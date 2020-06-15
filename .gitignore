@@ -1,0 +1,67 @@
+# Compiled files
+*.py[cod]
+*.a
+*.o
+*.so
+*.pyd
+*.dll
+__pycache__
+
+
+# Other generated files
+MANIFEST
+asdf_astropy/version.py
+
+# Sphinx
+_build
+_generated
+docs/api
+docs/generated
+docs/visualization/ngc6976.jpeg
+docs/visualization/ngc6976-default.jpeg
+
+# Packages/installer info
+*.egg
+*.egg-info
+dist
+build
+eggs
+.eggs
+bin
+var
+sdist
+develop-eggs
+.installed.cfg
+distribute-*.tar.gz
+.venv
+venv
+
+# Other
+.cache
+.tox
+.*.swp
+.*.swo
+*~
+.project
+.pydevproject
+.settings
+.coverage
+cover
+htmlcov
+.hypothesis
+
+# Mac OSX
+.DS_Store
+
+# PyCharm
+.idea
+
+# Pytest
+v
+.pytest_cache
+
+# VSCode
+.vscode
+
+.tmp
+pip-wheel-metadata
