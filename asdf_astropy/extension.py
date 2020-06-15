@@ -39,7 +39,7 @@ from .tags.unit.equivalency import *  # noqa
 from .types import _astropy_types, _astropy_asdf_types, _asdf_format_types
 
 
-__all__ = ['AsdfFormatExtension', 'AstropyExtension', 'AstropyAsdfExtension']
+__all__ = ['AsdfFormatExtension']
 
 
 ASTROPY_SCHEMA_URI_BASE = 'http://asdf-format.org/schemas/'
@@ -49,37 +49,23 @@ asdf_transform_path = asdf_transform_schemas.__path__[0]
 
 SCHEMA_PATH = os.path.abspath(
     os.path.join(asdf_transform_path, 'schemas'))
+
 ASTROPY_URL_MAPPING = [(ASTROPY_SCHEMA_URI_BASE,
                         filepath_to_url(SCHEMA_PATH + '/{url_suffix}.yaml'))]
-
-'''
-# This extension is used to register custom types that have both tags and
-# schemas defined by Astropy.
-class AstropyExtension(AsdfExtension):
-    @property
-    def types(self):
-        return _astropy_types
-
-    @property
-    def tag_mapping(self):
-        return [('tag:astropy.org:astropy',
-                 ASTROPY_SCHEMA_URI_BASE + 'astropy{tag_suffix}')]
-
-    @property
-    def url_mapping(self):
-        return ASTROPY_URL_MAPPING
-
-
-# This extension is used to register custom tag types that have schemas defined
-# by ASDF, but have tag implementations defined in astropy.
-class AstropyAsdfExtension(BuiltinExtension):
-    @property
-    def types(self):
-        return _astropy_asdf_types
-'''
 
 
 class AsdfFormatExtension(BuiltinExtension):
     @property
     def types(self):
         return _asdf_format_types
+
+    @property
+    def tag_mapping(self):
+        return [('tag:asdf-format:transform',
+                 'http://asdf-format.org/schemas/{tag_suffix}')]
+
+    @property
+    def url_mapping(self):
+        return [('http://asdf-format.org/schemas',
+                 filepath_to_url(SCHEMA_PATH + '/{url_suffix}.yaml'))]
+
