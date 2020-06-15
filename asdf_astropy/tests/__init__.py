@@ -8,7 +8,7 @@ import pytest
 from pkg_resources import iter_entry_points
 
 entry_points = [entry.name for entry in iter_entry_points('asdf_extensions')]
-ASDF_ENTRY_INSTALLED = 'astropy' in entry_points and 'astropy-asdf' in entry_points
+ASDF_ENTRY_INSTALLED = 'astropy' in entry_points and 'asdf-astropy' in entry_points
 
 del entry_points, iter_entry_points
 
