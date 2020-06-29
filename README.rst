@@ -2,7 +2,8 @@ Astropy Converters for ASDF
 ---------------------------
 
 .. image:: https://coveralls.io/repos/github/astropy/asdf-astropy/badge.svg?branch=master
-:target: https://coveralls.io/github/astropy/asdf-astropy?branch=master
+    :target: https://coveralls.io/github/astropy/asdf-astropy?branch=master
+    :alt: Code coverage
 
 
 .. image:: http://img.shields.io/badge/powered%20by-AstroPy-orange.svg?style=flat
