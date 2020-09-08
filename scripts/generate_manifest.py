@@ -7,7 +7,6 @@ import argparse
 from pathlib import Path
 
 import yaml
-import asdf
 
 
 def parse_args():
