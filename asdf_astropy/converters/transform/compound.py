@@ -1,4 +1,5 @@
 from .core import TransformConverterBase
+from ..helpers import get_tag_name
 
 
 __all__ = ["CompoundConverter"]
@@ -47,7 +48,12 @@ class CompoundConverter(TransformConverterBase):
 
     def select_tag(self, model, tags, ctx):
         tag_name = _OPERATOR_TO_TAG_NAME[model.op]
-        return next(t for t in tags if t[t.rfind("/") + 1:t.rfind("-")] == tag_name)
+
+        # The extension will never include two tags with the
+        # same name but different version, so we can just
+        # return the first matching tag that we discover in
+        # the list:
+        return next(t for t in tags if get_tag_name(t) == tag_name)
 
     def to_yaml_tree_transform(self, model, tag, ctx):
         left = model.left
@@ -67,7 +73,7 @@ class CompoundConverter(TransformConverterBase):
     def from_yaml_tree_transform(self, node, tag, ctx):
         from astropy.modeling.core import Model, CompoundModel
 
-        oper = _TAG_NAME_TO_MODEL_METHOD[tag.rsplit("/", 1)[-1].rsplit("-", 1)[0]]
+        oper = _TAG_NAME_TO_MODEL_METHOD[get_tag_name(tag)]
 
         left = node["forward"][0]
         if not isinstance(left, Model):
