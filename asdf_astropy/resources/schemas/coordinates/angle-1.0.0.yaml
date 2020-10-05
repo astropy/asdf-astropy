@@ -7,6 +7,8 @@ tag: "tag:astropy.org:astropy/coordinates/angle-1.0.0"
 title: |
   Represents an Angle.
 
+# TODO: Is there any restriction on the range of values?  The next
+# version of the schema should make this explicit.
 description:
   This object represents a subtype of Quantity which has units equivalent to
   radians or degrees.
