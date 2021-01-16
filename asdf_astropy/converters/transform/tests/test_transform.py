@@ -11,6 +11,11 @@ from asdf.tests.helpers import yaml_to_asdf
 
 from asdf_astropy import integration
 
+try:
+    from astropy.modeling.models import UnitsMapping
+    HAS_NO_UNITS_MAPPING = False
+except ImportError:
+    HAS_NO_UNITS_MAPPING = True
 
 # TODO: Uncomment this fixture once astropy converters
 # have been fully implemented.
@@ -198,7 +203,6 @@ SINGLE_MODELS = [
     astropy_models.BlackBody(scale=10.0, temperature=6000. * u.K),
     astropy_models.Drude1D(amplitude=10.0, x_0=0.5, fwhm=2.5),
     # TODO: NFW
-    astropy_models.Plummer1D(mass=10.0, r_plum=5.0),
 
     # astropy.modeling.polynomial
     astropy_models.Chebyshev1D(2, c0=2, c1=3, c2=0.5),
@@ -310,9 +314,12 @@ SINGLE_MODELS = [
 ]
 
 
+if astropy.__version__ >= "4.1":
+    SINGLE_MODELS.append(astropy_models.Plummer1D(mass=10.0, r_plum=5.0))
+
+
 UNSUPPORTED_MODELS = [
     # Deprecated models:
-    astropy.modeling.blackbody.BlackBody1D,
     astropy.modeling.functional_models.MexicanHat1D,
     astropy.modeling.functional_models.MexicanHat2D,
 
@@ -336,9 +343,19 @@ UNSUPPORTED_MODELS = [
     astropy.modeling.projections.Sky2PixProjection,
     astropy.modeling.projections.Zenithal,
 
+
+    ]
+
+
+if astropy.__version__ > "4.1":
     # https://github.com/astropy/asdf-astropy/issues/6
-    astropy.modeling.physical_models.NFW,
-]
+    UNSUPPORTED_MODELS += [astropy.modeling.physical_models.NFW,
+                           astropy.modeling.models.UnitsMapping,
+                          ]
+if astropy.__version__ < "4.3":
+    UNSUPPORTED_MODELS.append(astropy.modeling.blackbody.BlackBody1D)
+else:
+    UNSUPPORTED_MODELS.append(astropy.modeling.physical_models.BlackBody)
 
 
 @pytest.mark.parametrize("model", SINGLE_MODELS)
@@ -412,6 +429,7 @@ def test_fix_inputs(tmpdir):
     assert result.op == fixed_model.op
 
 
+@pytest.mark.skipif('HAS_NO_UNITS_MAPPING')
 def test_units_mapping(tmpdir):
     # Basic mapping between units:
     model = astropy_models.UnitsMapping(((u.m, u.dimensionless_unscaled),))

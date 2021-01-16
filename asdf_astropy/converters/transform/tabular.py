@@ -17,7 +17,8 @@ class TabularConverter(TransformConverterBase):
 
     def to_yaml_tree_transform(self, model, tag, ctx):
         node = {}
-        node["fill_value"] = model.fill_value
+        if model.fill_value is not None:
+            node["fill_value"] = model.fill_value
         node["lookup_table"] = model.lookup_table
         node["points"] = [p for p in model.points]
         node["method"] = str(model.method)
