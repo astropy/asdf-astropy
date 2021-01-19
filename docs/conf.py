@@ -29,6 +29,9 @@ import os
 import sys
 import datetime
 from importlib import import_module
+from configparser import ConfigParser
+import sphinx
+import sphinx_astropy
 
 try:
     from sphinx_astropy.conf.v1 import *  # noqa
@@ -37,7 +40,6 @@ except ImportError:
     sys.exit(1)
 
 # Get configuration information from setup.cfg
-from configparser import ConfigParser
 conf = ConfigParser()
 
 conf.read([os.path.join(os.path.dirname(__file__), '..', 'setup.cfg')])
@@ -49,7 +51,7 @@ setup_cfg = dict(conf.items('metadata'))
 highlight_language = 'python3'
 
 # If your documentation needs a minimal Sphinx version, state it here.
-#needs_sphinx = '1.2'
+needs_sphinx = '1.7'
 
 # To perform a Sphinx version check that needs to be more specific than
 # major.minor, call `check_sphinx_version("x.y.z")` here.
@@ -61,8 +63,7 @@ exclude_patterns.append('_templates')
 
 # This is added to the end of RST files - a good place to put substitutions to
 # be used globally.
-rst_epilog += """
-"""
+#
 
 # -- Project information ------------------------------------------------------
 
@@ -151,26 +152,34 @@ latex_documents = [('index', project + '.tex', project + u' Documentation',
 man_pages = [('index', project.lower(), project + u' Documentation',
               [author], 1)]
 
+# extensions = ['sphinx.ext.autodoc',
+#               'sphinx.ext.autosummary',
+#               'sphinx_automodapi.automodsumm',
+#               'sphinx_automodapi.autodoc_enhancements',
+#               'sphinx_automodapi.smart_resolver',
+#               'sphinx_automodapi.automodapi',
+#               ]
 
 # -- Options for the edit_on_github extension ---------------------------------
 
-if setup_cfg.get('edit_on_github').lower() == 'true':
-
-    extensions += ['sphinx_astropy.ext.edit_on_github']
-
-    edit_on_github_project = setup_cfg['github_project']
-    edit_on_github_branch = "master"
-
-    edit_on_github_source_root = ""
-    edit_on_github_doc_root = "docs"
-
-# -- Resolving issue number to links in changelog -----------------------------
-github_issues_url = 'https://github.com/{0}/issues/'.format(setup_cfg['github_project'])
+# if setup_cfg.get('edit_on_github').lower() == 'true':
+#
+#     extensions += ['sphinx_astropy.ext.edit_on_github']
+#
+#
+#     edit_on_github_project = setup_cfg['github_project']
+#     edit_on_github_branch = "master"
+#
+#     edit_on_github_source_root = ""
+#     edit_on_github_doc_root = "docs"
+#
+# # -- Resolving issue number to links in changelog -----------------------------
+# github_issues_url = 'https://github.com/{0}/issues/'.format(setup_cfg['github_project'])
 
 # -- Turn on nitpicky mode for sphinx (to warn about references not found) ----
 #
-# nitpicky = True
-# nitpick_ignore = []
+#nitpicky = True
+#nitpick_ignore = []
 #
 # Some warnings are impossible to suppress, and you can list specific references
 # that should be ignored in a nitpick-exceptions file which should be inside

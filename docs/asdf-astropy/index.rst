@@ -2,9 +2,10 @@
 asdf-astropy Documentation
 **************************
 
-This is the documentation for asdf-astropy.
+.. toctree::
+   :maxdepth: 1
 
 Reference/API
 =============
 
-.. automodapi:: asdf-astropy
+#.. automodapi::  asdf-astropy.converters
