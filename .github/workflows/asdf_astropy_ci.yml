@@ -17,6 +17,7 @@ jobs:
     name: ${{ matrix.name }} 
     runs-on: ${{ matrix.os }}
     strategy:
+      fail-fast: false
       matrix:
         include: 
           - name: Python 3.8 with code coverage
@@ -66,10 +67,10 @@ jobs:
 
           # Fails: asdf_astropy/converters/transform/tests/test_transform.py::test_deserialize_compound_user_inverse
           # Failes asdf_astropy/converters/transform/tests/test_transform.py: 528
-          #- name: Python 3.8 with Astropy LTS
-          #  python-version: "3.8"
-          #  os: ubuntu-latest
-          #  toxenv: py38-astropylts
+          - name: Python 3.8 with Astropy LTS
+            python-version: "3.8"
+            os: ubuntu-latest
+            toxenv: py38-astropylts
 
           - name: Bandit Checks
             python-version: "3.8"
