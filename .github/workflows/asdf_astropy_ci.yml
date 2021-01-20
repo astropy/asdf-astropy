@@ -19,56 +19,65 @@ jobs:
     strategy:
       matrix:
         include: 
+          # Passes
           #- name: Python 3.8 with code coverage
           #  python-version: "3.8"
           #  os: ubuntu-latest
           #  toxenv: py38-cov
 
+          # Passes
           #- name: Python 3.8, Development Dependencies
           #  python-version: "3.8"
           #  os: ubuntu-latest
           #  toxenv: py38-test-devdeps
 
+          # Passes
           #- name: Python 3.8, Numpy 1.17
           #  python-version: "3.8"
           #  os: ubuntu-latest
           #  toxenv: py38-test-numpy117
 
-          - name: Python 3.8, Numpy 1.18
-            python-version: "3.8"
-            os: ubuntu-latest
-            toxenv: py38-test-numpy118
+          # Passes
+          #- name: Python 3.8, Numpy 1.18
+          #  python-version: "3.8"
+          #  os: ubuntu-latest
+          #  toxenv: py38-test-numpy118
 
-          - name: Python 3.8, Numpy 1.19
-            python-version: "3.8"
-            os: ubuntu-latest
-            toxenv: py38-test-numpy119
+          # Passes
+          #- name: Python 3.8, Numpy 1.19
+          #  python-version: "3.8"
+          #  os: ubuntu-latest
+          #  toxenv: py38-test-numpy119
 
-          - name: Code Style Checks
-            python-version: "3.8"
-            os: ubuntu-latest
-            toxenv: codestyle
+          # Passes
+          #- name: Code Style Checks
+          #  python-version: "3.8"
+          #  os: ubuntu-latest
+          #  toxenv: codestyle
 
+          # Passes
           #- name: Python 3.7, MacOS
           #  python-version: "3.7"
           #  os: macos-latest
           #  toxenv: py37-test
 
-          - name: Build Documents
-            python-version: "3.8"
-            os: ubuntu-latest
-            toxenv: build_docs
+          # Passes
+          #- name: Build Documents
+          #  python-version: "3.8"
+          #  os: ubuntu-latest
+          #  toxenv: build_docs
 
           #- name: Code Style Checks
           #  python-version: "3.8"
           #  os: ubuntu-latest
           #  toxenv: codestyle
 
-          #- name: Python 3.8 with Astropy LTS
-          #  python-version: "3.8"
-          #  os: ubuntu-latest
-          #  toxenv: py38-astropylts
+          - name: Python 3.8 with Astropy LTS
+            python-version: "3.8"
+            os: ubuntu-latest
+            toxenv: py38-astropylts
 
+          # To be tested --------------
           #- name: Bandit Checks
           #  python-version: "3.8"
           #  os: ubuntu-latest
