@@ -67,21 +67,24 @@ jobs:
           #  os: ubuntu-latest
           #  toxenv: build_docs
 
+          # Passes
           #- name: Code Style Checks
           #  python-version: "3.8"
           #  os: ubuntu-latest
           #  toxenv: codestyle
 
+          # Fails: asdf_astropy/converters/transform/tests/test_transform.py::test_deserialize_compound_user_inverse
+          # Failes asdf_astropy/converters/transform/tests/test_transform.py: 528
           - name: Python 3.8 with Astropy LTS
             python-version: "3.8"
             os: ubuntu-latest
             toxenv: py38-astropylts
 
-          # To be tested --------------
-          #- name: Bandit Checks
-          #  python-version: "3.8"
-          #  os: ubuntu-latest
-          #  toxenv: bandit
+          # Fails: invalid command line.
+          - name: Bandit Checks
+            python-version: "3.8"
+            os: ubuntu-latest
+            toxenv: bandit
 
     steps:
       - name: Checkout code
