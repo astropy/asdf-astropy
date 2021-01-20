@@ -1,0 +1,56 @@
+name: ASDF-Astropy CI
+
+on:
+  push:
+    branches:
+      - master
+    tags:
+      - "*"
+  pull_request:
+    branches:
+  schedule:
+    # Run every Monday at 6am UTC
+    - cron: '0 6 * * 1'
+
+jobs:
+  tox_pytest:
+    name: ${{ matrix.name }} 
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        include: 
+          - name: Python 3.8
+            python-version: "3.8"
+            os: ubuntu-latest
+            toxenv: py38-test-cov
+
+          - name: Python 3.7, MacOS
+            python-version: "3.7"
+            os: macos-latest
+            toxenv: py37-test
+
+          - name: Code Style Checks
+            python-version: "3.8"
+            os: ubuntu-latest
+            toxenv: codestyle
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install tox
+        run: |
+          export SETUP_XVFB=True
+          python -m pip install tox
+      - name: Run tox
+        run: tox -e ${{ matrix.toxenv }}
+      - name: Upload Code Coverage
+        if: ${{ contains(matrix.toxenv,'-cov') }}
+        uses: codecov/codecov-action@v1
+        with:
+          file: ./coverage.xml
