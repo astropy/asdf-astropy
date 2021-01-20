@@ -24,11 +24,6 @@ jobs:
             os: ubuntu-latest
             toxenv: py38-cov
 
-          - name: Python 3.8 with Astropy LTS
-            python-version: "3.8"
-            os: ubuntu-latest
-            toxenv: py38-astropylts
-
           - name: Python 3.8, Development Dependencies
             python-version: "3.8"
             os: ubuntu-latest
@@ -39,30 +34,10 @@ jobs:
             os: ubuntu-latest
             toxenv: py38-test-numpy117
 
-          - name: Python 3.8, Numpy 1.18
-            python-version: "3.8"
-            os: ubuntu-latest
-            toxenv: py38-test-numpy118
-
-          - name: Python 3.8, Numpy 1.19
-            python-version: "3.8"
-            os: ubuntu-latest
-            toxenv: py38-test-numpy119
-
-          - name: Build Documents
-            python-version: "3.8"
-            os: ubuntu-latest
-            toxenv: build_docs
-
           - name: Code Style Checks
             python-version: "3.8"
             os: ubuntu-latest
             toxenv: codestyle
-
-          - name: Bandit Checks
-            python-version: "3.8"
-            os: ubuntu-latest
-            toxenv: bandit
 
           - name: Python 3.7, MacOS
             python-version: "3.7"
