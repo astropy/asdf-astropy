@@ -3,6 +3,7 @@ import pytest
 import numpy as np
 import itertools
 
+import astropy
 from astropy.modeling import models as astropy_models
 import astropy.modeling
 from astropy import units as u
@@ -16,6 +17,11 @@ try:
     HAS_NO_UNITS_MAPPING = False
 except ImportError:
     HAS_NO_UNITS_MAPPING = True
+
+if astropy.__version__ < "4.1":
+    ASTROPY_LT_41 = True
+else:
+    ASTROPY_LT_41 = False
 
 # TODO: Uncomment this fixture once astropy converters
 # have been fully implemented.
@@ -501,6 +507,7 @@ def test_2d_polynomial_with_asdf_standard_version(tmpdir, standard_version, mode
     assert result.y_window == model.y_window
 
 
+@pytest.mark.skip('ASTROPY_LT_41')
 def test_deserialize_compound_user_inverse(tmpdir):
     """
     Confirm that we are able to correctly reconstruct a
