@@ -5,8 +5,8 @@ Astropy Converters for ASDF
     :target: https://github.com/astropy/asdf-astropy/actions
     :alt: CI Status
 	  
-.. image:: https://codecov.io/gh/astropy/asdf-astropy/branch/master/graph/badge.svg
-    :target: https://codecov.io/gh/astropy/asdf-astropy/branch=master
+.. image:: https://codecov.io/gh/astropy/asdf-astropy/branch/main/graph/badge.svg
+    :target: https://codecov.io/gh/astropy/asdf-astropy/branch=main
     :alt: Code coverage
 
 

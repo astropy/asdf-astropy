@@ -168,7 +168,7 @@ man_pages = [('index', project.lower(), project + u' Documentation',
 #
 #
 #     edit_on_github_project = setup_cfg['github_project']
-#     edit_on_github_branch = "master"
+#     edit_on_github_branch = "main"
 #
 #     edit_on_github_source_root = ""
 #     edit_on_github_doc_root = "docs"
