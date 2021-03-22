@@ -3,7 +3,7 @@ name: CI
 on:
   push:
     branches:
-      - master
+      - main
     tags:
       - "*"
   pull_request:
@@ -14,12 +14,12 @@ on:
 
 jobs:
   tox_pytest:
-    name: ${{ matrix.name }} 
+    name: ${{ matrix.name }}
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
       matrix:
-        include: 
+        include:
           - name: Python 3.8 with code coverage
             python-version: "3.8"
             os: ubuntu-latest

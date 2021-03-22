@@ -4,9 +4,9 @@ Astropy Converters for ASDF
 .. image:: https://github.com/astropy/asdf-astropy/workflows/CI/badge.svg
     :target: https://github.com/astropy/asdf-astropy/actions
     :alt: CI Status
-	  
+
 .. image:: https://codecov.io/gh/astropy/asdf-astropy/branch/master/graph/badge.svg
-    :target: https://codecov.io/gh/astropy/asdf-astropy/branch=master
+    :target: https://codecov.io/gh/astropy/asdf-astropy/branch=main
     :alt: Code coverage
 
 
@@ -30,4 +30,3 @@ Contributing
 
 We love contributions! asdf-astropy is open source,
 built on open source, and we'd love to have you hang out in our community.
-
