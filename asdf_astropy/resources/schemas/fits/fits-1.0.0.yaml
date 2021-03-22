@@ -78,6 +78,8 @@ allOf:
     items:
       type: object
       properties:
+        # TODO: Why are there no validations for the header here?  The
+        # next version of the schema should add them.
         data:
           description: "The data part of the HDU."
           anyOf:

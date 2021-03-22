@@ -23,6 +23,7 @@ class TabularConverter(TransformConverterBase):
         node["points"] = [p for p in model.points]
         node["method"] = str(model.method)
         node["bounds_error"] = model.bounds_error
+
         return node
 
     def from_yaml_tree_transform(self, node, tag, ctx):

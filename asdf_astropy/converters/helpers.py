@@ -15,3 +15,18 @@ def parse_tag_version(tag):
     packaging.version.Version
     """
     return parse_version(tag[tag.rfind("-") + 1:])
+
+
+def get_tag_name(tag):
+    """
+    Extract the name portion of a tag URI.
+
+    Parameters
+    ----------
+    tag : str
+
+    Returns
+    -------
+    str
+    """
+    return tag[tag.rfind("/") + 1:tag.rfind("-")]
