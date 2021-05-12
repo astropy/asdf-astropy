@@ -29,7 +29,7 @@ def test_manifests():
         manifest = yaml.safe_load(manifest_content)
 
         manifest_schema = asdf.schema.load_schema(
-            "asdf://asdf-format.org/core/schemas/extension_manifest-1.0"
+            "asdf://asdf-format.org/core/schemas/extension_manifest-1.0.0"
         )
 
         # The manifest must be valid against its own schema:
