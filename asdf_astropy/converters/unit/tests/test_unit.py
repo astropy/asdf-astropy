@@ -1,7 +1,11 @@
 
+import warnings
+
 import asdf
 from asdf.tests import helpers
+import astropy
 from astropy import units
+from packaging.version import Version
 import pytest
 
 
@@ -16,18 +20,17 @@ def remove_astropy_extensions():
         yield
 
 
-UNREPRESENTABLE_UNITS = {
-    units.deg_C,
-    units.dex,
-    units.electron,
-    units.littleh,
-    units.mgy,
-    units.nmgy,
-    units.percent,
-    units.Sun,
-}
+def vounit_compatible(unit):
+    with warnings.catch_warnings():
+        warnings.simplefilter("ignore", category=units.UnitsWarning)
+        try:
+            unit.to_string(format="vounit")
+            return True
+        except Exception:
+            return False
 
-TEST_UNITS = [u for u in units.__dict__.values() if isinstance(u, units.UnitBase) and u not in UNREPRESENTABLE_UNITS]
+
+TEST_UNITS = [u for u in list(units.__dict__.values()) if isinstance(u, units.UnitBase) and vounit_compatible(u)]
 
 
 @pytest.mark.parametrize("unit", TEST_UNITS)
