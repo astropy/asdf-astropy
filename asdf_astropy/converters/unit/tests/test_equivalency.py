@@ -1,9 +1,11 @@
 import pytest
 
 import asdf
+import astropy
 from astropy import units as u
 from astropy.units import equivalencies as eq
 from astropy.cosmology import Planck15
+from packaging.version import Version
 
 
 @pytest.fixture(autouse=True)
@@ -19,7 +21,6 @@ def remove_astropy_extensions():
 
 TEST_EQUIVALENCIES = [
     eq.plate_scale(.3 * u.deg/u.mm), eq.pixel_scale(.5 * u.deg/u.pix),
-    eq.pixel_scale(100. * u.pix/u.cm),
     eq.spectral_density(350 * u.nm, factor=2),
     eq.spectral_density(350 * u.nm), eq.spectral(),
     eq.brightness_temperature(500 * u.GHz),
@@ -37,6 +38,9 @@ TEST_EQUIVALENCIES = [
     (eq.spectral() + eq.spectral_density(35 * u.nm) +
         eq.brightness_temperature(5 * u.Hz, beam_area=2 * u.sr)),
 ]
+
+if Version(astropy.__version__) >= Version("4.1"):
+    TEST_EQUIVALENCIES.append(eq.pixel_scale(100. * u.pix/u.cm))
 
 
 @pytest.mark.parametrize("equivalency", TEST_EQUIVALENCIES)
