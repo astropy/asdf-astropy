@@ -22,8 +22,8 @@ def get_resource_mappings():
     resources_root = importlib_resources.files(resources)
 
     return [
-        DirectoryResourceMapping(resources_root / "schemas", "http://astropy.org/schemas/astropy", recursive=True),
-        DirectoryResourceMapping(resources_root / "manifests", "http://astropy.org/asdf/extensions/astropy/manifests"),
+        DirectoryResourceMapping(resources_root / "schemas", "http://astropy.org/schemas/astropy/", recursive=True),
+        DirectoryResourceMapping(resources_root / "manifests", "asdf://astropy.org/astropy/manifests/"),
     ]
 
 
@@ -38,4 +38,4 @@ def get_extensions():
     list of asdf.extension.Extension
     """
     from . import extensions
-    return [extensions.ASTROPY_EXTENSION] + extensions.TRANSFORM_EXTENSIONS
+    return [extensions.ASTROPY_EXTENSION] + extensions.TRANSFORM_EXTENSIONS + extensions.CORE_EXTENSIONS

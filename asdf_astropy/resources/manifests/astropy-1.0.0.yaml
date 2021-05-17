@@ -1,6 +1,6 @@
-id: http://astropy.org/asdf/extensions/astropy/manifests/astropy-1.0
-extension_uri: http://astropy.org/asdf/extensions/astropy-1.0
-title: Astropy extension 1.0
+id: asdf://astropy.org/astropy/manifests/astropy-1.0.0
+extension_uri: asdf://astropy.org/astropy/extensions/astropy-1.0.0
+title: Astropy extension 1.0.0
 description: |-
   A set of tags for serializing astropy objects.  This does not include most
   model classes, which are handled by an implementation of the ASDF
