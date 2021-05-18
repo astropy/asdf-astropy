@@ -21,4 +21,9 @@ class EquivalencyConverter(Converter):
             kwargs = dict(zip(equivalency_node["kwargs_names"], equivalency_node["kwargs_values"]))
             components.append(equivalency_method(**kwargs))
 
+        # The Equivalency class is a UserList that overrides __add__ to
+        # provide special behavior when combined with another Equivalency.
+        # We're using sum here to add each subsequent Equivalency to the
+        # first so we end up with a single correctly combined Equivalency
+        # object at the end.
         return sum(components[1:], components[0])
