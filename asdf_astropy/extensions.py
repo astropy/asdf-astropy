@@ -14,6 +14,10 @@ from .converters.transform.projections import ProjectionConverter
 from .converters.transform.rotations import Rotate3DConverter, RotationSequenceConverter
 from .converters.transform.tabular import TabularConverter
 
+from .converters.unit.equivalency import EquivalencyConverter
+from .converters.unit.quantity import QuantityConverter
+from .converters.unit.unit import UnitConverter
+
 
 TRANSFORM_CONVERTERS = [
     # astropy.modeling.core
@@ -367,14 +371,38 @@ TRANSFORM_EXTENSIONS = [
 
 
 ASTROPY_CONVERTERS = [
+    EquivalencyConverter(),
     UnitsMappingConverter(),
 ]
 
 
 ASTROPY_EXTENSION = ManifestExtension.from_uri(
+    "asdf://astropy.org/astropy/manifests/astropy-1.0.0",
     # This prevents a warning about a missing extension when opening
     # files written by older versions of astropy:
-    "http://astropy.org/asdf/extensions/astropy/manifests/astropy-1.0",
     legacy_class_names=["astropy.io.misc.asdf.extension.AstropyExtension"],
     converters=ASTROPY_CONVERTERS,
 )
+
+# unit and quantity are part of the ASDF Standard core tags,
+# but we want to override serialization here so that users can
+# work with nice astropy objects for those entities.
+
+CORE_CONVERTERS = [
+    QuantityConverter(),
+    UnitConverter(),
+]
+
+
+CORE_MANIFEST_URIS = [
+    "asdf://asdf-format.org/core/manifests/core-1.0.0",
+    "asdf://asdf-format.org/core/manifests/core-1.1.0",
+    "asdf://asdf-format.org/core/manifests/core-1.2.0",
+    "asdf://asdf-format.org/core/manifests/core-1.3.0",
+    "asdf://asdf-format.org/core/manifests/core-1.4.0",
+    "asdf://asdf-format.org/core/manifests/core-1.5.0",
+    "asdf://asdf-format.org/core/manifests/core-1.6.0",
+]
+
+
+CORE_EXTENSIONS = [ManifestExtension.from_uri(u, converters=CORE_CONVERTERS) for u in CORE_MANIFEST_URIS]

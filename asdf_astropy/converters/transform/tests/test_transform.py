@@ -348,9 +348,7 @@ UNSUPPORTED_MODELS = [
     astropy.modeling.projections.QuadCube,
     astropy.modeling.projections.Sky2PixProjection,
     astropy.modeling.projections.Zenithal,
-
-
-    ]
+]
 
 
 if astropy.__version__ > "4.1":
