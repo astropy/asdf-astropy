@@ -45,6 +45,9 @@ tags:
 - tag_uri: tag:astropy.org:astropy/coordinates/frames/itrs-1.0.0
   schema_uri: http://astropy.org/schemas/astropy/coordinates/frames/itrs-1.0.0
   title: Represents a ITRS coordinate object from astropy
+- tag_uri: tag:astropy.org:astropy/coordinates/frames/icrs-1.0.0
+  schema_uri: http://astropy.org/schemas/astropy/coordinates/frames/icrs-1.0.0
+  title: Represents an ICRS coordinate object from astropy (deprecated format).
 - tag_uri: tag:astropy.org:astropy/coordinates/frames/icrs-1.1.0
   schema_uri: http://astropy.org/schemas/astropy/coordinates/frames/icrs-1.1.0
   title: Represents an ICRS coordinate object from astropy.
