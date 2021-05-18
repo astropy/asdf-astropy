@@ -7,22 +7,10 @@ class EquivalencyConverter(Converter):
     types = ["astropy.units.equivalencies.Equivalency"]
 
     def to_yaml_tree(self, obj, tag, ctx):
-        results = []
-
-        for name, kwargs in zip(obj.name, obj.kwargs):
-            kwargs_names = []
-            kwargs_values = []
-            for kwargs_name, kwargs_value in kwargs.items():
-                kwargs_names.append(kwargs_name)
-                kwargs_values.append(kwargs_value)
-
-            results.append({
-                "name": name,
-                "kwargs_names": kwargs_names,
-                "kwargs_values": kwargs_values,
-            })
-
-        return results
+        return [
+            {'name': name, 'kwargs_names': list(kw.keys()), 'kwargs_values': list(kw.values())}
+            for name, kw in zip(obj.name, obj.kwargs)
+        ]
 
     def from_yaml_tree(self, node, tag, ctx):
         from astropy.units import equivalencies
