@@ -25,6 +25,9 @@ from .converters.coordinates.representation import RepresentationConverter
 from .converters.coordinates.sky_coord import SkyCoordConverter
 from .converters.coordinates.spectral_coord import SpectralCoordConverter
 
+from .converters.time.time import TimeConverter
+from .converters.time.time_delta import TimeDeltaConverter
+
 
 TRANSFORM_CONVERTERS = [
     # astropy.modeling.core
@@ -356,12 +359,12 @@ TRANSFORM_CONVERTERS = [
 # The order here is important; asdf will prefer to use extensions
 # that occur earlier in the list.
 TRANSFORM_MANIFEST_URIS = [
-    "http://stsci.edu/asdf/extensions/transform/manifests/transform-1.5.0",
-    "http://stsci.edu/asdf/extensions/transform/manifests/transform-1.4.0",
-    "http://stsci.edu/asdf/extensions/transform/manifests/transform-1.3.0",
-    "http://stsci.edu/asdf/extensions/transform/manifests/transform-1.2.0",
-    "http://stsci.edu/asdf/extensions/transform/manifests/transform-1.1.0",
-    "http://stsci.edu/asdf/extensions/transform/manifests/transform-1.0.0",
+    "asdf://asdf-format.org/transform/manifests/transform-1.5.0",
+    "asdf://asdf-format.org/transform/manifests/transform-1.4.0",
+    "asdf://asdf-format.org/transform/manifests/transform-1.3.0",
+    "asdf://asdf-format.org/transform/manifests/transform-1.2.0",
+    "asdf://asdf-format.org/transform/manifests/transform-1.1.0",
+    "asdf://asdf-format.org/transform/manifests/transform-1.0.0",
 ]
 
 
@@ -428,6 +431,7 @@ ASTROPY_CONVERTERS = [
     RepresentationConverter(),
     SkyCoordConverter(),
     SpectralCoordConverter(),
+    TimeDeltaConverter(),
 ]
 
 
@@ -445,6 +449,7 @@ ASTROPY_EXTENSION = ManifestExtension.from_uri(
 
 CORE_CONVERTERS = [
     QuantityConverter(),
+    TimeConverter(),
     UnitConverter(),
 ]
 

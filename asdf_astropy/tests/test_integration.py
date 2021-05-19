@@ -44,12 +44,12 @@ def test_extensions():
     package_and_uri_pairs = {(e.package_name, e.extension_uri) for e in asdf.get_config().extensions}
 
     assert ("asdf-astropy", "asdf://astropy.org/astropy/extensions/astropy-1.0.0") in package_and_uri_pairs
-    assert ("asdf-astropy", "http://stsci.edu/asdf/extensions/transform-1.0.0") in package_and_uri_pairs
-    assert ("asdf-astropy", "http://stsci.edu/asdf/extensions/transform-1.1.0") in package_and_uri_pairs
-    assert ("asdf-astropy", "http://stsci.edu/asdf/extensions/transform-1.2.0") in package_and_uri_pairs
-    assert ("asdf-astropy", "http://stsci.edu/asdf/extensions/transform-1.3.0") in package_and_uri_pairs
-    assert ("asdf-astropy", "http://stsci.edu/asdf/extensions/transform-1.4.0") in package_and_uri_pairs
-    assert ("asdf-astropy", "http://stsci.edu/asdf/extensions/transform-1.5.0") in package_and_uri_pairs
+    assert ("asdf-astropy", "asdf://asdf-format.org/transform/extensions/transform-1.0.0") in package_and_uri_pairs
+    assert ("asdf-astropy", "asdf://asdf-format.org/transform/extensions/transform-1.1.0") in package_and_uri_pairs
+    assert ("asdf-astropy", "asdf://asdf-format.org/transform/extensions/transform-1.2.0") in package_and_uri_pairs
+    assert ("asdf-astropy", "asdf://asdf-format.org/transform/extensions/transform-1.3.0") in package_and_uri_pairs
+    assert ("asdf-astropy", "asdf://asdf-format.org/transform/extensions/transform-1.4.0") in package_and_uri_pairs
+    assert ("asdf-astropy", "asdf://asdf-format.org/transform/extensions/transform-1.5.0") in package_and_uri_pairs
 
 
 def test_no_astropy_import():

@@ -8,17 +8,6 @@ import numpy as np
 from numpy.testing import assert_array_equal
 
 
-@pytest.fixture(autouse=True)
-def remove_astropy_extensions():
-    """
-    Disable the old astropy extension so that it doesn't
-    confuse our test results.
-    """
-    with asdf.config_context() as config:
-        config.remove_extension(package="astropy")
-        yield
-
-
 TEST_QUANTITIES = [
     # Scalar:
     Quantity(2.71828, units.kpc),

@@ -11,18 +11,7 @@ from astropy.coordinates import SpectralCoord, ICRS, Galactic
 from astropy.coordinates.spectral_coordinate import NoVelocityWarning
 from astropy.tests.helper import assert_quantity_allclose
 
-from .helpers import assert_frame_equal
-
-
-@pytest.fixture(autouse=True)
-def remove_astropy_extensions():
-    """
-    Disable the old astropy extension so that it doesn't
-    confuse our test results.
-    """
-    with asdf.config_context() as config:
-        config.remove_extension(package="astropy")
-        yield
+from asdf_astropy.testing.helpers import assert_frame_equal
 
 
 TEST_COORDS = [

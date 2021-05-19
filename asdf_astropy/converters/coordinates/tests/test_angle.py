@@ -6,17 +6,6 @@ from astropy.coordinates import Angle, Latitude, Longitude
 import numpy as np
 
 
-@pytest.fixture(autouse=True)
-def remove_astropy_extensions():
-    """
-    Disable the old astropy extension so that it doesn't
-    confuse our test results.
-    """
-    with asdf.config_context() as config:
-        config.remove_extension(package="astropy")
-        yield
-
-
 TEST_ANGLES = [
     Angle(100, u.deg),
     Angle([100, 120, 150], u.deg),

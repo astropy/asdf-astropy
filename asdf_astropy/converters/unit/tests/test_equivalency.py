@@ -8,17 +8,6 @@ from astropy.cosmology import Planck15
 from packaging.version import Version
 
 
-@pytest.fixture(autouse=True)
-def remove_astropy_extensions():
-    """
-    Disable the old astropy extension so that it doesn't
-    confuse our test results.
-    """
-    with asdf.config_context() as config:
-        config.remove_extension(package="astropy")
-        yield
-
-
 TEST_EQUIVALENCIES = [
     eq.plate_scale(.3 * u.deg/u.mm), eq.pixel_scale(.5 * u.deg/u.pix),
     eq.spectral_density(350 * u.nm, factor=2),

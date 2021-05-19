@@ -6,16 +6,7 @@ from astropy.units import Quantity
 from astropy.coordinates import EarthLocation, Longitude, Latitude
 from astropy.coordinates.earth import ELLIPSOIDS
 
-
-@pytest.fixture(autouse=True)
-def remove_astropy_extensions():
-    """
-    Disable the old astropy extension so that it doesn't
-    confuse our test results.
-    """
-    with asdf.config_context() as config:
-        config.remove_extension(package="astropy")
-        yield
+from asdf_astropy.testing.helpers import assert_earth_location_equal
 
 
 TEST_LONGITUDE = Longitude([0., 45., 90., 135., 180., -180, -90, -45], u.deg, wrap_angle=180 * u.deg)
@@ -59,4 +50,4 @@ def test_earthlocation_site(tmp_path, builtin_site_registry):
         af.write_to(file_path)
 
     with asdf.open(file_path) as af:
-        assert (af["earth_location"] == earth_location).all()
+        assert_earth_location_equal(af["earth_location"], earth_location)

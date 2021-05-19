@@ -3,21 +3,8 @@ import warnings
 
 import asdf
 from asdf.tests import helpers
-import astropy
 from astropy import units
-from packaging.version import Version
 import pytest
-
-
-@pytest.fixture(autouse=True)
-def remove_astropy_extensions():
-    """
-    Disable the old astropy extension so that it doesn't
-    confuse our test results.
-    """
-    with asdf.config_context() as config:
-        config.remove_extension(package="astropy")
-        yield
 
 
 def vounit_compatible(unit):

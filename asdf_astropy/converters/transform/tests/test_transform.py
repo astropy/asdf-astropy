@@ -23,18 +23,6 @@ if astropy.__version__ < "4.1":
 else:
     ASTROPY_LT_41 = False
 
-# TODO: Uncomment this fixture once astropy converters
-# have been fully implemented.
-# @pytest.fixture(autouse=True)
-# def remove_astropy_extensions():
-#     """
-#     Disable the old astropy extension so that it doesn't
-#     confuse our test results.
-#     """
-#     with asdf.config_context() as config:
-#         config.remove_extension(package="astropy")
-#         yield
-
 
 def assert_model_roundtrip(model, tmpdir, version=None):
     """
@@ -470,7 +458,7 @@ def test_units_mapping(tmpdir):
     assert result.mapping == model.mapping
 
 
-@pytest.mark.parametrize("standard_version", [v for v in asdf.versioning.supported_versions if v >= "1.2.0"])
+@pytest.mark.parametrize("standard_version", [v for v in asdf.versioning.supported_versions if v >= "1.4.0"])
 @pytest.mark.parametrize("model", [
     astropy_models.Polynomial1D(1, c0=5, c1=17),
     astropy_models.Polynomial1D(1, c0=5, c1=17, domain=[-5, 4], window=[-2, 3]),
@@ -484,7 +472,7 @@ def test_1d_polynomial_with_asdf_standard_version(tmpdir, standard_version, mode
     assert result.window == model.window
 
 
-@pytest.mark.parametrize("standard_version", [v for v in asdf.versioning.supported_versions if v >= "1.2.0"])
+@pytest.mark.parametrize("standard_version", [v for v in asdf.versioning.supported_versions if v >= "1.4.0"])
 @pytest.mark.parametrize("model", [
     astropy_models.Polynomial2D(2, c0_0=3, c1_0=5, c0_1=7),
     astropy_models.Polynomial2D(
