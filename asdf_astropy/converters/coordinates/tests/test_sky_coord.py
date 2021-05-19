@@ -5,7 +5,7 @@ import astropy.units as u
 from astropy.coordinates import SkyCoord, FK4, Galactic, ICRS, Longitude
 import numpy as np
 
-from .helpers import assert_sky_coord_equal
+from asdf_astropy.testing.helpers import assert_sky_coord_equal
 
 
 # These are cribbed directly from the Examples section of

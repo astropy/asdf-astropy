@@ -24,7 +24,7 @@ from astropy.coordinates import (
 from astropy.time import Time
 import numpy as np
 
-from .helpers import assert_frame_equal
+from asdf_astropy.testing.helpers import assert_frame_equal
 
 
 TEST_DATA = {

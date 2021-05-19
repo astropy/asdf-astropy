@@ -28,11 +28,7 @@ class RepresentationConverter(Converter):
         components = {}
         for c in obj.components:
             value = getattr(obj, "_" + c, None)
-            if isinstance(value, Distance):
-                # No tag exists for Distance, so we need to "cast"
-                # it to a regular ol' Quantity:
-                components[c] = Quantity(value)
-            elif value is not None:
+            if value is not None:
                 components[c] = value
 
         return {

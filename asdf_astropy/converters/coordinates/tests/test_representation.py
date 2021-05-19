@@ -5,18 +5,7 @@ import astropy.units as u
 from astropy.coordinates import Angle, representation
 from numpy.random import random
 
-from .helpers import assert_representation_equal
-
-
-@pytest.fixture(autouse=True)
-def remove_astropy_extensions():
-    """
-    Disable the old astropy extension so that it doesn't
-    confuse our test results.
-    """
-    with asdf.config_context() as config:
-        config.remove_extension(package="astropy")
-        yield
+from asdf_astropy.testing.helpers import assert_representation_equal
 
 
 REPRESENTATION_CLASSES = [

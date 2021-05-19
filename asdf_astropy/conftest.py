@@ -5,7 +5,9 @@
 
 import os
 
+import asdf
 from astropy.version import version as astropy_version
+import pytest
 
 # For Astropy 3.0 and later, we can use the standalone pytest plugin
 if astropy_version < '3.0':
@@ -47,3 +49,14 @@ def pytest_configure(config):
 #     warnings_to_ignore_by_pyver={(MAJOR, MINOR): ['Message to ignore']}
 # from astropy.tests.helper import enable_deprecations_as_exceptions  # noqa
 # enable_deprecations_as_exceptions()
+
+
+@pytest.fixture(autouse=True)
+def remove_astropy_extensions():
+    """
+    Disable the old astropy extension so that it doesn't
+    confuse our test results.
+    """
+    with asdf.config_context() as config:
+        config.remove_extension(package="astropy")
+        yield
