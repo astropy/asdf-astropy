@@ -66,3 +66,12 @@ def assert_time_delta_equal(a, b):
     assert_array_equal(a.jd, b.jd)
     assert_array_equal(a.jd2, b.jd2)
     assert_array_equal(a.sec, b.sec)
+
+
+def assert_hdu_list_equal(a, b):
+    assert len(a) == len(b)
+    for hdu_a, hdu_b in zip(a, b):
+        assert_array_equal(hdu_a.data, hdu_b.data)
+        assert len(hdu_a.header.cards) == len(hdu_b.header.cards)
+        for card_a, card_b in zip(hdu_a.header.cards, hdu_b.header.cards):
+            assert tuple(card_a) == tuple(card_b)
