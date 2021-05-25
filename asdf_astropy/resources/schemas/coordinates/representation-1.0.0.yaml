@@ -117,7 +117,7 @@ properties:
           d_x:
             $ref: "http://stsci.edu/schemas/asdf/unit/quantity-1.1.0"
           d_y:
-            $ref: "thttp://stsci.edu/schemas/asdf/unit/quantity-1.1.0"
+            $ref: "http://stsci.edu/schemas/asdf/unit/quantity-1.1.0"
           d_z:
             $ref: "http://stsci.edu/schemas/asdf/unit/quantity-1.1.0"
 
