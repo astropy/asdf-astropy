@@ -28,6 +28,10 @@ from .converters.coordinates.spectral_coord import SpectralCoordConverter
 from .converters.time.time import TimeConverter
 from .converters.time.time_delta import TimeDeltaConverter
 
+from .converters.table.table import ColumnConverter, AsdfTableConverter, AstropyTableConverter
+
+from .converters.fits.fits import AstropyFitsConverter, AsdfFitsConverter
+
 
 TRANSFORM_CONVERTERS = [
     # astropy.modeling.core
@@ -432,6 +436,8 @@ ASTROPY_CONVERTERS = [
     SkyCoordConverter(),
     SpectralCoordConverter(),
     TimeDeltaConverter(),
+    AstropyTableConverter(),
+    AstropyFitsConverter(),
 ]
 
 
@@ -443,7 +449,7 @@ ASTROPY_EXTENSION = ManifestExtension.from_uri(
     converters=ASTROPY_CONVERTERS,
 )
 
-# unit and quantity are part of the ASDF Standard core tags,
+# These tags are part of the ASDF Standard,
 # but we want to override serialization here so that users can
 # work with nice astropy objects for those entities.
 
@@ -451,6 +457,9 @@ CORE_CONVERTERS = [
     QuantityConverter(),
     TimeConverter(),
     UnitConverter(),
+    ColumnConverter(),
+    AsdfTableConverter(),
+    AsdfFitsConverter(),
 ]
 
 
