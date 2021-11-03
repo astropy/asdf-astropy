@@ -2,6 +2,7 @@ import asdf
 import pytest
 import numpy as np
 import itertools
+from packaging.version import Version
 
 import astropy
 from astropy.modeling import models as astropy_models
@@ -18,7 +19,7 @@ try:
 except ImportError:
     HAS_NO_UNITS_MAPPING = True
 
-if astropy.__version__ < "4.1":
+if Version(astropy.__version__) < Version("4.1"):
     ASTROPY_LT_41 = True
 else:
     ASTROPY_LT_41 = False
@@ -100,12 +101,17 @@ MODEL_WITH_CONSTRAINTS = astropy_models.Legendre2D(
     bounds={"c0_0": (-10, 10)}
 )
 
+MODEL_WITH_CUSTOM_INPUTS_OUTPUTS = astropy_models.Gaussian2D()
+MODEL_WITH_CUSTOM_INPUTS_OUTPUTS.inputs = ("a", "b")
+MODEL_WITH_CUSTOM_INPUTS_OUTPUTS.outputs = ("c",)
+
 SINGLE_MODELS = [
     # Generic model features
     astropy_models.Shift(10, name="some model name"),
     MODEL_WITH_BOUNDING_BOX,
     MODEL_WITH_USER_INVERSE,
     MODEL_WITH_CONSTRAINTS,
+    MODEL_WITH_CUSTOM_INPUTS_OUTPUTS,
 
     # astropy.modeling.functional_models
     astropy_models.AiryDisk2D(amplitude=10., x_0=0.5, y_0=1.5),
@@ -308,15 +314,11 @@ SINGLE_MODELS = [
 ]
 
 
-if astropy.__version__ >= "4.1":
+if Version(astropy.__version__) >= Version("4.1"):
     SINGLE_MODELS.append(astropy_models.Plummer1D(mass=10.0, r_plum=5.0))
 
 
 UNSUPPORTED_MODELS = [
-    # Deprecated models:
-    astropy.modeling.functional_models.MexicanHat1D,
-    astropy.modeling.functional_models.MexicanHat2D,
-
     # FITS-specific and deemed unworthy of ASDF serialization:
     astropy.modeling.polynomial.InverseSIP,
     astropy.modeling.polynomial.SIP,
@@ -339,15 +341,33 @@ UNSUPPORTED_MODELS = [
 ]
 
 
-if astropy.__version__ > "4.1":
+if Version(astropy.__version__) > Version("4.1"):
     # https://github.com/astropy/asdf-astropy/issues/6
     UNSUPPORTED_MODELS += [astropy.modeling.physical_models.NFW,
                            astropy.modeling.models.UnitsMapping,
                           ]
-if astropy.__version__ < "4.3":
+
+if Version(astropy.__version__) < Version("4.3"):
     UNSUPPORTED_MODELS.append(astropy.modeling.blackbody.BlackBody1D)
 else:
     UNSUPPORTED_MODELS.append(astropy.modeling.physical_models.BlackBody)
+
+if Version(astropy.__version__) < Version("4.999.999"):
+    UNSUPPORTED_MODELS.extend([
+        astropy.modeling.models.MexicanHat1D,
+        astropy.modeling.models.MexicanHat2D,
+    ])
+
+if Version(astropy.__version__) > Version("4.999.999"):
+    # https://github.com/astropy/asdf-astropy/issues/28
+    UNSUPPORTED_MODELS.extend([
+        astropy.modeling.functional_models.ArcCosine1D,
+        astropy.modeling.functional_models.ArcSine1D,
+        astropy.modeling.functional_models.ArcTangent1D,
+        astropy.modeling.functional_models.Cosine1D,
+        astropy.modeling.functional_models.Tangent1D,
+        astropy.modeling.spline.Spline1D,
+    ])
 
 
 @pytest.mark.parametrize("model", SINGLE_MODELS)
