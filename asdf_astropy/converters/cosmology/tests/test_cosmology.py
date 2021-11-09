@@ -11,6 +11,13 @@ from astropy.cosmology import parameters, realizations
 TEST_COSMOLOGIES = (getattr(realizations, n) for n in parameters.available)
 
 
+def assert_cosmo_equal(a, b):
+    __tracebackhide__ = True
+
+    assert a == b
+    assert a.meta == b.meta
+
+
 @pytest.mark.parametrize("cosmo", TEST_COSMOLOGIES)
 def test_serialization(cosmo, tmp_path):
     file_path = tmp_path / "test.asdf"
@@ -19,5 +26,4 @@ def test_serialization(cosmo, tmp_path):
         af.write_to(file_path)
 
     with asdf.open(file_path) as af:
-        assert af["cosmo"] == cosmo
-        assert af["cosmo"].meta == cosmo.meta
+        assert_cosmo_equal(af["cosmo"], cosmo)

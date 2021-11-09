@@ -1,8 +1,8 @@
 %YAML 1.1
 ---
 $schema: "http://stsci.edu/schemas/yaml-schema/draft-01"
-id: "http://astropy.org/schemas/astropy/cosmology/flrw-1.0.0"
-tag: "tag:astropy.org:astropy/cosmology/flrw-1.0.0"
+id: "http://astropy.org/schemas/astropy/cosmology/baseflrw-1.0.0"
+tag: "tag:astropy.org:astropy/cosmology/baseflrw-1.0.0"
 
 title: |
   Represents a FLRW cosmology object from astropy
