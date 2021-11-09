@@ -1,0 +1,32 @@
+%YAML 1.1
+---
+$schema: "http://stsci.edu/schemas/yaml-schema/draft-01"
+id: "http://astropy.org/schemas/astropy/cosmology/flatwcdm-1.0.0"
+tag: "tag:astropy.org:astropy/cosmology/flatwcdm-1.0.0"
+
+title: |
+  Represents a wCDM cosmology object from astropy.
+
+allOf:
+  - $ref: baseflrw-1.0.0
+  - properties:
+        parameters:
+          type: object
+          properties:
+            H0:
+              $ref: "http://stsci.edu/schemas/asdf/unit/quantity-1.1.0"
+            Om0:
+              type: float
+            Tcmb0:
+              $ref: "http://stsci.edu/schemas/asdf/unit/quantity-1.1.0"
+            Neff:
+              type: float
+            m_nu:
+              $ref: "http://stsci.edu/schemas/asdf/unit/quantity-1.1.0"
+            Ob0:
+              $ref: "http://stsci.edu/schemas/asdf/unit/quantity-1.1.0"
+            w0:
+              type: float
+  
+          required: [H0, Om0, Tcmb0, Neff, m_nu, Ob0, w0]
+...
