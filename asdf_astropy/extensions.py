@@ -392,6 +392,10 @@ ASTROPY_CONVERTERS = [
     LongitudeConverter(),
     EarthLocationConverter(),
     FrameConverter(
+        "tag:astropy.org:astropy/coordinates/frames/baseframe-*",
+        "astropy.coordinates.baseframe.BaseCoordinateFrame",
+    ),
+    FrameConverter(
         "tag:astropy.org:astropy/coordinates/frames/cirs-*",
         "astropy.coordinates.builtin_frames.cirs.CIRS",
     ),
