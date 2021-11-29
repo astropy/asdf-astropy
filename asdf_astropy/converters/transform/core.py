@@ -31,6 +31,9 @@ def parameter_to_value(param):
 # One converter, UnitsMappingConverter, does not inherit
 # this class.  When adding features here consider also
 # updating UnitsMappingConverter.
+# This class is used by other packages, e.g., gwcs, to implement
+# converters for custom models.  Keep that in mind when modifying
+# this code.
 class TransformConverterBase(Converter):
     """
     ABC for transform/model converters.  Handles common
