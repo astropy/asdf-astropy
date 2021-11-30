@@ -402,6 +402,7 @@ def test_all_models_supported():
         assert len(missing) == 0, message
 
 
+@pytest.mark.xfail(reason="Older tag versions are difficult to test until asdf implements new config features")
 def test_legacy_const(tmpdir):
     model = astropy_models.Const1D(amplitude=5.)
     assert_model_roundtrip(model, tmpdir, version="1.3.0")
