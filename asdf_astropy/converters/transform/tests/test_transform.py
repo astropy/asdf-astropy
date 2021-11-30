@@ -402,6 +402,16 @@ def test_all_models_supported():
         assert len(missing) == 0, message
 
 
+@pytest.mark.xfail(reason="Older tag versions are difficult to test until asdf implements new config features")
+def test_legacy_const(tmpdir):
+    model = astropy_models.Const1D(amplitude=5.)
+    assert_model_roundtrip(model, tmpdir, version="1.3.0")
+
+    model = astropy_models.Const2D(amplitude=5.)
+    with pytest.raises(TypeError, match="does not support models with > 1 dimension"):
+        assert_model_roundtrip(model, tmpdir, version="1.3.0")
+
+
 COMPOUND_LEFT_MODEL = astropy_models.Shift(5)
 COMPOUND_RIGHT_MODEL = astropy_models.Shift(-1)
 COMPOUND_MODELS = [
