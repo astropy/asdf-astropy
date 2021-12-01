@@ -8,31 +8,34 @@ from astropy.cosmology import Planck15
 from packaging.version import Version
 
 
-TEST_EQUIVALENCIES = [
-    eq.plate_scale(.3 * u.deg/u.mm), eq.pixel_scale(.5 * u.deg/u.pix),
-    eq.spectral_density(350 * u.nm, factor=2),
-    eq.spectral_density(350 * u.nm), eq.spectral(),
-    eq.brightness_temperature(500 * u.GHz),
-    eq.brightness_temperature(500 * u.GHz, beam_area=23 * u.sr),
-    eq.with_H0(), eq.temperature_energy(), eq.temperature(),
-    eq.thermodynamic_temperature(300 * u.Hz),
-    eq.thermodynamic_temperature(140 * u.GHz, Planck15.Tcmb0),
-    eq.beam_angular_area(3 * u.sr), eq.mass_energy(),
-    eq.molar_mass_amu(), eq.doppler_relativistic(2 * u.m),
-    eq.doppler_optical(2 * u.nm), eq.doppler_radio(2 * u.Hz),
-    eq.parallax(), eq.logarithmic(), eq.dimensionless_angles(),
-    eq.spectral() + eq.temperature(),
-    (eq.spectral_density(35 * u.nm) +
-        eq.brightness_temperature(5 * u.Hz, beam_area=2 * u.sr)),
-    (eq.spectral() + eq.spectral_density(35 * u.nm) +
-        eq.brightness_temperature(5 * u.Hz, beam_area=2 * u.sr)),
-]
+def create_equivalencies():
+    result = [
+        eq.plate_scale(.3 * u.deg/u.mm), eq.pixel_scale(.5 * u.deg/u.pix),
+        eq.spectral_density(350 * u.nm, factor=2),
+        eq.spectral_density(350 * u.nm), eq.spectral(),
+        eq.brightness_temperature(500 * u.GHz),
+        eq.brightness_temperature(500 * u.GHz, beam_area=23 * u.sr),
+        eq.with_H0(), eq.temperature_energy(), eq.temperature(),
+        eq.thermodynamic_temperature(300 * u.Hz),
+        eq.thermodynamic_temperature(140 * u.GHz, Planck15.Tcmb0),
+        eq.beam_angular_area(3 * u.sr), eq.mass_energy(),
+        eq.molar_mass_amu(), eq.doppler_relativistic(2 * u.m),
+        eq.doppler_optical(2 * u.nm), eq.doppler_radio(2 * u.Hz),
+        eq.parallax(), eq.logarithmic(), eq.dimensionless_angles(),
+        eq.spectral() + eq.temperature(),
+        (eq.spectral_density(35 * u.nm) +
+            eq.brightness_temperature(5 * u.Hz, beam_area=2 * u.sr)),
+        (eq.spectral() + eq.spectral_density(35 * u.nm) +
+            eq.brightness_temperature(5 * u.Hz, beam_area=2 * u.sr)),
+    ]
 
-if Version(astropy.__version__) >= Version("4.1"):
-    TEST_EQUIVALENCIES.append(eq.pixel_scale(100. * u.pix/u.cm))
+    if Version(astropy.__version__) >= Version("4.1"):
+        result.append(eq.pixel_scale(100. * u.pix/u.cm))
+
+    return result
 
 
-@pytest.mark.parametrize("equivalency", TEST_EQUIVALENCIES)
+@pytest.mark.parametrize("equivalency", create_equivalencies())
 def test_serialization(equivalency, tmp_path):
     file_path = tmp_path / "test.asdf"
     with asdf.AsdfFile() as af:

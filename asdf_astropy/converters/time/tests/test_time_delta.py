@@ -9,18 +9,21 @@ from astropy import units as u
 from astropy.time import Time, TimeDelta
 
 
-TEST_TIME_DELTAS = [
-    TimeDelta([1, 2] * u.day),
-]
+def create_time_deltas():
+    result = [
+        TimeDelta([1, 2] * u.day),
+    ]
 
-for format in TimeDelta.FORMATS.keys():
-    TEST_TIME_DELTAS.append(TimeDelta(Time.now() - Time.now(), format=format))
+    for format in TimeDelta.FORMATS.keys():
+        result.append(TimeDelta(Time.now() - Time.now(), format=format))
 
-for scale in list(TimeDelta.SCALES) + [None]:
-    TEST_TIME_DELTAS.append(TimeDelta(0.125, scale=scale))
+    for scale in list(TimeDelta.SCALES) + [None]:
+        result.append(TimeDelta(0.125, scale=scale))
+
+    return result
 
 
-@pytest.mark.parametrize("time_delta", TEST_TIME_DELTAS)
+@pytest.mark.parametrize("time_delta", create_time_deltas())
 def test_serialization(time_delta, tmp_path):
     file_path = tmp_path / "test.asdf"
     with asdf.AsdfFile() as af:

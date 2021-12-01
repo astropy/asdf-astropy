@@ -8,19 +8,20 @@ import numpy as np
 from numpy.testing import assert_array_equal
 
 
-TEST_QUANTITIES = [
-    # Scalar:
-    Quantity(2.71828, units.kpc),
-    # Single element array:
-    Quantity([3.14159], units.kg),
-    # Multiple element array:
-    Quantity([x * 2.3081 for x in range(10)], units.ampere),
-    # Multiple dimension array:
-    Quantity(np.arange(100, dtype=np.float64).reshape(5, 20), units.km),
-]
+def create_quantities():
+    return [
+        # Scalar:
+        Quantity(2.71828, units.kpc),
+        # Single element array:
+        Quantity([3.14159], units.kg),
+        # Multiple element array:
+        Quantity([x * 2.3081 for x in range(10)], units.ampere),
+        # Multiple dimension array:
+        Quantity(np.arange(100, dtype=np.float64).reshape(5, 20), units.km),
+    ]
 
 
-@pytest.mark.parametrize("quantity", TEST_QUANTITIES)
+@pytest.mark.parametrize("quantity", create_quantities())
 def test_serialization(quantity, tmp_path):
     file_path = tmp_path / "test.asdf"
     with asdf.AsdfFile() as af:

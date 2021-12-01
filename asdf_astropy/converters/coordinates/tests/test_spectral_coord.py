@@ -14,27 +14,30 @@ from astropy.tests.helper import assert_quantity_allclose
 from asdf_astropy.testing.helpers import assert_frame_equal
 
 
-TEST_COORDS = [
-    # Scalar
-    SpectralCoord(565 * u.nm),
-    # Vector
-    SpectralCoord([100, 200, 300] * u.GHz),
-]
+def create_spectral_coords():
+    result = [
+        # Scalar
+        SpectralCoord(565 * u.nm),
+        # Vector
+        SpectralCoord([100, 200, 300] * u.GHz),
+    ]
 
-with warnings.catch_warnings():
-    warnings.simplefilter("ignore", NoVelocityWarning)
-    TEST_COORDS.append(
-        # With observer and target
-        SpectralCoord(
-            10 * u.GHz,
-            observer=ICRS(1 * u.km, 2 * u.km, 3 * u.km, representation_type="cartesian"),
-            target=Galactic(10 * u.deg, 20 * u.deg, distance=30 * u.pc)
+    with warnings.catch_warnings():
+        warnings.simplefilter("ignore", NoVelocityWarning)
+        result.append(
+            # With observer and target
+            SpectralCoord(
+                10 * u.GHz,
+                observer=ICRS(1 * u.km, 2 * u.km, 3 * u.km, representation_type="cartesian"),
+                target=Galactic(10 * u.deg, 20 * u.deg, distance=30 * u.pc)
+            )
         )
-    )
+
+    return result
 
 
 @pytest.mark.filterwarnings("ignore::astropy.coordinates.spectral_coordinate.NoVelocityWarning")
-@pytest.mark.parametrize("coord", TEST_COORDS)
+@pytest.mark.parametrize("coord", create_spectral_coords())
 def test_serialization(coord, tmp_path):
     file_path = tmp_path / "test.asdf"
 

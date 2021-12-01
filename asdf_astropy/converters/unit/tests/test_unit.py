@@ -17,10 +17,14 @@ def vounit_compatible(unit):
             return False
 
 
-TEST_UNITS = [u for u in list(units.__dict__.values()) if isinstance(u, units.UnitBase) and vounit_compatible(u)]
+def create_units():
+    return [
+        u for u in list(units.__dict__.values())
+        if isinstance(u, units.UnitBase) and vounit_compatible(u)
+    ]
 
 
-@pytest.mark.parametrize("unit", TEST_UNITS)
+@pytest.mark.parametrize("unit", create_units())
 # Ignore warnings due to VOUnit deprecations
 @pytest.mark.filterwarnings("ignore::astropy.units.core.UnitsWarning")
 def test_serialization(unit, tmp_path):
