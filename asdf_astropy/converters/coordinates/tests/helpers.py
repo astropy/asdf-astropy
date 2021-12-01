@@ -1,6 +1,4 @@
 from astropy.tests.helper import assert_quantity_allclose
-import astropy.units as u
-import numpy as np
 
 
 def assert_representation_equal(a, b):

@@ -8,29 +8,27 @@ import pytest
 from asdf_astropy.testing.helpers import assert_hdu_list_equal
 
 
-HDUL = fits.HDUList()
-HEADER = fits.Header([
-    ("FOO", "BAR", "BAZ"),
-    ("SOMENUM", "11.0"),
-    ("EMPTY",)
-])
-HDUL.append(fits.PrimaryHDU(header=HEADER))
-HDUL.append(fits.ImageHDU(data=np.arange(100)))
+def create_hduls():
+    hdul = fits.HDUList()
+    header = fits.Header([
+        ("FOO", "BAR", "BAZ"),
+        ("SOMENUM", "11.0"),
+        ("EMPTY",)
+    ])
+    hdul.append(fits.PrimaryHDU(header=header))
+    hdul.append(fits.ImageHDU(data=np.arange(100)))
 
-HDUL_WITH_TABLE = fits.HDUList()
-HDUL_WITH_TABLE.append(
-    fits.BinTableHDU.from_columns(
-        np.array([(0, 1), (2, 3)], dtype=[("A", int), ("B", int)])
+    hdul_with_table = fits.HDUList()
+    hdul_with_table.append(
+        fits.BinTableHDU.from_columns(
+            np.array([(0, 1), (2, 3)], dtype=[("A", int), ("B", int)])
+        )
     )
-)
 
-TEST_HDULS = [
-    HDUL,
-    HDUL_WITH_TABLE,
-]
+    return [hdul, hdul_with_table]
 
 
-@pytest.mark.parametrize("hdul", TEST_HDULS)
+@pytest.mark.parametrize("hdul", create_hduls())
 def test_serialization(hdul, tmp_path):
     file_path = tmp_path / "test.asdf"
     with asdf.AsdfFile() as af:

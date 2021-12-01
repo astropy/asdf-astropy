@@ -88,234 +88,236 @@ def assert_models_equal(a, b):
     assert_models_equal(a._user_inverse, b._user_inverse)
 
 
-MODEL_WITH_BOUNDING_BOX = astropy_models.Shift(10)
-MODEL_WITH_BOUNDING_BOX.bounding_box = ((1, 7),)
+def create_single_models():
+    model_with_bounding_box = astropy_models.Shift(10)
+    model_with_bounding_box.bounding_box = ((1, 7),)
 
-MODEL_WITH_USER_INVERSE = astropy_models.Shift(10)
-MODEL_WITH_USER_INVERSE.inverse = astropy_models.Shift(-7)
+    model_with_user_inverse = astropy_models.Shift(10)
+    model_with_user_inverse.inverse = astropy_models.Shift(-7)
 
-MODEL_WITH_CONSTRAINTS = astropy_models.Legendre2D(
-    x_degree=1, y_degree=1,
-    c0_0=1, c0_1=2, c1_0=3,
-    fixed={"c1_0": True, "c0_1": True},
-    bounds={"c0_0": (-10, 10)}
-)
+    model_with_constraints = astropy_models.Legendre2D(
+        x_degree=1, y_degree=1,
+        c0_0=1, c0_1=2, c1_0=3,
+        fixed={"c1_0": True, "c0_1": True},
+        bounds={"c0_0": (-10, 10)}
+    )
 
-MODEL_WITH_CUSTOM_INPUTS_OUTPUTS = astropy_models.Gaussian2D()
-MODEL_WITH_CUSTOM_INPUTS_OUTPUTS.inputs = ("a", "b")
-MODEL_WITH_CUSTOM_INPUTS_OUTPUTS.outputs = ("c",)
+    model_with_custom_inputs_outputs = astropy_models.Gaussian2D()
+    model_with_custom_inputs_outputs.inputs = ("a", "b")
+    model_with_custom_inputs_outputs.outputs = ("c",)
 
-SINGLE_MODELS = [
-    # Generic model features
-    astropy_models.Shift(10, name="some model name"),
-    MODEL_WITH_BOUNDING_BOX,
-    MODEL_WITH_USER_INVERSE,
-    MODEL_WITH_CONSTRAINTS,
-    MODEL_WITH_CUSTOM_INPUTS_OUTPUTS,
+    result = [
+        # Generic model features
+        astropy_models.Shift(10, name="some model name"),
+        model_with_bounding_box,
+        model_with_user_inverse,
+        model_with_constraints,
+        model_with_custom_inputs_outputs,
 
-    # astropy.modeling.functional_models
-    astropy_models.AiryDisk2D(amplitude=10., x_0=0.5, y_0=1.5),
-    astropy_models.Box1D(amplitude=10., x_0=0.5, width=5.),
-    astropy_models.Box2D(amplitude=10., x_0=0.5, x_width=5., y_0=1.5, y_width=7.),
-    astropy_models.Const1D(amplitude=5.),
-    astropy_models.Const2D(amplitude=5.),
-    astropy_models.Disk2D(amplitude=10., x_0=0.5, y_0=1.5, R_0=5.),
-    astropy_models.Ellipse2D(amplitude=10., x_0=0.5, y_0=1.5, a=2., b=4., theta=0.1),
-    astropy_models.Exponential1D(amplitude=10., tau=3.5),
-    astropy_models.Gaussian1D(amplitude=10., mean=5., stddev=3.),
-    astropy_models.Gaussian2D(amplitude=10., x_mean=5., y_mean=5., x_stddev=3., y_stddev=3.),
-    astropy_models.KingProjectedAnalytic1D(amplitude=10., r_core=5., r_tide=2.),
-    astropy_models.Linear1D(slope=2.0, intercept=1.5),
-    astropy_models.Logarithmic1D(amplitude=10., tau=3.5),
-    astropy_models.Lorentz1D(amplitude=10., x_0=0.5, fwhm=2.5),
-    astropy_models.Moffat1D(amplitude=10., x_0=0.5, gamma=1.2, alpha=2.5),
-    astropy_models.Moffat2D(amplitude=10., x_0=0.5, y_0=1.5, gamma=1.2, alpha=2.5),
-    astropy_models.Multiply(3),
-    astropy_models.Multiply(10 * u.m),
-    astropy_models.Planar2D(slope_x=0.5, slope_y=1.2, intercept=2.5),
-    astropy_models.RedshiftScaleFactor(z=2.5),
-    astropy_models.RickerWavelet1D(amplitude=10., x_0=0.5, sigma=1.2),
-    astropy_models.RickerWavelet2D(amplitude=10., x_0=0.5, y_0=1.5, sigma=1.2),
-    astropy_models.Ring2D(amplitude=10., x_0=0.5, y_0=1.5, r_in=5., width=10.),
-    astropy_models.Scale(3.4),
-    astropy_models.Sersic1D(amplitude=10., r_eff=1., n=4.),
-    astropy_models.Sersic2D(amplitude=10., r_eff=1., n=4., x_0=0.5, y_0=1.5, ellip=0.0, theta=0.0),
-    astropy_models.Shift(2.),
-    astropy_models.Shift(2. * u.deg),
-    astropy_models.Scale(3.4 * u.deg),
-    astropy_models.Sine1D(amplitude=10., frequency=0.5, phase=1.),
-    astropy_models.Trapezoid1D(amplitude=10., x_0=0.5, width=5., slope=1.),
-    astropy_models.TrapezoidDisk2D(amplitude=10., x_0=0.5, y_0=1.5, R_0=5., slope=1.),
-    astropy_models.Voigt1D(x_0=0.55, amplitude_L=10., fwhm_L=0.5, fwhm_G=0.9),
+        # astropy.modeling.functional_models
+        astropy_models.AiryDisk2D(amplitude=10., x_0=0.5, y_0=1.5),
+        astropy_models.Box1D(amplitude=10., x_0=0.5, width=5.),
+        astropy_models.Box2D(amplitude=10., x_0=0.5, x_width=5., y_0=1.5, y_width=7.),
+        astropy_models.Const1D(amplitude=5.),
+        astropy_models.Const2D(amplitude=5.),
+        astropy_models.Disk2D(amplitude=10., x_0=0.5, y_0=1.5, R_0=5.),
+        astropy_models.Ellipse2D(amplitude=10., x_0=0.5, y_0=1.5, a=2., b=4., theta=0.1),
+        astropy_models.Exponential1D(amplitude=10., tau=3.5),
+        astropy_models.Gaussian1D(amplitude=10., mean=5., stddev=3.),
+        astropy_models.Gaussian2D(amplitude=10., x_mean=5., y_mean=5., x_stddev=3., y_stddev=3.),
+        astropy_models.KingProjectedAnalytic1D(amplitude=10., r_core=5., r_tide=2.),
+        astropy_models.Linear1D(slope=2.0, intercept=1.5),
+        astropy_models.Logarithmic1D(amplitude=10., tau=3.5),
+        astropy_models.Lorentz1D(amplitude=10., x_0=0.5, fwhm=2.5),
+        astropy_models.Moffat1D(amplitude=10., x_0=0.5, gamma=1.2, alpha=2.5),
+        astropy_models.Moffat2D(amplitude=10., x_0=0.5, y_0=1.5, gamma=1.2, alpha=2.5),
+        astropy_models.Multiply(3),
+        astropy_models.Multiply(10 * u.m),
+        astropy_models.Planar2D(slope_x=0.5, slope_y=1.2, intercept=2.5),
+        astropy_models.RedshiftScaleFactor(z=2.5),
+        astropy_models.RickerWavelet1D(amplitude=10., x_0=0.5, sigma=1.2),
+        astropy_models.RickerWavelet2D(amplitude=10., x_0=0.5, y_0=1.5, sigma=1.2),
+        astropy_models.Ring2D(amplitude=10., x_0=0.5, y_0=1.5, r_in=5., width=10.),
+        astropy_models.Scale(3.4),
+        astropy_models.Sersic1D(amplitude=10., r_eff=1., n=4.),
+        astropy_models.Sersic2D(amplitude=10., r_eff=1., n=4., x_0=0.5, y_0=1.5, ellip=0.0, theta=0.0),
+        astropy_models.Shift(2.),
+        astropy_models.Shift(2. * u.deg),
+        astropy_models.Scale(3.4 * u.deg),
+        astropy_models.Sine1D(amplitude=10., frequency=0.5, phase=1.),
+        astropy_models.Trapezoid1D(amplitude=10., x_0=0.5, width=5., slope=1.),
+        astropy_models.TrapezoidDisk2D(amplitude=10., x_0=0.5, y_0=1.5, R_0=5., slope=1.),
+        astropy_models.Voigt1D(x_0=0.55, amplitude_L=10., fwhm_L=0.5, fwhm_G=0.9),
 
-    # astropy.modeling.mappings
-    astropy_models.Identity(2),
-    astropy_models.Mapping((0, 1), n_inputs=3),
+        # astropy.modeling.mappings
+        astropy_models.Identity(2),
+        astropy_models.Mapping((0, 1), n_inputs=3),
 
-    # astropy.modeling.math_functions
-    astropy.modeling.math_functions.AbsoluteUfunc(),
-    astropy.modeling.math_functions.AddUfunc(),
-    astropy.modeling.math_functions.ArccosUfunc(),
-    astropy.modeling.math_functions.ArccoshUfunc(),
-    astropy.modeling.math_functions.ArcsinUfunc(),
-    astropy.modeling.math_functions.ArcsinhUfunc(),
-    astropy.modeling.math_functions.Arctan2Ufunc(),
-    astropy.modeling.math_functions.ArctanUfunc(),
-    astropy.modeling.math_functions.ArctanhUfunc(),
-    astropy.modeling.math_functions.CbrtUfunc(),
-    astropy.modeling.math_functions.CosUfunc(),
-    astropy.modeling.math_functions.CoshUfunc(),
-    astropy.modeling.math_functions.Deg2radUfunc(),
-    astropy.modeling.math_functions.DivideUfunc(),
-    astropy.modeling.math_functions.DivmodUfunc(),
-    astropy.modeling.math_functions.Exp2Ufunc(),
-    astropy.modeling.math_functions.ExpUfunc(),
-    astropy.modeling.math_functions.Expm1Ufunc(),
-    astropy.modeling.math_functions.FabsUfunc(),
-    astropy.modeling.math_functions.Floor_divideUfunc(),
-    astropy.modeling.math_functions.FmodUfunc(),
-    astropy.modeling.math_functions.HypotUfunc(),
-    astropy.modeling.math_functions.Log10Ufunc(),
-    astropy.modeling.math_functions.Log1pUfunc(),
-    astropy.modeling.math_functions.Log2Ufunc(),
-    astropy.modeling.math_functions.LogUfunc(),
-    astropy.modeling.math_functions.Logaddexp2Ufunc(),
-    astropy.modeling.math_functions.LogaddexpUfunc(),
-    astropy.modeling.math_functions.ModUfunc(),
-    astropy.modeling.math_functions.MultiplyUfunc(),
-    astropy.modeling.math_functions.NegativeUfunc(),
-    astropy.modeling.math_functions.PositiveUfunc(),
-    astropy.modeling.math_functions.PowerUfunc(),
-    astropy.modeling.math_functions.Rad2degUfunc(),
-    astropy.modeling.math_functions.ReciprocalUfunc(),
-    astropy.modeling.math_functions.RemainderUfunc(),
-    astropy.modeling.math_functions.RintUfunc(),
-    astropy.modeling.math_functions.SinUfunc(),
-    astropy.modeling.math_functions.SinhUfunc(),
-    astropy.modeling.math_functions.SqrtUfunc(),
-    astropy.modeling.math_functions.SquareUfunc(),
-    astropy.modeling.math_functions.SubtractUfunc(),
-    astropy.modeling.math_functions.TanUfunc(),
-    astropy.modeling.math_functions.TanhUfunc(),
-    astropy.modeling.math_functions.True_divideUfunc(),
+        # astropy.modeling.math_functions
+        astropy.modeling.math_functions.AbsoluteUfunc(),
+        astropy.modeling.math_functions.AddUfunc(),
+        astropy.modeling.math_functions.ArccosUfunc(),
+        astropy.modeling.math_functions.ArccoshUfunc(),
+        astropy.modeling.math_functions.ArcsinUfunc(),
+        astropy.modeling.math_functions.ArcsinhUfunc(),
+        astropy.modeling.math_functions.Arctan2Ufunc(),
+        astropy.modeling.math_functions.ArctanUfunc(),
+        astropy.modeling.math_functions.ArctanhUfunc(),
+        astropy.modeling.math_functions.CbrtUfunc(),
+        astropy.modeling.math_functions.CosUfunc(),
+        astropy.modeling.math_functions.CoshUfunc(),
+        astropy.modeling.math_functions.Deg2radUfunc(),
+        astropy.modeling.math_functions.DivideUfunc(),
+        astropy.modeling.math_functions.DivmodUfunc(),
+        astropy.modeling.math_functions.Exp2Ufunc(),
+        astropy.modeling.math_functions.ExpUfunc(),
+        astropy.modeling.math_functions.Expm1Ufunc(),
+        astropy.modeling.math_functions.FabsUfunc(),
+        astropy.modeling.math_functions.Floor_divideUfunc(),
+        astropy.modeling.math_functions.FmodUfunc(),
+        astropy.modeling.math_functions.HypotUfunc(),
+        astropy.modeling.math_functions.Log10Ufunc(),
+        astropy.modeling.math_functions.Log1pUfunc(),
+        astropy.modeling.math_functions.Log2Ufunc(),
+        astropy.modeling.math_functions.LogUfunc(),
+        astropy.modeling.math_functions.Logaddexp2Ufunc(),
+        astropy.modeling.math_functions.LogaddexpUfunc(),
+        astropy.modeling.math_functions.ModUfunc(),
+        astropy.modeling.math_functions.MultiplyUfunc(),
+        astropy.modeling.math_functions.NegativeUfunc(),
+        astropy.modeling.math_functions.PositiveUfunc(),
+        astropy.modeling.math_functions.PowerUfunc(),
+        astropy.modeling.math_functions.Rad2degUfunc(),
+        astropy.modeling.math_functions.ReciprocalUfunc(),
+        astropy.modeling.math_functions.RemainderUfunc(),
+        astropy.modeling.math_functions.RintUfunc(),
+        astropy.modeling.math_functions.SinUfunc(),
+        astropy.modeling.math_functions.SinhUfunc(),
+        astropy.modeling.math_functions.SqrtUfunc(),
+        astropy.modeling.math_functions.SquareUfunc(),
+        astropy.modeling.math_functions.SubtractUfunc(),
+        astropy.modeling.math_functions.TanUfunc(),
+        astropy.modeling.math_functions.TanhUfunc(),
+        astropy.modeling.math_functions.True_divideUfunc(),
 
-    # astropy.modeling.physical_models
-    astropy_models.BlackBody(scale=10.0, temperature=6000. * u.K),
-    astropy_models.Drude1D(amplitude=10.0, x_0=0.5, fwhm=2.5),
-    # TODO: NFW
+        # astropy.modeling.physical_models
+        astropy_models.BlackBody(scale=10.0, temperature=6000. * u.K),
+        astropy_models.Drude1D(amplitude=10.0, x_0=0.5, fwhm=2.5),
+        # TODO: NFW
 
-    # astropy.modeling.polynomial
-    astropy_models.Chebyshev1D(2, c0=2, c1=3, c2=0.5),
-    astropy_models.Chebyshev1D(2, c0=2, c1=3, c2=0.5, domain=(0.0, 1.0), window=(1.5, 2.5)),
-    astropy_models.Chebyshev2D(1, 1, c0_0=1, c0_1=2, c1_0=3),
-    astropy_models.Chebyshev2D(1, 1, c0_0=1, c0_1=2, c1_0=3,
-                               x_domain=(1.0, 2.0),
-                               y_domain=(3.0, 4.0),
-                               x_window=(5.0, 6.0),
-                               y_window=(7.0, 8.0)),
-    astropy_models.Hermite1D(2, c0=2, c1=3, c2=0.5),
-    astropy_models.Hermite2D(1, 1, c0_0=1, c0_1=2, c1_0=3),
-    astropy_models.Legendre1D(2, c0=2, c1=3, c2=0.5),
-    astropy_models.Legendre2D(1, 1, c0_0=1, c0_1=2, c1_0=3),
-    astropy_models.Polynomial1D(2, c0=1, c1=2, c2=3),
-    astropy_models.Polynomial2D(1, c0_0=1, c0_1=2, c1_0=3),
+        # astropy.modeling.polynomial
+        astropy_models.Chebyshev1D(2, c0=2, c1=3, c2=0.5),
+        astropy_models.Chebyshev1D(2, c0=2, c1=3, c2=0.5, domain=(0.0, 1.0), window=(1.5, 2.5)),
+        astropy_models.Chebyshev2D(1, 1, c0_0=1, c0_1=2, c1_0=3),
+        astropy_models.Chebyshev2D(1, 1, c0_0=1, c0_1=2, c1_0=3,
+                                x_domain=(1.0, 2.0),
+                                y_domain=(3.0, 4.0),
+                                x_window=(5.0, 6.0),
+                                y_window=(7.0, 8.0)),
+        astropy_models.Hermite1D(2, c0=2, c1=3, c2=0.5),
+        astropy_models.Hermite2D(1, 1, c0_0=1, c0_1=2, c1_0=3),
+        astropy_models.Legendre1D(2, c0=2, c1=3, c2=0.5),
+        astropy_models.Legendre2D(1, 1, c0_0=1, c0_1=2, c1_0=3),
+        astropy_models.Polynomial1D(2, c0=1, c1=2, c2=3),
+        astropy_models.Polynomial2D(1, c0_0=1, c0_1=2, c1_0=3),
 
-    # astropy.modeling.powerlaws
-    astropy_models.BrokenPowerLaw1D(amplitude=10, x_break=0.5, alpha_1=2.0, alpha_2=3.5),
-    astropy_models.ExponentialCutoffPowerLaw1D(10, 0.5, 2.0, 7.),
-    astropy_models.LogParabola1D(amplitude=10, x_0=0.5, alpha=2., beta=3.,),
-    astropy_models.PowerLaw1D(amplitude=10., x_0=0.5, alpha=2.0),
-    astropy_models.SmoothlyBrokenPowerLaw1D(amplitude=10., x_break=5.0, alpha_1=2.0, alpha_2=3.0, delta=0.5),
+        # astropy.modeling.powerlaws
+        astropy_models.BrokenPowerLaw1D(amplitude=10, x_break=0.5, alpha_1=2.0, alpha_2=3.5),
+        astropy_models.ExponentialCutoffPowerLaw1D(10, 0.5, 2.0, 7.),
+        astropy_models.LogParabola1D(amplitude=10, x_0=0.5, alpha=2., beta=3.,),
+        astropy_models.PowerLaw1D(amplitude=10., x_0=0.5, alpha=2.0),
+        astropy_models.SmoothlyBrokenPowerLaw1D(amplitude=10., x_break=5.0, alpha_1=2.0, alpha_2=3.0, delta=0.5),
 
-    # astropy.modeling.projections
-    astropy_models.AffineTransformation2D(matrix=np.array([[1.0, 2.0], [3.0, 4.0]]), translation=np.array([5.0, 6.0])),
-    astropy_models.Pix2Sky_Airy(theta_b=75.8),
-    astropy_models.Sky2Pix_Airy(theta_b=75.8),
-    astropy_models.Pix2Sky_BonneEqualArea(theta1=44.3),
-    astropy_models.Sky2Pix_BonneEqualArea(theta1=44.3),
-    astropy_models.Pix2Sky_COBEQuadSphericalCube(),
-    astropy_models.Sky2Pix_COBEQuadSphericalCube(),
-    astropy_models.Pix2Sky_ConicEqualArea(sigma=89.5, delta=0.5),
-    astropy_models.Sky2Pix_ConicEqualArea(sigma=89.5, delta=0.5),
-    astropy_models.Pix2Sky_ConicEquidistant(sigma=89.5, delta=0.5),
-    astropy_models.Sky2Pix_ConicEquidistant(sigma=89.5, delta=0.5),
-    astropy_models.Pix2Sky_ConicOrthomorphic(sigma=89.5, delta=0.5),
-    astropy_models.Sky2Pix_ConicOrthomorphic(sigma=89.5, delta=0.5),
-    astropy_models.Pix2Sky_ConicPerspective(sigma=89.5, delta=0.5),
-    astropy_models.Sky2Pix_ConicPerspective(sigma=89.5, delta=0.5),
-    astropy_models.Pix2Sky_CylindricalEqualArea(lam=0.5),
-    astropy_models.Sky2Pix_CylindricalEqualArea(lam=0.5),
-    astropy_models.Pix2Sky_CylindricalPerspective(mu=1.5, lam=2.4),
-    astropy_models.Sky2Pix_CylindricalPerspective(mu=1.5, lam=2.4),
-    astropy_models.Pix2Sky_Gnomonic(),
-    astropy_models.Sky2Pix_Gnomonic(),
-    astropy_models.Pix2Sky_HEALPixPolar(),
-    astropy_models.Sky2Pix_HEALPixPolar(),
-    astropy_models.Pix2Sky_HEALPix(H=12.0, X=17.0),
-    astropy_models.Sky2Pix_HEALPix(H=12.0, X=17.0),
-    astropy_models.Pix2Sky_HammerAitoff(),
-    astropy_models.Sky2Pix_HammerAitoff(),
-    astropy_models.Pix2Sky_Mercator(),
-    astropy_models.Sky2Pix_Mercator(),
-    astropy_models.Pix2Sky_Molleweide(),
-    astropy_models.Sky2Pix_Molleweide(),
-    astropy_models.Pix2Sky_Parabolic(),
-    astropy_models.Sky2Pix_Parabolic(),
-    astropy_models.Pix2Sky_PlateCarree(),
-    astropy_models.Sky2Pix_PlateCarree(),
-    astropy_models.Pix2Sky_Polyconic(),
-    astropy_models.Sky2Pix_Polyconic(),
-    astropy_models.Pix2Sky_QuadSphericalCube(),
-    astropy_models.Sky2Pix_QuadSphericalCube(),
-    astropy_models.Pix2Sky_SansonFlamsteed(),
-    astropy_models.Sky2Pix_SansonFlamsteed(),
-    astropy_models.Pix2Sky_SlantOrthographic(xi=0.1, eta=0.2),
-    astropy_models.Sky2Pix_SlantOrthographic(xi=0.1, eta=0.2),
-    astropy_models.Pix2Sky_SlantZenithalPerspective(mu=1.5, phi0=15.0, theta0=80.0),
-    astropy_models.Sky2Pix_SlantZenithalPerspective(mu=1.5, phi0=15.0, theta0=80.0),
-    astropy_models.Pix2Sky_Stereographic(),
-    astropy_models.Sky2Pix_Stereographic(),
-    astropy_models.Pix2Sky_TangentialSphericalCube(),
-    astropy_models.Sky2Pix_TangentialSphericalCube(),
-    astropy_models.Pix2Sky_ZenithalEqualArea(),
-    astropy_models.Sky2Pix_ZenithalEqualArea(),
-    astropy_models.Pix2Sky_ZenithalEquidistant(),
-    astropy_models.Sky2Pix_ZenithalEquidistant(),
-    astropy_models.Pix2Sky_ZenithalPerspective(mu=1.5, gamma=15.0),
-    astropy_models.Sky2Pix_ZenithalPerspective(mu=1.5, gamma=15.0),
+        # astropy.modeling.projections
+        astropy_models.AffineTransformation2D(matrix=np.array([[1.0, 2.0], [3.0, 4.0]]), translation=np.array([5.0, 6.0])),
+        astropy_models.Pix2Sky_Airy(theta_b=75.8),
+        astropy_models.Sky2Pix_Airy(theta_b=75.8),
+        astropy_models.Pix2Sky_BonneEqualArea(theta1=44.3),
+        astropy_models.Sky2Pix_BonneEqualArea(theta1=44.3),
+        astropy_models.Pix2Sky_COBEQuadSphericalCube(),
+        astropy_models.Sky2Pix_COBEQuadSphericalCube(),
+        astropy_models.Pix2Sky_ConicEqualArea(sigma=89.5, delta=0.5),
+        astropy_models.Sky2Pix_ConicEqualArea(sigma=89.5, delta=0.5),
+        astropy_models.Pix2Sky_ConicEquidistant(sigma=89.5, delta=0.5),
+        astropy_models.Sky2Pix_ConicEquidistant(sigma=89.5, delta=0.5),
+        astropy_models.Pix2Sky_ConicOrthomorphic(sigma=89.5, delta=0.5),
+        astropy_models.Sky2Pix_ConicOrthomorphic(sigma=89.5, delta=0.5),
+        astropy_models.Pix2Sky_ConicPerspective(sigma=89.5, delta=0.5),
+        astropy_models.Sky2Pix_ConicPerspective(sigma=89.5, delta=0.5),
+        astropy_models.Pix2Sky_CylindricalEqualArea(lam=0.5),
+        astropy_models.Sky2Pix_CylindricalEqualArea(lam=0.5),
+        astropy_models.Pix2Sky_CylindricalPerspective(mu=1.5, lam=2.4),
+        astropy_models.Sky2Pix_CylindricalPerspective(mu=1.5, lam=2.4),
+        astropy_models.Pix2Sky_Gnomonic(),
+        astropy_models.Sky2Pix_Gnomonic(),
+        astropy_models.Pix2Sky_HEALPixPolar(),
+        astropy_models.Sky2Pix_HEALPixPolar(),
+        astropy_models.Pix2Sky_HEALPix(H=12.0, X=17.0),
+        astropy_models.Sky2Pix_HEALPix(H=12.0, X=17.0),
+        astropy_models.Pix2Sky_HammerAitoff(),
+        astropy_models.Sky2Pix_HammerAitoff(),
+        astropy_models.Pix2Sky_Mercator(),
+        astropy_models.Sky2Pix_Mercator(),
+        astropy_models.Pix2Sky_Molleweide(),
+        astropy_models.Sky2Pix_Molleweide(),
+        astropy_models.Pix2Sky_Parabolic(),
+        astropy_models.Sky2Pix_Parabolic(),
+        astropy_models.Pix2Sky_PlateCarree(),
+        astropy_models.Sky2Pix_PlateCarree(),
+        astropy_models.Pix2Sky_Polyconic(),
+        astropy_models.Sky2Pix_Polyconic(),
+        astropy_models.Pix2Sky_QuadSphericalCube(),
+        astropy_models.Sky2Pix_QuadSphericalCube(),
+        astropy_models.Pix2Sky_SansonFlamsteed(),
+        astropy_models.Sky2Pix_SansonFlamsteed(),
+        astropy_models.Pix2Sky_SlantOrthographic(xi=0.1, eta=0.2),
+        astropy_models.Sky2Pix_SlantOrthographic(xi=0.1, eta=0.2),
+        astropy_models.Pix2Sky_SlantZenithalPerspective(mu=1.5, phi0=15.0, theta0=80.0),
+        astropy_models.Sky2Pix_SlantZenithalPerspective(mu=1.5, phi0=15.0, theta0=80.0),
+        astropy_models.Pix2Sky_Stereographic(),
+        astropy_models.Sky2Pix_Stereographic(),
+        astropy_models.Pix2Sky_TangentialSphericalCube(),
+        astropy_models.Sky2Pix_TangentialSphericalCube(),
+        astropy_models.Pix2Sky_ZenithalEqualArea(),
+        astropy_models.Sky2Pix_ZenithalEqualArea(),
+        astropy_models.Pix2Sky_ZenithalEquidistant(),
+        astropy_models.Sky2Pix_ZenithalEquidistant(),
+        astropy_models.Pix2Sky_ZenithalPerspective(mu=1.5, gamma=15.0),
+        astropy_models.Sky2Pix_ZenithalPerspective(mu=1.5, gamma=15.0),
 
-    # astropy.modeling.rotations
-    astropy_models.EulerAngleRotation(23, 14, 2.3, axes_order="xzx"),
-    astropy_models.RotateCelestial2Native(5.63, -72.5, 180),
-    astropy_models.RotateCelestial2Native(5.63 * u.deg, -72.5 * u.deg, 180 * u.deg),
-    astropy_models.RotateNative2Celestial(5.63, -72.5, 180),
-    astropy_models.RotateNative2Celestial(5.63 * u.deg, -72.5 * u.deg, 180 * u.deg),
-    astropy_models.Rotation2D(angle=1.51),
-    astropy_models.RotationSequence3D([1.2, 2.3, 3.4, .3], "xyzx"),
-    astropy_models.SphericalRotationSequence([1.2, 2.3, 3.4, .3], "xyzy"),
+        # astropy.modeling.rotations
+        astropy_models.EulerAngleRotation(23, 14, 2.3, axes_order="xzx"),
+        astropy_models.RotateCelestial2Native(5.63, -72.5, 180),
+        astropy_models.RotateCelestial2Native(5.63 * u.deg, -72.5 * u.deg, 180 * u.deg),
+        astropy_models.RotateNative2Celestial(5.63, -72.5, 180),
+        astropy_models.RotateNative2Celestial(5.63 * u.deg, -72.5 * u.deg, 180 * u.deg),
+        astropy_models.Rotation2D(angle=1.51),
+        astropy_models.RotationSequence3D([1.2, 2.3, 3.4, .3], "xyzx"),
+        astropy_models.SphericalRotationSequence([1.2, 2.3, 3.4, .3], "xyzy"),
 
-    # astropy.modeling.tabular
-    astropy_models.Tabular1D(points=np.arange(0, 5), lookup_table=[1., 10, 2, 45, -3]),
-    astropy_models.Tabular1D(points=np.arange(0, 5) * u.pix, lookup_table=[1., 10, 2, 45, -3] * u.nm),
-    astropy_models.Tabular2D(
-        points=([1, 2, 3], [1, 2, 3]),
-        lookup_table=np.arange(0, 9).reshape(3, 3),
-        bounds_error=False,
-        fill_value=None,
-        method="nearest",
-    ),
-    astropy_models.Tabular2D(
-        points=([1, 2, 3], [1, 2, 3]) * u.pix,
-        lookup_table=np.arange(0, 9).reshape(3, 3) * u.nm,
-        bounds_error=False,
-        fill_value=None,
-        method="nearest",
-    ),
-]
+        # astropy.modeling.tabular
+        astropy_models.Tabular1D(points=np.arange(0, 5), lookup_table=[1., 10, 2, 45, -3]),
+        astropy_models.Tabular1D(points=np.arange(0, 5) * u.pix, lookup_table=[1., 10, 2, 45, -3] * u.nm),
+        astropy_models.Tabular2D(
+            points=([1, 2, 3], [1, 2, 3]),
+            lookup_table=np.arange(0, 9).reshape(3, 3),
+            bounds_error=False,
+            fill_value=None,
+            method="nearest",
+        ),
+        astropy_models.Tabular2D(
+            points=([1, 2, 3], [1, 2, 3]) * u.pix,
+            lookup_table=np.arange(0, 9).reshape(3, 3) * u.nm,
+            bounds_error=False,
+            fill_value=None,
+            method="nearest",
+        ),
+    ]
 
+    if Version(astropy.__version__) >= Version("4.1"):
+        result.append(astropy_models.Plummer1D(mass=10.0, r_plum=5.0))
 
-if Version(astropy.__version__) >= Version("4.1"):
-    SINGLE_MODELS.append(astropy_models.Plummer1D(mass=10.0, r_plum=5.0))
+    return result
 
 
 UNSUPPORTED_MODELS = [
@@ -370,7 +372,7 @@ if Version(astropy.__version__) > Version("4.999.999"):
     ])
 
 
-@pytest.mark.parametrize("model", SINGLE_MODELS)
+@pytest.mark.parametrize("model", create_single_models())
 def test_single_model(tmpdir, model):
     assert_model_roundtrip(model, tmpdir)
 
@@ -412,24 +414,25 @@ def test_legacy_const(tmpdir):
         assert_model_roundtrip(model, tmpdir, version="1.3.0")
 
 
-COMPOUND_LEFT_MODEL = astropy_models.Shift(5)
-COMPOUND_RIGHT_MODEL = astropy_models.Shift(-1)
-COMPOUND_MODELS = [
-    COMPOUND_LEFT_MODEL + COMPOUND_RIGHT_MODEL,
-    COMPOUND_LEFT_MODEL - COMPOUND_RIGHT_MODEL,
-    COMPOUND_LEFT_MODEL * COMPOUND_RIGHT_MODEL,
-    COMPOUND_LEFT_MODEL / COMPOUND_RIGHT_MODEL,
-    COMPOUND_LEFT_MODEL ** COMPOUND_RIGHT_MODEL,
-    COMPOUND_LEFT_MODEL | COMPOUND_RIGHT_MODEL,
-    COMPOUND_LEFT_MODEL & COMPOUND_RIGHT_MODEL,
+COMPOUND_OPERATORS = [
+    "__add__",
+    "__sub__",
+    "__mul__",
+    "__truediv__",
+    "__pow__",
+    "__or__",
+    "__and__",
 ]
 
 
-@pytest.mark.parametrize("model", COMPOUND_MODELS)
-def test_compound_model(tmpdir, model):
+@pytest.mark.parametrize("operator", COMPOUND_OPERATORS)
+def test_compound_model(tmpdir, operator):
+    left_model = astropy_models.Shift(5)
+    right_model = astropy_models.Shift(-1)
+    model = getattr(left_model, operator)(right_model)
     result = assert_model_roundtrip(model, tmpdir)
-    assert_models_equal(result.left, COMPOUND_LEFT_MODEL)
-    assert_models_equal(result.right, COMPOUND_RIGHT_MODEL)
+    assert_models_equal(result.left, left_model)
+    assert_models_equal(result.right, right_model)
     assert result.op == model.op
 
 

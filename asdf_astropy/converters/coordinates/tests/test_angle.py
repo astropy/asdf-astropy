@@ -6,17 +6,18 @@ from astropy.coordinates import Angle, Latitude, Longitude
 import numpy as np
 
 
-TEST_ANGLES = [
-    Angle(100, u.deg),
-    Angle([100, 120, 150], u.deg),
-    Angle([[90, 100, 110], [100, 120, 150]], u.deg),
-    Angle(np.arange(100).reshape(5, 2, 10), u.deg),
-    Latitude(10, u.deg),
-    Longitude(-100, u.deg, wrap_angle=180 * u.deg),
-]
+def create_angles():
+    return [
+        Angle(100, u.deg),
+        Angle([100, 120, 150], u.deg),
+        Angle([[90, 100, 110], [100, 120, 150]], u.deg),
+        Angle(np.arange(100).reshape(5, 2, 10), u.deg),
+        Latitude(10, u.deg),
+        Longitude(-100, u.deg, wrap_angle=180 * u.deg),
+    ]
 
 
-@pytest.mark.parametrize("angle", TEST_ANGLES)
+@pytest.mark.parametrize("angle", create_angles())
 def test_serialization(angle, tmp_path):
     file_path = tmp_path / "test.asdf"
     with asdf.AsdfFile() as af:
