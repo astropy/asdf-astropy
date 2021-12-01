@@ -1,4 +1,4 @@
-Copyright 2020 The ASDF dev team
+Copyright 2021 Association of Universities for Research in Astronomy (AURA)
 
 Redistribution and use in source and binary forms, with or without
 modification, are permitted provided that the following conditions are met:
