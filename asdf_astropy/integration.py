@@ -38,4 +38,4 @@ def get_extensions():
     list of asdf.extension.Extension
     """
     from . import extensions
-    return [extensions.ASTROPY_EXTENSION] + extensions.TRANSFORM_EXTENSIONS + extensions.CORE_EXTENSIONS
+    return [extensions.ASTROPY_EXTENSION, extensions.COORDINATES_EXTENSION] + extensions.TRANSFORM_EXTENSIONS + extensions.CORE_EXTENSIONS

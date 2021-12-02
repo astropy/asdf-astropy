@@ -384,13 +384,7 @@ TRANSFORM_EXTENSIONS = [
 ]
 
 
-ASTROPY_CONVERTERS = [
-    EquivalencyConverter(),
-    UnitsMappingConverter(),
-    AngleConverter(),
-    LatitudeConverter(),
-    LongitudeConverter(),
-    EarthLocationConverter(),
+COORDINATES_CONVERTERS = [
     FrameConverter(
         "tag:astropy.org:astropy/coordinates/frames/baseframe-*",
         "astropy.coordinates.baseframe.BaseCoordinateFrame",
@@ -436,13 +430,29 @@ ASTROPY_CONVERTERS = [
         "astropy.coordinates.builtin_frames.gcrs.PrecessedGeocentric",
     ),
     LegacyICRSConverter(),
+    AngleConverter(),
+    LatitudeConverter(),
+    LongitudeConverter(),
+    EarthLocationConverter(),
     RepresentationConverter(),
     SkyCoordConverter(),
     SpectralCoordConverter(),
+]
+
+
+ASTROPY_CONVERTERS = [
+    EquivalencyConverter(),
+    UnitsMappingConverter(),
     TimeDeltaConverter(),
     AstropyTableConverter(),
     AstropyFitsConverter(),
 ]
+
+
+COORDINATES_EXTENSION = ManifestExtension.from_uri(
+    "asdf://asdf-format.org/astronomy/coordinates/manifests/coordinates-1.0.0",
+    converters=COORDINATES_CONVERTERS,
+)
 
 
 ASTROPY_EXTENSION = ManifestExtension.from_uri(
