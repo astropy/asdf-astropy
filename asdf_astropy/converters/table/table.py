@@ -62,7 +62,7 @@ class AsdfTableConverter(Converter):
     def from_yaml_tree(self, node, tag, ctx):
         from astropy.table import Table
 
-        return Table(node["columns"], meta=node["meta"])
+        return Table(node["columns"], meta=node.get("meta"))
 
 
 class AstropyTableConverter(Converter):
