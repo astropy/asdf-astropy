@@ -116,6 +116,11 @@ class TransformConverterBase(Converter):
             if bounds_nondefaults:
                 node['bounds'] = bounds_nondefaults
 
+        # model input_units_equivalencies
+        if not isinstance(model, CompoundModel):
+            if model.input_units_equivalencies:
+                node['input_units_equivalencies'] = model.input_units_equivalencies
+
         return node
 
     def _serialize_bounding_box(self, model, node):
@@ -170,6 +175,8 @@ class TransformConverterBase(Converter):
                                          if np.isfinite(item[0])] for sbbox in bounding_boxes]
 
     def from_yaml_tree(self, node, tag, ctx):
+        from astropy.modeling.core import CompoundModel
+
         model = self.from_yaml_tree_transform(node, tag, ctx)
 
         if 'name' in node:
@@ -188,6 +195,11 @@ class TransformConverterBase(Converter):
             if constraint in node:
                 param_and_model_constraints[constraint] = node[constraint]
         model._initialize_constraints(param_and_model_constraints)
+
+        if "input_units_equivalencies" in node:
+            # this still writes eqs. for compound, but operates on each sub model
+            if not isinstance(model, CompoundModel):
+                model.input_units_equivalencies = node['input_units_equivalencies']
 
         yield model
 
