@@ -1,3 +1,9 @@
+0.2.0 (unreleased)
+------------------
+
+- Add support for serialization and deserialization of input_units_equivalencies
+  for astropy models. [#37]
+
 0.1.2 (2021-12-14)
 ------------------
 
