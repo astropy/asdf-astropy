@@ -54,19 +54,7 @@ def assert_models_equal(a, b):
     assert a.input_units == b.input_units
     assert a.outputs == b.outputs
     assert a.input_units_allow_dimensionless == b.input_units_allow_dimensionless
-
-    for i in a.inputs:
-        if a.input_units_equivalencies is None:
-            a_equiv = None
-        else:
-            a_equiv = a.input_units_equivalencies.get(i)
-
-        if b.input_units_equivalencies is None:
-            b_equiv = None
-        else:
-            b_equiv = b.input_units_equivalencies.get(i, None)
-
-        assert a_equiv == b_equiv
+    assert a.input_units_equivalencies == b.input_units_equivalencies
 
     assert_array_equal(a.parameters, b.parameters)
 
@@ -316,6 +304,44 @@ def create_single_models():
 
     if Version(astropy.__version__) >= Version("4.1"):
         result.append(astropy_models.Plummer1D(mass=10.0, r_plum=5.0))
+
+    # models with input_units_equivalencies
+    # 1D model
+    m1 = astropy_models.Shift(1*u.kg)
+    m1.input_units_equivalencies = {'x': u.mass_energy()}
+
+    # 2D model
+    m2 = astropy_models.Const2D(10*u.Hz)
+    m2.input_units_equivalencies = {'x': u.dimensionless_angles(),
+                                    'y': u.dimensionless_angles()}
+
+    # 2D model with only one input equivalencies
+    m3 = astropy_models.Const2D(10*u.Hz)
+    m3.input_units_equivalencies = {'x': u.dimensionless_angles()}
+
+    # model using equivalency that has args using units
+    m4 = astropy_models.PowerLaw1D(amplitude=1*u.m, x_0=10*u.pix, alpha=7)
+    m4.input_units_equivalencies = {'x': u.equivalencies.pixel_scale(0.5*u.arcsec/u.pix)}
+
+    result.extend([m1, m2, m3, m4])
+
+    # compound models with input_units_equivalencies
+    m1 = astropy_models.Gaussian1D(10*u.K, 11*u.arcsec, 12*u.arcsec)
+    m1.input_units_equivalencies = {'x': u.parallax()}
+    m2 = astropy_models.Gaussian1D(5*u.s, 2*u.K, 3*u.K)
+    m2.input_units_equivalencies = {'x': u.temperature()}
+
+    result.extend([m1 | m2, m1 & m2, m1 + m2])
+
+    # fix_inputs models with input_units_equivalencies
+    m1 = astropy_models.Pix2Sky_TAN()
+    m1.input_units_equivalencies = {'x': u.dimensionless_angles(),
+                                    'y': u.dimensionless_angles()}
+    m2 = astropy_models.Rotation2D()
+    m = m1 | m2
+
+    result.extend([astropy_models.fix_inputs(m, {'x': 45}),
+                   astropy_models.fix_inputs(m, {0: 45})])
 
     return result
 
