@@ -2,6 +2,8 @@ import itertools
 
 import asdf
 import astropy
+from astropy.modeling import models as astropy_models
+from astropy.modeling.bounding_box import ModelBoundingBox, CompoundBoundingBox
 import astropy.modeling
 import numpy as np
 import pytest
@@ -284,6 +286,19 @@ def create_single_models():
     if Version(astropy.__version__) >= Version("4.1"):
         result.append(astropy_models.Plummer1D(mass=10.0, r_plum=5.0))
 
+    # compound model with bounding box
+    model = astropy_models.Shift(1) & astropy_models.Shift(2)
+    model.bounding_box = ((1, 2), (3, 4))
+    result.append(model)
+
+    # model with compound bounding box
+    model = astropy_models.Shift(1) & astropy_models.Scale(2) & astropy_models.Identity(1)
+    model.inputs = ('x', 'y', 'slit_id')
+    bounding_boxes = {(0,): ((-0.5, 1047.5), (-0.5, 2047.5)), (1,): ((-0.5, 3047.5), (-0.5, 4047.5)), }
+    bounding_box = CompoundBoundingBox.validate(model, bounding_boxes, selector_args=[('slit_id', True)], order='F')
+    model.bounding_box = bounding_box
+    result.append(model)
+
     # models with input_units_equivalencies
     # 1D model
     m1 = astropy_models.Shift(1 * u.kg)
@@ -562,3 +577,43 @@ model: !transform/concatenate-1.2.0
         model = af["model"]
         assert model.has_inverse()
         assert model.inverse(-5, -20) == (0, 0)
+
+
+def assert_bounding_box_round_trip(bounding_box, tmpdir, version=None):
+    """
+    Assert that a bounding_box can be written to an ASDF file and read back
+    in without losing any of its essential properties.
+    """
+    path = str(tmpdir / "test.asdf")
+
+    with asdf.AsdfFile({"bounding_box": bounding_box}, version=version) as af:
+        af.write_to(path)
+
+    with asdf.open(path) as af:
+        assert bounding_box == af["bounding_box"]
+
+
+def create_bounding_boxes():
+    model_bounding_box = [
+        ModelBoundingBox((0, 1), astropy_models.Polynomial1D(1)),
+        ModelBoundingBox(((0, 1), (2, 3)), astropy_models.Polynomial2D(1)),
+        ModelBoundingBox(((0, 1), (2, 3)), astropy_models.Polynomial2D(1), order='F'),
+        ModelBoundingBox((0, 1), astropy_models.Polynomial2D(1), ignored=['x']),
+        ModelBoundingBox((0, 1), astropy_models.Polynomial2D(1), ignored=['y']),
+    ]
+    compound_bounding_box = [
+        CompoundBoundingBox({(1,): (0, 1), (2,): (2, 3)}, astropy_models.Polynomial2D(1), [('x', True)]),
+        CompoundBoundingBox({(1,): ((0, 1), (-1, 0)), (2,): ((2, 3), (-3, -2))},
+                            astropy_models.Polynomial2D(1), [('x', False)]),
+        CompoundBoundingBox({(1,): (0, 1), (2,): (2, 3)},
+                            astropy_models.Polynomial2D(1), [('x', False)], ignored=['x']),
+        CompoundBoundingBox({(1,): (0, 1), (2,): (2, 3)},
+                                             astropy_models.Polynomial2D(1), [('x', False)], ignored=['y']),
+    ]
+
+    return model_bounding_box + compound_bounding_box
+
+
+@pytest.mark.parametrize('bbox', create_bounding_boxes())
+def test_round_trip_bounding_box(bbox, tmpdir):
+    assert_bounding_box_round_trip(bbox, tmpdir)
