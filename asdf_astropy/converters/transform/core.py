@@ -92,6 +92,7 @@ class TransformConverterBase(Converter):
 
     def to_yaml_tree(self, model, tag, ctx):
         from astropy.modeling.core import CompoundModel
+        from astropy.modeling.bounding_box import ModelBoundingBox
 
         node = self.to_yaml_tree_transform(model, tag, ctx)
 
@@ -107,7 +108,7 @@ class TransformConverterBase(Converter):
             node["inverse"] = model._user_inverse
 
         try:
-            node['bounding_box'] = model.bounding_box
+            node['bounding_box'] = ModelBoundingBox.validate(model, model.bounding_box)
         except NotImplementedError:
             pass
 
