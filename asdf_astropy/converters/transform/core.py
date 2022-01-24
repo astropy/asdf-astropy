@@ -107,20 +107,9 @@ class TransformConverterBase(Converter):
         if getattr(model, "_user_inverse", None) is not None:
             node["inverse"] = model._user_inverse
 
-
-        # Fix 1 deal with default bounding_box
-        try:
-            bbox = model.bounding_box
-            if model._user_bounding_box is None:
-                bbox = ModelBoundingBox.validate(model, model.bounding_box)
-            node['bounding_box'] = bbox
-        except NotImplementedError:
-            pass
-
-        # # Fix 2 ignore default bounding_box
-        # if model._user_bounding_box is not None:
-        #     node['bounding_box'] = model.bounding_box
-
+        # ignore default bounding_box
+        if model._user_bounding_box is not None:
+            node['bounding_box'] = model.bounding_box
 
         # model / parameter constraints
         if not isinstance(model, CompoundModel):
