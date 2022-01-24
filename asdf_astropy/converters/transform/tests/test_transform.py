@@ -43,7 +43,7 @@ def assert_model_roundtrip(model, tmpdir, version=None):
 
 def create_single_models():
     model_with_bounding_box = astropy_models.Shift(10)
-    model_with_bounding_box.bounding_box = ((1, 7),)
+    model_with_bounding_box.bounding_box = (1, 7)
 
     model_with_user_inverse = astropy_models.Shift(10)
     model_with_user_inverse.inverse = astropy_models.Shift(-7)

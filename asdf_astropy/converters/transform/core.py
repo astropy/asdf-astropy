@@ -184,13 +184,13 @@ class TransformConverterBase(Converter):
         if "name" in node:
             model.name = node["name"]
 
-        self._deserialize_bounding_box(model, node)
-
-        if "inputs" in node:
-            model.inputs = tuple(node["inputs"])
+        if 'inputs' in node:
+            model.inputs = tuple(node['inputs'])
 
         if "outputs" in node:
             model.outputs = tuple(node["outputs"])
+
+        self._deserialize_bounding_box(model, node)
 
         param_and_model_constraints = {}
         for constraint in ["fixed", "bounds"]:
