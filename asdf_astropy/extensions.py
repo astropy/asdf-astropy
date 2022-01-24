@@ -20,6 +20,8 @@ from .converters.transform.projections import ProjectionConverter
 from .converters.transform.rotations import Rotate3DConverter, RotationSequenceConverter
 from .converters.transform.spline import SplineConverter
 from .converters.transform.tabular import TabularConverter
+from .converters.transform.properties import ModelBoundingBoxConverter, CompoundBoundingBoxConverter
+
 from .converters.unit.equivalency import EquivalencyConverter
 from .converters.unit.quantity import QuantityConverter
 from .converters.unit.unit import UnitConverter
@@ -360,6 +362,10 @@ TRANSFORM_CONVERTERS = [
     RotationSequenceConverter(),
     # astropy.modeling.tabular
     TabularConverter(),
+
+    # astropy.modeling.bounding_box
+    ModelBoundingBoxConverter(),
+    CompoundBoundingBoxConverter(),
 ]
 
 
