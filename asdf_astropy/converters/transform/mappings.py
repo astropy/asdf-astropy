@@ -81,8 +81,8 @@ class UnitsMappingConverter(Converter):
                 output["unit"] = m[-1]
             outputs.append(output)
 
-        node["inputs"] = inputs
-        node["outputs"] = outputs
+        node["unit_inputs"] = inputs
+        node["unit_outputs"] = outputs
 
         return node
 
@@ -90,10 +90,10 @@ class UnitsMappingConverter(Converter):
         from astropy.modeling.mappings import UnitsMapping
 
         mapping = tuple((i.get("unit"), o.get("unit"))
-                        for i, o in zip(node["inputs"], node["outputs"]))
+                        for i, o in zip(node["unit_inputs"], node["unit_outputs"]))
 
         equivalencies = None
-        for i in node["inputs"]:
+        for i in node["unit_inputs"]:
             if "equivalencies" in i:
                 if equivalencies is None:
                     equivalencies = {}
@@ -102,7 +102,7 @@ class UnitsMappingConverter(Converter):
         kwargs = {
             "input_units_equivalencies": equivalencies,
             "input_units_allow_dimensionless": {
-                i["name"]: i.get("allow_dimensionless", False) for i in node["inputs"]},
+                i["name"]: i.get("allow_dimensionless", False) for i in node["unit_inputs"]},
         }
 
         if "name" in node:
