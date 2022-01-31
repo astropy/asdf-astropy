@@ -3,6 +3,9 @@
 
 - Add support for serialization and deserialization of input_units_equivalencies
   for astropy models. [#37]
+- Bugfix for units_mapping schema's property name conflicts. Changes:
+  - ``inputs`` to ``unit_inputs``
+  - ``outputs`` to ``unit_outputs``
 
 0.1.2 (2021-12-14)
 ------------------
