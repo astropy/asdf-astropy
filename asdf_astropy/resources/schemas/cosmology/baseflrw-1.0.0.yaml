@@ -1,0 +1,32 @@
+%YAML 1.1
+---
+$schema: "http://stsci.edu/schemas/yaml-schema/draft-01"
+id: "http://astropy.org/schemas/astropy/cosmology/baseflrw-1.0.0"
+tag: "tag:astropy.org:astropy/cosmology/baseflrw-1.0.0"
+
+title: |
+  Represents a FLRW cosmology object from astropy
+
+description: |
+  This schema is designed to be extended by other schemas to restrict the
+  allowable parameters.
+
+type: object
+properties:
+  name:
+    description: |
+      The name of the cosmology.
+    type: string
+  parameters:
+    description: |
+      Parameters of the cosmology.
+    type: object
+  meta:
+    description: |
+      Additional free-form metadata about the cosmology.
+    type: object
+    default: {}
+
+additionalProperties: false
+required: [parameters]
+...

@@ -54,6 +54,7 @@ def test_extensions():
 
 _ASTROPY_MODULES = [
     "astropy.coordinates",
+    "astropy.cosmology",
     "astropy.io",
     "astropy.modeling",
     "astropy.table",

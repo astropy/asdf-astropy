@@ -25,6 +25,8 @@ from .converters.coordinates.representation import RepresentationConverter
 from .converters.coordinates.sky_coord import SkyCoordConverter
 from .converters.coordinates.spectral_coord import SpectralCoordConverter
 
+from .converters.cosmology.cosmology import CosmologyConverter
+
 from .converters.time.time import TimeConverter
 from .converters.time.time_delta import TimeDeltaConverter
 
@@ -446,6 +448,39 @@ ASTROPY_CONVERTERS = [
     TimeDeltaConverter(),
     AstropyTableConverter(),
     AstropyFitsConverter(),
+    # Cosmology
+    CosmologyConverter(
+        "tag:astropy.org:astropy/cosmology/lambdacdm-*",
+        "astropy.cosmology.flrw.LambdaCDM",
+    ),
+    CosmologyConverter(
+        "tag:astropy.org:astropy/cosmology/flatlambdacdm-*",
+        "astropy.cosmology.flrw.FlatLambdaCDM",
+    ),
+    CosmologyConverter(
+        "tag:astropy.org:astropy/cosmology/wcdm-*",
+        "astropy.cosmology.flrw.wCDM",
+    ),
+    CosmologyConverter(
+        "tag:astropy.org:astropy/cosmology/flatwcdm-*",
+        "astropy.cosmology.flrw.FlatwCDM",
+    ),
+    CosmologyConverter(
+        "tag:astropy.org:astropy/cosmology/w0wacdm-*",
+        "astropy.cosmology.flrw.w0waCDM",
+    ),
+    CosmologyConverter(
+        "tag:astropy.org:astropy/cosmology/flatw0wacdm-*",
+        "astropy.cosmology.flrw.Flatw0waCDM",
+    ),
+    CosmologyConverter(
+        "tag:astropy.org:astropy/cosmology/wpwacdm-*",
+        "astropy.cosmology.flrw.wpwaCDM",
+    ),
+    CosmologyConverter(
+        "tag:astropy.org:astropy/cosmology/w0wzcdm-*",
+        "astropy.cosmology.flrw.w0wzCDM",
+    ),
 ]
 
 
