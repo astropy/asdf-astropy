@@ -14,7 +14,7 @@ from asdf.tests.helpers import yaml_to_asdf
 from asdf_astropy import integration
 
 try:
-    from astropy.modeling.models import UnitsMapping
+    from astropy.modeling.models import UnitsMapping # noqa
     HAS_NO_UNITS_MAPPING = False
 except ImportError:
     HAS_NO_UNITS_MAPPING = True

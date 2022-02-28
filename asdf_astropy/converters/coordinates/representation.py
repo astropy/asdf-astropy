@@ -22,9 +22,6 @@ class RepresentationConverter(Converter):
     ]
 
     def to_yaml_tree(self, obj, tag, ctx):
-        from astropy.coordinates.distances import Distance
-        from astropy.units import Quantity
-
         components = {}
         for c in obj.components:
             value = getattr(obj, "_" + c, None)
