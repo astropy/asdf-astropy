@@ -70,6 +70,11 @@ jobs:
             os: ubuntu-latest
             toxenv: py39-astropylts
 
+          - name: Twine check
+            python-version: "3.9"
+            os: ubuntu-latest
+            toxenv: twine
+
           - name: Build Documents
             python-version: "3.9"
             os: ubuntu-latest
