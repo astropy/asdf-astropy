@@ -36,7 +36,7 @@ def create_sky_coords():
             frame=ICRS,
             ra=Longitude([1, 2, 3], unit=u.deg),
             dec=np.array([4.5, 5.2, 6.3]) * u.deg,
-            obstime="2001-01-02T12:34:56"
+            obstime="2001-01-02T12:34:56",
         ),
         # With overridden frame defaults
         SkyCoord(FK4(1 * u.deg, 2 * u.deg), obstime="J2010.11", equinox="B1965"),

@@ -13,7 +13,7 @@ _OPERATOR_TO_TAG_NAME = {
     "**": "power",
     "|": "compose",
     "&": "concatenate",
-    "fix_inputs": "fix_inputs"
+    "fix_inputs": "fix_inputs",
 }
 
 
@@ -25,7 +25,7 @@ _TAG_NAME_TO_MODEL_METHOD = {
     "power": "__pow__",
     "compose": "__or__",
     "concatenate": "__and__",
-    "fix_inputs": "fix_inputs"
+    "fix_inputs": "fix_inputs",
 }
 
 
@@ -33,6 +33,7 @@ class CompoundConverter(TransformConverterBase):
     """
     ASDF serialization support for CompoundModel.
     """
+
     tags = [
         "tag:stsci.edu:asdf/transform/add-*",
         "tag:stsci.edu:asdf/transform/subtract-*",
@@ -59,16 +60,11 @@ class CompoundConverter(TransformConverterBase):
         left = model.left
 
         if isinstance(model.right, dict):
-            right = {
-                "keys": list(model.right.keys()),
-                "values": list(model.right.values())
-            }
+            right = {"keys": list(model.right.keys()), "values": list(model.right.values())}
         else:
             right = model.right
 
-        return {
-            "forward": [left, right]
-        }
+        return {"forward": [left, right]}
 
     def from_yaml_tree_transform(self, node, tag, ctx):
         from astropy.modeling.core import Model, CompoundModel
@@ -77,14 +73,11 @@ class CompoundConverter(TransformConverterBase):
 
         left = node["forward"][0]
         if not isinstance(left, Model):
-            raise TypeError("Unknown model type '{0}'".format(
-                node["forward"][0]._tag))
+            raise TypeError("Unknown model type '{0}'".format(node["forward"][0]._tag))
 
         right = node["forward"][1]
-        if (not isinstance(right, Model) and
-                not (oper == "fix_inputs" and isinstance(right, dict))):
-            raise TypeError("Unknown model type '{0}'".format(
-                node["forward"][1]._tag))
+        if not isinstance(right, Model) and not (oper == "fix_inputs" and isinstance(right, dict)):
+            raise TypeError("Unknown model type '{0}'".format(node["forward"][1]._tag))
 
         if oper == "fix_inputs":
             right = dict(zip(right["keys"], right["values"]))

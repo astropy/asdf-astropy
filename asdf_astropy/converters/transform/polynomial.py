@@ -10,6 +10,7 @@ class PolynomialConverter(TransformConverterBase):
     """
     ASDF support for serializing the 1D and 2D polynomial models.
     """
+
     # Schema versions prior to 1.2 included an unrelated "domain"
     # property.  We can't serialize the new domain values with those
     # versions because they don't validate.
@@ -62,8 +63,7 @@ class PolynomialConverter(TransformConverterBase):
             domain = node.get("domain", None)
             window = node.get("window", None)
 
-            model = Polynomial1D(coefficients.size - 1,
-                                 domain=domain, window=window)
+            model = Polynomial1D(coefficients.size - 1, domain=domain, window=window)
             model.parameters = coefficients
         elif n_dim == 2:
             x_domain, y_domain = tuple(node.get("domain", (None, None)))
@@ -79,12 +79,9 @@ class PolynomialConverter(TransformConverterBase):
                     if i + j < degree + 1:
                         name = "c" + str(i) + "_" + str(j)
                         coeffs[name] = coefficients[i, j]
-            model = Polynomial2D(degree,
-                                 x_domain=x_domain,
-                                 y_domain=y_domain,
-                                 x_window=x_window,
-                                 y_window=y_window,
-                                 **coeffs)
+            model = Polynomial2D(
+                degree, x_domain=x_domain, y_domain=y_domain, x_window=x_window, y_window=y_window, **coeffs
+            )
         else:
             raise NotImplementedError("astropy supports only 1D or 2D polynomial models")
 
@@ -96,6 +93,7 @@ class OrthoPolynomialConverter(TransformConverterBase):
     ASDF support for serializing models that inherit
     OrthoPolyomialBase.
     """
+
     # Map of model class name to (polynomial type, number of dimensions) tuple:
     _CLASS_NAME_TO_POLY_INFO = {
         "Legendre1D": ("legendre", 1),
@@ -173,13 +171,7 @@ class OrthoPolynomialConverter(TransformConverterBase):
                     name = f"c{i}_{j}"
                     coeffs[name] = coefficients[i, j]
             model = model_type(
-                x_degree,
-                y_degree,
-                x_domain=x_domain,
-                y_domain=y_domain,
-                x_window=x_window,
-                y_window=y_window,
-                **coeffs
+                x_degree, y_degree, x_domain=x_domain, y_domain=y_domain, x_window=x_window, y_window=y_window, **coeffs
             )
         else:
             raise NotImplementedError("astropy supports only 1D or 2D polynomial models")

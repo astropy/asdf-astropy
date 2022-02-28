@@ -75,11 +75,7 @@ def test_table(tmp_path):
 
 def test_array_columns(tmp_path):
     data = np.array(
-        [
-            ([[1, 2], [3, 4]], 2.0, "x"),
-            ([[5, 6], [7, 8]], 5.0, "y"),
-            ([[9, 10], [11, 12]], 8.2, "z")
-        ],
+        [([[1, 2], [3, 4]], 2.0, "x"), ([[5, 6], [7, 8]], 5.0, "y"), ([[9, 10], [11, 12]], 8.2, "z")],
         dtype=[("a", "<i4", (2, 2)), ("b", "<f8"), ("c", "|S1")],
     )
 
@@ -90,12 +86,8 @@ def test_array_columns(tmp_path):
 
 def test_structured_array_columns(tmp_path):
     rows = np.array(
-        [
-            ((1, "a"), 2.0, "x"),
-            ((4, "b"), 5.0, "y"),
-            ((5, "c"), 8.2, "z")
-        ],
-        dtype=[("a", [("a0", "<i4"), ("a1", "|S1")]), ("b", "<f8"), ("c", "|S1")]
+        [((1, "a"), 2.0, "x"), ((4, "b"), 5.0, "y"), ((5, "c"), 8.2, "z")],
+        dtype=[("a", [("a0", "<i4"), ("a1", "|S1")]), ("b", "<f8"), ("c", "|S1")],
     )
 
     table = Table(rows, copy=False)
@@ -104,10 +96,7 @@ def test_structured_array_columns(tmp_path):
 
 
 def test_table_row_order(tmp_path):
-    data = np.array(
-        [(1, 2.0, "x"), (4, 5.0, "y"),  (5, 8.2, "z")],
-        dtype=[("a", "<i4"), ("b", "<f8"), ("c", "|S1")]
-    )
+    data = np.array([(1, 2.0, "x"), (4, 5.0, "y"), (5, 8.2, "z")], dtype=[("a", "<i4"), ("b", "<f8"), ("c", "|S1")])
 
     table = Table(data, copy=False)
     table.columns["a"].description = "RA"

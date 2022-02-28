@@ -1,5 +1,3 @@
-
-
 import pytest
 
 import asdf
@@ -29,7 +27,7 @@ from asdf_astropy.testing.helpers import assert_frame_equal
 
 def create_frames():
     test_data = {
-       "ra": 1 * u.deg,
+        "ra": 1 * u.deg,
         "dec": 2 * u.deg,
     }
 
@@ -39,16 +37,16 @@ def create_frames():
         FK4(**test_data),
         FK4(**test_data, obstime=Time("B1950")),
         FK4NoETerms(**test_data),
-        FK4NoETerms(**test_data, obstime= Time("J1975")),
+        FK4NoETerms(**test_data, obstime=Time("J1975")),
         FK5(**test_data),
         FK5(**test_data, equinox="J2005"),
         FK5(**test_data, equinox="2011-01-01T00:00:00"),
         Galactic(l=47.37 * u.degree, b=+6.32 * u.degree),
         Galactocentric(
-            x=np.linspace(-10., 10., 100) * u.kpc,
-            y=np.linspace(-10., 10., 100) * u.kpc,
+            x=np.linspace(-10.0, 10.0, 100) * u.kpc,
+            y=np.linspace(-10.0, 10.0, 100) * u.kpc,
             z=np.zeros(100) * u.kpc,
-            z_sun=15 * u.pc
+            z_sun=15 * u.pc,
         ),
         GCRS(**test_data),
         GCRS(**test_data, obsgeoloc=CartesianRepresentation([1, 2, 3], unit=u.m)),

@@ -18,9 +18,7 @@ def test_resources():
 
 
 def test_manifests():
-    manifests_root = (
-        Path(__file__).parent.parent / "resources" / "manifests"
-    )
+    manifests_root = Path(__file__).parent.parent / "resources" / "manifests"
     resource_manager = asdf.get_config().resource_manager
 
     for manifest_path in manifests_root.glob("*.yaml"):
@@ -28,9 +26,7 @@ def test_manifests():
             manifest_content = f.read()
         manifest = yaml.safe_load(manifest_content)
 
-        manifest_schema = asdf.schema.load_schema(
-            "asdf://asdf-format.org/core/schemas/extension_manifest-1.0.0"
-        )
+        manifest_schema = asdf.schema.load_schema("asdf://asdf-format.org/core/schemas/extension_manifest-1.0.0")
 
         # The manifest must be valid against its own schema:
         asdf.schema.validate(manifest, schema=manifest_schema)
@@ -68,11 +64,14 @@ def test_no_astropy_import():
     at import time.
     """
 
-    keys = [k for k in sys.modules.keys() if k.startswith("asdf_astropy") or any(k.startswith(m) for m in _ASTROPY_MODULES)]
+    keys = [
+        k for k in sys.modules.keys() if k.startswith("asdf_astropy") or any(k.startswith(m) for m in _ASTROPY_MODULES)
+    ]
     for key in keys:
         del sys.modules[key]
 
     from asdf_astropy import integration
+
     integration.get_resource_mappings()
     integration.get_extensions()
 

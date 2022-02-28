@@ -9,9 +9,7 @@ from asdf_astropy.testing.helpers import assert_representation_equal
 
 
 REPRESENTATION_CLASSES = [
-    getattr(representation, class_name)
-    for class_name in representation.__all__
-    if "Base" not in class_name
+    getattr(representation, class_name) for class_name in representation.__all__ if "Base" not in class_name
 ]
 
 

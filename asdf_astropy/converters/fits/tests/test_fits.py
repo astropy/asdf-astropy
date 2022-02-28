@@ -10,20 +10,12 @@ from asdf_astropy.testing.helpers import assert_hdu_list_equal
 
 def create_hduls():
     hdul = fits.HDUList()
-    header = fits.Header([
-        ("FOO", "BAR", "BAZ"),
-        ("SOMENUM", "11.0"),
-        ("EMPTY",)
-    ])
+    header = fits.Header([("FOO", "BAR", "BAZ"), ("SOMENUM", "11.0"), ("EMPTY",)])
     hdul.append(fits.PrimaryHDU(header=header))
     hdul.append(fits.ImageHDU(data=np.arange(100)))
 
     hdul_with_table = fits.HDUList()
-    hdul_with_table.append(
-        fits.BinTableHDU.from_columns(
-            np.array([(0, 1), (2, 3)], dtype=[("A", int), ("B", int)])
-        )
-    )
+    hdul_with_table.append(fits.BinTableHDU.from_columns(np.array([(0, 1), (2, 3)], dtype=[("A", int), ("B", int)])))
 
     return [hdul, hdul_with_table]
 

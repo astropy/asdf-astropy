@@ -29,7 +29,7 @@ def create_spectral_coords():
             SpectralCoord(
                 10 * u.GHz,
                 observer=ICRS(1 * u.km, 2 * u.km, 3 * u.km, representation_type="cartesian"),
-                target=Galactic(10 * u.deg, 20 * u.deg, distance=30 * u.pc)
+                target=Galactic(10 * u.deg, 20 * u.deg, distance=30 * u.pc),
             )
         )
 

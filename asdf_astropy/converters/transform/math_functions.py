@@ -55,6 +55,7 @@ class MathFunctionsConverter(TransformConverterBase):
     ASDF support for serializing the math functions models,
     each of which corresponds to a numpy ufunc.
     """
+
     tags = ["tag:stsci.edu:asdf/transform/math_functions-*"]
 
     types = ["astropy.modeling.math_functions." + m for m in _MODEL_NAMES]

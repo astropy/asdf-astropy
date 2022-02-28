@@ -11,4 +11,5 @@ class TimeDeltaConverter(Converter):
 
     def from_yaml_tree(self, node, tag, ctx):
         from astropy.time.core import TimeDelta
+
         return TimeDelta.info._construct_from_dict(node)

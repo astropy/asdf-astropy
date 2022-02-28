@@ -10,9 +10,9 @@ from asdf_astropy.testing.helpers import assert_earth_location_equal
 
 
 def create_earth_locations():
-    longitude = Longitude([0., 45., 90., 135., 180., -180, -90, -45], u.deg, wrap_angle=180 * u.deg)
-    latitude = Latitude([+0., 30., 60., +90., -90., -60., -30., 0.], u.deg)
-    height = Quantity([0.1, 0.5, 1.0, -0.5, -1.0, +4.2, -11., -.1], u.m)
+    longitude = Longitude([0.0, 45.0, 90.0, 135.0, 180.0, -180, -90, -45], u.deg, wrap_angle=180 * u.deg)
+    latitude = Latitude([+0.0, 30.0, 60.0, +90.0, -90.0, -60.0, -30.0, 0.0], u.deg)
+    height = Quantity([0.1, 0.5, 1.0, -0.5, -1.0, +4.2, -11.0, -0.1], u.m)
     position = (longitude, latitude, height)
 
     result = [

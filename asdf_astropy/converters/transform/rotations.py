@@ -6,6 +6,7 @@ class Rotate3DConverter(TransformConverterBase):
     ASDF support for serializing rotation models that
     use the rotate3d tag.
     """
+
     tags = ["tag:stsci.edu:asdf/transform/rotate3d-*"]
 
     types = [
@@ -45,24 +46,18 @@ class Rotate3DConverter(TransformConverterBase):
         from astropy.modeling import rotations
 
         if node["direction"] == "native2celestial":
-            return rotations.RotateNative2Celestial(node["phi"],
-                                                    node["theta"],
-                                                    node["psi"])
+            return rotations.RotateNative2Celestial(node["phi"], node["theta"], node["psi"])
         elif node["direction"] == "celestial2native":
-            return rotations.RotateCelestial2Native(node["phi"],
-                                                    node["theta"],
-                                                    node["psi"])
+            return rotations.RotateCelestial2Native(node["phi"], node["theta"], node["psi"])
         else:
-            return rotations.EulerAngleRotation(node["phi"],
-                                                node["theta"],
-                                                node["psi"],
-                                                axes_order=node["direction"])
+            return rotations.EulerAngleRotation(node["phi"], node["theta"], node["psi"], axes_order=node["direction"])
 
 
 class RotationSequenceConverter(TransformConverterBase):
     """
     ASDF support for serializing rotation sequence models.
     """
+
     tags = ["tag:stsci.edu:asdf/transform/rotate_sequence_3d-*"]
 
     types = [

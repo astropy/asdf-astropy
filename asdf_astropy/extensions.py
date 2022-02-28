@@ -36,7 +36,6 @@ from .converters.fits.fits import AstropyFitsConverter, AsdfFitsConverter
 TRANSFORM_CONVERTERS = [
     # astropy.modeling.core
     CompoundConverter(),
-
     # astropy.modeling.functional_models
     SimpleTransformConverter(
         ["tag:stsci.edu:asdf/transform/airy_disk2d-*"],
@@ -151,17 +150,14 @@ TRANSFORM_CONVERTERS = [
         ["tag:stsci.edu:asdf/transform/voigt1d-*"],
         "astropy.modeling.functional_models.Voigt1D",
     ),
-
     # astropy.modeling.mappings
     IdentityConverter(),
     RemapAxesConverter(),
     # UnitsMapping is not represented here because
     # it is an astropy-specific transform and not
     # included in the ASDF transform extension.
-
     # astropy.modeling.math_functions
     MathFunctionsConverter(),
-
     # astropy.modeling.physical_models
     SimpleTransformConverter(
         ["tag:stsci.edu:asdf/transform/blackbody-*"],
@@ -176,14 +172,12 @@ TRANSFORM_CONVERTERS = [
         ["tag:stsci.edu:asdf/transform/plummer1d-*"],
         "astropy.modeling.physical_models.Plummer1D",
     ),
-
     # astropy.modeling.polynomial
     PolynomialConverter(),
     OrthoPolynomialConverter(),
     # SIP and InverseSIP are deliberately excluded because they
     # are FITS-specific and can be easily represented by a
     # simple combination of existing models.
-
     # astropy.modeling.powerlaws
     SimpleTransformConverter(
         ["tag:stsci.edu:asdf/transform/broken_power_law1d-*"],
@@ -205,7 +199,6 @@ TRANSFORM_CONVERTERS = [
         ["tag:stsci.edu:asdf/transform/smoothly_broken_power_law1d-*"],
         "astropy.modeling.powerlaws.SmoothlyBrokenPowerLaw1D",
     ),
-
     # astropy.modeling.projections
     SimpleTransformConverter(
         ["tag:stsci.edu:asdf/transform/affine-*"],
@@ -346,7 +339,6 @@ TRANSFORM_CONVERTERS = [
         "astropy.modeling.projections.Pix2Sky_ZenithalPerspective",
         "astropy.modeling.projections.Sky2Pix_ZenithalPerspective",
     ),
-
     # astropy.modeling.rotations
     SimpleTransformConverter(
         ["tag:stsci.edu:asdf/transform/rotate2d-*"],
@@ -354,7 +346,6 @@ TRANSFORM_CONVERTERS = [
     ),
     Rotate3DConverter(),
     RotationSequenceConverter(),
-
     # astropy.modeling.tabular
     TabularConverter(),
 ]

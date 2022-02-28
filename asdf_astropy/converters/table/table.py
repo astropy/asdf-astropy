@@ -11,10 +11,7 @@ class ColumnConverter(Converter):
     ]
 
     def to_yaml_tree(self, obj, tag, ctx):
-        node = {
-            "data": obj.data,
-            "name": obj.name
-        }
+        node = {"data": obj.data, "name": obj.name}
 
         if obj.description:
             node["description"] = obj.description
@@ -79,7 +76,7 @@ class AstropyTableConverter(Converter):
         node = {
             "columns": [obj[name] for name in obj.colnames],
             "colnames": obj.colnames,
-            "qtable": isinstance(obj, QTable)
+            "qtable": isinstance(obj, QTable),
         }
 
         if obj.meta:

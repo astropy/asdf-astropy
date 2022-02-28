@@ -16,6 +16,7 @@ class ProjectionConverter(TransformConverterBase):
     sky2pix_type_name : str
         Fully-qualified type name of the projection's Sky2Pix model.
     """
+
     def __init__(self, tags, pix2sky_type_name, sky2pix_type_name):
         self._tags = tags
         self._pix2sky_type_name = pix2sky_type_name

@@ -14,7 +14,7 @@ def parse_tag_version(tag):
     -------
     packaging.version.Version
     """
-    return parse_version(tag[tag.rfind("-") + 1:])
+    return parse_version(tag[tag.rfind("-") + 1 :])
 
 
 def get_tag_name(tag):
@@ -29,4 +29,4 @@ def get_tag_name(tag):
     -------
     str
     """
-    return tag[tag.rfind("/") + 1:tag.rfind("-")]
+    return tag[tag.rfind("/") + 1 : tag.rfind("-")]

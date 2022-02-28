@@ -40,6 +40,7 @@ class TransformConverterBase(Converter):
     properties after concrete converter sets model-specific
     properties.
     """
+
     @abc.abstractmethod
     def to_yaml_tree_transform(self, model, tag, ctx):
         """
@@ -111,15 +112,15 @@ class TransformConverterBase(Converter):
         if not isinstance(model, CompoundModel):
             fixed_nondefaults = {k: f for k, f in model.fixed.items() if f}
             if fixed_nondefaults:
-                node['fixed'] = fixed_nondefaults
+                node["fixed"] = fixed_nondefaults
             bounds_nondefaults = {k: b for k, b in model.bounds.items() if any(b)}
             if bounds_nondefaults:
-                node['bounds'] = bounds_nondefaults
+                node["bounds"] = bounds_nondefaults
 
         # model input_units_equivalencies
         if not isinstance(model, CompoundModel):
             if model.input_units_equivalencies:
-                node['input_units_equivalencies'] = model.input_units_equivalencies
+                node["input_units_equivalencies"] = model.input_units_equivalencies
 
         return node
 
@@ -127,7 +128,7 @@ class TransformConverterBase(Converter):
         from packaging.version import Version
         import astropy
 
-        if Version(astropy.__version__) > Version('4.999.999'):
+        if Version(astropy.__version__) > Version("4.999.999"):
             self._serialize_bounding_box_astropy_5(model, node)
         else:
             self._serialize_bounding_box_astropy_4(model, node)
@@ -143,7 +144,7 @@ class TransformConverterBase(Converter):
                 bb = list(bb)
             else:
                 bb = [list(item) for item in model.bounding_box]
-            node['bounding_box'] = bb
+            node["bounding_box"] = bb
 
     def _serialize_bounding_box_astropy_5(self, model, node):
         from astropy.modeling.bounding_box import ModelBoundingBox, CompoundBoundingBox
@@ -154,44 +155,45 @@ class TransformConverterBase(Converter):
             bb = None
 
         if isinstance(bb, ModelBoundingBox):
-            bb = bb.bounding_box(order='C')
+            bb = bb.bounding_box(order="C")
 
             if model.n_inputs == 1:
                 bb = list(bb)
             else:
                 bb = [list(item) for item in bb]
-            node['bounding_box'] = bb
+            node["bounding_box"] = bb
 
         elif isinstance(bb, CompoundBoundingBox):
             selector_args = [[sa.index, sa.ignore] for sa in bb.selector_args]
-            node['selector_args'] = selector_args
-            node['cbbox_keys'] = list(bb.bounding_boxes.keys())
+            node["selector_args"] = selector_args
+            node["cbbox_keys"] = list(bb.bounding_boxes.keys())
 
             bounding_boxes = list(bb.bounding_boxes.values())
             if len(model.inputs) - len(selector_args) == 1:
-                node['cbbox_values'] = [list(sbbox.bounding_box()) for sbbox in bounding_boxes]
+                node["cbbox_values"] = [list(sbbox.bounding_box()) for sbbox in bounding_boxes]
             else:
-                node['cbbox_values'] = [[list(item) for item in sbbox.bounding_box()
-                                         if np.isfinite(item[0])] for sbbox in bounding_boxes]
+                node["cbbox_values"] = [
+                    [list(item) for item in sbbox.bounding_box() if np.isfinite(item[0])] for sbbox in bounding_boxes
+                ]
 
     def from_yaml_tree(self, node, tag, ctx):
         from astropy.modeling.core import CompoundModel
 
         model = self.from_yaml_tree_transform(node, tag, ctx)
 
-        if 'name' in node:
-            model.name = node['name']
+        if "name" in node:
+            model.name = node["name"]
 
         self._deserialize_bounding_box(model, node)
 
-        if 'inputs' in node:
-            model.inputs = tuple(node['inputs'])
+        if "inputs" in node:
+            model.inputs = tuple(node["inputs"])
 
-        if 'outputs' in node:
-            model.outputs = tuple(node['outputs'])
+        if "outputs" in node:
+            model.outputs = tuple(node["outputs"])
 
         param_and_model_constraints = {}
-        for constraint in ['fixed', 'bounds']:
+        for constraint in ["fixed", "bounds"]:
             if constraint in node:
                 param_and_model_constraints[constraint] = node[constraint]
         model._initialize_constraints(param_and_model_constraints)
@@ -199,38 +201,38 @@ class TransformConverterBase(Converter):
         if "input_units_equivalencies" in node:
             # this still writes eqs. for compound, but operates on each sub model
             if not isinstance(model, CompoundModel):
-                model.input_units_equivalencies = node['input_units_equivalencies']
+                model.input_units_equivalencies = node["input_units_equivalencies"]
 
         yield model
 
-        if 'inverse' in node:
-            model.inverse = node['inverse']
+        if "inverse" in node:
+            model.inverse = node["inverse"]
 
     def _deserialize_bounding_box(self, model, node):
         from packaging.version import Version
         import astropy
 
-        if Version(astropy.__version__) > Version('4.999.999'):
+        if Version(astropy.__version__) > Version("4.999.999"):
             self._deserialize_bounding_box_astropy_5(model, node)
         else:
             self._deserialize_bounding_box_astropy_4(model, node)
 
     def _deserialize_bounding_box_astropy_4(self, model, node):
-        if 'bounding_box' in node:
-            model.bounding_box = node['bounding_box']
-        elif 'selector_args' in node:
+        if "bounding_box" in node:
+            model.bounding_box = node["bounding_box"]
+        elif "selector_args" in node:
             warnings.warn("This version of astropy does not support compound bounding boxes.")
 
     def _deserialize_bounding_box_astropy_5(self, model, node):
         from astropy.modeling.bounding_box import CompoundBoundingBox
 
-        if 'bounding_box' in node:
-            model.bounding_box = node['bounding_box']
-        elif 'selector_args' in node:
-            cbbox_keys = [tuple(key) for key in node['cbbox_keys']]
-            bbox_dict = dict(zip(cbbox_keys, node['cbbox_values']))
+        if "bounding_box" in node:
+            model.bounding_box = node["bounding_box"]
+        elif "selector_args" in node:
+            cbbox_keys = [tuple(key) for key in node["cbbox_keys"]]
+            bbox_dict = dict(zip(cbbox_keys, node["cbbox_values"]))
 
-            selector_args = node['selector_args']
+            selector_args = node["selector_args"]
             model.bounding_box = CompoundBoundingBox.validate(model, bbox_dict, selector_args)
 
 
@@ -247,6 +249,7 @@ class SimpleTransformConverter(TransformConverterBase):
     model_type_name
         Fully-qualified model type name.
     """
+
     def __init__(self, tags, model_type_name):
         self._tags = tags
         self._model_type_name = model_type_name

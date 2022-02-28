@@ -14,7 +14,8 @@ from asdf.tests.helpers import yaml_to_asdf
 from asdf_astropy import integration
 
 try:
-    from astropy.modeling.models import UnitsMapping # noqa
+    from astropy.modeling.models import UnitsMapping  # noqa
+
     HAS_NO_UNITS_MAPPING = False
 except ImportError:
     HAS_NO_UNITS_MAPPING = True
@@ -84,10 +85,7 @@ def create_single_models():
     model_with_user_inverse.inverse = astropy_models.Shift(-7)
 
     model_with_constraints = astropy_models.Legendre2D(
-        x_degree=1, y_degree=1,
-        c0_0=1, c0_1=2, c1_0=3,
-        fixed={"c1_0": True, "c0_1": True},
-        bounds={"c0_0": (-10, 10)}
+        x_degree=1, y_degree=1, c0_0=1, c0_1=2, c1_0=3, fixed={"c1_0": True, "c0_1": True}, bounds={"c0_0": (-10, 10)}
     )
 
     model_with_custom_inputs_outputs = astropy_models.Gaussian2D()
@@ -101,46 +99,43 @@ def create_single_models():
         model_with_user_inverse,
         model_with_constraints,
         model_with_custom_inputs_outputs,
-
         # astropy.modeling.functional_models
-        astropy_models.AiryDisk2D(amplitude=10., x_0=0.5, y_0=1.5),
-        astropy_models.Box1D(amplitude=10., x_0=0.5, width=5.),
-        astropy_models.Box2D(amplitude=10., x_0=0.5, x_width=5., y_0=1.5, y_width=7.),
-        astropy_models.Const1D(amplitude=5.),
-        astropy_models.Const2D(amplitude=5.),
-        astropy_models.Disk2D(amplitude=10., x_0=0.5, y_0=1.5, R_0=5.),
-        astropy_models.Ellipse2D(amplitude=10., x_0=0.5, y_0=1.5, a=2., b=4., theta=0.1),
-        astropy_models.Exponential1D(amplitude=10., tau=3.5),
-        astropy_models.Gaussian1D(amplitude=10., mean=5., stddev=3.),
-        astropy_models.Gaussian2D(amplitude=10., x_mean=5., y_mean=5., x_stddev=3., y_stddev=3.),
-        astropy_models.KingProjectedAnalytic1D(amplitude=10., r_core=5., r_tide=2.),
+        astropy_models.AiryDisk2D(amplitude=10.0, x_0=0.5, y_0=1.5),
+        astropy_models.Box1D(amplitude=10.0, x_0=0.5, width=5.0),
+        astropy_models.Box2D(amplitude=10.0, x_0=0.5, x_width=5.0, y_0=1.5, y_width=7.0),
+        astropy_models.Const1D(amplitude=5.0),
+        astropy_models.Const2D(amplitude=5.0),
+        astropy_models.Disk2D(amplitude=10.0, x_0=0.5, y_0=1.5, R_0=5.0),
+        astropy_models.Ellipse2D(amplitude=10.0, x_0=0.5, y_0=1.5, a=2.0, b=4.0, theta=0.1),
+        astropy_models.Exponential1D(amplitude=10.0, tau=3.5),
+        astropy_models.Gaussian1D(amplitude=10.0, mean=5.0, stddev=3.0),
+        astropy_models.Gaussian2D(amplitude=10.0, x_mean=5.0, y_mean=5.0, x_stddev=3.0, y_stddev=3.0),
+        astropy_models.KingProjectedAnalytic1D(amplitude=10.0, r_core=5.0, r_tide=2.0),
         astropy_models.Linear1D(slope=2.0, intercept=1.5),
-        astropy_models.Logarithmic1D(amplitude=10., tau=3.5),
-        astropy_models.Lorentz1D(amplitude=10., x_0=0.5, fwhm=2.5),
-        astropy_models.Moffat1D(amplitude=10., x_0=0.5, gamma=1.2, alpha=2.5),
-        astropy_models.Moffat2D(amplitude=10., x_0=0.5, y_0=1.5, gamma=1.2, alpha=2.5),
+        astropy_models.Logarithmic1D(amplitude=10.0, tau=3.5),
+        astropy_models.Lorentz1D(amplitude=10.0, x_0=0.5, fwhm=2.5),
+        astropy_models.Moffat1D(amplitude=10.0, x_0=0.5, gamma=1.2, alpha=2.5),
+        astropy_models.Moffat2D(amplitude=10.0, x_0=0.5, y_0=1.5, gamma=1.2, alpha=2.5),
         astropy_models.Multiply(3),
         astropy_models.Multiply(10 * u.m),
         astropy_models.Planar2D(slope_x=0.5, slope_y=1.2, intercept=2.5),
         astropy_models.RedshiftScaleFactor(z=2.5),
-        astropy_models.RickerWavelet1D(amplitude=10., x_0=0.5, sigma=1.2),
-        astropy_models.RickerWavelet2D(amplitude=10., x_0=0.5, y_0=1.5, sigma=1.2),
-        astropy_models.Ring2D(amplitude=10., x_0=0.5, y_0=1.5, r_in=5., width=10.),
+        astropy_models.RickerWavelet1D(amplitude=10.0, x_0=0.5, sigma=1.2),
+        astropy_models.RickerWavelet2D(amplitude=10.0, x_0=0.5, y_0=1.5, sigma=1.2),
+        astropy_models.Ring2D(amplitude=10.0, x_0=0.5, y_0=1.5, r_in=5.0, width=10.0),
         astropy_models.Scale(3.4),
-        astropy_models.Sersic1D(amplitude=10., r_eff=1., n=4.),
-        astropy_models.Sersic2D(amplitude=10., r_eff=1., n=4., x_0=0.5, y_0=1.5, ellip=0.0, theta=0.0),
-        astropy_models.Shift(2.),
-        astropy_models.Shift(2. * u.deg),
+        astropy_models.Sersic1D(amplitude=10.0, r_eff=1.0, n=4.0),
+        astropy_models.Sersic2D(amplitude=10.0, r_eff=1.0, n=4.0, x_0=0.5, y_0=1.5, ellip=0.0, theta=0.0),
+        astropy_models.Shift(2.0),
+        astropy_models.Shift(2.0 * u.deg),
         astropy_models.Scale(3.4 * u.deg),
-        astropy_models.Sine1D(amplitude=10., frequency=0.5, phase=1.),
-        astropy_models.Trapezoid1D(amplitude=10., x_0=0.5, width=5., slope=1.),
-        astropy_models.TrapezoidDisk2D(amplitude=10., x_0=0.5, y_0=1.5, R_0=5., slope=1.),
-        astropy_models.Voigt1D(x_0=0.55, amplitude_L=10., fwhm_L=0.5, fwhm_G=0.9),
-
+        astropy_models.Sine1D(amplitude=10.0, frequency=0.5, phase=1.0),
+        astropy_models.Trapezoid1D(amplitude=10.0, x_0=0.5, width=5.0, slope=1.0),
+        astropy_models.TrapezoidDisk2D(amplitude=10.0, x_0=0.5, y_0=1.5, R_0=5.0, slope=1.0),
+        astropy_models.Voigt1D(x_0=0.55, amplitude_L=10.0, fwhm_L=0.5, fwhm_G=0.9),
         # astropy.modeling.mappings
         astropy_models.Identity(2),
         astropy_models.Mapping((0, 1), n_inputs=3),
-
         # astropy.modeling.math_functions
         astropy.modeling.math_functions.AbsoluteUfunc(),
         astropy.modeling.math_functions.AddUfunc(),
@@ -187,37 +182,46 @@ def create_single_models():
         astropy.modeling.math_functions.TanUfunc(),
         astropy.modeling.math_functions.TanhUfunc(),
         astropy.modeling.math_functions.True_divideUfunc(),
-
         # astropy.modeling.physical_models
-        astropy_models.BlackBody(scale=10.0, temperature=6000. * u.K),
+        astropy_models.BlackBody(scale=10.0, temperature=6000.0 * u.K),
         astropy_models.Drude1D(amplitude=10.0, x_0=0.5, fwhm=2.5),
         # TODO: NFW
-
         # astropy.modeling.polynomial
         astropy_models.Chebyshev1D(2, c0=2, c1=3, c2=0.5),
         astropy_models.Chebyshev1D(2, c0=2, c1=3, c2=0.5, domain=(0.0, 1.0), window=(1.5, 2.5)),
         astropy_models.Chebyshev2D(1, 1, c0_0=1, c0_1=2, c1_0=3),
-        astropy_models.Chebyshev2D(1, 1, c0_0=1, c0_1=2, c1_0=3,
-                                x_domain=(1.0, 2.0),
-                                y_domain=(3.0, 4.0),
-                                x_window=(5.0, 6.0),
-                                y_window=(7.0, 8.0)),
+        astropy_models.Chebyshev2D(
+            1,
+            1,
+            c0_0=1,
+            c0_1=2,
+            c1_0=3,
+            x_domain=(1.0, 2.0),
+            y_domain=(3.0, 4.0),
+            x_window=(5.0, 6.0),
+            y_window=(7.0, 8.0),
+        ),
         astropy_models.Hermite1D(2, c0=2, c1=3, c2=0.5),
         astropy_models.Hermite2D(1, 1, c0_0=1, c0_1=2, c1_0=3),
         astropy_models.Legendre1D(2, c0=2, c1=3, c2=0.5),
         astropy_models.Legendre2D(1, 1, c0_0=1, c0_1=2, c1_0=3),
         astropy_models.Polynomial1D(2, c0=1, c1=2, c2=3),
         astropy_models.Polynomial2D(1, c0_0=1, c0_1=2, c1_0=3),
-
         # astropy.modeling.powerlaws
         astropy_models.BrokenPowerLaw1D(amplitude=10, x_break=0.5, alpha_1=2.0, alpha_2=3.5),
-        astropy_models.ExponentialCutoffPowerLaw1D(10, 0.5, 2.0, 7.),
-        astropy_models.LogParabola1D(amplitude=10, x_0=0.5, alpha=2., beta=3.,),
-        astropy_models.PowerLaw1D(amplitude=10., x_0=0.5, alpha=2.0),
-        astropy_models.SmoothlyBrokenPowerLaw1D(amplitude=10., x_break=5.0, alpha_1=2.0, alpha_2=3.0, delta=0.5),
-
+        astropy_models.ExponentialCutoffPowerLaw1D(10, 0.5, 2.0, 7.0),
+        astropy_models.LogParabola1D(
+            amplitude=10,
+            x_0=0.5,
+            alpha=2.0,
+            beta=3.0,
+        ),
+        astropy_models.PowerLaw1D(amplitude=10.0, x_0=0.5, alpha=2.0),
+        astropy_models.SmoothlyBrokenPowerLaw1D(amplitude=10.0, x_break=5.0, alpha_1=2.0, alpha_2=3.0, delta=0.5),
         # astropy.modeling.projections
-        astropy_models.AffineTransformation2D(matrix=np.array([[1.0, 2.0], [3.0, 4.0]]), translation=np.array([5.0, 6.0])),
+        astropy_models.AffineTransformation2D(
+            matrix=np.array([[1.0, 2.0], [3.0, 4.0]]), translation=np.array([5.0, 6.0])
+        ),
         astropy_models.Pix2Sky_Airy(theta_b=75.8),
         astropy_models.Sky2Pix_Airy(theta_b=75.8),
         astropy_models.Pix2Sky_BonneEqualArea(theta1=44.3),
@@ -272,7 +276,6 @@ def create_single_models():
         astropy_models.Sky2Pix_ZenithalEquidistant(),
         astropy_models.Pix2Sky_ZenithalPerspective(mu=1.5, gamma=15.0),
         astropy_models.Sky2Pix_ZenithalPerspective(mu=1.5, gamma=15.0),
-
         # astropy.modeling.rotations
         astropy_models.EulerAngleRotation(23, 14, 2.3, axes_order="xzx"),
         astropy_models.RotateCelestial2Native(5.63, -72.5, 180),
@@ -280,12 +283,11 @@ def create_single_models():
         astropy_models.RotateNative2Celestial(5.63, -72.5, 180),
         astropy_models.RotateNative2Celestial(5.63 * u.deg, -72.5 * u.deg, 180 * u.deg),
         astropy_models.Rotation2D(angle=1.51),
-        astropy_models.RotationSequence3D([1.2, 2.3, 3.4, .3], "xyzx"),
-        astropy_models.SphericalRotationSequence([1.2, 2.3, 3.4, .3], "xyzy"),
-
+        astropy_models.RotationSequence3D([1.2, 2.3, 3.4, 0.3], "xyzx"),
+        astropy_models.SphericalRotationSequence([1.2, 2.3, 3.4, 0.3], "xyzy"),
         # astropy.modeling.tabular
-        astropy_models.Tabular1D(points=np.arange(0, 5), lookup_table=[1., 10, 2, 45, -3]),
-        astropy_models.Tabular1D(points=np.arange(0, 5) * u.pix, lookup_table=[1., 10, 2, 45, -3] * u.nm),
+        astropy_models.Tabular1D(points=np.arange(0, 5), lookup_table=[1.0, 10, 2, 45, -3]),
+        astropy_models.Tabular1D(points=np.arange(0, 5) * u.pix, lookup_table=[1.0, 10, 2, 45, -3] * u.nm),
         astropy_models.Tabular2D(
             points=([1, 2, 3], [1, 2, 3]),
             lookup_table=np.arange(0, 9).reshape(3, 3),
@@ -307,41 +309,38 @@ def create_single_models():
 
     # models with input_units_equivalencies
     # 1D model
-    m1 = astropy_models.Shift(1*u.kg)
-    m1.input_units_equivalencies = {'x': u.mass_energy()}
+    m1 = astropy_models.Shift(1 * u.kg)
+    m1.input_units_equivalencies = {"x": u.mass_energy()}
 
     # 2D model
-    m2 = astropy_models.Const2D(10*u.Hz)
-    m2.input_units_equivalencies = {'x': u.dimensionless_angles(),
-                                    'y': u.dimensionless_angles()}
+    m2 = astropy_models.Const2D(10 * u.Hz)
+    m2.input_units_equivalencies = {"x": u.dimensionless_angles(), "y": u.dimensionless_angles()}
 
     # 2D model with only one input equivalencies
-    m3 = astropy_models.Const2D(10*u.Hz)
-    m3.input_units_equivalencies = {'x': u.dimensionless_angles()}
+    m3 = astropy_models.Const2D(10 * u.Hz)
+    m3.input_units_equivalencies = {"x": u.dimensionless_angles()}
 
     # model using equivalency that has args using units
-    m4 = astropy_models.PowerLaw1D(amplitude=1*u.m, x_0=10*u.pix, alpha=7)
-    m4.input_units_equivalencies = {'x': u.equivalencies.pixel_scale(0.5*u.arcsec/u.pix)}
+    m4 = astropy_models.PowerLaw1D(amplitude=1 * u.m, x_0=10 * u.pix, alpha=7)
+    m4.input_units_equivalencies = {"x": u.equivalencies.pixel_scale(0.5 * u.arcsec / u.pix)}
 
     result.extend([m1, m2, m3, m4])
 
     # compound models with input_units_equivalencies
-    m1 = astropy_models.Gaussian1D(10*u.K, 11*u.arcsec, 12*u.arcsec)
-    m1.input_units_equivalencies = {'x': u.parallax()}
-    m2 = astropy_models.Gaussian1D(5*u.s, 2*u.K, 3*u.K)
-    m2.input_units_equivalencies = {'x': u.temperature()}
+    m1 = astropy_models.Gaussian1D(10 * u.K, 11 * u.arcsec, 12 * u.arcsec)
+    m1.input_units_equivalencies = {"x": u.parallax()}
+    m2 = astropy_models.Gaussian1D(5 * u.s, 2 * u.K, 3 * u.K)
+    m2.input_units_equivalencies = {"x": u.temperature()}
 
     result.extend([m1 | m2, m1 & m2, m1 + m2])
 
     # fix_inputs models with input_units_equivalencies
     m1 = astropy_models.Pix2Sky_TAN()
-    m1.input_units_equivalencies = {'x': u.dimensionless_angles(),
-                                    'y': u.dimensionless_angles()}
+    m1.input_units_equivalencies = {"x": u.dimensionless_angles(), "y": u.dimensionless_angles()}
     m2 = astropy_models.Rotation2D()
     m = m1 | m2
 
-    result.extend([astropy_models.fix_inputs(m, {'x': 45}),
-                   astropy_models.fix_inputs(m, {0: 45})])
+    result.extend([astropy_models.fix_inputs(m, {"x": 45}), astropy_models.fix_inputs(m, {0: 45})])
 
     return result
 
@@ -350,7 +349,6 @@ UNSUPPORTED_MODELS = [
     # FITS-specific and deemed unworthy of ASDF serialization:
     astropy.modeling.polynomial.InverseSIP,
     astropy.modeling.polynomial.SIP,
-
     # Base classes which should not be directly supported:
     astropy.modeling.core.Model,
     astropy.modeling.math_functions._NPUfuncModel,
@@ -371,9 +369,10 @@ UNSUPPORTED_MODELS = [
 
 if Version(astropy.__version__) > Version("4.1"):
     # https://github.com/astropy/asdf-astropy/issues/6
-    UNSUPPORTED_MODELS += [astropy.modeling.physical_models.NFW,
-                           astropy.modeling.models.UnitsMapping,
-                          ]
+    UNSUPPORTED_MODELS += [
+        astropy.modeling.physical_models.NFW,
+        astropy.modeling.models.UnitsMapping,
+    ]
 
 if Version(astropy.__version__) < Version("4.3"):
     UNSUPPORTED_MODELS.append(astropy.modeling.blackbody.BlackBody1D)
@@ -381,21 +380,25 @@ else:
     UNSUPPORTED_MODELS.append(astropy.modeling.physical_models.BlackBody)
 
 if Version(astropy.__version__) < Version("4.999.999"):
-    UNSUPPORTED_MODELS.extend([
-        astropy.modeling.models.MexicanHat1D,
-        astropy.modeling.models.MexicanHat2D,
-    ])
+    UNSUPPORTED_MODELS.extend(
+        [
+            astropy.modeling.models.MexicanHat1D,
+            astropy.modeling.models.MexicanHat2D,
+        ]
+    )
 
 if Version(astropy.__version__) > Version("4.999.999"):
     # https://github.com/astropy/asdf-astropy/issues/28
-    UNSUPPORTED_MODELS.extend([
-        astropy.modeling.functional_models.ArcCosine1D,
-        astropy.modeling.functional_models.ArcSine1D,
-        astropy.modeling.functional_models.ArcTangent1D,
-        astropy.modeling.functional_models.Cosine1D,
-        astropy.modeling.functional_models.Tangent1D,
-        astropy.modeling.spline.Spline1D,
-    ])
+    UNSUPPORTED_MODELS.extend(
+        [
+            astropy.modeling.functional_models.ArcCosine1D,
+            astropy.modeling.functional_models.ArcSine1D,
+            astropy.modeling.functional_models.ArcTangent1D,
+            astropy.modeling.functional_models.Cosine1D,
+            astropy.modeling.functional_models.Tangent1D,
+            astropy.modeling.spline.Spline1D,
+        ]
+    )
 
 
 @pytest.mark.parametrize("model", create_single_models())
@@ -411,9 +414,16 @@ def test_all_models_supported():
     the model to the UNSUPPORTED_MODELS list above with
     a link to the issue in a comment.
     """
+
     def _iterate_model_classes():
-        for key, value in itertools.chain(astropy_models.__dict__.items(), astropy.modeling.math_functions.__dict__.items()):
-            if isinstance(value, type) and issubclass(value, astropy.modeling.core.Model) and value not in UNSUPPORTED_MODELS:
+        for key, value in itertools.chain(
+            astropy_models.__dict__.items(), astropy.modeling.math_functions.__dict__.items()
+        ):
+            if (
+                isinstance(value, type)
+                and issubclass(value, astropy.modeling.core.Model)
+                and value not in UNSUPPORTED_MODELS
+            ):
                 yield value
 
     extensions = integration.get_extensions()
@@ -432,10 +442,10 @@ def test_all_models_supported():
 
 @pytest.mark.xfail(reason="Older tag versions are difficult to test until asdf implements new config features")
 def test_legacy_const(tmpdir):
-    model = astropy_models.Const1D(amplitude=5.)
+    model = astropy_models.Const1D(amplitude=5.0)
     assert_model_roundtrip(model, tmpdir, version="1.3.0")
 
-    model = astropy_models.Const2D(amplitude=5.)
+    model = astropy_models.Const2D(amplitude=5.0)
     with pytest.raises(TypeError, match="does not support models with > 1 dimension"):
         assert_model_roundtrip(model, tmpdir, version="1.3.0")
 
@@ -471,7 +481,7 @@ def test_fix_inputs(tmpdir):
     assert result.op == fixed_model.op
 
 
-@pytest.mark.skipif('HAS_NO_UNITS_MAPPING')
+@pytest.mark.skipif("HAS_NO_UNITS_MAPPING")
 def test_units_mapping(tmpdir):
     # Basic mapping between units:
     model = astropy_models.UnitsMapping(((u.m, u.dimensionless_unscaled),))
@@ -490,32 +500,37 @@ def test_units_mapping(tmpdir):
     assert result.mapping == model.mapping
 
     # With equivalencies:
-    model = astropy_models.UnitsMapping(((u.m, u.dimensionless_unscaled),),
-                                        input_units_equivalencies={"x": u.equivalencies.spectral()})
+    model = astropy_models.UnitsMapping(
+        ((u.m, u.dimensionless_unscaled),), input_units_equivalencies={"x": u.equivalencies.spectral()}
+    )
     result = assert_model_roundtrip(model, tmpdir)
     assert result.mapping == model.mapping
 
     # Allow dimensionless on all inputs:
-    model = astropy_models.UnitsMapping(((u.m, u.dimensionless_unscaled), (u.s, u.Hz)),
-                                        input_units_allow_dimensionless=True)
+    model = astropy_models.UnitsMapping(
+        ((u.m, u.dimensionless_unscaled), (u.s, u.Hz)), input_units_allow_dimensionless=True
+    )
     result = assert_model_roundtrip(model, tmpdir)
     assert result.mapping == model.mapping
 
     # Allow dimensionless selectively:
-    model = astropy_models.UnitsMapping(((u.m, u.dimensionless_unscaled), (u.s, u.Hz)),
-                                        input_units_allow_dimensionless={"x0": True, "x1": False})
+    model = astropy_models.UnitsMapping(
+        ((u.m, u.dimensionless_unscaled), (u.s, u.Hz)), input_units_allow_dimensionless={"x0": True, "x1": False}
+    )
     result = assert_model_roundtrip(model, tmpdir)
     assert result.mapping == model.mapping
 
 
 @pytest.mark.parametrize("standard_version", [v for v in asdf.versioning.supported_versions if v >= "1.4.0"])
-@pytest.mark.parametrize("model", [
-    astropy_models.Polynomial1D(1, c0=5, c1=17),
-    astropy_models.Polynomial1D(1, c0=5, c1=17, domain=[-5, 4], window=[-2, 3]),
-    astropy_models.Chebyshev1D(2, c0=2, c1=3, c2=0.5, domain=[-2, 2]),
-    astropy_models.Chebyshev1D(2, c0=2, c1=3, c2=0.5,
-                               domain=[-2, 2], window=[-0.5, 0.5]),
-])
+@pytest.mark.parametrize(
+    "model",
+    [
+        astropy_models.Polynomial1D(1, c0=5, c1=17),
+        astropy_models.Polynomial1D(1, c0=5, c1=17, domain=[-5, 4], window=[-2, 3]),
+        astropy_models.Chebyshev1D(2, c0=2, c1=3, c2=0.5, domain=[-2, 2]),
+        astropy_models.Chebyshev1D(2, c0=2, c1=3, c2=0.5, domain=[-2, 2], window=[-0.5, 0.5]),
+    ],
+)
 def test_1d_polynomial_with_asdf_standard_version(tmpdir, standard_version, model):
     result = assert_model_roundtrip(model, tmpdir, version=standard_version)
     assert result.domain == model.domain
@@ -523,18 +538,19 @@ def test_1d_polynomial_with_asdf_standard_version(tmpdir, standard_version, mode
 
 
 @pytest.mark.parametrize("standard_version", [v for v in asdf.versioning.supported_versions if v >= "1.4.0"])
-@pytest.mark.parametrize("model", [
-    astropy_models.Polynomial2D(2, c0_0=3, c1_0=5, c0_1=7),
-    astropy_models.Polynomial2D(
-        2, c0_0=3, c1_0=5, c0_1=7, x_domain=[-2, 2], y_domain=[-4, 4],
-        x_window=[-6, 6], y_window=[-8, 8]
-    ),
-    astropy_models.Chebyshev2D(1, 1, c0_0=1, c0_1=2, c1_0=3,
-                               x_domain=[-2, 2], y_domain=[-2, 2]),
-    astropy_models.Chebyshev2D(1, 1, c0_0=1, c0_1=2, c1_0=3,
-                               x_domain=[-2, 2], y_domain=[-2, 2],
-                               x_window=[-0.5, 0.5], y_window=[-0.1, 0.5]),
-])
+@pytest.mark.parametrize(
+    "model",
+    [
+        astropy_models.Polynomial2D(2, c0_0=3, c1_0=5, c0_1=7),
+        astropy_models.Polynomial2D(
+            2, c0_0=3, c1_0=5, c0_1=7, x_domain=[-2, 2], y_domain=[-4, 4], x_window=[-6, 6], y_window=[-8, 8]
+        ),
+        astropy_models.Chebyshev2D(1, 1, c0_0=1, c0_1=2, c1_0=3, x_domain=[-2, 2], y_domain=[-2, 2]),
+        astropy_models.Chebyshev2D(
+            1, 1, c0_0=1, c0_1=2, c1_0=3, x_domain=[-2, 2], y_domain=[-2, 2], x_window=[-0.5, 0.5], y_window=[-0.1, 0.5]
+        ),
+    ],
+)
 def test_2d_polynomial_with_asdf_standard_version(tmpdir, standard_version, model):
     result = assert_model_roundtrip(model, tmpdir, version=standard_version)
     assert result.x_domain == model.x_domain
@@ -543,7 +559,7 @@ def test_2d_polynomial_with_asdf_standard_version(tmpdir, standard_version, mode
     assert result.y_window == model.y_window
 
 
-@pytest.mark.skip('ASTROPY_LT_41')
+@pytest.mark.skip("ASTROPY_LT_41")
 def test_deserialize_compound_user_inverse(tmpdir):
     """
     Confirm that we are able to correctly reconstruct a

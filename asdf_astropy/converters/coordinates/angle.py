@@ -8,6 +8,7 @@ class AngleConverter(QuantityConverter):
 
     def from_yaml_tree(self, node, tag, ctx):
         from astropy.coordinates.angles import Angle
+
         return Angle(super().from_yaml_tree(node, tag, ctx))
 
 
@@ -18,6 +19,7 @@ class LatitudeConverter(QuantityConverter):
 
     def from_yaml_tree(self, node, tag, ctx):
         from astropy.coordinates.angles import Latitude
+
         return Latitude(super().from_yaml_tree(node, tag, ctx))
 
 
@@ -33,4 +35,5 @@ class LongitudeConverter(QuantityConverter):
 
     def from_yaml_tree(self, node, tag, ctx):
         from astropy.coordinates.angles import Longitude
+
         return Longitude(super().from_yaml_tree(node, tag, ctx), wrap_angle=node["wrap_angle"])

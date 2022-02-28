@@ -13,7 +13,7 @@ class UnitConverter(Converter):
         "astropy.units.core.UnitBase",
         "astropy.units.core.UnrecognizedUnit",
         "astropy.units.function.mixin.IrreducibleFunctionUnit",
-        "astropy.units.function.mixin.RegularFunctionUnit"
+        "astropy.units.function.mixin.RegularFunctionUnit",
     ]
 
     def to_yaml_tree(self, obj, tag, ctx):
