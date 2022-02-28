@@ -1,10 +1,9 @@
-import pytest
-
 import asdf
 import astropy
+import pytest
 from astropy import units as u
-from astropy.units import equivalencies as eq
 from astropy.cosmology import Planck15
+from astropy.units import equivalencies as eq
 from packaging.version import Version
 
 

@@ -1,9 +1,8 @@
-import pytest
-
 import asdf
 import astropy.units as u
-from astropy.coordinates import SkyCoord, FK4, Galactic, ICRS, Longitude
 import numpy as np
+import pytest
+from astropy.coordinates import FK4, ICRS, Galactic, Longitude, SkyCoord
 
 from asdf_astropy.testing.helpers import assert_sky_coord_equal
 

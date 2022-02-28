@@ -1,15 +1,15 @@
-import asdf
-import pytest
-import numpy as np
 import itertools
-from packaging.version import Version
 
+import asdf
 import astropy
-from astropy.modeling import models as astropy_models
 import astropy.modeling
-from astropy import units as u
-from numpy.testing import assert_array_equal
+import numpy as np
+import pytest
 from asdf.tests.helpers import yaml_to_asdf
+from astropy import units as u
+from astropy.modeling import models as astropy_models
+from numpy.testing import assert_array_equal
+from packaging.version import Version
 
 from asdf_astropy import integration
 

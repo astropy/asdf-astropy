@@ -1,10 +1,9 @@
-import pytest
-
 import asdf
+import pytest
 from astropy import units as u
-from astropy.units import Quantity
-from astropy.coordinates import EarthLocation, Longitude, Latitude
+from astropy.coordinates import EarthLocation, Latitude, Longitude
 from astropy.coordinates.earth import ELLIPSOIDS
+from astropy.units import Quantity
 
 from asdf_astropy.testing.helpers import assert_earth_location_equal
 

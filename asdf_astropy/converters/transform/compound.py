@@ -1,6 +1,5 @@
-from .core import TransformConverterBase
 from ..helpers import get_tag_name
-
+from .core import TransformConverterBase
 
 __all__ = ["CompoundConverter"]
 
@@ -67,7 +66,7 @@ class CompoundConverter(TransformConverterBase):
         return {"forward": [left, right]}
 
     def from_yaml_tree_transform(self, node, tag, ctx):
-        from astropy.modeling.core import Model, CompoundModel
+        from astropy.modeling.core import CompoundModel, Model
 
         oper = _TAG_NAME_TO_MODEL_METHOD[get_tag_name(tag)]
 

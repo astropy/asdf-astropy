@@ -1,11 +1,9 @@
-import pytest
-
 import asdf
-
-from asdf_astropy.testing.helpers import assert_time_delta_equal
-
+import pytest
 from astropy import units as u
 from astropy.time import Time, TimeDelta
+
+from asdf_astropy.testing.helpers import assert_time_delta_equal
 
 
 def create_time_deltas():

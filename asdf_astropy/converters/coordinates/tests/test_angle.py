@@ -1,9 +1,8 @@
-import pytest
-
 import asdf
+import numpy as np
+import pytest
 from astropy import units as u
 from astropy.coordinates import Angle, Latitude, Longitude
-import numpy as np
 
 
 def create_angles():

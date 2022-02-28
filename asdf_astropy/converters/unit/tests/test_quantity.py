@@ -1,10 +1,9 @@
-import pytest
-
 import asdf
+import numpy as np
+import pytest
 from asdf.tests import helpers
 from astropy import units
 from astropy.units import Quantity
-import numpy as np
 from numpy.testing import assert_array_equal
 
 

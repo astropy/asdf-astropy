@@ -1,26 +1,25 @@
-import pytest
-
 import asdf
+import numpy as np
+import pytest
 from astropy import units as u
 from astropy.coordinates import (
-    Angle,
-    CartesianRepresentation,
     CIRS,
     FK4,
-    FK4NoETerms,
     FK5,
-    Galactic,
-    Galactocentric,
     GCRS,
     ICRS,
     ITRS,
+    Angle,
+    CartesianRepresentation,
+    FK4NoETerms,
+    Galactic,
+    Galactocentric,
     Latitude,
     Longitude,
     PrecessedGeocentric,
     SphericalRepresentation,
 )
 from astropy.time import Time
-import numpy as np
 
 from asdf_astropy.testing.helpers import assert_frame_equal
 

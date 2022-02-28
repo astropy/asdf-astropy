@@ -85,7 +85,7 @@ class AstropyTableConverter(Converter):
         return node
 
     def from_yaml_tree(self, node, tag, ctx):
-        from astropy.table import Table, QTable
+        from astropy.table import QTable, Table
 
         if node.get("qtable", False):
             table = QTable(meta=node.get("meta"))

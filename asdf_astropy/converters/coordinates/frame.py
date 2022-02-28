@@ -73,7 +73,7 @@ class LegacyICRSConverter(Converter):
         }
 
     def from_yaml_tree(self, node, tag, ctx):
-        from astropy.coordinates import Angle, Longitude, Latitude, ICRS
+        from astropy.coordinates import ICRS, Angle, Latitude, Longitude
 
         ra = Longitude(node["ra"]["value"], unit=node["ra"]["unit"], wrap_angle=Angle(node["ra"]["wrap_angle"]))
 

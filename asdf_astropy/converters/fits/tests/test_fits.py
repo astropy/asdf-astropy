@@ -1,9 +1,9 @@
 import asdf
+import numpy as np
+import pytest
 from asdf.tests.helpers import yaml_to_asdf
 from astropy.io import fits
-import numpy as np
 from numpy.testing import assert_array_equal
-import pytest
 
 from asdf_astropy.testing.helpers import assert_hdu_list_equal
 

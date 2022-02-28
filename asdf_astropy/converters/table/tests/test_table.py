@@ -1,18 +1,18 @@
 import asdf
-from asdf.tests.helpers import yaml_to_asdf
-from astropy.coordinates import SkyCoord, EarthLocation
-from astropy.table import Table, NdarrayMixin, QTable, Column, MaskedColumn
-from astropy.time import Time, TimeDelta
 import astropy.units as u
 import numpy as np
-from numpy.testing import assert_array_equal
 import pytest
+from asdf.tests.helpers import yaml_to_asdf
+from astropy.coordinates import EarthLocation, SkyCoord
+from astropy.table import Column, MaskedColumn, NdarrayMixin, QTable, Table
+from astropy.time import Time, TimeDelta
+from numpy.testing import assert_array_equal
 
 from asdf_astropy.testing.helpers import (
     assert_earth_location_equal,
     assert_sky_coord_equal,
-    assert_time_equal,
     assert_time_delta_equal,
+    assert_time_equal,
 )
 
 

@@ -1,5 +1,5 @@
-from astropy.tests.helper import assert_quantity_allclose
 import astropy.units as u
+from astropy.tests.helper import assert_quantity_allclose
 
 
 def assert_representation_equal(a, b):

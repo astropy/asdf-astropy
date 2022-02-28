@@ -125,8 +125,8 @@ class TransformConverterBase(Converter):
         return node
 
     def _serialize_bounding_box(self, model, node):
-        from packaging.version import Version
         import astropy
+        from packaging.version import Version
 
         if Version(astropy.__version__) > Version("4.999.999"):
             self._serialize_bounding_box_astropy_5(model, node)
@@ -147,7 +147,7 @@ class TransformConverterBase(Converter):
             node["bounding_box"] = bb
 
     def _serialize_bounding_box_astropy_5(self, model, node):
-        from astropy.modeling.bounding_box import ModelBoundingBox, CompoundBoundingBox
+        from astropy.modeling.bounding_box import CompoundBoundingBox, ModelBoundingBox
 
         try:
             bb = model.bounding_box
@@ -209,8 +209,8 @@ class TransformConverterBase(Converter):
             model.inverse = node["inverse"]
 
     def _deserialize_bounding_box(self, model, node):
-        from packaging.version import Version
         import astropy
+        from packaging.version import Version
 
         if Version(astropy.__version__) > Version("4.999.999"):
             self._deserialize_bounding_box_astropy_5(model, node)

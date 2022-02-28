@@ -1,7 +1,6 @@
-from .core import TransformConverterBase
-
-
 from asdf.extension import Converter
+
+from .core import TransformConverterBase
 
 
 class IdentityConverter(TransformConverterBase):

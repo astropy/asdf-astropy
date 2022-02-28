@@ -25,11 +25,12 @@
 # Thus, any C-extensions that are needed to build the documentation will *not*
 # be accessible, and the documentation will not build correctly.
 
+import datetime
 import os
 import sys
-import datetime
-from importlib import import_module
 from configparser import ConfigParser
+from importlib import import_module
+
 import sphinx
 import sphinx_astropy
 
