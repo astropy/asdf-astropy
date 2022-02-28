@@ -65,6 +65,11 @@ jobs:
             os: ubuntu-latest
             toxenv: py39-test-numpy119
 
+          - name: Python 3.9 with Astropy LTS
+            python-version: "3.9"
+            os: ubuntu-latest
+            toxenv: py39-astropylts
+
           - name: Build Documents
             python-version: "3.9"
             os: ubuntu-latest
@@ -74,11 +79,6 @@ jobs:
             python-version: "3.8"
             os: ubuntu-latest
             toxenv: codestyle
-
-          - name: Python 3.9 with Astropy LTS
-            python-version: "3.9"
-            os: ubuntu-latest
-            toxenv: py39-astropylts
 
           - name: Bandit Checks
             python-version: "3.9"
@@ -96,7 +96,6 @@ jobs:
           python-version: ${{ matrix.python-version }}
       - name: Install tox
         run: |
-          export SETUP_XVFB=True
           python -m pip install tox
       - name: Run tox
         run: tox -e ${{ matrix.toxenv }}
