@@ -1,5 +1,4 @@
 [build-system]
-
 requires = ["setuptools",
             "setuptools_scm",
             "wheel",
@@ -7,5 +6,20 @@ requires = ["setuptools",
             "oldest-supported-numpy",
             #"cython==0.29.14"
 	    ]
-
 build-backend = 'setuptools.build_meta'
+
+[tool.black]
+line-length = 120
+force-exclude = '''
+^/(
+  (
+      \.eggs
+    | \.git
+    | \.pytest_cache
+    | \.tox
+    | scripts
+    | build
+    | dist
+  )/
+)
+'''
