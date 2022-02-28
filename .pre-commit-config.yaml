@@ -18,3 +18,9 @@ repos:
   hooks:
     - id: flake8
       exclude: "scripts/.*|docs/.*"
+
+- repo: https://github.com/PyCQA/bandit
+  rev: 1.7.2
+  hooks:
+    - id: bandit
+      args: ["-c", "bandit.yaml"]

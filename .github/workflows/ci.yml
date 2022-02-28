@@ -80,11 +80,6 @@ jobs:
             os: ubuntu-latest
             toxenv: codestyle
 
-          - name: Bandit Checks
-            python-version: "3.9"
-            os: ubuntu-latest
-            toxenv: bandit
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
