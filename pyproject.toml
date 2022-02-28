@@ -23,3 +23,8 @@ force-exclude = '''
   )/
 )
 '''
+
+[tool.isort]
+profile = "black"
+filter_files = true
+line_length = 120
