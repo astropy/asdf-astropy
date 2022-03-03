@@ -1,7 +1,5 @@
 import abc
-import warnings
 
-import numpy as np
 from asdf.extension import Converter
 
 from ..utils import import_type
@@ -92,7 +90,6 @@ class TransformConverterBase(Converter):
 
     def to_yaml_tree(self, model, tag, ctx):
         from astropy.modeling.core import CompoundModel
-        from astropy.modeling.bounding_box import ModelBoundingBox
 
         node = self.to_yaml_tree_transform(model, tag, ctx)
 
@@ -109,7 +106,7 @@ class TransformConverterBase(Converter):
 
         # ignore default bounding_box
         if model._user_bounding_box is not None:
-            node['bounding_box'] = model.bounding_box
+            node["bounding_box"] = model.bounding_box
 
         # model / parameter constraints
         if not isinstance(model, CompoundModel):
@@ -135,14 +132,14 @@ class TransformConverterBase(Converter):
         if "name" in node:
             model.name = node["name"]
 
-        if 'inputs' in node:
-            model.inputs = tuple(node['inputs'])
+        if "inputs" in node:
+            model.inputs = tuple(node["inputs"])
 
         if "outputs" in node:
             model.outputs = tuple(node["outputs"])
 
-        if 'bounding_box' in node:
-            model.bounding_box = node['bounding_box']
+        if "bounding_box" in node:
+            model.bounding_box = node["bounding_box"]
 
         param_and_model_constraints = {}
         for constraint in ["fixed", "bounds"]:
