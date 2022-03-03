@@ -10,7 +10,7 @@ __pycache__
 
 # Other generated files
 MANIFEST
-asdf_astropy/version.py
+asdf_astropy/_version.py
 
 # Sphinx
 _build
