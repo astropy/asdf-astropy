@@ -189,9 +189,7 @@ TRANSFORM_CONVERTERS = [
     # SIP and InverseSIP are deliberately excluded because they
     # are FITS-specific and can be easily represented by a
     # simple combination of existing models.
-
     SplineConverter(),
-
     # astropy.modeling.powerlaws
     SimpleTransformConverter(
         ["tag:stsci.edu:asdf/transform/broken_power_law1d-*"],

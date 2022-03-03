@@ -212,15 +212,14 @@ def create_single_models():
         astropy_models.Legendre2D(1, 1, c0_0=1, c0_1=2, c1_0=3),
         astropy_models.Polynomial1D(2, c0=1, c1=2, c2=3),
         astropy_models.Polynomial2D(1, c0_0=1, c0_1=2, c1_0=3),
-
         # astropy.modeling.spline
-        astropy_models.Spline1D(np.array([-3., -3., -3., -3., -1., 0., 1.,
-                                          3.,  3.,  3.,  3.]),
-                                np.array([0.10412331, 0.07013616, -0.18799552,
-                                          1.35953147, -0.15282581, 0.03923,
-                                          -0.04297299, 0., 0., 0., 0.]),
-                                3),
-
+        astropy_models.Spline1D(
+            np.array([-3.0, -3.0, -3.0, -3.0, -1.0, 0.0, 1.0, 3.0, 3.0, 3.0, 3.0]),
+            np.array(
+                [0.10412331, 0.07013616, -0.18799552, 1.35953147, -0.15282581, 0.03923, -0.04297299, 0.0, 0.0, 0.0, 0.0]
+            ),
+            3,
+        ),
         # astropy.modeling.powerlaws
         astropy_models.BrokenPowerLaw1D(amplitude=10, x_break=0.5, alpha_1=2.0, alpha_2=3.5),
         astropy_models.ExponentialCutoffPowerLaw1D(10, 0.5, 2.0, 7.0),
