@@ -40,11 +40,6 @@ jobs:
             os: ubuntu-latest
             toxenv: py38-test
 
-          - name: Python 3.7 Tests
-            python-version: "3.7"
-            os: ubuntu-latest
-            toxenv: py37-test
-
           - name: Mac OS Latest
             python-version: "3.9"
             os: macos-latest
