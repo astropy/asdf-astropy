@@ -25,43 +25,58 @@ jobs:
             os: ubuntu-latest
             toxenv: py310-test
 
-          - name: Python 3.9 Tests
+          - name: Python 3.9 with code coverage
             python-version: "3.9"
             os: ubuntu-latest
-            toxenv: py39-test
+            toxenv: py39-cov
 
-          - name: Python 3.8 with code coverage
+          - name: Python 3.9, Development Dependencies
+            python-version: "3.9"
+            os: ubuntu-latest
+            toxenv: py39-test-devdeps
+
+          - name: Python 3.8 Tests
             python-version: "3.8"
             os: ubuntu-latest
-            toxenv: py38-cov
+            toxenv: py38-test
 
-          - name: Python 3.8, Development Dependencies
-            python-version: "3.8"
-            os: ubuntu-latest
-            toxenv: py38-test-devdeps
-
-          - name: Python 3.8, Numpy 1.18
-            python-version: "3.8"
-            os: ubuntu-latest
-            toxenv: py38-test-numpy118
-
-          - name: Python 3.8, Numpy 1.19
-            python-version: "3.8"
-            os: ubuntu-latest
-            toxenv: py38-test-numpy119
-
-          - name: Code Style Checks
-            python-version: "3.8"
-            os: ubuntu-latest
-            toxenv: codestyle
-
-          - name: Python 3.7, MacOS
+          - name: Python 3.7 Tests
             python-version: "3.7"
-            os: macos-latest
+            os: ubuntu-latest
             toxenv: py37-test
 
+          - name: Mac OS Latest
+            python-version: "3.9"
+            os: macos-latest
+            toxenv: py39-test
+
+          - name: Windows Latest
+            python-version: "3.9"
+            os: windows-latest
+            toxenv: py39-test
+
+          - name: Python 3.9, Numpy 1.18
+            python-version: "3.9"
+            os: ubuntu-latest
+            toxenv: py39-test-numpy118
+
+          - name: Python 3.9, Numpy 1.19
+            python-version: "3.9"
+            os: ubuntu-latest
+            toxenv: py39-test-numpy119
+
+          - name: Python 3.9 with Astropy LTS
+            python-version: "3.9"
+            os: ubuntu-latest
+            toxenv: py39-astropylts
+
+          - name: Twine check
+            python-version: "3.9"
+            os: ubuntu-latest
+            toxenv: twine
+
           - name: Build Documents
-            python-version: "3.8"
+            python-version: "3.9"
             os: ubuntu-latest
             toxenv: build_docs
 
@@ -69,18 +84,6 @@ jobs:
             python-version: "3.8"
             os: ubuntu-latest
             toxenv: codestyle
-
-          # Fails: asdf_astropy/converters/transform/tests/test_transform.py::test_deserialize_compound_user_inverse
-          # Failes asdf_astropy/converters/transform/tests/test_transform.py: 528
-          - name: Python 3.8 with Astropy LTS
-            python-version: "3.8"
-            os: ubuntu-latest
-            toxenv: py38-astropylts
-
-          - name: Bandit Checks
-            python-version: "3.8"
-            os: ubuntu-latest
-            toxenv: bandit
 
     steps:
       - name: Checkout code
@@ -93,7 +96,6 @@ jobs:
           python-version: ${{ matrix.python-version }}
       - name: Install tox
         run: |
-          export SETUP_XVFB=True
           python -m pip install tox
       - name: Run tox
         run: tox -e ${{ matrix.toxenv }}

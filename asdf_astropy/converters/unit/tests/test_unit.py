@@ -1,10 +1,9 @@
-
 import warnings
 
 import asdf
+import pytest
 from asdf.tests import helpers
 from astropy import units
-import pytest
 
 
 def vounit_compatible(unit):
@@ -18,10 +17,7 @@ def vounit_compatible(unit):
 
 
 def create_units():
-    return [
-        u for u in list(units.__dict__.values())
-        if isinstance(u, units.UnitBase) and vounit_compatible(u)
-    ]
+    return [u for u in list(units.__dict__.values()) if isinstance(u, units.UnitBase) and vounit_compatible(u)]
 
 
 @pytest.mark.parametrize("unit", create_units())

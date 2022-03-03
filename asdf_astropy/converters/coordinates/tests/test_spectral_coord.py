@@ -7,7 +7,7 @@ pytest.importorskip("astropy.coordinates.spectral_coordinate")
 
 import asdf
 from astropy import units as u
-from astropy.coordinates import SpectralCoord, ICRS, Galactic
+from astropy.coordinates import ICRS, Galactic, SpectralCoord
 from astropy.coordinates.spectral_coordinate import NoVelocityWarning
 from astropy.tests.helper import assert_quantity_allclose
 
@@ -29,7 +29,7 @@ def create_spectral_coords():
             SpectralCoord(
                 10 * u.GHz,
                 observer=ICRS(1 * u.km, 2 * u.km, 3 * u.km, representation_type="cartesian"),
-                target=Galactic(10 * u.deg, 20 * u.deg, distance=30 * u.pc)
+                target=Galactic(10 * u.deg, 20 * u.deg, distance=30 * u.pc),
             )
         )
 

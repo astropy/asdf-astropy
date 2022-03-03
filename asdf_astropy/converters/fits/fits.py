@@ -26,7 +26,7 @@ class FitsConverter(Converter):
 
         node = []
         for hdu in obj:
-            header_node =  [_card_to_node(c) for c in hdu.header.cards]
+            header_node = [_card_to_node(c) for c in hdu.header.cards]
             hdu_node = {"header": header_node}
 
             if hdu.data is not None:

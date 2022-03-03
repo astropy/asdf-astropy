@@ -1,6 +1,5 @@
 from .core import TransformConverterBase
 
-
 __all__ = ["TabularConverter"]
 
 
@@ -8,6 +7,7 @@ class TabularConverter(TransformConverterBase):
     """
     ASDF support for serializing tabular models.
     """
+
     tags = ["tag:stsci.edu:asdf/transform/tabular-*"]
 
     types = [
@@ -34,14 +34,22 @@ class TabularConverter(TransformConverterBase):
         fill_value = node.pop("fill_value", None)
         if dim == 1:
             points = (node["points"][0],)
-            model = tabular.Tabular1D(points=points, lookup_table=lookup_table,
-                                      method=node["method"], bounds_error=node["bounds_error"],
-                                      fill_value=fill_value)
+            model = tabular.Tabular1D(
+                points=points,
+                lookup_table=lookup_table,
+                method=node["method"],
+                bounds_error=node["bounds_error"],
+                fill_value=fill_value,
+            )
         elif dim == 2:
             points = tuple(node["points"])
-            model = tabular.Tabular2D(points=points, lookup_table=lookup_table,
-                                      method=node["method"], bounds_error=node["bounds_error"],
-                                      fill_value=fill_value)
+            model = tabular.Tabular2D(
+                points=points,
+                lookup_table=lookup_table,
+                method=node["method"],
+                bounds_error=node["bounds_error"],
+                fill_value=fill_value,
+            )
         else:
             raise NotImplementedError("tabular models with ndim > 2 are not supported ")
 

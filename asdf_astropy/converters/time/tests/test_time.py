@@ -1,10 +1,9 @@
-import pytest
-
 import asdf
+import numpy as np
+import pytest
+from astropy import units as u
 from astropy.coordinates import EarthLocation
 from astropy.time import Time
-from astropy import units as u
-import numpy as np
 
 from asdf_astropy.testing.helpers import assert_time_equal
 

@@ -1,0 +1,18 @@
+exclude_dirs:
+  - .eggs
+  - .git
+  - .pytest_cache
+  - .tox
+  - asdf_astropy/testing
+  - asdf_astropy/tests
+  - asdf_astropy/converters/coordinates/tests
+  - asdf_astropy/converters/fits/tests
+  - asdf_astropy/converters/table/tests
+  - asdf_astropy/converters/time/tests
+  - asdf_astropy/converters/transform/tests
+  - asdf_astropy/converters/unit/tests
+  - scripts
+  - build
+  - dist
+  - docs
+  - __pycache__

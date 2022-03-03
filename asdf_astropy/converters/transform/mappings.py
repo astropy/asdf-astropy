@@ -1,13 +1,13 @@
-from .core import TransformConverterBase
-
-
 from asdf.extension import Converter
+
+from .core import TransformConverterBase
 
 
 class IdentityConverter(TransformConverterBase):
     """
     ASDF support for serializing the Identity model.
     """
+
     tags = ["tag:stsci.edu:asdf/transform/identity-*"]
 
     types = ["astropy.modeling.mappings.Identity"]
@@ -15,19 +15,20 @@ class IdentityConverter(TransformConverterBase):
     def to_yaml_tree_transform(self, model, tag, ctx):
         node = {}
         if model.n_inputs != 1:
-            node['n_dims'] = model.n_inputs
+            node["n_dims"] = model.n_inputs
         return node
 
     def from_yaml_tree_transform(self, node, tag, ctx):
         from astropy.modeling.mappings import Identity
 
-        return Identity(node.get('n_dims', 1))
+        return Identity(node.get("n_dims", 1))
 
 
 class RemapAxesConverter(TransformConverterBase):
     """
     ASDF support for serializing the Mapping model
     """
+
     tags = ["tag:stsci.edu:asdf/transform/remap_axes-*"]
 
     types = ["astropy.modeling.mappings.Mapping"]
@@ -51,6 +52,7 @@ class UnitsMappingConverter(Converter):
     because the inputs and outputs are written differently
     from other models.
     """
+
     tags = ["tag:astropy.org:astropy/transform/units_mapping-*"]
 
     types = ["astropy.modeling.mappings.UnitsMapping"]
@@ -89,8 +91,7 @@ class UnitsMappingConverter(Converter):
     def from_yaml_tree(self, node, tag, ctx):
         from astropy.modeling.mappings import UnitsMapping
 
-        mapping = tuple((i.get("unit"), o.get("unit"))
-                        for i, o in zip(node["unit_inputs"], node["unit_outputs"]))
+        mapping = tuple((i.get("unit"), o.get("unit")) for i, o in zip(node["unit_inputs"], node["unit_outputs"]))
 
         equivalencies = None
         for i in node["unit_inputs"]:
@@ -102,7 +103,8 @@ class UnitsMappingConverter(Converter):
         kwargs = {
             "input_units_equivalencies": equivalencies,
             "input_units_allow_dimensionless": {
-                i["name"]: i.get("allow_dimensionless", False) for i in node["unit_inputs"]},
+                i["name"]: i.get("allow_dimensionless", False) for i in node["unit_inputs"]
+            },
         }
 
         if "name" in node:

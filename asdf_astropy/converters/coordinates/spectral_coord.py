@@ -1,4 +1,3 @@
-
 from asdf.extension import Converter
 from asdf.tags.core.ndarray import NDArrayType
 

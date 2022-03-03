@@ -1,7 +1,6 @@
+import numpy as np
 from asdf.extension import Converter
 from asdf.tags.core.ndarray import NDArrayType
-import numpy as np
-
 
 _GUESSABLE_FORMATS = {"iso", "byear", "jyear", "yday"}
 
@@ -66,9 +65,9 @@ class TimeConverter(Converter):
         return node
 
     def from_yaml_tree(self, node, tag, ctx):
-        from astropy.time import Time
         from astropy import units
         from astropy.coordinates import EarthLocation
+        from astropy.time import Time
 
         if isinstance(node, (str, list, np.ndarray, NDArrayType)):
             time = Time(node)

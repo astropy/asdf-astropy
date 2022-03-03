@@ -1,6 +1,6 @@
+from astropy import units
 from astropy.coordinates import EarthLocation
 from astropy.tests.helper import assert_quantity_allclose
-from astropy import units
 from numpy.testing import assert_array_equal
 
 

@@ -8,7 +8,7 @@ class EquivalencyConverter(Converter):
 
     def to_yaml_tree(self, obj, tag, ctx):
         return [
-            {'name': name, 'kwargs_names': list(kw.keys()), 'kwargs_values': list(kw.values())}
+            {"name": name, "kwargs_names": list(kw.keys()), "kwargs_values": list(kw.values())}
             for name, kw in zip(obj.name, obj.kwargs)
         ]
 
