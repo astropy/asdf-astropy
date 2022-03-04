@@ -18,6 +18,7 @@ from .converters.transform.math_functions import MathFunctionsConverter
 from .converters.transform.polynomial import OrthoPolynomialConverter, PolynomialConverter
 from .converters.transform.projections import ProjectionConverter
 from .converters.transform.rotations import Rotate3DConverter, RotationSequenceConverter
+from .converters.transform.spline import SplineConverter
 from .converters.transform.tabular import TabularConverter
 from .converters.unit.equivalency import EquivalencyConverter
 from .converters.unit.quantity import QuantityConverter
@@ -188,6 +189,7 @@ TRANSFORM_CONVERTERS = [
     # SIP and InverseSIP are deliberately excluded because they
     # are FITS-specific and can be easily represented by a
     # simple combination of existing models.
+    SplineConverter(),
     # astropy.modeling.powerlaws
     SimpleTransformConverter(
         ["tag:stsci.edu:asdf/transform/broken_power_law1d-*"],
