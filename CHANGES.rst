@@ -1,3 +1,8 @@
+0.2.1 (unreleased)
+------------------
+
+- Add converter support for the new ``BoundingBox`` schema and ``CompoundBoundingBox``. [#38]
+
 0.2.0 (2022-03-08)
 ------------------
 
