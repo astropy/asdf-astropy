@@ -5,7 +5,9 @@
   for astropy models. [#37]
 - Bugfix for units_mapping schema's property name conflicts. Changes:
   - ``inputs`` to ``unit_inputs``
-  - ``outputs`` to ``unit_outputs``
+  - ``outputs`` to ``unit_outputs`` [#39]
+- Add converter support for Cosine1D, Tangent1D, ArcSine1D, ArcCosine1D, ArcTangent1D
+  models. [#42]
 
 0.1.2 (2021-12-14)
 ------------------

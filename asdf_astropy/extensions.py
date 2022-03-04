@@ -129,6 +129,26 @@ TRANSFORM_CONVERTERS = [
         "astropy.modeling.functional_models.Sine1D",
     ),
     SimpleTransformConverter(
+        ["tag:stsci.edu:asdf/transform/cosine1d-*"],
+        "astropy.modeling.functional_models.Cosine1D",
+    ),
+    SimpleTransformConverter(
+        ["tag:stsci.edu:asdf/transform/tangent1d-*"],
+        "astropy.modeling.functional_models.Tangent1D",
+    ),
+    SimpleTransformConverter(
+        ["tag:stsci.edu:asdf/transform/arcsine1d-*"],
+        "astropy.modeling.functional_models.ArcSine1D",
+    ),
+    SimpleTransformConverter(
+        ["tag:stsci.edu:asdf/transform/arccosine1d-*"],
+        "astropy.modeling.functional_models.ArcCosine1D",
+    ),
+    SimpleTransformConverter(
+        ["tag:stsci.edu:asdf/transform/arctangent1d-*"],
+        "astropy.modeling.functional_models.ArcTangent1D",
+    ),
+    SimpleTransformConverter(
         ["tag:stsci.edu:asdf/transform/trapezoid1d-*"],
         "astropy.modeling.functional_models.Trapezoid1D",
     ),
