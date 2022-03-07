@@ -1,4 +1,3 @@
-# Licensed under a 3-clause BSD style license - see licenses/ASTROPY_LICENSE.rst
 import asdf
 import pytest
 from astropy.table import Table

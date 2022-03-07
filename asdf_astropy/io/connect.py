@@ -1,4 +1,3 @@
-# Licensed under a 3-clause BSD style license - see licenses/ASTROPY_LICENSE.rst
 # This file connects ASDF to the astropy.table.Table class
 import asdf
 from astropy.io import registry as io_registry
