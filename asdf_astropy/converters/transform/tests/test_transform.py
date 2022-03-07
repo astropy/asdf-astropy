@@ -8,10 +8,10 @@ import pytest
 from asdf.tests.helpers import yaml_to_asdf
 from astropy import units as u
 from astropy.modeling import models as astropy_models
-from numpy.testing import assert_array_equal
 from packaging.version import Version
 
 from asdf_astropy import integration
+from asdf_astropy.testing.helpers import assert_model_equal
 
 try:
     from astropy.modeling.models import UnitsMapping  # noqa
@@ -37,44 +37,8 @@ def assert_model_roundtrip(model, tmpdir, version=None):
         af.write_to(path)
 
     with asdf.open(path) as af:
-        assert_models_equal(model, af["model"])
+        assert_model_equal(model, af["model"])
         return af["model"]
-
-
-def assert_models_equal(a, b):
-    """
-    Assert that two model instances are equivalent.
-    """
-    if a is None and b is None:
-        return
-
-    assert a.__class__ == b.__class__
-
-    assert a.name == b.name
-    assert a.inputs == b.inputs
-    assert a.input_units == b.input_units
-    assert a.outputs == b.outputs
-    assert a.input_units_allow_dimensionless == b.input_units_allow_dimensionless
-    assert a.input_units_equivalencies == b.input_units_equivalencies
-
-    assert_array_equal(a.parameters, b.parameters)
-
-    try:
-        a_bounding_box = a.bounding_box
-    except NotImplementedError:
-        a_bounding_box = None
-
-    try:
-        b_bounding_box = b.bounding_box
-    except NotImplementedError:
-        b_bounding_box = None
-
-    assert a_bounding_box == b_bounding_box
-
-    assert a.fixed == b.fixed
-    assert a.bounds == b.bounds
-
-    assert_models_equal(a._user_inverse, b._user_inverse)
 
 
 def create_single_models():
@@ -480,8 +444,8 @@ def test_compound_model(tmpdir, operator):
     right_model = astropy_models.Shift(-1)
     model = getattr(left_model, operator)(right_model)
     result = assert_model_roundtrip(model, tmpdir)
-    assert_models_equal(result.left, left_model)
-    assert_models_equal(result.right, right_model)
+    assert_model_equal(result.left, left_model)
+    assert_model_equal(result.right, right_model)
     assert result.op == model.op
 
 
@@ -489,7 +453,7 @@ def test_fix_inputs(tmpdir):
     model = astropy_models.Gaussian2D(1, 2, 3, 4, 5)
     fixed_model = astropy_models.fix_inputs(model, {"x": 2.5})
     result = assert_model_roundtrip(fixed_model, tmpdir)
-    assert_models_equal(result.left, model)
+    assert_model_equal(result.left, model)
     assert result.right == fixed_model.right
     assert result.op == fixed_model.op
 
