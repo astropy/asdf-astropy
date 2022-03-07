@@ -9,6 +9,7 @@
 - Add converter support for Cosine1D, Tangent1D, ArcSine1D, ArcCosine1D, ArcTangent1D
   models. [#42]
 - Add converter for Spline1D model. [#43]
+- Add astropy Table connector for ASDF. [#47]
 
 0.1.2 (2021-12-14)
 ------------------
