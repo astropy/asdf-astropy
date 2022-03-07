@@ -3,6 +3,7 @@ exclude_dirs:
   - .git
   - .pytest_cache
   - .tox
+  - asdf_astropy/io/tests
   - asdf_astropy/testing
   - asdf_astropy/tests
   - asdf_astropy/converters/coordinates/tests
