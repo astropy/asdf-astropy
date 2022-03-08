@@ -80,6 +80,11 @@ jobs:
             os: ubuntu-latest
             toxenv: codestyle
 
+          - name: Warnings Treated as Exceptions
+            os: ubuntu-latest
+            python-version: "3.9"
+            toxenv: warnings
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
