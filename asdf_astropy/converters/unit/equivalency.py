@@ -13,11 +13,17 @@ class EquivalencyConverter(Converter):
         ]
 
     def from_yaml_tree(self, node, tag, ctx):
+        from astropy.cosmology.units import with_H0
         from astropy.units import equivalencies
 
         components = []
         for equivalency_node in node:
-            equivalency_method = getattr(equivalencies, equivalency_node["name"])
+            name = equivalency_node["name"]
+            if name == "with_H0":
+                equivalency_method = with_H0
+            else:
+                equivalency_method = getattr(equivalencies, name)
+
             kwargs = dict(zip(equivalency_node["kwargs_names"], equivalency_node["kwargs_values"]))
             components.append(equivalency_method(**kwargs))
 
