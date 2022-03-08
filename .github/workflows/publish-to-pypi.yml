@@ -36,7 +36,7 @@ jobs:
         cd ..
         python -m venv testenv
         testenv/bin/pip install pytest pytest-astropy scipy asdf-astropy/dist/*.whl
-        testenv/bin/pytest asdf-astropy/asdf_astropy
+        testenv/bin/pytest asdf-astropy
     - name: Publish distribution 📦 to PyPI
       if: github.event_name == 'release'
       uses: pypa/gh-action-pypi-publish@release/v1
