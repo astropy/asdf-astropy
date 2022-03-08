@@ -1,4 +1,4 @@
-0.2.0 (unreleased)
+0.2.0 (2022-03-08)
 ------------------
 
 - Add support for serialization and deserialization of input_units_equivalencies
