@@ -75,3 +75,39 @@ def assert_hdu_list_equal(a, b):
         assert len(hdu_a.header.cards) == len(hdu_b.header.cards)
         for card_a, card_b in zip(hdu_a.header.cards, hdu_b.header.cards):
             assert tuple(card_a) == tuple(card_b)
+
+
+def assert_model_equal(a, b):
+    """
+    Assert that two model instances are equivalent.
+    """
+    if a is None and b is None:
+        return
+
+    assert a.__class__ == b.__class__
+
+    assert a.name == b.name
+    assert a.inputs == b.inputs
+    assert a.input_units == b.input_units
+    assert a.outputs == b.outputs
+    assert a.input_units_allow_dimensionless == b.input_units_allow_dimensionless
+    assert a.input_units_equivalencies == b.input_units_equivalencies
+
+    assert_array_equal(a.parameters, b.parameters)
+
+    try:
+        a_bounding_box = a.bounding_box
+    except NotImplementedError:
+        a_bounding_box = None
+
+    try:
+        b_bounding_box = b.bounding_box
+    except NotImplementedError:
+        b_bounding_box = None
+
+    assert a_bounding_box == b_bounding_box
+
+    assert a.fixed == b.fixed
+    assert a.bounds == b.bounds
+
+    assert_model_equal(a._user_inverse, b._user_inverse)
