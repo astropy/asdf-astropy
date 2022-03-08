@@ -11,6 +11,7 @@
 - Add converter for Spline1D model. [#43]
 - Add astropy Table connector for ASDF. [#47]
 - Move assert_model_equal to helpers module. [#50]
+- Fix warnings raised during testing. [#52]
 
 0.1.2 (2021-12-14)
 ------------------
