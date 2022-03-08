@@ -3,6 +3,7 @@ import astropy
 import pytest
 from astropy import units as u
 from astropy.cosmology import Planck15
+from astropy.cosmology.units import with_H0
 from astropy.units import equivalencies as eq
 from packaging.version import Version
 
@@ -16,7 +17,7 @@ def create_equivalencies():
         eq.spectral(),
         eq.brightness_temperature(500 * u.GHz),
         eq.brightness_temperature(500 * u.GHz, beam_area=23 * u.sr),
-        eq.with_H0(),
+        with_H0(),
         eq.temperature_energy(),
         eq.temperature(),
         eq.thermodynamic_temperature(300 * u.Hz),
