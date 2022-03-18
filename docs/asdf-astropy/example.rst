@@ -1,4 +1,4 @@
-.. _basic_example::
+.. _basic_example:
 
 =======
 Example

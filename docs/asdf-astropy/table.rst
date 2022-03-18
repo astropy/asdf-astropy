@@ -37,7 +37,7 @@ it is possible to explicitly specify the reader/writer function to be used::
     t3 = Table.read('table.zxcv', format='asdf')
 
 Advanced Usage
-==============
+^^^^^^^^^^^^^^
 
 The fundamental ASDF data structure is the tree, which is a nested
 combination of basic data structures (see `this
