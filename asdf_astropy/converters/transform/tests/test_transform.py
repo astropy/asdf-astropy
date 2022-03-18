@@ -9,7 +9,6 @@ from asdf.tests.helpers import yaml_to_asdf
 from astropy import units as u
 from astropy.modeling import models as astropy_models
 from astropy.modeling.bounding_box import CompoundBoundingBox, ModelBoundingBox
-from numpy.testing import assert_array_equal
 from packaging.version import Version
 
 from asdf_astropy import integration
