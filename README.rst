@@ -44,6 +44,92 @@ which is licensed under the BSD 3-clause license. See the licenses folder for
 more information.
 
 
+Installation
+------------
+
+.. _begin-pip-install-text:
+
+Stable releases of the asdf-astropy python package are registered `at
+PyPi <https://pypi.python.org/pypi/asdf-astropy>`__. The latest stable version
+can be installed using ``pip``:
+
+::
+
+    $ pip install asdf-astropy
+
+.. _end-pip-install-text:
+
+.. _begin-source-install-text:
+
+The latest development version of asdf-astropy is available from the ``main`` branch
+`on github <https://github.com/astropy/asdf-astropy>`__. To clone the project:
+
+::
+
+    $ git clone https://github.com/astropy/asdf-astropy
+
+To install:
+
+::
+
+    $ cd asdf-astropy
+    $ pip install .
+
+To install in `development
+mode <https://packaging.python.org/tutorials/distributing-packages/#working-in-development-mode>`__::
+
+    $ pip install -e .
+
+.. _end-source-install-text:
+
+Testing
+-------
+
+.. _begin-testing-text:
+
+To install the test dependencies from a source checkout of the repository:
+
+::
+
+    $ pip install -e ".[test]"
+
+To run the unit tests from a source checkout of the repository:
+
+::
+
+    $ pytest
+
+It is also possible to run the test suite from an installed version of
+the package.
+
+::
+
+    $ pip install "asdf-astropy[test]"
+    $ pytest --pyargs asdf-astropy
+
+It is also possible to run the tests using `tox
+<https://tox.readthedocs.io/en/latest/>`__.
+
+::
+
+   $ pip install tox
+
+To list all available environments:
+
+::
+
+   $ tox -va
+
+To run a specific environment:
+
+::
+
+   $ tox -e <envname>
+
+
+.. _end-testing-text:
+
+
 Contributing
 ------------
 

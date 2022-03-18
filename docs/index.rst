@@ -1,18 +1,26 @@
+************
 asdf-astropy
-=============
+************
 
 The **asdf-astropy** package contains code that is used to serialize ``astropy``
 types so that they can be represented and stored using the Advanced Scientific
 Data Format (ASDF).
 
 If **asdf-astropy** is installed, no further configuration is required in order
-to process ASDF files that contain **astropy** types. This is becuase both **asdf**
-and **astropy** are required dependencies of **asdf-astropy**. Note that the **asdf**
+to process ASDF files that contain **astropy** types. Note that the **asdf**
 package has be designed to automatically detect the presence of tags defined by
 packages like **asdf-astropy** and automatically make use of that package's support
 infrastructure to operate correctly.
 
+Documentation on the ASDF Standard can be found `here
+<https://asdf-standard.readthedocs.io>`__. Documentation on the ASDF Python
+module can be found `here <https://asdf.readthedocs.io>`__.
+
+
+Getting Started
+===============
+
 .. toctree::
   :maxdepth: 2
 
-  asdf-astropy/index.rst
+  asdf-astropy/install.rst
