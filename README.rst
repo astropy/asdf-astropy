@@ -53,7 +53,7 @@ Stable releases of the asdf-astropy python package are registered `at
 PyPi <https://pypi.python.org/pypi/asdf-astropy>`__. The latest stable version
 can be installed using ``pip``:
 
-::
+.. code-block:: console
 
     $ pip install asdf-astropy
 
@@ -64,19 +64,21 @@ can be installed using ``pip``:
 The latest development version of asdf-astropy is available from the ``main`` branch
 `on github <https://github.com/astropy/asdf-astropy>`__. To clone the project:
 
-::
+.. code-block:: console
 
     $ git clone https://github.com/astropy/asdf-astropy
 
 To install:
 
-::
+.. code-block:: console
 
     $ cd asdf-astropy
     $ pip install .
 
 To install in `development
-mode <https://packaging.python.org/tutorials/distributing-packages/#working-in-development-mode>`__::
+mode <https://packaging.python.org/tutorials/distributing-packages/#working-in-development-mode>`__
+
+.. code-block:: console
 
     $ pip install -e .
 
@@ -89,20 +91,20 @@ Testing
 
 To install the test dependencies from a source checkout of the repository:
 
-::
+.. code-block:: console
 
     $ pip install -e ".[test]"
 
 To run the unit tests from a source checkout of the repository:
 
-::
+.. code-block:: console
 
     $ pytest
 
 It is also possible to run the test suite from an installed version of
 the package.
 
-::
+.. code-block:: console
 
     $ pip install "asdf-astropy[test]"
     $ pytest --pyargs asdf-astropy
@@ -110,21 +112,21 @@ the package.
 It is also possible to run the tests using `tox
 <https://tox.readthedocs.io/en/latest/>`__.
 
-::
+.. code-block:: console
 
-   $ pip install tox
+    $ pip install tox
 
 To list all available environments:
 
-::
+.. code-block:: console
 
-   $ tox -va
+    $ tox -va
 
 To run a specific environment:
 
-::
+.. code-block:: console
 
-   $ tox -e <envname>
+    $ tox -e <envname>
 
 
 .. _end-testing-text:

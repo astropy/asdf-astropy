@@ -16,7 +16,9 @@ consider a new model called ``MyModel``, a new model in ``astropy.modeling.funct
 that has two parameters ``amplitude`` and ``x_0``. We would like to strictly require both
 of these parameters be set. We would also like to specify that these parameters can
 either be numeric type, or ``astropy.units.quantity`` type. A schema describing this
-model would look like::
+model would look like
+
+.. code-block:: yaml
 
     %YAML 1.1
     ---

@@ -29,11 +29,15 @@ Installing with conda
 `asdf-astropy` is also distributed as a `conda <https://conda.io/docs/>`__
 package via the `conda-forge <https://conda-forge.org/>`__ channel.
 
-To install `asdf-astropy` within an existing conda environment::
+To install `asdf-astropy` within an existing conda environment
+
+.. code-block:: console
 
     $ conda install -c conda-forge asdf-astropy
 
-To create a new conda environment and install `asdf-astropy`::
+To create a new conda environment and install `asdf-astropy`
+
+.. code-block:: console
 
     $ conda create -n new-env-name -c conda-forge python asdf-astropy
 
