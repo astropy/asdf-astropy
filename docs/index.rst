@@ -24,3 +24,12 @@ Getting Started
   :maxdepth: 2
 
   asdf-astropy/install.rst
+
+Using asdf-astropy
+==================
+
+.. toctree::
+  :maxdepth: 2
+
+  asdf-astropy/table.rst
+  asdf-astropy/details.rst
