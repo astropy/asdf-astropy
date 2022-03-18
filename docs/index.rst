@@ -33,3 +33,4 @@ Using asdf-astropy
 
   asdf-astropy/table.rst
   asdf-astropy/details.rst
+  asdf-astropy/example.rst
