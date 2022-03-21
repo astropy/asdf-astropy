@@ -10,7 +10,7 @@ Users should never need to refer to converter implementations directly. Their
 presence should be entirely transparent when processing ASDF files.
 
 ASDF makes use of abstract data type definitions called `schemas`, which typically
-have an associated `tag`. ASDF `tags` uses tags in order to identify the different
+have an associated `tag`. ASDF uses tags in order to identify the different
 types of data within an ASDF file in order to know how to read or write it.
 The converter classes provided here are specific implementations of particular `tags`.
 
