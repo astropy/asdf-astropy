@@ -8,13 +8,13 @@ Data Format (ASDF).
 
 If **asdf-astropy** is installed, no further configuration is required in order
 to process ASDF files that contain **astropy** types. Note that the **asdf**
-package has be designed to automatically detect the presence of tags defined by
+package has been designed to automatically detect the presence of tags defined by
 packages like **asdf-astropy** and automatically make use of that package's support
 infrastructure to operate correctly.
 
 Documentation on the ASDF Standard can be found `here
 <https://asdf-standard.readthedocs.io>`__. Documentation on the ASDF Python
-module can be found `here <https://asdf.readthedocs.io>`__.
+library can be found `here <https://asdf.readthedocs.io>`__.
 
 
 Getting Started
