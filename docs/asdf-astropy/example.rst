@@ -59,13 +59,14 @@ version. This schema describes the other model attributes that are common to all
 or many models, so that individual schemas only handle the parameters specific
 to that model. Additionally, this schema uses the latest tag for ``quantity``,
 so that models can retain information about units and quantities. References allow
-previously defined but objects to be used inside new custom types, while the direct
+previously defined schemas to be used inside new custom types, while the direct
 reference to a specific tag is preferred when possible as this allows ASDF to more
 confidently validate both the schema itself and the ASDF files which make use of it.
 
 Finally, we can create the **tag** itself. This is done by creating an entry in a
-manifest for the tag. An example manifest entry for this model would look something
-like:
+manifest for the tag. The manifest entry is where the **tag** gets associated with the
+schemas that are used by **ASDF** to validate the ASDF file. An example manifest
+entry for this model would look something like:
 
 .. code-block:: yaml
 
@@ -77,8 +78,8 @@ like:
 
 If one was contributing this tag to **asdf-astropy**, this entry would be
 added the :ref:`asdf-astropy_manifest` directly. Doing this will allow
-**asdf-astropy** to properly register this tag for use by **ASDF**.
-Moreover, the underlying schema will need to be added to the
+**asdf-astropy** to properly register this tag and associate this tag with its underlying
+schema for use by **ASDF**. Moreover, the underlying schema will need to be added to the
 `asdf_astropy/resources/schemas` directly in order for **asdf-astropy** to make
 use of it when creating the tag in **ASDF**.
 
@@ -114,7 +115,9 @@ will perform the serialization of the parts of ``MyModel`` which are specific to
 while ``from_yaml_tree_transform`` will perform the deserialization of the parts of
 ``MyModel`` specific to ``MyModel``. Moreover, the converter class must also
 specify the `tags` corresponding to ``MyModel`` and the matching python `types` for
-those `tags`::
+those `tags`. The `tags` are what **ASDF** uses to identify which converter to use when
+deserializing an ASDF file, while the `types` are used by **ASDF** to identify which converter
+to use when serializing an object to an ASDF file.::
 
     from asdf_astropy.converters.transform.core import TransformConverterBase, parameter_to_value
 
