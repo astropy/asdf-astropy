@@ -17,6 +17,9 @@ ASDF serialization support for astropy
     :target: http://www.astropy.org
     :alt: Powered by Astropy Badge
 
+.. image:: https://readthedocs.org/projects/asdf-astropy/badge/?version=latest
+    :target: https://asdf-astropy.readthedocs.io/en/latest/
+
 .. image:: https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white
     :target: https://github.com/pre-commit/pre-commit
     :alt: pre-commit
