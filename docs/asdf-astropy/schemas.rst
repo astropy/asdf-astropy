@@ -1,11 +1,11 @@
 .. _asdf-astropy_schemas:
 
 
-================
-Included Schemas
-================
+====================
+asdf-astropy Schemas
+====================
 
-Documentation for each of the individual ASDF schemas defined by ``asdf-astropy`` can
+Documentation for each of the individual ASDF schemas defined by **asdf-astropy** can
 be found at the links below.
 
 Documentation for the schemas defined in the ASDF Standard can be found `here
