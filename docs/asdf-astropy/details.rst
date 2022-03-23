@@ -24,10 +24,10 @@ the tags that are defined by the
 `asdf-coordinates-schemas package <https://github.com/asdf-format/asdf-coordinates-schemas>`_.
 Moreover, many of the converters in **asdf-astropy** related to units implement tags
 that are defined in the `ASDF-standard <https://asdf-standard.readthedocs.io/en/latest/>`.
-Finally, their are converters in **asdf-astropy** whose tags are defined within **asdf-astropy**
-itself. See :ref:`asdf-astropy_manifest` for a listing of all these tags.
-Documentation of the individual schemas defined by **asdf-astropy**, which are used
-by to assemble these tags can be found in :ref:`asdf-astropy_schemas`.
+Finally, there are converters in **asdf-astropy** whose tags are defined within **asdf-astropy**
+itself. See :ref:`asdf-astropy_manifest` for a listing of all these tags. Documentation of the
+individual schemas defined by **asdf-astropy**, which are used to assemble these tags can be
+found in :ref:`asdf-astropy_schemas`.
 
 .. note::
     Not all **astropy** types are currently serializable by ASDF. Attempting to
