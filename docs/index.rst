@@ -1,3 +1,5 @@
+.. _asdf-astropy:
+
 ************
 asdf-astropy
 ************
