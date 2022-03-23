@@ -17,6 +17,9 @@ ASDF serialization support for astropy
     :target: http://www.astropy.org
     :alt: Powered by Astropy Badge
 
+.. image:: https://readthedocs.org/projects/asdf-astropy/badge/?version=latest
+    :target: https://asdf-astropy.readthedocs.io/en/latest/
+
 .. image:: https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white
     :target: https://github.com/pre-commit/pre-commit
     :alt: pre-commit
@@ -42,6 +45,94 @@ and licensed under the terms of the BSD 3-Clause license. This package is based 
 the `Astropy package template <https://github.com/astropy/package-template>`_
 which is licensed under the BSD 3-clause license. See the licenses folder for
 more information.
+
+
+Installation
+------------
+
+.. _begin-pip-install-text:
+
+Stable releases of the asdf-astropy python package are registered `at
+PyPi <https://pypi.python.org/pypi/asdf-astropy>`__. The latest stable version
+can be installed using ``pip``:
+
+.. code-block:: console
+
+    $ pip install asdf-astropy
+
+.. _end-pip-install-text:
+
+.. _begin-source-install-text:
+
+The latest development version of asdf-astropy is available from the ``main`` branch
+`on github <https://github.com/astropy/asdf-astropy>`__. To clone the project:
+
+.. code-block:: console
+
+    $ git clone https://github.com/astropy/asdf-astropy
+
+To install:
+
+.. code-block:: console
+
+    $ cd asdf-astropy
+    $ pip install .
+
+To install in `development
+mode <https://packaging.python.org/tutorials/distributing-packages/#working-in-development-mode>`__
+
+.. code-block:: console
+
+    $ pip install -e .
+
+.. _end-source-install-text:
+
+Testing
+-------
+
+.. _begin-testing-text:
+
+To install the test dependencies from a source checkout of the repository:
+
+.. code-block:: console
+
+    $ pip install -e ".[test]"
+
+To run the unit tests from a source checkout of the repository:
+
+.. code-block:: console
+
+    $ pytest
+
+It is also possible to run the test suite from an installed version of
+the package.
+
+.. code-block:: console
+
+    $ pip install "asdf-astropy[test]"
+    $ pytest --pyargs asdf-astropy
+
+It is also possible to run the tests using `tox
+<https://tox.readthedocs.io/en/latest/>`__.
+
+.. code-block:: console
+
+    $ pip install tox
+
+To list all available environments:
+
+.. code-block:: console
+
+    $ tox -va
+
+To run a specific environment:
+
+.. code-block:: console
+
+    $ tox -e <envname>
+
+
+.. _end-testing-text:
 
 
 Contributing
