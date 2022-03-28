@@ -372,11 +372,15 @@ def test_all_models_supported():
 
 
 def test_legacy_const(tmpdir):
-    model = astropy_models.Const1D(amplitude=5.0)
-    assert_model_roundtrip(model, tmpdir, version="1.3.0")
+    with asdf.config_context() as config:
+        config.remove_extension("asdf://asdf-format.org/transform/extensions/transform-1.5.0")
 
-    model = astropy_models.Const2D(amplitude=5.0)
-    assert_model_roundtrip(model, tmpdir, version="1.3.0")
+        model = astropy_models.Const1D(amplitude=5.0)
+        assert_model_roundtrip(model, tmpdir, version="1.3.0")
+
+        model = astropy_models.Const2D(amplitude=5.0)
+        with pytest.raises(TypeError, match=r".* does not support models with > 1 dimension"):
+            assert_model_roundtrip(model, tmpdir, version="1.3.0")
 
 
 COMPOUND_OPERATORS = [
