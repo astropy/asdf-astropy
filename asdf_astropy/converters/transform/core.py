@@ -109,7 +109,7 @@ class TransformConverterBase(Converter):
 
         # ignore default bounding_box
         if model._user_bounding_box is not None:
-            bbox = model.bounding_box
+            bbox = model._user_bounding_box
             print(f"{bbox=}")
             node["bounding_box"] = bbox
 

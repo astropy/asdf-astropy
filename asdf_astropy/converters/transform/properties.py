@@ -27,4 +27,7 @@ class ModelBoundingBoxConverter(Converter):
         else:
             order = "C"
 
-        return {"intervals": intervals, "ignore": ignore, "order": order}
+        output = {"intervals": intervals, "ignore": ignore, "order": order}
+        print(output)
+
+        return output

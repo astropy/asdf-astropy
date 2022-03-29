@@ -301,6 +301,10 @@ def create_single_models():
         ),
     ]
 
+    gaussian_1d = astropy_models.Gaussian1D(10, 1.5, 0.25)
+    gaussian_1d.bounding_box = [0.125, 2.875]
+    result.append(gaussian_1d)
+
     result.append(astropy_models.Plummer1D(mass=10.0, r_plum=5.0))
 
     # models with input_units_equivalencies
