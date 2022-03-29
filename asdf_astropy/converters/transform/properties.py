@@ -6,23 +6,25 @@ class ModelBoundingBoxConverter(Converter):
     types = ["astropy.modeling.bounding_box.ModelBoundingBox"]
 
     def to_yaml_tree(self, bbox, tag, ctx):
+        print(f"Converting bbox to yaml: {bbox=}")
         return {
-            "intervals": {_input: list(interval) for _input, interval in bbox.intervals.items()},
-            "ignore": list(bbox.ignored),
+            "intervals": {_input: list(interval) for _input, interval in bbox.named_intervals.items()},
+            "ignore": list(bbox.ignored_inputs),
             "order": bbox.order,
         }
 
     def from_yaml_tree(self, node, tag, ctx):
+        print(f"Converting bbox from yaml: {node=}")
         intervals = {_input: tuple(interval) for _input, interval in node["intervals"].items()}
 
         if "ignore" in node:
-            ignored = node["ignore"]
+            ignore = node["ignore"]
         else:
-            ignored = None
+            ignore = None
 
         if "order" in node:
             order = node["order"]
         else:
             order = "C"
 
-        return intervals, ignored, order
+        return {"intervals": intervals, "ignore": ignore, "order": order}

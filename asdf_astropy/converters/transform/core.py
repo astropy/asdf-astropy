@@ -91,6 +91,7 @@ class TransformConverterBase(Converter):
         pass  # pragma: no cover
 
     def to_yaml_tree(self, model, tag, ctx):
+        print(f"Convert transform to yaml: {model=}")
         from astropy.modeling.core import CompoundModel
 
         node = self.to_yaml_tree_transform(model, tag, ctx)
@@ -106,7 +107,11 @@ class TransformConverterBase(Converter):
         if getattr(model, "_user_inverse", None) is not None:
             node["inverse"] = model._user_inverse
 
-        self._serialize_bounding_box(model, node)
+        # ignore default bounding_box
+        if model._user_bounding_box is not None:
+            bbox = model.bounding_box
+            print(f"{bbox=}")
+            node["bounding_box"] = bbox
 
         # model / parameter constraints
         if not isinstance(model, CompoundModel):
@@ -177,6 +182,7 @@ class TransformConverterBase(Converter):
                 ]
 
     def from_yaml_tree(self, node, tag, ctx):
+        print(f"Convert transform from yaml: {node=}")
         from astropy.modeling.core import CompoundModel
 
         model = self.from_yaml_tree_transform(node, tag, ctx)
@@ -184,13 +190,14 @@ class TransformConverterBase(Converter):
         if "name" in node:
             model.name = node["name"]
 
-        self._deserialize_bounding_box(model, node)
-
         if "inputs" in node:
             model.inputs = tuple(node["inputs"])
 
         if "outputs" in node:
             model.outputs = tuple(node["outputs"])
+
+        if "bounding_box" in node:
+            self._deserialize_bounding_box(model, node["bounding_box"])
 
         param_and_model_constraints = {}
         for constraint in ["fixed", "bounds"]:
@@ -208,14 +215,15 @@ class TransformConverterBase(Converter):
         if "inverse" in node:
             model.inverse = node["inverse"]
 
-    def _deserialize_bounding_box(self, model, node):
-        import astropy
-        from packaging.version import Version
+    def _deserialize_bounding_box(self, model, bounding_box):
+        from astropy.modeling import bind_bounding_box
 
-        if Version(astropy.__version__) > Version("4.999.999"):
-            self._deserialize_bounding_box_astropy_5(model, node)
+        if isinstance(bounding_box, list):
+            model.bounding_box = bounding_box
+        elif isinstance(bounding_box, dict):
+            bind_bounding_box(model, bounding_box["intervals"], bounding_box["order"])
         else:
-            self._deserialize_bounding_box_astropy_4(model, node)
+            raise TypeError(f"Cannot form bounding_box from: {bounding_box}")
 
     def _deserialize_bounding_box_astropy_4(self, model, node):
         if "bounding_box" in node:
