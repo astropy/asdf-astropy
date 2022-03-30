@@ -112,6 +112,8 @@ class TransformConverterBase(Converter):
             bbox = model._user_bounding_box
             print(f"{bbox=}")
             node["bounding_box"] = bbox
+            print(type(node))
+            print(node)
 
         # model / parameter constraints
         if not isinstance(model, CompoundModel):
