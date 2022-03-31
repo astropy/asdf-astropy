@@ -215,12 +215,10 @@ class TransformConverterBase(Converter):
             model.inverse = node["inverse"]
 
     def _deserialize_bounding_box(self, model, bounding_box):
-        from astropy.modeling import bind_bounding_box
-
         if isinstance(bounding_box, list):
             model.bounding_box = bounding_box
-        elif isinstance(bounding_box, dict):
-            bind_bounding_box(model, bounding_box["intervals"], bounding_box["order"])
+        elif callable(bounding_box):
+            model.bounding_box = bounding_box(model)
         else:
             raise TypeError(f"Cannot form bounding_box from: {bounding_box}")
 

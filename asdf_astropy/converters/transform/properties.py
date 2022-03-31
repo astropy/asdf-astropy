@@ -13,16 +13,21 @@ class ModelBoundingBoxConverter(Converter):
         }
 
     def from_yaml_tree(self, node, tag, ctx):
+        from astropy.modeling.bounding_box import ModelBoundingBox
+
         intervals = {_input: tuple(interval) for _input, interval in node["intervals"].items()}
 
         if "ignore" in node:
-            ignore = node["ignore"]
+            ignored = node["ignore"]
         else:
-            ignore = None
+            ignored = None
 
         if "order" in node:
             order = node["order"]
         else:
             order = "C"
 
-        return {"intervals": intervals, "ignore": ignore, "order": order}
+        def create_bounding_box(model):
+            return ModelBoundingBox(intervals, model, ignored=ignored, order=order)
+
+        return create_bounding_box
