@@ -8,6 +8,7 @@ import pytest
 from asdf.tests.helpers import yaml_to_asdf
 from astropy import units as u
 from astropy.modeling import models as astropy_models
+from astropy.modeling.bounding_box import CompoundBoundingBox, ModelBoundingBox
 
 from asdf_astropy import integration
 from asdf_astropy.testing.helpers import assert_model_equal
@@ -36,7 +37,20 @@ def create_bounding_boxes():
         ModelBoundingBox((11, 12), astropy_models.Polynomial2D(1), ignored=["y"]),
     ]
 
-    return model_bounding_box
+    compound_bounding_box = [
+        CompoundBoundingBox({(1,): (0, 1), (2,): (2, 3)}, astropy_models.Polynomial2D(1), [("x", True)]),
+        CompoundBoundingBox(
+            {(1,): ((0, 1), (-1, 0)), (2,): ((2, 3), (-3, -2))}, astropy_models.Polynomial2D(1), [("x", False)]
+        ),
+        CompoundBoundingBox(
+            {(1,): (0, 1), (2,): (2, 3)}, astropy_models.Polynomial2D(1), [("x", False)], ignored=["x"]
+        ),
+        CompoundBoundingBox(
+            {(1,): (0, 1), (2,): (2, 3)}, astropy_models.Polynomial2D(1), [("x", False)], ignored=["y"]
+        ),
+    ]
+
+    return model_bounding_box + compound_bounding_box
 
 
 @pytest.mark.parametrize("bbox", create_bounding_boxes())
