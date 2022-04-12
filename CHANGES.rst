@@ -2,6 +2,7 @@
 ------------------
 
 - Migrate documentation from ``astropy`` to ``asdf-astropy``. [#55]
+- Pin astropy min version to 5.0.4. [#62]
 
 0.2.0 (2022-03-08)
 ------------------
