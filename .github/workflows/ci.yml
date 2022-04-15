@@ -99,3 +99,32 @@ jobs:
         uses: codecov/codecov-action@v2
         with:
           file: ./coverage.xml
+
+  asdf-transform-schemas-dev:
+    name: Run asdf-transform-schemas development tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout asdf-astropy
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+          path: asdf-astropy
+      - name: Checkout asdf-transform-schemas-dev
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+          repository: asdf-format/asdf-transform-schemas
+          ref: master
+          path: asdf-transform-schemas
+      - name: Set up Python 3.9
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.9
+      - name: Install asdf-astropy
+        run: cd asdf-astropy && pip install .[test]
+      - name: Install asdf-transform-schemas
+        run: cd asdf-transform-schemas && pip install -e .[test]
+      - name: Pip Freeze
+        run: pip freeze
+      - name: Run asdf-transform-schemas development tests
+        run: cd asdf-transform-schemas && pytest
