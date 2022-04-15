@@ -8,22 +8,9 @@ import pytest
 from asdf.tests.helpers import yaml_to_asdf
 from astropy import units as u
 from astropy.modeling import models as astropy_models
-from packaging.version import Version
 
 from asdf_astropy import integration
 from asdf_astropy.testing.helpers import assert_model_equal
-
-try:
-    from astropy.modeling.models import UnitsMapping  # noqa
-
-    HAS_NO_UNITS_MAPPING = False
-except ImportError:
-    HAS_NO_UNITS_MAPPING = True
-
-if Version(astropy.__version__) < Version("4.1"):
-    ASTROPY_LT_41 = True
-else:
-    ASTROPY_LT_41 = False
 
 
 def assert_model_roundtrip(model, tmpdir, version=None):
@@ -281,8 +268,7 @@ def create_single_models():
         ),
     ]
 
-    if Version(astropy.__version__) >= Version("4.1"):
-        result.append(astropy_models.Plummer1D(mass=10.0, r_plum=5.0))
+    result.append(astropy_models.Plummer1D(mass=10.0, r_plum=5.0))
 
     # models with input_units_equivalencies
     # 1D model
@@ -341,41 +327,9 @@ UNSUPPORTED_MODELS = [
     astropy.modeling.projections.QuadCube,
     astropy.modeling.projections.Sky2PixProjection,
     astropy.modeling.projections.Zenithal,
-]
-
-
-if Version(astropy.__version__) > Version("4.1"):
     # https://github.com/astropy/asdf-astropy/issues/6
-    UNSUPPORTED_MODELS += [
-        astropy.modeling.physical_models.NFW,
-        astropy.modeling.models.UnitsMapping,
-    ]
-
-if Version(astropy.__version__) < Version("4.3"):
-    UNSUPPORTED_MODELS.append(astropy.modeling.blackbody.BlackBody1D)
-else:
-    UNSUPPORTED_MODELS.append(astropy.modeling.physical_models.BlackBody)
-
-if Version(astropy.__version__) < Version("4.999.999"):
-    UNSUPPORTED_MODELS.extend(
-        [
-            astropy.modeling.models.MexicanHat1D,
-            astropy.modeling.models.MexicanHat2D,
-        ]
-    )
-
-if Version(astropy.__version__) > Version("4.999.999"):
-    # https://github.com/astropy/asdf-astropy/issues/28
-    UNSUPPORTED_MODELS.extend(
-        [
-            astropy.modeling.functional_models.ArcCosine1D,
-            astropy.modeling.functional_models.ArcSine1D,
-            astropy.modeling.functional_models.ArcTangent1D,
-            astropy.modeling.functional_models.Cosine1D,
-            astropy.modeling.functional_models.Tangent1D,
-            astropy.modeling.spline.Spline1D,
-        ]
-    )
+    astropy.modeling.physical_models.NFW,
+]
 
 
 @pytest.mark.parametrize("model", create_single_models())
@@ -417,14 +371,16 @@ def test_all_models_supported():
         assert len(missing) == 0, message
 
 
-@pytest.mark.xfail(reason="Older tag versions are difficult to test until asdf implements new config features")
 def test_legacy_const(tmpdir):
-    model = astropy_models.Const1D(amplitude=5.0)
-    assert_model_roundtrip(model, tmpdir, version="1.3.0")
+    with asdf.config_context() as config:
+        config.remove_extension("asdf://asdf-format.org/transform/extensions/transform-1.5.0")
 
-    model = astropy_models.Const2D(amplitude=5.0)
-    with pytest.raises(TypeError, match="does not support models with > 1 dimension"):
+        model = astropy_models.Const1D(amplitude=5.0)
         assert_model_roundtrip(model, tmpdir, version="1.3.0")
+
+        model = astropy_models.Const2D(amplitude=5.0)
+        with pytest.raises(TypeError, match=r".* does not support models with > 1 dimension"):
+            assert_model_roundtrip(model, tmpdir, version="1.3.0")
 
 
 COMPOUND_OPERATORS = [
@@ -458,7 +414,6 @@ def test_fix_inputs(tmpdir):
     assert result.op == fixed_model.op
 
 
-@pytest.mark.skipif("HAS_NO_UNITS_MAPPING")
 def test_units_mapping(tmpdir):
     # Basic mapping between units:
     model = astropy_models.UnitsMapping(((u.m, u.dimensionless_unscaled),))
@@ -536,7 +491,6 @@ def test_2d_polynomial_with_asdf_standard_version(tmpdir, standard_version, mode
     assert result.y_window == model.y_window
 
 
-@pytest.mark.skip("ASTROPY_LT_41")
 def test_deserialize_compound_user_inverse(tmpdir):
     """
     Confirm that we are able to correctly reconstruct a
