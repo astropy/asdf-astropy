@@ -1,4 +1,5 @@
 from asdf.extension import ManifestExtension
+from astropy.utils import minversion
 
 from .converters.coordinates.angle import AngleConverter, LatitudeConverter, LongitudeConverter
 from .converters.coordinates.earth_location import EarthLocationConverter
@@ -361,10 +362,16 @@ TRANSFORM_CONVERTERS = [
     RotationSequenceConverter(),
     # astropy.modeling.tabular
     TabularConverter(),
-    # astropy.modeling.bounding_box
-    ModelBoundingBoxConverter(),
-    CompoundBoundingBoxConverter(),
 ]
+
+# astropy.modeling.bounding_box
+if minversion("astropy", "5.0.5"):
+    TRANSFORM_CONVERTERS.extend(
+        [
+            ModelBoundingBoxConverter(),
+            CompoundBoundingBoxConverter(),
+        ]
+    )
 
 
 # The order here is important; asdf will prefer to use extensions

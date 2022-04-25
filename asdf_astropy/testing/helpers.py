@@ -95,6 +95,8 @@ def assert_model_equal(a, b):
 
     assert_array_equal(a.parameters, b.parameters)
 
+    print(a._user_bounding_box)
+    print(b._user_bounding_box)
     assert a._user_bounding_box == b._user_bounding_box
     try:
         a_bounding_box = a.bounding_box
