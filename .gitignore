@@ -11,6 +11,7 @@ __pycache__
 # Other generated files
 MANIFEST
 asdf_astropy/_version.py
+coverage.xml
 
 # Sphinx
 _build
