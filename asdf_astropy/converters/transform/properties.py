@@ -1,4 +1,5 @@
 from asdf.extension import Converter
+from astropy.utils import minversion
 
 
 class ModelBoundingBoxConverter(Converter):
@@ -28,6 +29,9 @@ class ModelBoundingBoxConverter(Converter):
             order = "C"
 
         def create_bounding_box(model):
+            if ignored is not None and not minversion("astropy", "5.1"):
+                raise RuntimeError("Deserializing ignored elements of a bounding is only supported for astropy 5.1+")
+
             return ModelBoundingBox(intervals, model, ignored=ignored, order=order)
 
         return create_bounding_box

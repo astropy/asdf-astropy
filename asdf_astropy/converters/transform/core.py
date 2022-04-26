@@ -134,7 +134,15 @@ class TransformConverterBase(Converter):
         bbox = model.bounding_box
 
         if minversion("asdf_transform_schemas", "0.2.2", inclusive=False):
-            bbox = ModelBoundingBox.validate(model, bbox)
+            if len(bbox.ignored) > 0:
+                if minversion("astropy", "5.1"):
+                    kwargs = {"_preserve_ignore": True}
+                else:
+                    raise RuntimeError("Bounding box ignored arguments are only supported by astropy 5.1+")
+            else:
+                kwargs = {}
+
+            bbox = ModelBoundingBox.validate(model, bbox, **kwargs)
         else:
             bbox = bbox.bounding_box(order="C")
 

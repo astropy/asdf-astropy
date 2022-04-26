@@ -324,6 +324,11 @@ def create_single_models():
     model.bounding_box = ((1, 2), (3, 4))
     result.append(model)
 
+    # compound model with bounding box
+    model = astropy_models.Shift(1) & astropy_models.Shift(2) & astropy_models.Shift(3)
+    model.bounding_box = ((1, 2), (3, 4), (5, 6))
+    result.append(model)
+
     result.append(astropy_models.Plummer1D(mass=10.0, r_plum=5.0))
 
     # models with input_units_equivalencies
