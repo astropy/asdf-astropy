@@ -33,7 +33,7 @@ jobs:
           - name: Python 3.9, Development Dependencies
             python-version: "3.9"
             os: ubuntu-latest
-            toxenv: py39-test-devdeps
+            toxenv: py39-test-devdeps-cov
 
           - name: Python 3.8 Tests
             python-version: "3.8"
