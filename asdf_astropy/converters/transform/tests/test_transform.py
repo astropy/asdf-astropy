@@ -34,14 +34,26 @@ def create_bounding_boxes():
         ModelBoundingBox((0, 1), astropy_models.Polynomial1D(1)),
         ModelBoundingBox(((2, 3), (3, 4)), astropy_models.Polynomial2D(1)),
         ModelBoundingBox(((5, 6), (7, 8)), astropy_models.Polynomial2D(1), order="F"),
-        ModelBoundingBox((9, 10), astropy_models.Polynomial2D(1), ignored=["x"]),
-        ModelBoundingBox((11, 12), astropy_models.Polynomial2D(1), ignored=["y"]),
     ]
+
+    # ignore option is not properly supported until astropy versions with the bug fix from:
+    # astropy/astropy#13032 (milestone 5.0.5) is included
+    if minversion("astropy", "5.0.4", inclusive=False):
+        model_bounding_box.extend(
+            [
+                ModelBoundingBox((9, 10), astropy_models.Polynomial2D(1), ignored=["x"]),
+                ModelBoundingBox((11, 12), astropy_models.Polynomial2D(1), ignored=["y"]),
+            ]
+        )
 
     return model_bounding_box
 
 
 @pytest.mark.parametrize("bbox", create_bounding_boxes())
+@pytest.mark.skipif(
+    not minversion("asdf_transform_schemas", "0.2.2", inclusive=False),
+    reason="Schema not present until versions after asdf-transform-schemas 0.2.2",
+)
 def test_round_trip_bounding_box(bbox, tmpdir):
     assert_bounding_box_roundtrip(bbox, tmpdir)
 
@@ -368,6 +380,11 @@ UNSUPPORTED_MODELS = [
 ]
 
 if minversion("astropy", "5.1") and not minversion("asdf-transform-schemas", "0.2.3"):
+    UNSUPPORTED_MODELS.append(astropy.modeling.powerlaws.Schechter1D)
+
+
+# Model added in astropy 5.1 and schema added after asdf-transform 0.2.2
+if minversion("astropy", "5.1") and not minversion("asdf_transform_schemas", "0.2.2", inclusive=False):
     UNSUPPORTED_MODELS.append(astropy.modeling.powerlaws.Schechter1D)
 
 
