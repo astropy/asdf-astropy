@@ -313,6 +313,17 @@ def create_single_models():
         ),
     ]
 
+    # Test case for model with a metaclass generated abstract bounding_box
+    # where a custom bounding box is stored
+    gaussian_1d = astropy_models.Gaussian1D(10, 1.5, 0.25)
+    gaussian_1d.bounding_box = [7, 8]
+    result.append(gaussian_1d)
+
+    # compound model with bounding box
+    model = astropy_models.Shift(1) & astropy_models.Shift(2)
+    model.bounding_box = ((1, 2), (3, 4))
+    result.append(model)
+
     result.append(astropy_models.Plummer1D(mass=10.0, r_plum=5.0))
 
     # models with input_units_equivalencies
