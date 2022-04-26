@@ -14,14 +14,63 @@ class ModelBoundingBoxConverter(Converter):
         }
 
     def from_yaml_tree(self, node, tag, ctx):
-        from astropy.modeling.bounding_box import ModelBoundingBox
+        from astropy.modeling.bounding_box import ModelBoundingBox, get_index, get_name
 
         intervals = {_input: tuple(interval) for _input, interval in node["intervals"].items()}
 
         if "ignore" in node:
             ignored = node["ignore"]
         else:
-            ignored = None
+            ignored = []
+
+        if "order" in node:
+            order = node["order"]
+        else:
+            order = "C"
+
+        def create_bounding_box(model, cbbox=None):
+            if len(ignored) > 0 and not minversion("astropy", "5.1"):
+                raise RuntimeError("Deserializing ignored elements of a bounding is only supported for astropy 5.1+")
+
+            # Hack to get compound_bounding_box to work for both 5.0.4 and 5.1
+            if cbbox is None:
+                ignore = ignored
+            else:
+                ignore = list(
+                    set(ignored + [get_name(model, get_index(model, key)) for key in cbbox.selector_args.ignore])
+                )
+
+            return ModelBoundingBox(intervals, model, ignored=ignore, order=order)
+
+        return create_bounding_box
+
+
+class CompoundBoundingBoxConverter(Converter):
+    tags = ["tag:stsci.edu:asdf/transform/property/compound_bounding_box-1.0.0"]
+    types = ["astropy.modeling.bounding_box.CompoundBoundingBox"]
+
+    def to_yaml_tree(self, cbbox, tag, ctx):
+        node = {
+            "selector_args": [{"argument": sa.name(cbbox._model), "ignore": sa.ignore} for sa in cbbox.selector_args],
+            "cbbox": [{"key": list(key), "bbox": bbox} for key, bbox in cbbox.bounding_boxes.items()],
+            "order": cbbox.order,
+        }
+
+        if minversion("astropy", "5.1"):
+            node["ignore"] = cbbox.ignored_inputs
+
+        return node
+
+    def from_yaml_tree(self, node, tag, ctx):
+        from astropy.modeling.bounding_box import CompoundBoundingBox
+
+        selector_args = tuple([(selector["argument"], selector["ignore"]) for selector in node["selector_args"]])
+        bboxes = {tuple(bbox["key"]): bbox["bbox"] for bbox in node["cbbox"]}
+
+        if "ignore" in node:
+            ignored = node["ignore"]
+        else:
+            ignored = []
 
         if "order" in node:
             order = node["order"]
@@ -29,9 +78,21 @@ class ModelBoundingBoxConverter(Converter):
             order = "C"
 
         def create_bounding_box(model):
-            if ignored is not None and not minversion("astropy", "5.1"):
-                raise RuntimeError("Deserializing ignored elements of a bounding is only supported for astropy 5.1+")
+            # bounding_boxes = {key: bbox(model) for key, bbox in bboxes.items()}
 
-            return ModelBoundingBox(intervals, model, ignored=ignored, order=order)
+            if not minversion("astropy", "5.1"):
+                if len(ignored) > 0:
+                    raise RuntimeError(
+                        "Deserializing ignored elements of a bounding is only supported for astropy 5.1+"
+                    )
+                else:
+                    cbbox = CompoundBoundingBox({}, model, selector_args, order=order)
+            else:
+                cbbox = CompoundBoundingBox({}, model, selector_args, ignored=ignored, order=order)
+
+            for key, bb in bboxes.items():
+                cbbox[key] = bb(model, cbbox)
+
+            return cbbox
 
         return create_bounding_box
