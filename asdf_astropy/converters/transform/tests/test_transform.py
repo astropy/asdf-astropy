@@ -8,10 +8,42 @@ import pytest
 from asdf.tests.helpers import yaml_to_asdf
 from astropy import units as u
 from astropy.modeling import models as astropy_models
+from astropy.modeling.bounding_box import ModelBoundingBox
 from astropy.utils import minversion
 
 from asdf_astropy import integration
 from asdf_astropy.testing.helpers import assert_model_equal
+
+
+def assert_bounding_box_roundtrip(bounding_box, tmpdir, version=None):
+    """
+    Assert that a bounding_box can be written to an ASDF file and read back
+    in without losing any of its essential properties.
+    """
+    path = str(tmpdir / "test.asdf")
+
+    with asdf.AsdfFile({"bounding_box": bounding_box}, version=version) as af:
+        af.write_to(path)
+
+    with asdf.open(path) as af:
+        assert bounding_box == af["bounding_box"](bounding_box._model)
+
+
+def create_bounding_boxes():
+    model_bounding_box = [
+        ModelBoundingBox((0, 1), astropy_models.Polynomial1D(1)),
+        ModelBoundingBox(((2, 3), (3, 4)), astropy_models.Polynomial2D(1)),
+        ModelBoundingBox(((5, 6), (7, 8)), astropy_models.Polynomial2D(1), order="F"),
+        ModelBoundingBox((9, 10), astropy_models.Polynomial2D(1), ignored=["x"]),
+        ModelBoundingBox((11, 12), astropy_models.Polynomial2D(1), ignored=["y"]),
+    ]
+
+    return model_bounding_box
+
+
+@pytest.mark.parametrize("bbox", create_bounding_boxes())
+def test_round_trip_bounding_box(bbox, tmpdir):
+    assert_bounding_box_roundtrip(bbox, tmpdir)
 
 
 def assert_model_roundtrip(model, tmpdir, version=None):
