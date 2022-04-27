@@ -123,11 +123,16 @@ class TransformConverterBase(Converter):
         return node
 
     def _serialize_bounding_box(self, model, node):
-        # ignore any default bounding_box
-        if model._user_bounding_box is not None:
-            self._serialize_bounding_box_astropy(model, node)
+        from astropy.modeling.bounding_box import CompoundBoundingBox, ModelBoundingBox
 
-    def _serialize_bounding_box_astropy(self, model, node):
+        # ignore any default bounding_box
+        if (bbox := model._user_bounding_box) is not None:
+            if isinstance(bbox, ModelBoundingBox):
+                self._serialize_bbox(model, node)
+            elif isinstance(bbox, CompoundBoundingBox):
+                self._serialize_cbbox(model, node)
+
+    def _serialize_bbox(self, model, node):
         from astropy.modeling.bounding_box import ModelBoundingBox
         from astropy.utils import minversion
 
@@ -153,6 +158,16 @@ class TransformConverterBase(Converter):
 
         node["bounding_box"] = bbox
 
+    def _serialize_cbbox(self, model, node):
+        from astropy.utils import minversion
+
+        bbox = model.bounding_box
+
+        if minversion("asdf_transform_schemas", "0.2.2", inclusive=False):
+            node["bounding_box"] = bbox
+        else:
+            raise RuntimeError("Need a schema in order to serialize a compound bounding_box")
+
     def from_yaml_tree(self, node, tag, ctx):
         from astropy.modeling.core import CompoundModel
 
@@ -161,13 +176,13 @@ class TransformConverterBase(Converter):
         if "name" in node:
             model.name = node["name"]
 
-        self._deserialize_bounding_box(model, node)
-
         if "inputs" in node:
             model.inputs = tuple(node["inputs"])
 
         if "outputs" in node:
             model.outputs = tuple(node["outputs"])
+
+        self._deserialize_bounding_box(model, node)
 
         param_and_model_constraints = {}
         for constraint in ["fixed", "bounds"]:

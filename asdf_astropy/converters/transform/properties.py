@@ -29,16 +29,16 @@ class ModelBoundingBoxConverter(Converter):
             order = "C"
 
         def create_bounding_box(model, cbbox=None):
-            if len(ignored) > 0 and not minversion("astropy", "5.1"):
-                raise RuntimeError("Deserializing ignored elements of a bounding is only supported for astropy 5.1+")
-
-            # Hack to get compound_bounding_box to work for both 5.0.4 and 5.1
             if cbbox is None:
                 ignore = ignored
             else:
+                # Hack to pass compound_bounding_box selector_args ignore in 5.0.4+
                 ignore = list(
                     set(ignored + [get_name(model, get_index(model, key)) for key in cbbox.selector_args.ignore])
                 )
+                # Add in globally ignored inputs from the compound_bounding_box in 5.1+
+                if minversion("astropy", "5.1"):
+                    ignore = list(set(ignore + [get_name(model, get_index(model, key)) for key in cbbox.ignored]))
 
             return ModelBoundingBox(intervals, model, ignored=ignore, order=order)
 

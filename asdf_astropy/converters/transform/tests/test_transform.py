@@ -347,6 +347,28 @@ def create_single_models():
     model.bounding_box = ((1, 2), (3, 4), (5, 6))
     result.append(model)
 
+    if minversion("asdf_transform_schemas", "0.2.2", inclusive=False):
+        # model with compound bounding box
+        model = astropy_models.Shift(1) & astropy_models.Scale(2) & astropy_models.Identity(1)
+        model.inputs = ("x", "y", "slit_id")
+        bounding_boxes = {
+            (0,): ((-0.5, 1047.5), (-0.5, 2047.5)),
+            (1,): ((-0.5, 3047.5), (-0.5, 4047.5)),
+        }
+        bounding_box = CompoundBoundingBox.validate(model, bounding_boxes, selector_args=[("slit_id", True)], order="F")
+        model.bounding_box = bounding_box
+        result.append(model)
+
+        model = astropy_models.Shift(1) & astropy_models.Shift(2) & astropy_models.Shift(3)
+        model.inputs = ("x", "y", "z")
+        bounding_boxes = {
+            (0,): (1.0, 2.0),
+            (1,): (3.0, 4.0),
+        }
+        bounding_box = CompoundBoundingBox.validate(model, bounding_boxes, selector_args=[("x", True)], ignored=["y"])
+        model.bounding_box = bounding_box
+        result.append(model)
+
     result.append(astropy_models.Plummer1D(mass=10.0, r_plum=5.0))
 
     # models with input_units_equivalencies
