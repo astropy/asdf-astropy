@@ -64,7 +64,7 @@ class CompoundBoundingBoxConverter(Converter):
     def from_yaml_tree(self, node, tag, ctx):
         from astropy.modeling.bounding_box import CompoundBoundingBox
 
-        selector_args = tuple([(selector["argument"], selector["ignore"]) for selector in node["selector_args"]])
+        selector_args = tuple((selector["argument"], selector["ignore"]) for selector in node["selector_args"])
         bboxes = {tuple(bbox["key"]): bbox["bbox"] for bbox in node["cbbox"]}
 
         if "ignore" in node:
