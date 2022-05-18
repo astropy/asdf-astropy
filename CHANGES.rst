@@ -2,6 +2,7 @@
 ------------------
 
 - Add converter for the new ``Schechter1D`` model. [#67]
+- Add CITATION file. [#71]
 
 0.2.1 (2022-04-18)
 ------------------
