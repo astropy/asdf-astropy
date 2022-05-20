@@ -23,7 +23,7 @@ Similarly, the converters in **asdf-astropy** related to coordinates implement
 the tags that are defined by the
 `asdf-coordinates-schemas package <https://github.com/asdf-format/asdf-coordinates-schemas>`_.
 Moreover, many of the converters in **asdf-astropy** related to units implement tags
-that are defined in the `ASDF-standard <https://asdf-standard.readthedocs.io/en/latest/>`.
+that are defined in the :ref:`ASDF-standard <asdf-standard:asdf-standard>`.
 Finally, there are converters in **asdf-astropy** whose tags are defined within **asdf-astropy**
 itself. See :ref:`asdf-astropy_manifest` for a listing of all these tags. Documentation of the
 individual schemas defined by **asdf-astropy**, which are used to assemble these tags can be
@@ -34,5 +34,5 @@ found in :ref:`asdf-astropy_schemas`.
     write unsupported types to an ASDF file will lead to a ``RepresenterError``. In
     order to support new types, new tags and converters must be created. A basic
     example can be found in :ref:`basic_example`, for additional details please refer to
-    `Writing ASDF Extensions <https://asdf.readthedocs.io/en/latest/asdf/extending/extensions.html>`_.
+    :ref:`asdf:extending_extensions`.
     If you do write additional converters or schemas please consider contributing them to **asdf-astropy**.

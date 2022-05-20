@@ -40,9 +40,8 @@ Advanced Usage
 ^^^^^^^^^^^^^^
 
 The fundamental ASDF data structure is the tree, which is a nested
-combination of basic data structures (see `this
-<https://asdf.readthedocs.io/en/latest/asdf/features.html#data-model>`_
-for a more detailed description). At the top level, the tree is a `dict`.
+combination of basic data structures (see :ref:`asdf:data-model` for a more
+detailed description). At the top level, the tree is a `dict`.
 
 The consequence of this is that a `~astropy.table.Table` object (or any object,
 for that matter) can be stored at any arbitrary location within an ASDF tree.

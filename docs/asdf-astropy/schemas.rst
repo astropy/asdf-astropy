@@ -8,8 +8,7 @@ asdf-astropy Schemas
 Documentation for each of the individual ASDF schemas defined by **asdf-astropy** can
 be found at the links below.
 
-Documentation for the schemas defined in the ASDF Standard can be found `here
-<https://asdf-standard.readthedocs.io/en/latest/schemas/index.html>`__.
+Documentation for the schemas defined in the ASDF Standard can be found :ref:`here <asdf-standard:schema>`.
 Note that other schemas are defined in
 `asdf-transform-schemas <https://github.com/asdf-format/asdf-transform-schemas>`_
 and
