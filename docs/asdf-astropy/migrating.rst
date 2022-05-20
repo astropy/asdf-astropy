@@ -8,9 +8,9 @@ requires no code changes at all. Instead, all users need to do is include `asdf-
 as an additional dependency to their package.
 
 This is because when the `asdf-astropy` package is installed, it will automatically be used
-by `asdf` when serializing and deserializing `astropy` objects. This is occurs seamlessly because
+by `asdf` when serializing and deserializing `astropy` objects. This occurs seamlessly because
 the interface used by `asdf-astropy` to extend `asdf` is given preference over the one used by
-`~astropy.io.misc.asdf` (which is currently depreciated).
+`~astropy.io.misc.asdf` (which is currently deprecated).
 
 .. note::
 
