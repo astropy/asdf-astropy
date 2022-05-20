@@ -26,6 +26,7 @@ Getting Started
   :maxdepth: 2
 
   asdf-astropy/install.rst
+  asdf-astropy/quickstart.rst
 
 Using asdf-astropy
 ==================
