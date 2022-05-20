@@ -26,6 +26,7 @@ Getting Started
 
   asdf-astropy/install.rst
   asdf-astropy/quickstart.rst
+  asdf-astropy/migrating.rst
 
 Using asdf-astropy
 ==================
