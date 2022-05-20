@@ -1,8 +1,8 @@
 .. _asdf-astropy_manifest:
 
-=====================
-asdf-astropy Manifest
-=====================
+=========================
+**asdf-astropy** Manifest
+=========================
 
 Documentation of the ASDF manifest for **asdf-astropy** can be found below:
 
