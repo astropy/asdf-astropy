@@ -7,4 +7,4 @@
 Documentation of the ASDF manifest for **asdf-astropy** can be found below:
 
 .. literalinclude:: ../../asdf_astropy/resources/manifests/astropy-1.0.0.yaml
-   :language: yaml
+    :language: yaml

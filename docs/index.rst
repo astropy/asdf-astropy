@@ -22,20 +22,20 @@ Getting Started
 ===============
 
 .. toctree::
-  :maxdepth: 2
+    :maxdepth: 2
 
-  asdf-astropy/install.rst
-  asdf-astropy/quickstart.rst
-  asdf-astropy/migrating.rst
+    asdf-astropy/install.rst
+    asdf-astropy/quickstart.rst
+    asdf-astropy/migrating.rst
 
 Using **asdf-astropy**
 ======================
 
 .. toctree::
-  :maxdepth: 2
+    :maxdepth: 2
 
-  asdf-astropy/table.rst
-  asdf-astropy/details.rst
-  asdf-astropy/example.rst
-  asdf-astropy/manifest.rst
-  asdf-astropy/schemas.rst
+    asdf-astropy/table.rst
+    asdf-astropy/details.rst
+    asdf-astropy/example.rst
+    asdf-astropy/manifest.rst
+    asdf-astropy/schemas.rst

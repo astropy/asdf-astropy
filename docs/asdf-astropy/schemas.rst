@@ -27,7 +27,7 @@ fits/fits-1.0.0
 ^^^^^^^^^^^^^^^
 
 .. literalinclude:: ../../asdf_astropy/resources/schemas/fits/fits-1.0.0.yaml
-   :language: yaml
+    :language: yaml
 
 
 Table
@@ -40,7 +40,7 @@ table/table-1.0.0
 ^^^^^^^^^^^^^^^^^
 
 .. literalinclude:: ../../asdf_astropy/resources/schemas/table/table-1.0.0.yaml
-   :language: yaml
+    :language: yaml
 
 
 Time
@@ -53,7 +53,7 @@ time/timedelta-1.0.0
 ^^^^^^^^^^^^^^^^^^^^
 
 .. literalinclude:: ../../asdf_astropy/resources/schemas/time/timedelta-1.0.0.yaml
-   :language: yaml
+    :language: yaml
 
 
 Units
@@ -66,4 +66,4 @@ units/equivalency-1.0.0
 ^^^^^^^^^^^^^^^^^^^^^^^
 
 .. literalinclude:: ../../asdf_astropy/resources/schemas/units/equivalency-1.0.0.yaml
-   :language: yaml
+    :language: yaml

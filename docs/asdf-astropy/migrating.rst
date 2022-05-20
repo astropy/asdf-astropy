@@ -14,9 +14,9 @@ the interface used by **asdf-astropy** to extend **ASDF** is given preference ov
 
 .. note::
 
-	When **ASDF** version 3.0 is released, the interface used by **astropy.io.misc.asdf** will
-	be removed. This means that using **ASDF** with **astropy** will stop functioning unless
-	**asdf-astropy** is installed.
+    When **ASDF** version 3.0 is released, the interface used by **astropy.io.misc.asdf** will
+    be removed. This means that using **ASDF** with **astropy** will stop functioning unless
+    **asdf-astropy** is installed.
 
 The only users of **astropy.io.misc.asdf** that need to do any code migration aside from adding
 an **asdf-astropy** dependency are those who directly use the objects (based on `~asdf.types.CustomType`)

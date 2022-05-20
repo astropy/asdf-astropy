@@ -13,12 +13,12 @@ Basic Usage
 
 Given a table, it is possible to write it out to an **ASDF** file::
 
-	from astropy.table import Table
+    from astropy.table import Table
 
-	# Create a simple table
-	t = Table(dtype=[('a', 'f4'), ('b', 'i4'), ('c', 'S2')])
-	# Write the table to an **ASDF** file
-	t.write('table.asdf')
+    # Create a simple table
+    t = Table(dtype=[('a', 'f4'), ('b', 'i4'), ('c', 'S2')])
+    # Write the table to an **ASDF** file
+    t.write('table.asdf')
 
 The I/O registry automatically selects the appropriate writer function to use
 based on the ``.asdf`` extension of the output file.
@@ -26,7 +26,7 @@ based on the ``.asdf`` extension of the output file.
 Reading a file generated in this way is also possible using
 `~astropy.table.Table.read`::
 
-	t2 = Table.read('table.asdf')
+    t2 = Table.read('table.asdf')
 
 The I/O registry automatically selects the appropriate reader function based on
 the extension of the input file.
@@ -34,7 +34,7 @@ the extension of the input file.
 In the case of both reading and writing, if the file extension is not ``.asdf``
 it is possible to explicitly specify the reader/writer function to be used::
 
-	t3 = Table.read('table.zxcv', format='asdf')
+    t3 = Table.read('table.zxcv', format='asdf')
 
 Advanced Usage
 ^^^^^^^^^^^^^^
@@ -54,16 +54,16 @@ key to be used for storage and retrieval of a `~astropy.table.Table` from an
 **ASDF** file. For this reason, the **ASDF** I/O interface provides ``data_key`` as an
 optional keyword when writing and reading::
 
-	from astropy.table import Table
+    from astropy.table import Table
 
-	t = Table(dtype=[('a', 'f4'), ('b', 'i4'), ('c', 'S2')])
-	# Write the table to an asdf file using a non-default key
-	t.write('foo.asdf', data_key='foo')
+    t = Table(dtype=[('a', 'f4'), ('b', 'i4'), ('c', 'S2')])
+    # Write the table to an asdf file using a non-default key
+    t.write('foo.asdf', data_key='foo')
 
 A `~astropy.table.Table` stored using a custom data key can be retrieved by
 passing the same argument to `~astropy.table.Table.read`::
 
-	foo = Table.read('foo.asdf', data_key='foo')
+    foo = Table.read('foo.asdf', data_key='foo')
 
 The ``data_key`` option only applies to `~astropy.table.Table` objects that are
 stored at the top of the **ASDF** tree. For full generality, users may pass a
@@ -73,13 +73,13 @@ write case is ``make_tree``. The function callback should accept exactly one
 argument, which is the `~astropy.table.Table` object, and should return a
 `dict` representing the tree to be stored::
 
-	def make_custom_tree(table):
-		# Return a nested tree where the table is stored at the second level
-		return dict(foo=dict(bar=table))
+    def make_custom_tree(table):
+        # Return a nested tree where the table is stored at the second level
+        return dict(foo=dict(bar=table))
 
-	t = Table(dtype=[('a', 'f4'), ('b', 'i4'), ('c', 'S2')])
-	# Write the table to an **ASDF** file using a non-default key
-	t.write('foobar.asdf', make_tree=make_custom_tree)
+    t = Table(dtype=[('a', 'f4'), ('b', 'i4'), ('c', 'S2')])
+    # Write the table to an **ASDF** file using a non-default key
+    t.write('foobar.asdf', make_tree=make_custom_tree)
 
 Similarly, when reading an **ASDF** file, the user can pass a custom callback to
 locate the table within the **ASDF** tree. The option in this case is
@@ -87,8 +87,8 @@ locate the table within the **ASDF** tree. The option in this case is
 `dict` representing the **ASDF** tree, and it should return a
 `~astropy.table.Table` object::
 
-	def find_table(tree):
-		# This returns the Table that was stored by the example above
-		return tree['foo']['bar']
+    def find_table(tree):
+        # This returns the Table that was stored by the example above
+        return tree['foo']['bar']
 
-	foo = Table.read('foobar.asdf', find_table=find_table)
+    foo = Table.read('foobar.asdf', find_table=find_table)

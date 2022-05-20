@@ -16,7 +16,7 @@ The **ASDF** format is a way of saving nested structures to **yaml**, where some
 the stored data can be stored in a binary format. Thus, one typically structures
 an **ASDF** file as a dictionary, with key/value pairs.
 
-For example if one wanted to store a :class:`Gaussian1D <astropy.modeling.functional_models.Gaussian1D>` model in
+For example if one wanted to store a `~astropy.modeling.functional_models.Gaussian1D` model in
 an **ASDF** file::
 
     from asdf import AsdfFile
@@ -47,9 +47,10 @@ or as a context manager::
         ...
 
 In either case the file ``ff`` will be an `asdf.AsdfFile` object which is accessible just
-like a python dictionary. **ASDF** will fully realize all of the objects stored within
+like a Python dictionary. **ASDF** will fully realize all of the objects stored within
 the file automatically. For example, to access the model stored in the file ``ff['gaussian_model']``
-will be a `~astropy.modeling.models.Gaussian1D` object exactly matching the model written originally.
+will be a `~astropy.modeling.functional_models.Gaussian1D` object exactly matching the model written
+originally.
 
 One can also update an existing file. For example, if one wanted to update the ``hello_world.asdf``
 file with a `~astropy.coordinates.SkyCoord` object::
@@ -65,7 +66,7 @@ file with a `~astropy.coordinates.SkyCoord` object::
         af.tree['skycoord'] = coord
         af.update()
 
-In the same way that the `~astropy.modeling.models.Gaussian1D` model round-tripped, the
+In the same way that the `~astropy.modeling.functional_models.Gaussian1D` model round-tripped, the
 `~astropy.coordinates.SkyCoord` object will also round-trip.
 
 Further Reading
