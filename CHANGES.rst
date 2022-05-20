@@ -3,7 +3,7 @@
 
 - Add converter for the new ``Schechter1D`` model. [#67]
 - Add CITATION file. [#71]
-- Add migration and quick-start documentation guides, and update minimum python version [#77]
+- Add migration and quick-start documentation guides, and update minimum Python version [#77]
 
 0.2.1 (2022-04-18)
 ------------------

@@ -17,7 +17,7 @@ Given a table, it is possible to write it out to an **ASDF** file::
 
     # Create a simple table
     t = Table(dtype=[('a', 'f4'), ('b', 'i4'), ('c', 'S2')])
-    # Write the table to an **ASDF** file
+    # Write the table to an ASDF file
     t.write('table.asdf')
 
 The I/O registry automatically selects the appropriate writer function to use
