@@ -85,12 +85,12 @@ use of it when creating the tag in **ASDF**.
 
 .. note::
 
-   This is not a complete manifest, instead it is a listing for a single
-   tag for a manifest. See :ref:`asdf-astropy_manifest` for an example of
-   a complete manifest. Moreover, a manifest is not strictly the only way
-   to create a tag for ASDF (this can be done using the ASDF context manager
-   for example); however, it is the standard way to create a tag for ASDF
-   for use with a given package.
+    This is not a complete manifest, instead it is a listing for a single
+    tag for a manifest. See :ref:`asdf-astropy_manifest` for an example of
+    a complete manifest. Moreover, a manifest is not strictly the only way
+    to create a tag for ASDF (this can be done using the ASDF context manager
+    for example); however, it is the standard way to create a tag for ASDF
+    for use with a given package.
 
 Creating a Converter
 --------------------
@@ -114,7 +114,7 @@ If we want to use the **asdf-astropy** framework for writing transform converter
 will perform the serialization of the parts of ``MyModel`` which are specific to ``MyModel``,
 while ``from_yaml_tree_transform`` will perform the deserialization of the parts of
 ``MyModel`` specific to ``MyModel``. Moreover, the converter class must also
-specify the `tags` corresponding to ``MyModel`` and the matching python `types` for
+specify the `tags` corresponding to ``MyModel`` and the matching Python `types` for
 those `tags`. The `tags` are what **ASDF** uses to identify which converter to use when
 deserializing an ASDF file, while the `types` are used by **ASDF** to identify which converter
 to use when serializing an object to an ASDF file.::
@@ -153,14 +153,14 @@ In this case `tags` and `types` must still be defined, but instead
 
     class MyTypeConverter(Converter):
         tags = ["tag:<tag for MyType"]
-        types = ["<python import for MyType>"]
+        types = ["<Python import for MyType>"]
 
         def to_yaml_tree(self, obj, tag, ctx):
-            """Code to create a python dictionary representing MyType"""
+            """Code to create a Python dictionary representing MyType"""
             ...
 
         def from_yaml_tree(self, node, tag, ctx):
-            """Code to read a python dictionary representing MyType"""
+            """Code to read a Python dictionary representing MyType"""
             ...
 
-For more details please see `Writing ASDF Extensions <https://asdf.readthedocs.io/en/latest/asdf/extending/extensions.html>`_.
+For more details please see :ref:`asdf:extending_extensions`.
