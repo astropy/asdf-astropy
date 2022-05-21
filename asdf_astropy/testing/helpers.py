@@ -1,6 +1,3 @@
-from astropy import units
-from astropy.coordinates import EarthLocation
-from astropy.tests.helper import assert_quantity_allclose
 from numpy.testing import assert_array_equal
 
 
@@ -11,6 +8,8 @@ def assert_earth_location_equal(a, b):
 
 
 def assert_representation_equal(a, b):
+    from astropy import units
+
     __tracebackhide__ = True
 
     assert type(a) is type(b)
@@ -41,6 +40,8 @@ def assert_frame_equal(a, b):
 
 
 def assert_spectral_coord_equal(a, b):
+    from astropy.tests.helper import assert_quantity_allclose
+
     __tracebackhide__ = True
 
     assert type(a) is type(b)
@@ -50,6 +51,8 @@ def assert_spectral_coord_equal(a, b):
 
 
 def assert_time_equal(a, b):
+    from astropy.coordinates import EarthLocation
+
     assert a.format == b.format
     assert a.scale == b.scale
 
