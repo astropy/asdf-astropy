@@ -8,6 +8,7 @@ import pytest
 from asdf.tests.helpers import yaml_to_asdf
 from astropy import units as u
 from astropy.modeling import models as astropy_models
+from astropy.utils import minversion
 
 from asdf_astropy import integration
 from asdf_astropy.testing.helpers import assert_model_equal
@@ -305,6 +306,9 @@ def create_single_models():
 
     result.extend([astropy_models.fix_inputs(m, {"x": 45}), astropy_models.fix_inputs(m, {0: 45})])
 
+    if minversion("astropy", "5.1") and minversion("asdf-transform-schemas", "0.2.3"):
+        result.append(astropy_models.Schechter1D(phi_star=1.0, m_star=2.0, alpha=3.0))
+
     return result
 
 
@@ -330,6 +334,9 @@ UNSUPPORTED_MODELS = [
     # https://github.com/astropy/asdf-astropy/issues/6
     astropy.modeling.physical_models.NFW,
 ]
+
+if minversion("astropy", "5.1") and not minversion("asdf-transform-schemas", "0.2.3"):
+    UNSUPPORTED_MODELS.append(astropy.modeling.powerlaws.Schechter1D)
 
 
 @pytest.mark.parametrize("model", create_single_models())
