@@ -344,15 +344,7 @@ def test_single_model(tmpdir, model):
     assert_model_roundtrip(model, tmpdir)
 
 
-def test_all_models_supported():
-    """
-    Test that all model classes in astropy have serialization
-    support implemented in this package.  If this test fails,
-    file an issue on GitHub for each missing model and add
-    the model to the UNSUPPORTED_MODELS list above with
-    a link to the issue in a comment.
-    """
-
+def get_all_models():
     def _iterate_model_classes():
         for key, value in itertools.chain(
             astropy_models.__dict__.items(), astropy.modeling.math_functions.__dict__.items()
@@ -364,18 +356,24 @@ def test_all_models_supported():
             ):
                 yield value
 
+    return list(_iterate_model_classes())
+
+
+@pytest.mark.parametrize("model", get_all_models())
+def test_all_models_supported(model):
+    """
+    Test that all model classes in astropy have serialization
+    support implemented in this package.  If this test fails,
+    file an issue on GitHub for each missing model and add
+    the model to the UNSUPPORTED_MODELS list above with
+    a link to the issue in a comment.
+    """
+
     extensions = integration.get_extensions()
     extension_manager = asdf.extension.ExtensionManager(extensions)
 
-    missing = set()
-    for model_class in _iterate_model_classes():
-        if not extension_manager.handles_type(model_class):
-            missing.add(model_class)
-
-    if len(missing) > 0:
-        class_names = sorted([f"{m.__module__}.{m.__qualname__}" for m in missing])
-        message = "Missing support for the following model classes:\n\n" + "\n".join(class_names)
-        assert len(missing) == 0, message
+    message = f"Missing support for model: {model.__module__}.{model.__qualname__}"
+    assert extension_manager.handles_type(model), message
 
 
 def test_legacy_const(tmpdir):
