@@ -5,6 +5,7 @@
 - Add CITATION file. [#71]
 - Add migration and quick-start documentation guides, and update minimum Python version [#77]
 - Update ``FrameConverter`` to enable the use of multiple tags. [#81]
+- Bugfixes for ``astropy.time`` converters. [#86]
 
 0.2.1 (2022-04-18)
 ------------------

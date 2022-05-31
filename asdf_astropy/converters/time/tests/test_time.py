@@ -1,3 +1,4 @@
+import unittest.mock as mk
 from datetime import datetime
 
 import asdf
@@ -110,3 +111,14 @@ def test_read_examples(example):
     with asdf.AsdfFile() as af:
         af._open_impl(af, buff, mode="rw")
         assert np.all(af["example"] == example["truth"])
+
+
+def test_error():
+    from asdf_astropy.converters.time.time import TimeConverter
+
+    with mk.patch("asdf_astropy.converters.time.time._ASTROPY_FORMAT_TO_ASDF_FORMAT") as mock_time:
+        mock_time.get.return_value = "Bad time"
+
+        example = "2000-01-01 00:00:00.000"
+        with pytest.raises(ValueError, match=f"ASDF time '{example}' is not one of the recognized implicit formats"):
+            TimeConverter().from_yaml_tree(example, mk.MagicMock(), mk.MagicMock())
