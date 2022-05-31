@@ -9,9 +9,8 @@ import asdf
 from astropy import units as u
 from astropy.coordinates import ICRS, Galactic, SpectralCoord
 from astropy.coordinates.spectral_coordinate import NoVelocityWarning
-from astropy.tests.helper import assert_quantity_allclose
 
-from asdf_astropy.testing.helpers import assert_frame_equal
+from asdf_astropy.testing.helpers import assert_spectral_coord_equal
 
 
 def create_spectral_coords():
@@ -46,7 +45,4 @@ def test_serialization(coord, tmp_path):
         af.write_to(file_path)
 
     with asdf.open(file_path) as af:
-        assert type(af["coord"]) is type(coord)
-        assert_quantity_allclose(af["coord"].quantity, coord.quantity)
-        assert_frame_equal(af["coord"].observer, coord.observer)
-        assert_frame_equal(af["coord"].target, coord.target)
+        assert_spectral_coord_equal(af["coord"], coord)
