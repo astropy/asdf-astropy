@@ -38,7 +38,7 @@ jobs:
           - name: Python 3.8 Tests
             python-version: "3.8"
             os: ubuntu-latest
-            toxenv: py38-test
+            toxenv: py38-test-cov
 
           - name: Mac OS Latest
             python-version: "3.9"
