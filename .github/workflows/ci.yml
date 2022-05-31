@@ -63,7 +63,7 @@ jobs:
           - name: Python 3.9 with Astropy LTS
             python-version: "3.9"
             os: ubuntu-latest
-            toxenv: py39-astropylts
+            toxenv: py39-astropylts-cov
 
           - name: Build Documents
             python-version: "3.9"
