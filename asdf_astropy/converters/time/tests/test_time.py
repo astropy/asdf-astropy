@@ -122,3 +122,28 @@ def test_error():
         example = "2000-01-01 00:00:00.000"
         with pytest.raises(ValueError, match=f"ASDF time '{example}' is not one of the recognized implicit formats"):
             TimeConverter().from_yaml_tree(example, mk.MagicMock(), mk.MagicMock())
+
+
+def create_formats():
+    from astropy.time.formats import TIME_FORMATS
+
+    formats = []
+    for new_format in TIME_FORMATS:
+        new = Time("B2000.0")
+        new.format = new_format
+        formats.append(new)
+
+    return formats
+
+
+@pytest.mark.parametrize("time", create_formats())
+def test_formats(time, tmp_path):
+    print(time)
+    file_path = tmp_path / "test.asdf"
+    with asdf.AsdfFile() as af:
+        af["time"] = time
+        af.write_to(file_path)
+
+    with asdf.open(file_path) as af:
+        af["time"] == time
+        af["time"].format == time.format
