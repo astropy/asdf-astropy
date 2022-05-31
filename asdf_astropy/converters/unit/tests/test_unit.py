@@ -40,3 +40,18 @@ unit: !unit/unit-1.0.0 "2.1798721  10-18kg m2 s-2"
     buff = helpers.yaml_to_asdf(yaml)
     with asdf.open(buff) as af:
         assert af["unit"].is_equivalent(units.Ry)
+
+
+def create_non_vounits():
+    return [u for u in list(units.__dict__.values()) if isinstance(u, units.UnitBase) and not vounit_compatible(u)]
+
+
+@pytest.mark.parametrize("unit", create_non_vounits())
+def test_error(unit, tmp_path):
+    file_path = tmp_path / "test.asdf"
+    with asdf.AsdfFile() as af:
+        af["unit"] = unit
+        with pytest.raises(
+            ValueError, match=r"Unit '.*' is not representable as VOUnit and cannot be serialized to ASDF"
+        ):
+            af.write_to(file_path)
