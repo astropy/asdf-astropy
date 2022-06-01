@@ -1,6 +1,10 @@
+import unittest.mock as mk
+
 import asdf
 import pytest
 from astropy.table import Table
+
+from asdf_astropy.io.connect import read_table, write_table
 
 
 def make_table():
@@ -80,3 +84,17 @@ def test_table_io_custom_tree(tmpdir):
 
     new_t = Table.read(tmpfile, find_table=find_table)
     assert all(new_t == table)
+
+
+def test_read_table_error(tmp_path):
+    file_name = tmp_path / "table.asdf"
+
+    with pytest.raises(ValueError, match="Options 'data_key' and 'find_table' are not compatible"):
+        read_table(file_name, data_key=mk.MagicMock(), find_table=mk.MagicMock())
+
+
+def test_write_table_error(tmp_path):
+    file_name = tmp_path / "table.asdf"
+
+    with pytest.raises(ValueError, match="Options 'data_key' and 'make_tree' are not compatible"):
+        write_table(mk.MagicMock(), file_name, data_key=mk.MagicMock(), make_tree=mk.MagicMock())
