@@ -36,7 +36,11 @@ def assert_frame_equal(a, b):
     if a is None:
         return
 
-    assert_representation_equal(a.data, b.data)
+    if a.has_data:
+        assert b.has_data
+        assert_representation_equal(a.data, b.data)
+    else:
+        return
 
 
 def assert_spectral_coord_equal(a, b):
