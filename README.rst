@@ -6,7 +6,7 @@ ASDF serialization support for astropy
     :alt: CI Status
 
 .. image:: https://codecov.io/gh/astropy/asdf-astropy/branch/master/graph/badge.svg
-    :target: https://codecov.io/gh/astropy/asdf-astropy/branch=main
+    :target: https://app.codecov.io/gh/astropy/asdf-astropy
     :alt: Code coverage
 
 .. image:: https://github.com/astropy/asdf-astropy/workflows/Downstream/badge.svg
