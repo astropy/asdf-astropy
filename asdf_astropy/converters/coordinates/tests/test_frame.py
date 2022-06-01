@@ -21,6 +21,7 @@ from astropy.coordinates import (
 )
 from astropy.time import Time
 
+from asdf_astropy.converters.coordinates.frame import FrameConverter
 from asdf_astropy.testing.helpers import assert_frame_equal
 
 
@@ -68,3 +69,8 @@ def test_serialization(frame, tmp_path):
 
     with asdf.open(file_path) as af:
         assert_frame_equal(af["frame"], frame)
+
+
+def test_tags():
+    converter = FrameConverter(["tag1", "tag2"], "test")
+    assert converter.tags == ["tag1", "tag2"]
