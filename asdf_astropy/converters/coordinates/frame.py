@@ -4,14 +4,17 @@ from ..utils import import_type
 
 
 class FrameConverter(Converter):
-    def __init__(self, tag, frame_type_name):
-        self._tag = tag
+    def __init__(self, tags, frame_type_name):
         self._frame_type_name = frame_type_name
         self._frame_type = None
 
+        if isinstance(tags, str):
+            tags = [tags]
+        self._tags = tags
+
     @property
     def tags(self):
-        return [self._tag]
+        return self._tags
 
     @property
     def types(self):
