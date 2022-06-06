@@ -153,6 +153,7 @@ latex_documents = [("index", project + ".tex", project + " Documentation", autho
 # (source start file, name, description, authors, manual section).
 man_pages = [("index", project.lower(), project + " Documentation", [author], 1)]
 
+extensions += ["sphinx_asdf"]
 # extensions = ['sphinx.ext.autodoc',
 #               'sphinx.ext.autosummary',
 #               'sphinx_automodapi.automodsumm',
@@ -202,3 +203,10 @@ man_pages = [("index", project.lower(), project + " Documentation", [author], 1)
 #     dtype, target = line.split(None, 1)
 #     target = target.strip()
 #     nitpick_ignore.append((dtype, six.u(target)))
+
+# -- sphinx_asdf configuration ---------------------------------------------
+
+# Top-level directory containing ASDF schemas (relative to current directory)
+asdf_schema_path = "../asdf_astropy/resources"
+# This is the prefix common to all schema IDs in this repository
+asdf_schema_standard_prefix = "schemas"
