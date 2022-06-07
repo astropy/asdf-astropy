@@ -26,9 +26,9 @@ The following schemas are associated with **astropy** objects from the
 fits/fits-1.0.0
 ^^^^^^^^^^^^^^^
 
-.. literalinclude:: ../../asdf_astropy/resources/schemas/fits/fits-1.0.0.yaml
-    :language: yaml
+.. asdf-autoschemas::
 
+    fits/fits-1.0.0
 
 Table
 -----
@@ -39,9 +39,9 @@ The following schemas are associated with **astropy** objects from the
 table/table-1.0.0
 ^^^^^^^^^^^^^^^^^
 
-.. literalinclude:: ../../asdf_astropy/resources/schemas/table/table-1.0.0.yaml
-    :language: yaml
+.. asdf-autoschemas::
 
+    table/table-1.0.0
 
 Time
 ----
@@ -52,9 +52,9 @@ The following schemas are associated with **astropy** objects from the
 time/timedelta-1.0.0
 ^^^^^^^^^^^^^^^^^^^^
 
-.. literalinclude:: ../../asdf_astropy/resources/schemas/time/timedelta-1.0.0.yaml
-    :language: yaml
+.. asdf-autoschemas::
 
+    time/timedelta-1.0.0
 
 Units
 -----
@@ -65,5 +65,6 @@ The following schemas are associated with **astropy** objects from the
 units/equivalency-1.0.0
 ^^^^^^^^^^^^^^^^^^^^^^^
 
-.. literalinclude:: ../../asdf_astropy/resources/schemas/units/equivalency-1.0.0.yaml
-    :language: yaml
+.. asdf-autoschemas::
+
+    units/equivalency-1.0.0
