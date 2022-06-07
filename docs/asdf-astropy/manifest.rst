@@ -6,5 +6,7 @@
 
 Documentation of the ASDF manifest for **asdf-astropy** can be found below:
 
-.. literalinclude:: ../../asdf_astropy/resources/manifests/astropy-1.0.0.yaml
-    :language: yaml
+.. asdf-schema::
+    :standard_prefix: manifests
+
+    astropy-1.0.0
