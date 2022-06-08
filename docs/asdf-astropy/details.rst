@@ -18,7 +18,7 @@ to converter implementations directly. Their presence should be entirely transpa
 when processing ASDF files.
 
 The converters in **asdf-astropy** related to transforms implement the tags that are
-defined by the `asdf-transform-schemas package <https://github.com/asdf-format/asdf-transform-schemas>`_.
+defined by the :ref:`asdf-transform-schemas package <asdf-transform-schemas:asdf-transform-schemas>`.
 Similarly, the converters in **asdf-astropy** related to coordinates implement
 the tags that are defined by the
 `asdf-coordinates-schemas package <https://github.com/asdf-format/asdf-coordinates-schemas>`_.

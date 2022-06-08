@@ -10,7 +10,7 @@ be found at the links below.
 
 Documentation for the schemas defined in the ASDF Standard can be found :ref:`here <asdf-standard:schema>`.
 Note that other schemas are defined in
-`asdf-transform-schemas <https://github.com/asdf-format/asdf-transform-schemas>`_
+:ref:`asdf-transform-schemas <asdf-transform-schemas:transform-schemas>`
 and
 `asdf-coordinates-schemas <https://github.com/asdf-format/asdf-coordinates-schemas>`_.
 
