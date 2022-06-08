@@ -14,9 +14,10 @@ Creating the Tag
 ----------------
 
 All of the tags for transforms (**astropy** models) are currently defined within
-the asdf-transform-schemas, along side the schemas which compose them.
-Any new serializable **astropy** model will require the creation of a new tag,
-which will likely require the creation of a new schema.
+the :ref:`asdf-transform-schemas <asdf-transform-schemas:asdf-transform-schemas>`,
+along side the schemas which compose them.  Any new serializable **astropy** model
+will require the creation of a new tag, which will likely require the creation of
+a new schema.
 
 Let's consider a new model called ``MyModel``, a new model in ``astropy.modeling.functional_models``
 that has two parameters ``amplitude`` and ``x_0``. We would like to strictly require both
