@@ -12,7 +12,7 @@ Documentation for the schemas defined in the ASDF Standard can be found :ref:`he
 Note that other schemas are defined in
 :ref:`asdf-transform-schemas <asdf-transform-schemas:transform-schemas>`
 and
-`asdf-coordinates-schemas <https://github.com/asdf-format/asdf-coordinates-schemas>`_.
+:ref:`asdf-coordinates-schemas <asdf-coordinates-schemas:asdf-coordinates-schemas>`.
 
 
 .. contents::
