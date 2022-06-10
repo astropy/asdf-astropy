@@ -21,7 +21,7 @@ The converters in **asdf-astropy** related to transforms implement the tags that
 defined by the :ref:`asdf-transform-schemas package <asdf-transform-schemas:asdf-transform-schemas>`.
 Similarly, the converters in **asdf-astropy** related to coordinates implement
 the tags that are defined by the
-`asdf-coordinates-schemas package <https://github.com/asdf-format/asdf-coordinates-schemas>`_.
+:ref:`asdf-coordinates-schemas package <asdf-coordinates-schemas:asdf-coordinates-schemas>`.
 Moreover, many of the converters in **asdf-astropy** related to units implement tags
 that are defined in the :ref:`ASDF-standard <asdf-standard:asdf-standard>`.
 Finally, there are converters in **asdf-astropy** whose tags are defined within **asdf-astropy**
