@@ -19,21 +19,20 @@ class TimeConverter(Converter):
     def to_yaml_tree(self, obj, tag, ctx):
         from astropy.time import Time
 
-        if obj.format == "byear":
+        base_format = obj.format
+        if base_format == "byear":
             obj = Time(obj, format="byear_str")
-        elif obj.format == "jyear":
+        elif base_format == "jyear":
             obj = Time(obj, format="jyear_str")
-        elif obj.format in ("fits", "datetime", "plot_date"):
+        elif base_format in ("fits", "datetime", "plot_date", "ymdhms", "datetime64"):
             obj = Time(obj, format="isot")
 
         asdf_format = _ASTROPY_FORMAT_TO_ASDF_FORMAT.get(obj.format, obj.format)
         guessable_format = asdf_format in _GUESSABLE_FORMATS
 
-        if obj.scale == "utc" and guessable_format and obj.isscalar:
-            return obj.value
-
         node = {
             "value": obj.value,
+            "base_format": base_format,
         }
 
         if not guessable_format:
@@ -96,9 +95,15 @@ class TimeConverter(Converter):
                     location["z"],
                 )
 
-        return Time(
+        time = Time(
             node["value"],
             format=node.get("format"),
             scale=node.get("scale"),
             location=location,
         )
+
+        base_format = node.get("base_format")
+        if base_format is not None and base_format != time.format:
+            time.format = base_format
+
+        return time

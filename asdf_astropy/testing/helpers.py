@@ -1,4 +1,4 @@
-from numpy.testing import assert_array_equal
+from numpy.testing import assert_array_almost_equal, assert_array_equal
 
 
 def assert_earth_location_equal(a, b):
@@ -66,7 +66,10 @@ def assert_time_equal(a, b):
     else:
         assert a.location == b.location
 
-    assert_array_equal(a, b)
+    if a.format == "plot_date":
+        assert_array_almost_equal(a.value, b.value)
+    else:
+        assert_array_equal(a, b)
 
 
 def assert_time_delta_equal(a, b):
