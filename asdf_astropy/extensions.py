@@ -30,8 +30,7 @@ TRANSFORM_CONVERTERS = [
     CompoundConverter(),
     # astropy.modeling.functional_models
     SimpleTransformConverter(
-        ["tag:stsci.edu:asdf/transform/airy_disk2d-*"],
-        "astropy.modeling.functional_models.AiryDisk2D",
+        ["tag:stsci.edu:asdf/transform/airy_disk2d-*"], "astropy.modeling.functional_models.AiryDisk2D",
     ),
     SimpleTransformConverter(
         ["tag:stsci.edu:asdf/transform/box1d-*"],
