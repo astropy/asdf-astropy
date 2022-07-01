@@ -11,6 +11,8 @@ write_to = "asdf_astropy/_version.py"
 
 [tool.black]
 line-length = 120
+check = true
+diff = true
 force-exclude = '''
 ^/(
   (

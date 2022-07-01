@@ -7,13 +7,13 @@ repos:
 - repo: https://github.com/pre-commit/pre-commit-hooks
   rev: v4.1.0
   hooks:
-  - id: check-added-large-files
-  - id: check-case-conflict
-  - id: check-yaml
-    args: ["--unsafe"]
-  - id: debug-statements
-  - id: end-of-file-fixer
-  - id: trailing-whitespace
+    - id: check-added-large-files
+    - id: check-case-conflict
+    - id: check-yaml
+      args: ["--unsafe"]
+    - id: debug-statements
+    - id: end-of-file-fixer
+    - id: trailing-whitespace
 
 - repo: https://github.com/asottile/pyupgrade
   rev: v2.34.0
