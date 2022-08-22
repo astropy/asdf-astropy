@@ -1,4 +1,4 @@
-0.2.2 (unreleased)
+0.2.2 (2022-08-22)
 ------------------
 
 - Add converter for the new ``Schechter1D`` model. [#67]
