@@ -8,10 +8,72 @@ import pytest
 from asdf.tests.helpers import yaml_to_asdf
 from astropy import units as u
 from astropy.modeling import models as astropy_models
+from astropy.modeling.bounding_box import CompoundBoundingBox, ModelBoundingBox
 from astropy.utils import minversion
 
 from asdf_astropy import integration
 from asdf_astropy.testing.helpers import assert_model_equal
+
+
+def assert_bounding_box_roundtrip(bounding_box, tmpdir, version=None):
+    """
+    Assert that a bounding_box can be written to an ASDF file and read back
+    in without losing any of its essential properties.
+    """
+    path = str(tmpdir / "test.asdf")
+
+    with asdf.AsdfFile({"bounding_box": bounding_box}, version=version) as af:
+        af.write_to(path)
+
+    with asdf.open(path) as af:
+        assert bounding_box == af["bounding_box"](bounding_box._model)
+
+
+def create_bounding_boxes():
+    model_bounding_box = [
+        ModelBoundingBox((0, 1), astropy_models.Polynomial1D(1)),
+        ModelBoundingBox(((2, 3), (3, 4)), astropy_models.Polynomial2D(1)),
+        ModelBoundingBox(((5, 6), (7, 8)), astropy_models.Polynomial2D(1), order="F"),
+    ]
+
+    # ignore option is not properly supported until astropy versions with the bug fix from:
+    # astropy/astropy#13032 (milestone 5.0.5) is included
+    if minversion("astropy", "5.0.4", inclusive=False):
+        model_bounding_box.extend(
+            [
+                ModelBoundingBox((9, 10), astropy_models.Polynomial2D(1), ignored=["x"]),
+                ModelBoundingBox((11, 12), astropy_models.Polynomial2D(1), ignored=["y"]),
+            ]
+        )
+
+    compound_bounding_box = [
+        CompoundBoundingBox({(1,): (0, 1), (2,): (2, 3)}, astropy_models.Polynomial2D(1), [("x", True)]),
+        CompoundBoundingBox(
+            {(1,): ((0, 1), (-1, 0)), (2,): ((2, 3), (-3, -2))}, astropy_models.Polynomial2D(1), [("x", False)]
+        ),
+    ]
+    if minversion("astropy", "5.1"):
+        compound_bounding_box.extend(
+            [
+                CompoundBoundingBox(
+                    {(1,): (0, 1), (2,): (2, 3)}, astropy_models.Polynomial2D(1), [("x", False)], ignored=["x"]
+                ),
+                CompoundBoundingBox(
+                    {(1,): (0, 1), (2,): (2, 3)}, astropy_models.Polynomial2D(1), [("x", False)], ignored=["y"]
+                ),
+            ]
+        )
+
+    return model_bounding_box + compound_bounding_box
+
+
+@pytest.mark.parametrize("bbox", create_bounding_boxes())
+@pytest.mark.skipif(
+    not minversion("asdf_transform_schemas", "0.2.2", inclusive=False),
+    reason="Schema not present until versions after asdf-transform-schemas 0.2.2",
+)
+def test_round_trip_bounding_box(bbox, tmpdir):
+    assert_bounding_box_roundtrip(bbox, tmpdir)
 
 
 def assert_model_roundtrip(model, tmpdir, version=None):
@@ -269,6 +331,44 @@ def create_single_models():
         ),
     ]
 
+    # Test case for model with a metaclass generated abstract bounding_box
+    # where a custom bounding box is stored
+    gaussian_1d = astropy_models.Gaussian1D(10, 1.5, 0.25)
+    gaussian_1d.bounding_box = [7, 8]
+    result.append(gaussian_1d)
+
+    # compound model with bounding box
+    model = astropy_models.Shift(1) & astropy_models.Shift(2)
+    model.bounding_box = ((1, 2), (3, 4))
+    result.append(model)
+
+    # compound model with bounding box
+    model = astropy_models.Shift(1) & astropy_models.Shift(2) & astropy_models.Shift(3)
+    model.bounding_box = ((1, 2), (3, 4), (5, 6))
+    result.append(model)
+
+    if minversion("asdf_transform_schemas", "0.2.2", inclusive=False):
+        # model with compound bounding box
+        model = astropy_models.Shift(1) & astropy_models.Scale(2) & astropy_models.Identity(1)
+        model.inputs = ("x", "y", "slit_id")
+        bounding_boxes = {
+            (0,): ((-0.5, 1047.5), (-0.5, 2047.5)),
+            (1,): ((-0.5, 3047.5), (-0.5, 4047.5)),
+        }
+        bounding_box = CompoundBoundingBox.validate(model, bounding_boxes, selector_args=[("slit_id", True)], order="F")
+        model.bounding_box = bounding_box
+        result.append(model)
+
+        model = astropy_models.Shift(1) & astropy_models.Shift(2) & astropy_models.Shift(3)
+        model.inputs = ("x", "y", "z")
+        bounding_boxes = {
+            (0,): (1.0, 2.0),
+            (1,): (3.0, 4.0),
+        }
+        bounding_box = CompoundBoundingBox.validate(model, bounding_boxes, selector_args=[("x", True)], ignored=["y"])
+        model.bounding_box = bounding_box
+        result.append(model)
+
     result.append(astropy_models.Plummer1D(mass=10.0, r_plum=5.0))
 
     # models with input_units_equivalencies
@@ -336,6 +436,11 @@ UNSUPPORTED_MODELS = [
 ]
 
 if minversion("astropy", "5.1") and not minversion("asdf-transform-schemas", "0.2.3"):
+    UNSUPPORTED_MODELS.append(astropy.modeling.powerlaws.Schechter1D)
+
+
+# Model added in astropy 5.1 and schema added after asdf-transform 0.2.2
+if minversion("astropy", "5.1") and not minversion("asdf_transform_schemas", "0.2.2", inclusive=False):
     UNSUPPORTED_MODELS.append(astropy.modeling.powerlaws.Schechter1D)
 
 

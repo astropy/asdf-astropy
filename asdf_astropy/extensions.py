@@ -18,6 +18,7 @@ from .converters.transform.mappings import IdentityConverter, RemapAxesConverter
 from .converters.transform.math_functions import MathFunctionsConverter
 from .converters.transform.polynomial import OrthoPolynomialConverter, PolynomialConverter
 from .converters.transform.projections import ProjectionConverter
+from .converters.transform.properties import CompoundBoundingBoxConverter, ModelBoundingBoxConverter
 from .converters.transform.rotations import Rotate3DConverter, RotationSequenceConverter
 from .converters.transform.spline import SplineConverter
 from .converters.transform.tabular import TabularConverter
@@ -361,6 +362,9 @@ TRANSFORM_CONVERTERS = [
     RotationSequenceConverter(),
     # astropy.modeling.tabular
     TabularConverter(),
+    # astropy.modeling.bounding_box
+    ModelBoundingBoxConverter(),
+    CompoundBoundingBoxConverter(),
 ]
 
 if minversion("astropy", "5.1.0"):

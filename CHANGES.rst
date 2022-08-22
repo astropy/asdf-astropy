@@ -7,6 +7,7 @@
 - Update ``FrameConverter`` to enable the use of multiple tags. [#81]
 - Bugfixes for ``astropy.time`` converters. [#86]
 - Remove unnecessary ``tag:`` from schemas. [#103]
+- Add converters for ``ModelBoundingBox`` and ``CompoundBoundingBox``. [#69]
 
 0.2.1 (2022-04-18)
 ------------------

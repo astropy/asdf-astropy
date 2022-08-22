@@ -12,6 +12,7 @@ __pycache__
 MANIFEST
 asdf_astropy/_version.py
 coverage.xml
+.mypy_cache
 
 # Sphinx
 _build
