@@ -2,7 +2,6 @@
 ---
 $schema: "http://stsci.edu/schemas/yaml-schema/draft-01"
 id: "http://astropy.org/schemas/astropy/transform/units_mapping-1.0.0"
-tag: "tag:astropy.org:astropy/transform/units_mapping-1.0.0"
 
 title: |
   Mapper that operates on the units of the input.
