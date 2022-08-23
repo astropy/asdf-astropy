@@ -31,6 +31,7 @@ test = [
     'scipy',
 ]
 docs = [
+    'tomli',
     'sphinx',
     'sphinx-astropy',
     'sphinx-automodapi',

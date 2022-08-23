@@ -26,13 +26,13 @@
 # be accessible, and the documentation will not build correctly.
 
 import datetime
-import os
 import sys
-from configparser import ConfigParser
 from importlib import import_module
+from pathlib import Path
 
 import sphinx  # noqa
 import sphinx_astropy  # noqa
+import tomli
 
 try:
     from sphinx_astropy.conf.v1 import *  # noqa
@@ -40,11 +40,10 @@ except ImportError:
     print("ERROR: the documentation requires the sphinx-astropy package to be installed")
     sys.exit(1)
 
-# Get configuration information from setup.cfg
-conf = ConfigParser()
-
-conf.read([os.path.join(os.path.dirname(__file__), "..", "setup.cfg")])
-setup_cfg = dict(conf.items("metadata"))
+# Get configuration information from `pyproject.toml`
+with open(Path(__file__).parent.parent / "pyproject.toml", "rb") as configuration_file:
+    conf = tomli.load(configuration_file)
+configuration = conf["project"]
 
 # -- General configuration ----------------------------------------------------
 
@@ -74,16 +73,16 @@ exclude_patterns.append("_templates")
 # -- Project information ------------------------------------------------------
 
 # This does not *have* to match the package name, but typically does
-project = setup_cfg["name"]
-author = setup_cfg["author"]
-copyright = "{0}, {1}".format(datetime.datetime.now().year, setup_cfg["author"])
+project = configuration["name"]
+author = f"{configuration['authors'][0]['name']} <{configuration['authors'][0]['email']}>"
+copyright = f"{datetime.datetime.now().year}, {configuration['authors'][0]}"
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
 # built documents.
 
-import_module(setup_cfg["name"])
-package = sys.modules[setup_cfg["name"]]
+import_module(configuration["name"])
+package = sys.modules[configuration["name"]]
 
 # The short X.Y version.
 version = package.__version__.split("-", 1)[0]
