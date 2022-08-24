@@ -365,9 +365,12 @@ def create_single_models():
             (0,): (1.0, 2.0),
             (1,): (3.0, 4.0),
         }
-        bounding_box = CompoundBoundingBox.validate(model, bounding_boxes, selector_args=[("x", True)], ignored=["y"])
-        model.bounding_box = bounding_box
-        result.append(model)
+        if minversion("astropy", "5.1"):
+            bounding_box = CompoundBoundingBox.validate(
+                model, bounding_boxes, selector_args=[("x", True)], ignored=["y"]
+            )
+            model.bounding_box = bounding_box
+            result.append(model)
 
     result.append(astropy_models.Plummer1D(mass=10.0, r_plum=5.0))
 
