@@ -33,7 +33,7 @@ if __name__ == "__main__":
 
     manifest["id"] = "http://astropy.org/asdf/extensions/astropy/manifests/astropy-1.0"
     manifest["extension_uri"] = "http://astropy.org/asdf/extensions/astropy-1.0"
-    manifest["title"] = f"Astropy extension 1.0"
+    manifest["title"] = "Astropy extension 1.0"
     manifest["description"] = MultilineString(
         "A set of tags for serializing astropy objects.  This does not include most\n"
         "model classes, which are handled by an implementation of the ASDF\n"
