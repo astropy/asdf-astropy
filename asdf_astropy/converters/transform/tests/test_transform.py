@@ -650,6 +650,24 @@ def test_rotation_errors():
         converter.from_yaml_tree_transform(node, mk.MagicMock(), mk.MagicMock())
 
 
+def test_projection_errors():
+    from asdf_astropy.converters.transform.projections import ProjectionConverter
+
+    converter = ProjectionConverter(mk.MagicMock(), mk.MagicMock(), mk.MagicMock())
+    converter._sky2pix_type = astropy_models.Pix2Sky_Airy
+    converter._pix2sky_type = astropy_models.Sky2Pix_Airy
+
+    # to yaml error
+    mdl = astropy_models.Const1D(5)
+    with pytest.raises(TypeError, match=r"Unrecognized projection model type: *"):
+        converter.to_yaml_tree_transform(mdl, mk.MagicMock(), mk.MagicMock())
+
+    # from yaml error
+    node = {"direction": mk.MagicMock()}
+    with pytest.raises(ValueError, match=r"Unrecognized projection direction: *"):
+        converter.from_yaml_tree_transform(node, mk.MagicMock(), mk.MagicMock())
+
+
 def test_bounding_box_missing_attributes():
     yaml = """
 model: !transform/constant-1.4.0
