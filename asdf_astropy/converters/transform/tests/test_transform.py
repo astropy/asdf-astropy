@@ -668,6 +668,17 @@ def test_projection_errors():
         converter.from_yaml_tree_transform(node, mk.MagicMock(), mk.MagicMock())
 
 
+def test_polynomial_errors():
+    from asdf_astropy.converters.transform.polynomial import PolynomialConverter
+
+    converter = PolynomialConverter()
+
+    # from yaml error
+    node = {"coefficients": np.zeros((2, 3))}
+    with pytest.raises(TypeError, match=r"Coefficients must be an .* matrix"):
+        converter.from_yaml_tree_transform(node, mk.MagicMock(), mk.MagicMock())
+
+
 def test_bounding_box_missing_attributes():
     yaml = """
 model: !transform/constant-1.4.0
