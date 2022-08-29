@@ -20,7 +20,12 @@ repos:
   hooks:
     - id: pyupgrade
       args: ["--py38-plus"]
-      exclude: "asdf/extern/.*|docs/.*"
+      exclude: "docs/.*"
+
+- repo: https://github.com/fsouza/autoflake8
+  rev: v0.3.2
+  hooks:
+  - id: autoflake8
 
 - repo: https://github.com/pycqa/isort
   rev: 5.10.1
@@ -36,7 +41,7 @@ repos:
   rev: 5.0.4
   hooks:
     - id: flake8
-      exclude: "scripts/.*|docs/.*"
+      exclude: "docs/.*"
 
 - repo: https://github.com/PyCQA/bandit
   rev: 1.7.4

@@ -1,11 +1,7 @@
 import warnings
 
-import pytest
-
-# No spectral_coordinate module in astropy 4.0.x
-pytest.importorskip("astropy.coordinates.spectral_coordinate")
-
 import asdf
+import pytest
 from astropy import units as u
 from astropy.coordinates import ICRS, Galactic, SpectralCoord
 from astropy.coordinates.spectral_coordinate import NoVelocityWarning

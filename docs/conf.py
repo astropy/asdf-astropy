@@ -31,8 +31,8 @@ import sys
 from configparser import ConfigParser
 from importlib import import_module
 
-import sphinx
-import sphinx_astropy
+import sphinx  # noqa
+import sphinx_astropy  # noqa
 
 try:
     from sphinx_astropy.conf.v1 import *  # noqa

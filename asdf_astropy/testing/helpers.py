@@ -60,7 +60,7 @@ def assert_time_equal(a, b):
     assert a.format == b.format
     assert a.scale == b.scale
 
-    assert type(a.location) == type(b.location)
+    assert isinstance(a.location, type(b.location))
     if isinstance(a.location, EarthLocation):
         assert_earth_location_equal(a.location, b.location)
     else:
