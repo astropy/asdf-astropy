@@ -679,6 +679,31 @@ def test_polynomial_errors():
         converter.from_yaml_tree_transform(node, mk.MagicMock(), mk.MagicMock())
 
 
+def test_compound_errors():
+    from asdf_astropy.converters.transform.compound import CompoundConverter
+
+    converter = CompoundConverter()
+
+    # Left not a model
+    tag = "!transform/add-1.2.0"
+    node = {"forward": [mk.MagicMock(), mk.MagicMock()]}
+    with pytest.raises(TypeError, match=r"Unknown left model type '.*'"):
+        converter.from_yaml_tree_transform(node, tag, mk.MagicMock())
+
+    # Right not a model (not fix_inputs)
+    node = {"forward": [astropy_models.Const1D(17), mk.MagicMock()]}
+    with pytest.raises(TypeError, match=r"Unknown right model type '.*'"):
+        converter.from_yaml_tree_transform(node, tag, mk.MagicMock())
+
+    # Right not a model (fix_inputs)
+    tag = "!transform/fix_inputs-1.2.0"
+    mdl = mk.MagicMock()
+    mdl.__class__ = astropy_models.Const1D
+    node = {"forward": [astropy_models.Const1D(17), mdl]}
+    with pytest.raises(TypeError, match=r"Unknown right model type '.*'"):
+        converter.from_yaml_tree_transform(node, tag, mk.MagicMock())
+
+
 def test_bounding_box_missing_attributes():
     yaml = """
 model: !transform/constant-1.4.0

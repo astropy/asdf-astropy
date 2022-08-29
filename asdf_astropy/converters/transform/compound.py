@@ -72,11 +72,13 @@ class CompoundConverter(TransformConverterBase):
 
         left = node["forward"][0]
         if not isinstance(left, Model):
-            raise TypeError("Unknown model type '{}'".format(node["forward"][0]._tag))
+            raise TypeError("Unknown left model type '{}'".format(node["forward"][0]._tag))
 
         right = node["forward"][1]
-        if not isinstance(right, Model) and not (oper == "fix_inputs" and isinstance(right, dict)):
-            raise TypeError("Unknown model type '{}'".format(node["forward"][1]._tag))
+        if (oper == "fix_inputs" and not isinstance(right, dict)) or (
+            oper != "fix_inputs" and not isinstance(right, Model)
+        ):
+            raise TypeError("Unknown right model type '{}'".format(node["forward"][1]._tag))
 
         if oper == "fix_inputs":
             right = dict(zip(right["keys"], right["values"]))
