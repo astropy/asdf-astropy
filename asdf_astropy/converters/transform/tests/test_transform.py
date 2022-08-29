@@ -704,6 +704,10 @@ def test_compound_errors():
         converter.from_yaml_tree_transform(node, tag, mk.MagicMock())
 
 
+@pytest.mark.skipif(
+    not minversion("asdf_transform_schemas", "0.2.2", inclusive=False),
+    reason="Schema not present until versions after asdf-transform-schemas 0.2.2",
+)
 def test_bounding_box_missing_attributes():
     yaml = """
 model: !transform/constant-1.4.0
@@ -773,7 +777,11 @@ model: !transform/concatenate-1.2.0
     buff = yaml_to_asdf(yaml)
 
     if minversion("astropy", "5.1"):
-        asdf.open(buff)
+        if not minversion("asdf_transform_schemas", "0.2.2", inclusive=False):
+            with pytest.raises(TypeError, match=r"Cannot form bounding_box from: *"):
+                asdf.open(buff)
+        else:
+            asdf.open(buff)
     else:
         with pytest.raises(
             RuntimeError,
