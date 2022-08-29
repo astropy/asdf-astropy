@@ -1,4 +1,5 @@
 import itertools
+import unittest.mock as mk
 
 import asdf
 import astropy
@@ -629,3 +630,21 @@ model: !transform/concatenate-1.2.0
         model = af["model"]
         assert model.has_inverse()
         assert model.inverse(-5, -20) == (0, 0)
+
+
+def test_rotation_errors():
+    from asdf_astropy.converters.transform.rotations import RotationSequenceConverter
+
+    converter = RotationSequenceConverter()
+
+    # to yaml error
+    mdl = astropy_models.Const1D(5)
+    mdl.angles = mk.MagicMock()
+    mdl.axes_order = mk.MagicMock()
+    with pytest.raises(ValueError, match=r"Cannot serialize model of type *"):
+        converter.to_yaml_tree_transform(mdl, mk.MagicMock(), mk.MagicMock())
+
+    # from yaml error
+    node = {"angles": mk.MagicMock(), "axes_order": mk.MagicMock(), "rotation_type": mk.MagicMock()}
+    with pytest.raises(ValueError, match=r"Unrecognized rotation_type: *"):
+        converter.from_yaml_tree_transform(node, mk.MagicMock(), mk.MagicMock())
