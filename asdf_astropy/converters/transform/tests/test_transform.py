@@ -648,3 +648,81 @@ def test_rotation_errors():
     node = {"angles": mk.MagicMock(), "axes_order": mk.MagicMock(), "rotation_type": mk.MagicMock()}
     with pytest.raises(ValueError, match=r"Unrecognized rotation_type: *"):
         converter.from_yaml_tree_transform(node, mk.MagicMock(), mk.MagicMock())
+
+
+def test_bounding_box_missing_attributes():
+    yaml = """
+model: !transform/constant-1.4.0
+    value: 1
+    dimensions: 1
+    bounding_box: !transform/property/bounding_box-1.0.0
+        intervals:
+            x: [1.0, 2.0]
+    """
+    buff = yaml_to_asdf(yaml)
+    with asdf.open(buff) as af:
+        model = af["model"]
+        assert model.bounding_box.ignored == []
+        assert model.bounding_box.order == "C"
+
+    yaml = """
+model: !transform/constant-1.4.0
+    value: 1
+    dimensions: 2
+    bounding_box: !transform/property/compound_bounding_box-1.0.0
+        selector_args:
+            - argument: x
+              ignore: true
+        cbbox:
+            - key: [0] # value of input x is 0 to select this box
+              bbox: !transform/property/bounding_box-1.0.0
+                intervals:
+                    y: [1.0, 2.0]
+            - key: [3] # value of input x is 3 to select this box
+              bbox: !transform/property/bounding_box-1.0.0
+                intervals:
+                    y: [4.0, 5.0]
+    """
+    buff = yaml_to_asdf(yaml)
+    with asdf.open(buff) as af:
+        model = af["model"]
+        assert model.bounding_box.order == "C"
+
+
+def test_compound_bbox_ignored_error():
+    yaml = """
+model: !transform/concatenate-1.2.0
+  forward:
+    - !transform/concatenate-1.2.0
+      forward:
+        - !transform/shift-1.2.0
+          offset: 1.0
+        - !transform/shift-1.2.0
+          offset: 2.0
+    - !transform/shift-1.2.0
+      offset: 3.0
+  bounding_box: !transform/property/compound_bounding_box-1.0.0
+    selector_args:
+      - argument: x
+        ignore: true
+    cbbox:
+      - key: [0] # both value of input x is 0
+        bbox: !transform/property/bounding_box-1.0.0
+          intervals:
+            x0: [2.0, 3.0]
+      - key: [1] # both value of input x is 1
+        bbox: !transform/property/bounding_box-1.0.0
+          intervals:
+            x0: [6.0, 7.0]
+    ignore: [x1]
+    """
+    buff = yaml_to_asdf(yaml)
+
+    if minversion("astropy", "5.1"):
+        asdf.open(buff)
+    else:
+        with pytest.raises(
+            RuntimeError,
+            match=r"Deserializing ignored elements of a compound bounding box is only supported for astropy 5.1+.",
+        ):
+            asdf.open(buff)
