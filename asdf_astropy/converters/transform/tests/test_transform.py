@@ -1,4 +1,5 @@
 import itertools
+import unittest.mock as mk
 
 import asdf
 import astropy
@@ -629,3 +630,202 @@ model: !transform/concatenate-1.2.0
         model = af["model"]
         assert model.has_inverse()
         assert model.inverse(-5, -20) == (0, 0)
+
+
+def test_rotation_errors():
+    from asdf_astropy.converters.transform.rotations import RotationSequenceConverter
+
+    converter = RotationSequenceConverter()
+
+    # to yaml error
+    mdl = astropy_models.Const1D(5)
+    mdl.angles = mk.MagicMock()
+    mdl.axes_order = mk.MagicMock()
+    with pytest.raises(ValueError, match=r"Cannot serialize model of type *"):
+        converter.to_yaml_tree_transform(mdl, mk.MagicMock(), mk.MagicMock())
+
+    # from yaml error
+    node = {"angles": mk.MagicMock(), "axes_order": mk.MagicMock(), "rotation_type": mk.MagicMock()}
+    with pytest.raises(ValueError, match=r"Unrecognized rotation_type: *"):
+        converter.from_yaml_tree_transform(node, mk.MagicMock(), mk.MagicMock())
+
+
+def test_projection_errors():
+    from asdf_astropy.converters.transform.projections import ProjectionConverter
+
+    converter = ProjectionConverter(mk.MagicMock(), mk.MagicMock(), mk.MagicMock())
+    converter._sky2pix_type = astropy_models.Pix2Sky_Airy
+    converter._pix2sky_type = astropy_models.Sky2Pix_Airy
+
+    # to yaml error
+    mdl = astropy_models.Const1D(5)
+    with pytest.raises(TypeError, match=r"Unrecognized projection model type: *"):
+        converter.to_yaml_tree_transform(mdl, mk.MagicMock(), mk.MagicMock())
+
+    # from yaml error
+    node = {"direction": mk.MagicMock()}
+    with pytest.raises(ValueError, match=r"Unrecognized projection direction: *"):
+        converter.from_yaml_tree_transform(node, mk.MagicMock(), mk.MagicMock())
+
+
+def test_polynomial_errors():
+    from asdf_astropy.converters.transform.polynomial import PolynomialConverter
+
+    converter = PolynomialConverter()
+
+    # from yaml error
+    node = {"coefficients": np.zeros((2, 3))}
+    with pytest.raises(TypeError, match=r"Coefficients must be an .* matrix"):
+        converter.from_yaml_tree_transform(node, mk.MagicMock(), mk.MagicMock())
+
+
+def test_compound_errors():
+    from asdf_astropy.converters.transform.compound import CompoundConverter
+
+    converter = CompoundConverter()
+
+    # Left not a model
+    tag = "!transform/add-1.2.0"
+    node = {"forward": [mk.MagicMock(), mk.MagicMock()]}
+    with pytest.raises(TypeError, match=r"Unknown left model type '.*'"):
+        converter.from_yaml_tree_transform(node, tag, mk.MagicMock())
+
+    # Right not a model (not fix_inputs)
+    node = {"forward": [astropy_models.Const1D(17), mk.MagicMock()]}
+    with pytest.raises(TypeError, match=r"Unknown right model type '.*'"):
+        converter.from_yaml_tree_transform(node, tag, mk.MagicMock())
+
+    # Right not a model (fix_inputs)
+    tag = "!transform/fix_inputs-1.2.0"
+    mdl = mk.MagicMock()
+    mdl.__class__ = astropy_models.Const1D
+    node = {"forward": [astropy_models.Const1D(17), mdl]}
+    with pytest.raises(TypeError, match=r"Unknown right model type '.*'"):
+        converter.from_yaml_tree_transform(node, tag, mk.MagicMock())
+
+
+@pytest.mark.skipif(
+    not minversion("asdf_transform_schemas", "0.2.2", inclusive=False),
+    reason="Schema not present until versions after asdf-transform-schemas 0.2.2",
+)
+def test_bounding_box_missing_attributes():
+    yaml = """
+model: !transform/constant-1.4.0
+    value: 1
+    dimensions: 1
+    bounding_box: !transform/property/bounding_box-1.0.0
+        intervals:
+            x: [1.0, 2.0]
+    """
+    buff = yaml_to_asdf(yaml)
+    with asdf.open(buff) as af:
+        model = af["model"]
+        assert model.bounding_box.ignored == []
+        assert model.bounding_box.order == "C"
+
+    yaml = """
+model: !transform/constant-1.4.0
+    value: 1
+    dimensions: 2
+    bounding_box: !transform/property/compound_bounding_box-1.0.0
+        selector_args:
+            - argument: x
+              ignore: true
+        cbbox:
+            - key: [0] # value of input x is 0 to select this box
+              bbox: !transform/property/bounding_box-1.0.0
+                intervals:
+                    y: [1.0, 2.0]
+            - key: [3] # value of input x is 3 to select this box
+              bbox: !transform/property/bounding_box-1.0.0
+                intervals:
+                    y: [4.0, 5.0]
+    """
+    buff = yaml_to_asdf(yaml)
+    with asdf.open(buff) as af:
+        model = af["model"]
+        assert model.bounding_box.order == "C"
+
+
+def test_compound_bbox_ignored_error():
+    yaml = """
+model: !transform/concatenate-1.2.0
+  forward:
+    - !transform/concatenate-1.2.0
+      forward:
+        - !transform/shift-1.2.0
+          offset: 1.0
+        - !transform/shift-1.2.0
+          offset: 2.0
+    - !transform/shift-1.2.0
+      offset: 3.0
+  bounding_box: !transform/property/compound_bounding_box-1.0.0
+    selector_args:
+      - argument: x
+        ignore: true
+    cbbox:
+      - key: [0] # both value of input x is 0
+        bbox: !transform/property/bounding_box-1.0.0
+          intervals:
+            x0: [2.0, 3.0]
+      - key: [1] # both value of input x is 1
+        bbox: !transform/property/bounding_box-1.0.0
+          intervals:
+            x0: [6.0, 7.0]
+    ignore: [x1]
+    """
+    buff = yaml_to_asdf(yaml)
+
+    if minversion("astropy", "5.1"):
+        if not minversion("asdf_transform_schemas", "0.2.2", inclusive=False):
+            with pytest.raises(TypeError, match=r"Cannot form bounding_box from: *"):
+                asdf.open(buff)
+        else:
+            asdf.open(buff)
+    else:
+        with pytest.raises(
+            RuntimeError,
+            match=r"Deserializing ignored elements of a compound bounding box is only supported for astropy 5.1+.",
+        ):
+            asdf.open(buff)
+
+
+def test_serialize_bbox(tmpdir):
+    mdl = astropy_models.Const2D(3)
+
+    if minversion("astropy", "5.1"):
+        from astropy.modeling import bind_bounding_box
+
+        bind_bounding_box(mdl, (1, 2), ignored="y")
+        if minversion("asdf_transform_schemas", "0.2.2", inclusive=False):
+            assert_model_roundtrip(mdl, tmpdir)
+        else:
+            with pytest.raises(
+                RuntimeError, match=r"asdf-transform-schemas > 0.2.2 in order to serialize a bounding_box with ignored"
+            ):
+                assert_model_roundtrip(mdl, tmpdir)
+    else:
+        bbox = ModelBoundingBox({"x": (1, 2)}, mdl, ignored=["y"])
+        mdl._user_bounding_box = bbox
+
+        with pytest.raises(RuntimeError, match=r"Bounding box ignored arguments are only supported by astropy 5.1+"):
+            assert_model_roundtrip(mdl, tmpdir)
+
+
+def test_serialize_cbbox(tmpdir):
+    mdl = astropy_models.Shift(1) & astropy_models.Scale(2) & astropy_models.Identity(1)
+    mdl.inputs = ("x", "y", "slit_id")
+    bounding_boxes = {
+        (0,): ((-0.5, 1047.5), (-0.5, 2047.5)),
+        (1,): ((-0.5, 3047.5), (-0.5, 4047.5)),
+    }
+    bounding_box = CompoundBoundingBox.validate(mdl, bounding_boxes, selector_args=[("slit_id", True)], order="F")
+    mdl.bounding_box = bounding_box
+
+    if minversion("asdf_transform_schemas", "0.2.2", inclusive=False):
+        assert_model_roundtrip(mdl, tmpdir)
+    else:
+        with pytest.raises(
+            RuntimeError, match=r"asdf-transform-schemas > 0.2.2 in order to serialize a compound bounding_box"
+        ):
+            assert_model_roundtrip(mdl, tmpdir)

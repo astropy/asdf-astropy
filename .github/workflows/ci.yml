@@ -66,6 +66,11 @@ jobs:
             os: ubuntu-latest
             toxenv: py39-astropylts-cov
 
+          - name: Python 3.9 with asdf-transform-schemas LTS
+            python-version: "3.9"
+            os: ubuntu-latest
+            toxenv: py39-transformlts-cov
+
           - name: Build Documents
             python-version: "3.9"
             os: ubuntu-latest

@@ -83,7 +83,7 @@ class CompoundBoundingBoxConverter(Converter):
             if not minversion("astropy", "5.1"):
                 if len(ignored) > 0:
                     raise RuntimeError(
-                        "Deserializing ignored elements of a bounding is only supported for astropy 5.1+"
+                        "Deserializing ignored elements of a compound bounding box is only supported for astropy 5.1+."
                     )
                 else:
                     cbbox = CompoundBoundingBox({}, model, selector_args, order=order)
