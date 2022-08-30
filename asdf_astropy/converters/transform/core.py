@@ -149,8 +149,10 @@ class TransformConverterBase(Converter):
 
             bbox = ModelBoundingBox.validate(model, bbox, **kwargs)
         else:
-            bbox = bbox.bounding_box(order="C")
+            if len(bbox.ignored) > 0:
+                raise RuntimeError("asdf-transform-schemas > 0.2.2 in order to serialize a bounding_box with ignored")
 
+            bbox = bbox.bounding_box(order="C")
             if model.n_inputs == 1:
                 bbox = list(bbox)
             else:
@@ -166,7 +168,7 @@ class TransformConverterBase(Converter):
         if minversion("asdf_transform_schemas", "0.2.2", inclusive=False):
             node["bounding_box"] = bbox
         else:
-            raise RuntimeError("Need a schema in order to serialize a compound bounding_box")
+            raise RuntimeError("asdf-transform-schemas > 0.2.2 in order to serialize a compound bounding_box")
 
     def from_yaml_tree(self, node, tag, ctx):
         from astropy.modeling.core import CompoundModel

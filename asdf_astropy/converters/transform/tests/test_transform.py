@@ -788,3 +788,44 @@ model: !transform/concatenate-1.2.0
             match=r"Deserializing ignored elements of a compound bounding box is only supported for astropy 5.1+.",
         ):
             asdf.open(buff)
+
+
+def test_serialize_bbox(tmpdir):
+    mdl = astropy_models.Const2D(3)
+
+    if minversion("astropy", "5.1"):
+        from astropy.modeling import bind_bounding_box
+
+        bind_bounding_box(mdl, (1, 2), ignored="y")
+        if minversion("asdf_transform_schemas", "0.2.2", inclusive=False):
+            assert_model_roundtrip(mdl, tmpdir)
+        else:
+            with pytest.raises(
+                RuntimeError, match=r"asdf-transform-schemas > 0.2.2 in order to serialize a bounding_box with ignored"
+            ):
+                assert_model_roundtrip(mdl, tmpdir)
+    else:
+        bbox = ModelBoundingBox({"x": (1, 2)}, mdl, ignored=["y"])
+        mdl._user_bounding_box = bbox
+
+        with pytest.raises(RuntimeError, match=r"Bounding box ignored arguments are only supported by astropy 5.1+"):
+            assert_model_roundtrip(mdl, tmpdir)
+
+
+def test_serialize_cbbox(tmpdir):
+    mdl = astropy_models.Shift(1) & astropy_models.Scale(2) & astropy_models.Identity(1)
+    mdl.inputs = ("x", "y", "slit_id")
+    bounding_boxes = {
+        (0,): ((-0.5, 1047.5), (-0.5, 2047.5)),
+        (1,): ((-0.5, 3047.5), (-0.5, 4047.5)),
+    }
+    bounding_box = CompoundBoundingBox.validate(mdl, bounding_boxes, selector_args=[("slit_id", True)], order="F")
+    mdl.bounding_box = bounding_box
+
+    if minversion("asdf_transform_schemas", "0.2.2", inclusive=False):
+        assert_model_roundtrip(mdl, tmpdir)
+    else:
+        with pytest.raises(
+            RuntimeError, match=r"asdf-transform-schemas > 0.2.2 in order to serialize a compound bounding_box"
+        ):
+            assert_model_roundtrip(mdl, tmpdir)
