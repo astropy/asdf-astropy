@@ -23,7 +23,7 @@ repos:
       exclude: "docs/.*"
 
 - repo: https://github.com/fsouza/autoflake8
-  rev: v0.3.2
+  rev: v0.4.0
   hooks:
   - id: autoflake8
 
@@ -33,7 +33,7 @@ repos:
     - id: isort
 
 - repo: https://github.com/psf/black
-  rev: 22.6.0
+  rev: 22.8.0
   hooks:
     - id: black
 
