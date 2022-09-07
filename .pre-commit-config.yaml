@@ -20,7 +20,6 @@ repos:
   hooks:
     - id: pyupgrade
       args: ["--py38-plus"]
-      exclude: "docs/.*"
 
 - repo: https://github.com/fsouza/autoflake8
   rev: v0.3.2
