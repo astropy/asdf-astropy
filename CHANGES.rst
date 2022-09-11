@@ -2,6 +2,7 @@
 ------------------
 
 - Update citations. [#111]
+- Switch to using ``pyproject.toml`` for package configuration. [#106]
 
 0.2.2 (2022-08-22)
 ------------------

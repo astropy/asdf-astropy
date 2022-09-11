@@ -1,13 +1,116 @@
+[project]
+name = 'asdf_astropy'
+description = 'ASDF serialization support for astropy'
+readme = 'README.rst'
+requires-python = '>=3.8'
+license = { file = 'LICENSE.rst' }
+authors = [{ name = 'The Astropy Developers', email = 'astropy.team@gmail.com' }]
+classifiers = [
+    'Programming Language :: Python',
+    'Programming Language :: Python :: 3',
+    'Programming Language :: Python :: 3.8',
+    'Programming Language :: Python :: 3.9',
+    'Programming Language :: Python :: 3.10',
+    'Development Status :: 5 - Production/Stable',
+]
+dependencies = [
+    'astropy >=5.0.4',
+    'asdf >=2.8.0',
+    'numpy',
+    'asdf-coordinates-schemas',
+    'asdf-transform-schemas >=0.2.2',
+    'importlib_resources >=3; python_version <"3.9"',
+    'packaging >=16.0',
+]
+dynamic = ['version']
+
+[project.optional-dependencies]
+test = [
+    'pytest-astropy',
+    'coverage',
+    'scipy',
+]
+docs = [
+    'tomli',
+    'sphinx',
+    'sphinx-astropy',
+    'sphinx-automodapi',
+    'sphinx-asdf',
+    'graphviz',
+    'matplotlib',
+    'docutils',
+]
+
+[project.urls]
+'tracker' = 'https://github.com/astropy/asdf-astropy/issues'
+'documentation' = 'https://asdf-astropy.readthedocs.io/en/latest/'
+'repository' = 'https://github.com/astropy/asdf-astropy'
+
+[project.entry-points]
+'asdf.extensions' = { asdf-astropy = 'asdf_astropy.integration:get_extensions' }
+'asdf.resource_mappings' = { asdf-astropy = 'asdf_astropy.integration:get_resource_mappings' }
+
 [build-system]
-requires = ["setuptools>=42",
-            "setuptools_scm[toml]>=3.4",
-            "wheel",
-            "oldest-supported-numpy",
-	    ]
+requires = [
+    "setuptools>=60",
+    "setuptools_scm[toml]>=3.4",
+    "wheel",
+    "oldest-supported-numpy",
+]
 build-backend = 'setuptools.build_meta'
 
 [tool.setuptools_scm]
 write_to = "asdf_astropy/_version.py"
+
+[tool.setuptools]
+packages = ["asdf_astropy", "asdf_astropy.resources"]
+
+[tool.setuptools.package-data]
+"asdf_astropy.resources" = ["asdf_astropy/resources/**/**/*.yaml"]
+
+[tool.pytest.ini_options]
+testpaths = ['asdf_astropy', 'docs']
+astropy_header = true
+doctest_plus = 'enabled'
+text_file_format = 'rst'
+addopts = '--color=yes --doctest-rst'
+asdf_schema_root = 'asdf_astropy/resources/schemas'
+asdf_schema_tests_enabled = true
+
+[tool.coverage.run]
+omit = [
+    'asdf_astropy/_astropy_init*',
+    'asdf_astropy/conftest.py',
+    'asdf_astropy/*setup_package*',
+    'asdf_astropy/tests/*',
+    'asdf_astropy/*/tests/*',
+    'asdf_astropy/extern/*',
+    'asdf_astropy/version*',
+    '*/asdf_astropy/_astropy_init*',
+    '*/asdf_astropy/conftest.py',
+    '*/asdf_astropy/*setup_package*',
+    '*/asdf_astropy/tests/*',
+    '*/asdf_astropy/*/tests/*',
+    '*/asdf_astropy/extern/*',
+    '*/asdf_astropy/version*',
+]
+
+[tool.coverage.report]
+exclude_lines = [
+    # Have to re-enable the standard pragma
+    'pragma: no cover',
+    # Don't complain about packages we have installed
+    'except ImportError',
+    # Don't complain if tests don't hit assertions
+    'raise AssertionError',
+    'raise NotImplementedError',
+    # Don't complain about script hooks
+    'def main\(.*\):',
+    # Ignore branches that don't pertain to this version of Python
+    'pragma: py{ignore_python_version}',
+    # Don't complain about IPython completion helper
+    'def _ipython_key_completions_',
+]
 
 [tool.black]
 line-length = 120
@@ -18,9 +121,6 @@ force-exclude = '''
     | \.git
     | \.pytest_cache
     | \.tox
-    | scripts
-    | build
-    | dist
   )/
 )
 '''

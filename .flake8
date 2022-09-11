@@ -1,0 +1,10 @@
+[flake8]
+exclude =
+  .eggs
+  .git
+  .pytest_cache
+  .tox
+  __pycache__
+  docs
+max-line-length = 120
+extend-ignore = E203
