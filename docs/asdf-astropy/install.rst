@@ -4,17 +4,17 @@
 Installation
 ************
 
-There are several different ways to install the `asdf-astropy` package.
+There are several different ways to install the :ref:`asdf-astropy` package.
 Each is described in detail below.
 
 Requirements
 ============
 
-The `asdf-astropy` package has several dependencies which are all listed
+The :ref:`asdf-astropy` package has several dependencies which are all listed
 in the project's ``setup.cfg`` file. All dependencies are available on
-pypi and will be automatically installed along with `asdf-astropy`.
-Most importantly, both the `asdf` and `astropy` packages will be installed
-along with `asdf-astropy` which should enable full functionality.
+pypi and will be automatically installed along with :ref:`asdf-astropy`.
+Most importantly, both the `asdf` and :ref:`astropy:getting-started` packages will be installed
+along with :ref:`asdf-astropy` which should enable full functionality.
 
 Installation with pip
 =====================
@@ -26,16 +26,16 @@ Installation with pip
 Installing with conda
 =====================
 
-`asdf-astropy` is also distributed as a `conda <https://conda.io/docs/>`__
+:ref:`asdf-astropy` is also distributed as a `conda <https://conda.io/docs/>`__
 package via the `conda-forge <https://conda-forge.org/>`__ channel.
 
-To install `asdf-astropy` within an existing conda environment
+To install :ref:`asdf-astropy` within an existing conda environment
 
 .. code-block:: console
 
     $ conda install -c conda-forge asdf-astropy
 
-To create a new conda environment and install `asdf-astropy`
+To create a new conda environment and install :ref:`asdf-astropy`
 
 .. code-block:: console
 

@@ -39,3 +39,4 @@ Using **asdf-astropy**
     asdf-astropy/example.rst
     asdf-astropy/manifest.rst
     asdf-astropy/schemas.rst
+    asdf-astropy/api.rst

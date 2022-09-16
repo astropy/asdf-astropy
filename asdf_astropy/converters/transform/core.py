@@ -52,7 +52,7 @@ class TransformConverterBase(Converter):
         model : astropy.modeling.Model
             The model instance to convert.
         tag : str
-            The tag identifying the YAML type that `model` should be
+            The tag identifying the YAML type that `astropy.modeling.Model` should be
             converted into.
         ctx : asdf.asdf.SerializationContext
             The context of the current serialization request.

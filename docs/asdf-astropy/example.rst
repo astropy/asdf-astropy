@@ -81,7 +81,7 @@ If one was contributing this tag to **asdf-astropy**, this entry would be
 added the :ref:`asdf-astropy_manifest` directly. Doing this will allow
 **asdf-astropy** to properly register this tag and associate this tag with its underlying
 schema for use by **ASDF**. Moreover, the underlying schema will need to be added to the
-`asdf_astropy/resources/schemas` directly in order for **asdf-astropy** to make
+``asdf_astropy/resources/schemas`` directly in order for **asdf-astropy** to make
 use of it when creating the tag in **ASDF**.
 
 .. note::
@@ -101,7 +101,7 @@ is to create a **converter** class.
 
 .. note::
     For most transforms the
-    `~asdf_astropy.converters.transform.core.SimpleTransformConverter` will be sufficient
+    `asdf_astropy.converters.transform.core.SimpleTransformConverter` will be sufficient
     to construct the necessary converter for your model. However, for completeness
     we will describe the general procedure for writing both a transform converter
     and a more general converter.
@@ -110,13 +110,13 @@ Creating a Transform Converter
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 If we want to use the **asdf-astropy** framework for writing transform converters; namely, using
-`~asdf_astropy.converters.transform.core.TransformConverterBase``, we need to define two methods
+`asdf_astropy.converters.transform.core.TransformConverterBase`, we need to define two methods
 ``to_yaml_tree_transform`` and ``from_yaml_tree_transform``. The ``to_yaml_tree_transform``
 will perform the serialization of the parts of ``MyModel`` which are specific to ``MyModel``,
 while ``from_yaml_tree_transform`` will perform the deserialization of the parts of
 ``MyModel`` specific to ``MyModel``. Moreover, the converter class must also
-specify the `tags` corresponding to ``MyModel`` and the matching Python `types` for
-those `tags`. The `tags` are what **ASDF** uses to identify which converter to use when
+specify the ``tags`` corresponding to ``MyModel`` and the matching Python `types` for
+those ``tags``. The ``tags`` are what **ASDF** uses to identify which converter to use when
 deserializing an ASDF file, while the `types` are used by **ASDF** to identify which converter
 to use when serializing an object to an ASDF file.::
 
@@ -137,8 +137,8 @@ to use when serializing an object to an ASDF file.::
             return MyModel(amplitude=node['amplitude'], x_0=node['x_0'])
 
 If one was contributing this converter to **asdf-astropy**, this class would
-need to be instantiated and then added to the `TRANSFORM_CONVERTERS` list
-in the `~asdf_astropy.extensions` module. By doing this **asdf-astropy**
+need to be instantiated and then added to the ``TRANSFORM_CONVERTERS`` list
+in the `asdf_astropy.extensions` module. By doing this **asdf-astropy**
 will be able to properly register this converter with **ASDF** so that it
 can be used seamlessly when working with **ASDF**.
 
@@ -147,7 +147,7 @@ Creating a General Converter
 
 If one needs to create a more general (e.g. non-transform) converter, say
 ``MyType``, then one will need to inherit from `asdf.extension.Converter`.
-In this case `tags` and `types` must still be defined, but instead
+In this case ``tags`` and `types` must still be defined, but instead
 ``to_yaml_tree`` and ``from_yaml_tree`` must be defined instead::
 
     from asdf.extension import Converter

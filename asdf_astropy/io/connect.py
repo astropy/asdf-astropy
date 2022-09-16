@@ -17,7 +17,7 @@ def read_table(filename, data_key=None, find_table=None, **kwargs):
 
     Parameters
     ----------
-    filename : str or :class:`py.lath:local`
+    filename : str or :class:`py.path:local`
         Name of the file to be read
     data_key : str
         Optional top-level key to use for finding the Table in the tree. If not
