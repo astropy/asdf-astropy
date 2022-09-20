@@ -2,111 +2,106 @@ name: CI
 
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - main
-    tags:
-      - "*"
-  pull_request:
-    branches:
   schedule:
     # Run every Monday at 6am UTC
     - cron: '0 6 * * 1'
+  push:
+    branches:
+      - main
+      - '*.x'
+    tags:
+      - "*"
+  pull_request:
 
 jobs:
-  tox_pytest:
-    name: ${{ matrix.name }}
-    runs-on: ${{ matrix.os }}
-    strategy:
-      fail-fast: false
-      matrix:
-        include:
-          - name: Python 3.10 Tests
-            python-version: "3.10"
-            os: ubuntu-latest
-            toxenv: py310-test
-
-          - name: Python 3.9 with code coverage
-            python-version: "3.9"
-            os: ubuntu-latest
-            toxenv: py39-cov
-
-          - name: Python 3.9, Development Dependencies
-            python-version: "3.9"
-            os: ubuntu-latest
-            toxenv: py39-test-devdeps-cov
-
-          - name: Python 3.8 Tests
-            python-version: "3.8"
-            os: ubuntu-latest
-            toxenv: py38-test-cov
-
-          - name: Mac OS Latest
-            python-version: "3.9"
-            os: macos-latest
-            toxenv: py39-test
-
-          - name: Windows Latest
-            python-version: "3.9"
-            os: windows-latest
-            toxenv: py39-test
-
-          - name: Python 3.9, Numpy 1.18
-            python-version: "3.9"
-            os: ubuntu-latest
-            toxenv: py39-test-numpy118
-
-          - name: Python 3.9, Numpy 1.19
-            python-version: "3.9"
-            os: ubuntu-latest
-            toxenv: py39-test-numpy119
-
-          - name: Python 3.9 with Astropy LTS
-            python-version: "3.9"
-            os: ubuntu-latest
-            toxenv: py39-astropylts-cov
-
-          - name: Python 3.9 with asdf-transform-schemas LTS
-            python-version: "3.9"
-            os: ubuntu-latest
-            toxenv: py39-transformlts-cov
-
-          - name: Build Documents
-            python-version: "3.9"
-            os: ubuntu-latest
-            toxenv: build_docs
-
-          - name: Code Style Checks
-            python-version: "3.8"
-            os: ubuntu-latest
-            toxenv: codestyle
-
-          - name: Warnings Treated as Exceptions
-            os: ubuntu-latest
-            python-version: "3.9"
-            toxenv: warnings
-
+  setup:
+    runs-on: ubuntu-latest
+    outputs:
+      requirements-hash: ${{ steps.requirements-hash.outputs.hash }}
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
-      - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v2
-        with:
-          python-version: ${{ matrix.python-version }}
-      - name: Install tox
-        run: |
-          python -m pip install tox
-      - name: Run tox
-        run: tox -e ${{ matrix.toxenv }}
-      - name: Upload Code Coverage
-        if: ${{ contains(matrix.toxenv,'-cov') }}
-        uses: codecov/codecov-action@v2
-        with:
-          file: ./coverage.xml
+      - uses: actions/checkout@v3
+      - id: requirements-hash
+        run: echo "::set-output name=hash::${{ hashFiles('**/pyproject.toml', '**/setup.*', 'tox.ini') }}"
 
-  asdf-transform-schemas-dev:
+  core:
+    needs: [setup]
+    uses: OpenAstronomy/github-actions-workflows/.github/workflows/tox.yml@v1
+    with:
+      cache-path: ~/.cache/pip
+      cache-key: pip-${{ needs.setup.outputs.requirements-hash }}
+      cache-restore-keys: |
+        pip-
+      # Any env name which does not start with `pyXY` will use this Python version.
+      default_python: '3.9'
+      envs: |
+        - linux: py39-cov
+      coverage: codecov
+
+  coverage:
+    needs: [core, asdf-transform-schemas]
+    uses: OpenAstronomy/github-actions-workflows/.github/workflows/tox.yml@v1
+    with:
+      cache-path: ~/.cache/pip
+      cache-key: pip-${{ needs.setup.outputs.requirements-hash }}
+      cache-restore-keys: |
+        pip-
+      # Any env name which does not start with `pyXY` will use this Python version.
+      default_python: '3.9'
+      envs: |
+        - linux: py39-test-devdeps-cov
+        - linux: py38-test-cov
+        - linux: py39-astropylts-cov
+        - linux: py39-transformlts-cov
+      coverage: codecov
+
+  test:
+    needs: [core, asdf-transform-schemas]
+    uses: OpenAstronomy/github-actions-workflows/.github/workflows/tox.yml@v1
+    with:
+      cache-path: ~/.cache/pip
+      cache-key: pip-${{ needs.setup.outputs.requirements-hash }}
+      cache-restore-keys: |
+        pip-
+      # Any env name which does not start with `pyXY` will use this Python version.
+      default_python: '3.9'
+      envs: |
+        - linux: py310-test
+        - macos: py39-test
+        - windows: py39-test
+        - linux: py311-test-devdeps
+          python-version: 3.11.0-rc.2
+
+  numpy:
+    needs: [core, asdf-transform-schemas]
+    uses: OpenAstronomy/github-actions-workflows/.github/workflows/tox.yml@v1
+    with:
+      cache-path: ~/.cache/pip
+      cache-key: pip-${{ needs.setup.outputs.requirements-hash }}
+      cache-restore-keys: |
+        pip-
+      # Any env name which does not start with `pyXY` will use this Python version.
+      default_python: '3.9'
+      envs: |
+        - linux: py39-test-numpy118
+        - linux: py39-test-numpy119
+        - linux: py39-test-numpy120
+        - linux: py39-test-numpy121
+        - linux: py39-test-numpy122
+
+  warnings:
+    needs: [core, asdf-transform-schemas]
+    uses: OpenAstronomy/github-actions-workflows/.github/workflows/tox.yml@v1
+    with:
+      cache-path: ~/.cache/pip
+      cache-key: pip-${{ needs.setup.outputs.requirements-hash }}
+      cache-restore-keys: |
+        pip-
+      # Any env name which does not start with `pyXY` will use this Python version.
+      default_python: '3.9'
+      envs: |
+        - linux: warnings
+
+  asdf-transform-schemas:
     name: Run asdf-transform-schemas development tests
     runs-on: ubuntu-latest
     steps:
