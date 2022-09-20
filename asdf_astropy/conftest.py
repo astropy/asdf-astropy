@@ -11,7 +11,7 @@ from astropy.version import version as astropy_version
 
 # For Astropy 3.0 and later, we can use the standalone pytest plugin
 if astropy_version < "3.0":
-    from astropy.tests.pytest_plugins import *  # noqa
+    from astropy.tests.pytest_plugins import *  # noqa: F403, F401
 
     del pytest_report_header
     ASTROPY_HEADER = True
@@ -51,7 +51,7 @@ def pytest_configure(config):
 # To ignore some specific deprecation warning messages for Python version
 # MAJOR.MINOR or later, add:
 #     warnings_to_ignore_by_pyver={(MAJOR, MINOR): ['Message to ignore']}
-# from astropy.tests.helper import enable_deprecations_as_exceptions  # noqa
+# from astropy.tests.helper import enable_deprecations_as_exceptions  # noqa: F403, F401
 # enable_deprecations_as_exceptions()
 
 

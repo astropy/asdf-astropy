@@ -29,12 +29,12 @@ import sys
 from importlib import import_module
 from pathlib import Path
 
-import sphinx  # noqa
-import sphinx_astropy  # noqa
+import sphinx  # noqa: F403, F401
+import sphinx_astropy  # noqa: F403, F401
 import tomli
 
 try:
-    from sphinx_astropy.conf.v1 import *  # noqa
+    from sphinx_astropy.conf.v1 import *  # noqa: F403, F401
 except ImportError:
     print("ERROR: the documentation requires the sphinx-astropy package to be installed")
     sys.exit(1)
