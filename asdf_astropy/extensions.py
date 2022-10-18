@@ -500,6 +500,8 @@ ASDF_MANIFEST_URIS = [
     "asdf://asdf-format.org/time/manifests/time-1.1.0",
     "asdf://asdf-format.org/time/manifests/time-1.2.0",
     "asdf://asdf-format.org/table/manifests/table-1.0.0",
+    "asdf://asdf-format.org/unit/manifests/unit-1.0.0",
+    "asdf://asdf-format.org/unit/manifests/unit-1.1.0",
 ]
 
 
