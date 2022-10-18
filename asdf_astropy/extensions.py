@@ -479,11 +479,8 @@ ASTROPY_EXTENSION = ManifestExtension.from_uri(
     converters=ASTROPY_CONVERTERS,
 )
 
-# These tags are part of the ASDF Standard,
-# but we want to override serialization here so that users can
-# work with nice astropy objects for those entities.
 
-CORE_CONVERTERS = [
+ASDF_CONVERTERS = [
     QuantityConverter(),
     TimeConverter(),
     UnitConverter(),
@@ -491,6 +488,23 @@ CORE_CONVERTERS = [
     AsdfTableConverter(),
     AsdfFitsConverter(),
 ]
+
+# These tags are part of secondary schema packages, which provide backwards compatibility
+# with older releases of ASDF standard. We want to override the standard serialization
+# when possible so that users can work directly with the nice astropy object.
+
+
+ASDF_MANIFEST_URIS = [
+    "asdf://asdf-format.org/fits/manifests/fits-1.0.0",
+]
+
+
+ASDF_EXTENSIONS = [ManifestExtension.from_uri(uri, converters=ASDF_CONVERTERS) for uri in ASDF_MANIFEST_URIS]
+
+
+# For backwards compatibility these tags are part of older ASDF standard releases,
+# but we want to override serialization here so that users can
+# work with nice astropy objects for those entities.
 
 
 CORE_MANIFEST_URIS = [
@@ -504,4 +518,4 @@ CORE_MANIFEST_URIS = [
 ]
 
 
-CORE_EXTENSIONS = [ManifestExtension.from_uri(u, converters=CORE_CONVERTERS) for u in CORE_MANIFEST_URIS]
+CORE_EXTENSIONS = [ManifestExtension.from_uri(u, converters=ASDF_CONVERTERS) for u in CORE_MANIFEST_URIS]

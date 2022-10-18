@@ -43,5 +43,6 @@ def get_extensions():
     return (
         [extensions.ASTROPY_EXTENSION, extensions.COORDINATES_EXTENSION]
         + extensions.TRANSFORM_EXTENSIONS
+        + extensions.ASDF_EXTENSIONS
         + extensions.CORE_EXTENSIONS
     )
