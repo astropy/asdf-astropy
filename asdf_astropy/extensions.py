@@ -496,6 +496,9 @@ ASDF_CONVERTERS = [
 
 ASDF_MANIFEST_URIS = [
     "asdf://asdf-format.org/fits/manifests/fits-1.0.0",
+    "asdf://asdf-format.org/time/manifests/time-1.0.0",
+    "asdf://asdf-format.org/time/manifests/time-1.1.0",
+    "asdf://asdf-format.org/time/manifests/time-1.2.0",
 ]
 
 
