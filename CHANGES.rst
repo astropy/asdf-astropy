@@ -5,6 +5,7 @@
 - Switch to using ``pyproject.toml`` for package configuration. [#106]
 - Add support for ``asdf-fits-schemas`` package. [#121]
 - Add support for ``asdf-time-schemas`` package. [#122]
+- Add support for ``asdf-table-schemas`` package. [#123]
 
 0.2.2 (2022-08-22)
 ------------------
