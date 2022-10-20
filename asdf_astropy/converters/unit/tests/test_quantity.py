@@ -65,3 +65,37 @@ quantity: !unit/quantity-1.1.0
     with asdf.open(buff) as af:
         assert_array_equal(af["quantity"].value, np.array([1.0, 2.0, 3.0, 4.0]))
         assert af["quantity"].unit.is_equivalent(units.km)
+
+
+def test_memmap(tmp_path):
+    """
+    Test that memmap works with quantities. Unfortunately, this is not a simple `isinstance(obj, np.memmap)`
+    Instead it requires a more complicated check.
+    """
+    file_path = tmp_path / "test.asdf"
+    quantity = Quantity(np.arange(100, dtype=np.float64).reshape(5, 20), units.km)
+
+    new_value = 42.14 * units.cm
+    new_quantity = quantity.copy()
+    new_quantity[-1, -1] = new_value
+
+    # Write initial ASDF file
+    with asdf.AsdfFile() as af:
+        af.tree = {"quantity": quantity}
+        af.write_to(file_path)
+
+    # Update a value in the ASDF file
+    with asdf.open(file_path, mode="rw", copy_arrays=False) as af:
+        assert (af.tree["quantity"] == quantity).all()
+        assert af.tree["quantity"][-1, -1] != new_value
+
+        af.tree["quantity"][-1, -1] = new_value
+
+        assert af.tree["quantity"][-1, -1] == new_value
+        assert (af.tree["quantity"] != quantity).any()
+        assert (af.tree["quantity"] == new_quantity).all()
+
+    with asdf.open(file_path, mode="rw", copy_arrays=False) as af:
+        assert af.tree["quantity"][-1, -1] == new_value
+        assert (af.tree["quantity"] != quantity).any()
+        assert (af.tree["quantity"] == new_quantity).all()
