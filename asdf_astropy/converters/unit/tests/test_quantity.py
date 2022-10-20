@@ -69,7 +69,9 @@ quantity: !unit/quantity-1.1.0
 
 def test_memmap(tmp_path):
     """
-    Test that memmap works with quantities. Unfortunately, this is not a simple `isinstance(obj, np.memmap)`
+    Test that memmap (copy_arrays=False) works with quantities.
+
+    Unfortunately, this is not a simple `isinstance(obj, np.memmap)`
     Instead it requires a more complicated check.
     """
     file_path = tmp_path / "test.asdf"
@@ -99,3 +101,36 @@ def test_memmap(tmp_path):
         assert af.tree["quantity"][-1, -1] == new_value
         assert (af.tree["quantity"] != quantity).any()
         assert (af.tree["quantity"] == new_quantity).all()
+
+
+def test_no_memmap(tmp_path):
+    """
+    Test that turning off memmap (copy_arrays=True) works as expected for quantities
+    """
+    file_path = tmp_path / "test.asdf"
+    quantity = Quantity(np.arange(100, dtype=np.float64).reshape(5, 20), units.km)
+
+    new_value = 42.14 * units.cm
+    new_quantity = quantity.copy()
+    new_quantity[-1, -1] = new_value
+
+    # Write initial ASDF file
+    with asdf.AsdfFile() as af:
+        af.tree = {"quantity": quantity}
+        af.write_to(file_path)
+
+    # Update a value in the ASDF file
+    with asdf.open(file_path, mode="rw", copy_arrays=True) as af:
+        assert (af.tree["quantity"] == quantity).all()
+        assert af.tree["quantity"][-1, -1] != new_value
+
+        af.tree["quantity"][-1, -1] = new_value
+
+        assert af.tree["quantity"][-1, -1] == new_value
+        assert (af.tree["quantity"] != quantity).any()
+        assert (af.tree["quantity"] == new_quantity).all()
+
+    with asdf.open(file_path, mode="rw", copy_arrays=True) as af:
+        assert af.tree["quantity"][-1, -1] != new_value
+        assert (af.tree["quantity"] != new_quantity).any()
+        assert (af.tree["quantity"] == quantity).all()
