@@ -27,4 +27,4 @@ class QuantityConverter(Converter):
             # and documentation.
             value = value._make_array()
 
-        return Quantity(value, unit=node["unit"])
+        return Quantity(value, unit=node["unit"], copy=False)

@@ -3,6 +3,7 @@
 
 - Update citations. [#111]
 - Switch to using ``pyproject.toml`` for package configuration. [#106]
+- Fix bug with ``memmap`` of ``Quantity`` objects. [#125]
 
 0.2.2 (2022-08-22)
 ------------------
