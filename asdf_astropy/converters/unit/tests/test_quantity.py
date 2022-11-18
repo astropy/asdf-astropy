@@ -17,6 +17,8 @@ def create_quantities():
         Quantity([x * 2.3081 for x in range(10)], units.ampere),
         # Multiple dimension array:
         Quantity(np.arange(100, dtype=np.float64).reshape(5, 20), units.km),
+        # Non-float array:
+        Quantity(np.zeros((5, 5), dtype=np.uint16), units.cm, dtype=np.uint16),
     ]
 
 
@@ -28,6 +30,8 @@ def test_serialization(quantity, tmp_path):
         af.write_to(file_path)
 
     with asdf.open(file_path) as af:
+        assert (af["quantity"].value == quantity.value).all()
+        assert af["quantity"].dtype == quantity.dtype
         assert (af["quantity"] == quantity).all()
 
 

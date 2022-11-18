@@ -22,9 +22,11 @@ class QuantityConverter(Converter):
         from astropy.units import Quantity
 
         value = node["value"]
+        kwargs = {}
         if isinstance(value, NDArrayType):
             # TODO: Why doesn't NDArrayType work?  This needs some research
             # and documentation.
             value = value._make_array()
+            kwargs["dtype"] = value.dtype
 
-        return Quantity(value, unit=node["unit"], copy=False)
+        return Quantity(value, unit=node["unit"], copy=False, **kwargs)
