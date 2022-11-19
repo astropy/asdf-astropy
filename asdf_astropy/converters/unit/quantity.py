@@ -13,20 +13,25 @@ class QuantityConverter(Converter):
     ]
 
     def to_yaml_tree(self, obj, tag, ctx):
-        return {
+        node = {
             "value": obj.value,
             "unit": obj.unit,
         }
+
+        if obj.isscalar:
+            node["datatype"] = obj.dtype.name
+
+        return node
 
     def from_yaml_tree(self, node, tag, ctx):
         from astropy.units import Quantity
 
         value = node["value"]
-        kwargs = {}
+        dtype = node.get("datatype", None)
         if isinstance(value, NDArrayType):
             # TODO: Why doesn't NDArrayType work?  This needs some research
             # and documentation.
             value = value._make_array()
-            kwargs["dtype"] = value.dtype
+            dtype = value.dtype
 
-        return Quantity(value, unit=node["unit"], copy=False, **kwargs)
+        return Quantity(value, unit=node["unit"], copy=False, dtype=dtype)

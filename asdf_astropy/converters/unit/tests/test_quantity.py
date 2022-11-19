@@ -11,6 +11,8 @@ def create_quantities():
     return [
         # Scalar:
         Quantity(2.71828, units.kpc),
+        # Non-float scalar:
+        Quantity(7, units.K, dtype=np.int32),
         # Single element array:
         Quantity([3.14159], units.kg),
         # Multiple element array:
