@@ -5,6 +5,7 @@
 - Switch to using ``pyproject.toml`` for package configuration. [#106]
 - Fix bug with ``memmap`` of ``Quantity`` objects. [#125]
 - Drop support for ``numpy-1.18``. [#116]
+- Fix bug with ``str`` representations of ``astropy.time`` objects. [#132]
 
 0.2.2 (2022-08-22)
 ------------------
