@@ -138,12 +138,15 @@ def create_formats():
 
 @pytest.mark.parametrize("time", create_formats())
 def test_formats(time, tmp_path):
-    print(time)
+    if "jyear" in time.format:
+        atol = 1 * u.day
+    else:
+        atol = 1e-8 * u.day
+
     file_path = tmp_path / "test.asdf"
     with asdf.AsdfFile() as af:
         af["time"] = time
         af.write_to(file_path)
-
     with asdf.open(file_path) as af:
-        af["time"] == time
-        af["time"].format == time.format
+        assert af["time"].isclose(time, atol=atol)
+        assert af["time"].format == time.format
