@@ -30,6 +30,9 @@ class TimeConverter(Converter):
         asdf_format = _ASTROPY_FORMAT_TO_ASDF_FORMAT.get(obj.format, obj.format)
         guessable_format = asdf_format in _GUESSABLE_FORMATS
 
+        if obj.scale == "utc" and guessable_format and obj.isscalar and base_format == obj.format:
+            return obj.value
+
         node = {
             "value": obj.value,
             "base_format": base_format,

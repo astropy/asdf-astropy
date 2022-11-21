@@ -128,9 +128,9 @@ def create_formats():
     from astropy.time.formats import TIME_FORMATS
 
     formats = []
-    for new_format in TIME_FORMATS:
+    for format_ in TIME_FORMATS:
         new = Time("B2000.0")
-        new.format = new_format
+        new.format = format_
         formats.append(new)
 
     return formats
@@ -147,6 +147,40 @@ def test_formats(time, tmp_path):
     with asdf.AsdfFile() as af:
         af["time"] = time
         af.write_to(file_path)
+
+    with asdf.open(file_path) as af:
+        assert af["time"].isclose(time, atol=atol)
+        assert af["time"].format == time.format
+
+
+def create_str_formats():
+    return [
+        Time("2000-01-01 00:00:00.000", format="iso"),
+        Time("B2000.0", scale="utc", format="byear_str"),
+        Time("J2000.000", scale="utc", format="jyear_str"),
+        Time("2000:001:00:00:00.000", format="yday"),
+    ]
+
+
+@pytest.mark.parametrize("time", create_str_formats())
+def test_str_format(time, tmp_path):
+    """Test times that should serialize as strings"""
+
+    file_path = tmp_path / "test.asdf"
+
+    with asdf.AsdfFile() as af:
+        af["time"] = time
+        af.write_to(file_path)
+
+    with asdf.open(file_path, _force_raw_types=True) as af:
+        assert isinstance(af["time"], str)
+        assert str(af["time"]) == time.value
+
+    if "jyear" in time.format or "byear" in time.format:
+        atol = 1 * u.day
+    else:
+        atol = 1e-8 * u.day
+
     with asdf.open(file_path) as af:
         assert af["time"].isclose(time, atol=atol)
         assert af["time"].format == time.format
