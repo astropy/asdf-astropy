@@ -82,7 +82,6 @@ jobs:
       # Any env name which does not start with `pyXY` will use this Python version.
       default_python: '3.9'
       envs: |
-        - linux: py39-test-numpy118
         - linux: py39-test-numpy119
         - linux: py39-test-numpy120
         - linux: py39-test-numpy121
