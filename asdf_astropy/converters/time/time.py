@@ -35,11 +35,13 @@ class TimeConverter(Converter):
 
         node = {
             "value": obj.value,
-            "base_format": base_format,
         }
 
         if not guessable_format:
             node["format"] = asdf_format
+
+        if base_format != obj.format:
+            node["base_format"] = base_format
 
         if obj.scale != "utc":
             node["scale"] = obj.scale
