@@ -1,3 +1,8 @@
+"""
+This module builds all of the ASDF extensions which will be registered by `asdf_astropy.integration`,
+via an ``entry-point`` in the ``pyproject.toml`` file.
+"""
+
 from asdf.extension import ManifestExtension
 from astropy.utils import minversion
 
@@ -25,6 +30,19 @@ from .converters.transform.tabular import TabularConverter
 from .converters.unit.equivalency import EquivalencyConverter
 from .converters.unit.quantity import QuantityConverter
 from .converters.unit.unit import UnitConverter
+
+__all__ = [
+    "TRANSFORM_CONVERTERS",
+    "TRANSFORM_MANIFEST_URIS",
+    "TRANSFORM_EXTENSIONS",
+    "COORDINATES_CONVERTERS",
+    "ASTROPY_CONVERTERS",
+    "COORDINATES_EXTENSION",
+    "ASTROPY_EXTENSION",
+    "CORE_CONVERTERS",
+    "CORE_MANIFEST_URIS",
+    "CORE_EXTENSIONS",
+]
 
 TRANSFORM_CONVERTERS = [
     # astropy.modeling.core
