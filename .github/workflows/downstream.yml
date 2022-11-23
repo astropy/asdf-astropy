@@ -15,6 +15,9 @@ on:
     tags:
       - '*'
 
+permissions:
+  contents: read
+
 env:
   CRDS_SERVER_URL: https://jwst-crds.stsci.edu
   CRDS_PATH: ~/crds_cache
