@@ -102,7 +102,6 @@ jobs:
       default_python: '3.9'
       envs: |
         - linux: warnings
-
   asdf-transform-schemas:
     name: Run asdf-transform-schemas development tests
     runs-on: ubuntu-latest

@@ -1,6 +1,16 @@
 name: Release
 
 on:
+  workflow_dispatch:
+  schedule:
+    # Run every Monday at 6am UTC
+    - cron: '0 6 * * 1'
+  push:
+    branches:
+      - main
+      - '*.x'
+    tags:
+      - "*"
   pull_request:
   release:
     types: [released]
@@ -9,6 +19,17 @@ permissions:
   contents: read
 
 jobs:
+  test_wheel_building:
+    permissions:
+      contents: none
+    uses: OpenAstronomy/github-actions-workflows/.github/workflows/publish_pure_python.yml@v1
+    if: (github.event_name == 'push' || github.event_name == 'pull_request')
+    with:
+      upload_to_pypi: false
+      upload_to_anaconda: false
+      test_extras: test
+      test_command: pytest --pyargs asdf_astropy
+
   build-n-publish:
     name: Build and publish Python 🐍 distributions 📦 to PyPI
     runs-on: ubuntu-latest

@@ -12,8 +12,11 @@ on:
       - synchronize
       - labeled
   push:
+    branches:
+      - main
+      - '*.x'
     tags:
-      - '*'
+      - "*"
 
 permissions:
   contents: read
