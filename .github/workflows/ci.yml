@@ -89,6 +89,19 @@ jobs:
       default_python: '3.9'
       envs: |
         - linux: warnings
+
+  wheel_building:
+    needs: [core, asdf-transform-schemas]
+    permissions:
+      contents: none
+    uses: OpenAstronomy/github-actions-workflows/.github/workflows/publish_pure_python.yml@v1
+    if: (github.event_name == 'push' || github.event_name == 'pull_request')
+    with:
+      upload_to_pypi: false
+      upload_to_anaconda: false
+      test_extras: test
+      test_command: pytest --pyargs asdf_astropy
+
   asdf-transform-schemas:
     name: Run asdf-transform-schemas development tests
     runs-on: ubuntu-latest
