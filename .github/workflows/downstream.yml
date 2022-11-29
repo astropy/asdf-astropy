@@ -12,8 +12,14 @@ on:
       - synchronize
       - labeled
   push:
+    branches:
+      - main
+      - '*.x'
     tags:
-      - '*'
+      - "*"
+
+permissions:
+  contents: read
 
 env:
   CRDS_SERVER_URL: https://jwst-crds.stsci.edu

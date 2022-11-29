@@ -13,6 +13,9 @@ on:
       - "*"
   pull_request:
 
+permissions:
+  contents: read
+
 jobs:
   setup:
     runs-on: ubuntu-latest
@@ -35,19 +38,6 @@ jobs:
       default_python: '3.9'
       envs: |
         - linux: py39-cov
-      coverage: codecov
-
-  coverage:
-    needs: [core, asdf-transform-schemas]
-    uses: OpenAstronomy/github-actions-workflows/.github/workflows/tox.yml@v1
-    with:
-      cache-path: ~/.cache/pip
-      cache-key: pip-${{ needs.setup.outputs.requirements-hash }}
-      cache-restore-keys: |
-        pip-
-      # Any env name which does not start with `pyXY` will use this Python version.
-      default_python: '3.9'
-      envs: |
         - linux: py39-test-devdeps-cov
         - linux: py38-test-cov
         - linux: py39-astropylts-cov
@@ -69,7 +59,7 @@ jobs:
         - macos: py39-test
         - windows: py39-test
         - linux: py311-test-devdeps
-          python-version: 3.11.0-rc.2
+          python-version: 3.11.0
 
   numpy:
     needs: [core, asdf-transform-schemas]
@@ -99,6 +89,18 @@ jobs:
       default_python: '3.9'
       envs: |
         - linux: warnings
+
+  wheel_building:
+    needs: [core, asdf-transform-schemas]
+    permissions:
+      contents: none
+    uses: OpenAstronomy/github-actions-workflows/.github/workflows/publish_pure_python.yml@v1
+    if: (github.event_name == 'push' || github.event_name == 'pull_request')
+    with:
+      upload_to_pypi: false
+      upload_to_anaconda: false
+      test_extras: test
+      test_command: pytest --pyargs asdf_astropy
 
   asdf-transform-schemas:
     name: Run asdf-transform-schemas development tests
