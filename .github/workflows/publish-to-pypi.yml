@@ -15,6 +15,6 @@ jobs:
     uses: OpenAstronomy/github-actions-workflows/.github/workflows/publish_pure_python.yml@v1
     with:
       test_extras: test
-      test_command: pytest --pyargs test_package
+      test_command: pytest --pyargs asdf_astropy
     secrets:
       pypi_token: ${{ secrets.PYPI_PASSWORD }}
