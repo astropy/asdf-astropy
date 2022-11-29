@@ -14,6 +14,7 @@ jobs:
     if: (github.event_name == 'release')
     uses: OpenAstronomy/github-actions-workflows/.github/workflows/publish_pure_python.yml@v1
     with:
+      upload_to_pypi: true
       test_extras: test
       test_command: pytest --pyargs asdf_astropy
     secrets:
