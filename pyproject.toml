@@ -73,6 +73,10 @@ testpaths = ['asdf_astropy', 'docs']
 astropy_header = true
 doctest_plus = 'enabled'
 text_file_format = 'rst'
+filterwarnings = [
+    'error',
+    'ignore:numpy.ndarray size changed:RuntimeWarning',
+]
 addopts = '--color=yes --doctest-rst'
 asdf_schema_root = 'asdf_astropy/resources/schemas'
 asdf_schema_tests_enabled = true
