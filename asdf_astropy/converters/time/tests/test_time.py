@@ -47,6 +47,7 @@ def create_times():
 
 @pytest.mark.parametrize("time", create_times())
 @pytest.mark.parametrize("version", asdf.versioning.supported_versions)
+@pytest.mark.filterwarnings("ignore:ERFA function.*")  # ERFA warning emitted for plot_date format
 def test_serialization(time, version, tmp_path):
     file_path = tmp_path / "test.asdf"
     with asdf.AsdfFile(version=version) as af:
