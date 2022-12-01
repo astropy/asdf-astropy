@@ -34,7 +34,7 @@ def create_times():
             format="jyear_str",
         ),
         Time(51544.0, format="mjd"),
-        Time(730120.0003703703, format="plot_date"),
+        Time(Time("2000-01-01T00:00:00.000").plot_date, format="plot_date"),  # astropy/astropy#14080
         Time(np.arange(100), format="unix"),
         Time(946684800.0, format="unix_tai"),
         Time("2000:001:00:00:00.000", format="yday"),
@@ -47,7 +47,6 @@ def create_times():
 
 @pytest.mark.parametrize("time", create_times())
 @pytest.mark.parametrize("version", asdf.versioning.supported_versions)
-@pytest.mark.filterwarnings("ignore:ERFA function.*")  # ERFA warning emitted for plot_date format
 def test_serialization(time, version, tmp_path):
     file_path = tmp_path / "test.asdf"
     with asdf.AsdfFile(version=version) as af:
