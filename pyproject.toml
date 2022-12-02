@@ -14,7 +14,7 @@ classifiers = [
     'Development Status :: 5 - Production/Stable',
 ]
 dependencies = [
-    'astropy >=5.0.4',
+    'astropy==5.2rc1',
     'asdf >=2.8.0',
     'numpy',
     'asdf-coordinates-schemas',
