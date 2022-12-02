@@ -747,6 +747,8 @@ model: !transform/constant-1.4.0
         assert model.bounding_box.order == "C"
 
 
+@pytest.mark.filterwarnings("ignore:Unable to locate schema file for.*")
+@pytest.mark.filterwarnings("ignore:.* not recognized, converting to raw Python data structure")
 def test_compound_bbox_ignored_error():
     yaml = """
 model: !transform/concatenate-1.2.0
