@@ -11,3 +11,9 @@ tags:
     title: Represents an astropy derived unit
     description: |-
       Supports serialization of the non-VOunits supported by astropy
+  - tag_uri: tag:astropy.org:astropy/units/equivalency-1.0.0
+    schema_uri: http://astropy.org/schemas/astropy/units/equivalency-1.0.0
+    title: Represents unit equivalency.
+    description: |-
+      Supports serialization of equivalencies between units
+      in certain contexts

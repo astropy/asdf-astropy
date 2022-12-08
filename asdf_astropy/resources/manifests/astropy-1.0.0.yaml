@@ -13,12 +13,6 @@ tags:
   title: Represents an instance of TimeDelta from astropy
   description: |-
     Represents the time difference between two times.
-- tag_uri: tag:astropy.org:astropy/units/equivalency-1.0.0
-  schema_uri: http://astropy.org/schemas/astropy/units/equivalency-1.0.0
-  title: Represents unit equivalency.
-  description: |-
-    Supports serialization of equivalencies between units
-    in certain contexts
 - tag_uri: tag:astropy.org:astropy/fits/fits-1.0.0
   schema_uri: http://astropy.org/schemas/astropy/fits/fits-1.0.0
   title: A FITS file inside of an ASDF file.

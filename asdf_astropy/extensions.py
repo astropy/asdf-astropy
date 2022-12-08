@@ -476,7 +476,6 @@ COORDINATES_CONVERTERS = [
 
 
 ASTROPY_CONVERTERS = [
-    EquivalencyConverter(),
     UnitsMappingConverter(),
     TimeDeltaConverter(),
     AstropyTableConverter(),
@@ -512,6 +511,7 @@ CORE_CONVERTERS = [
 
 UNIT_CONVETERS = [
     UnitConverter(),
+    EquivalencyConverter(),
 ]
 
 
