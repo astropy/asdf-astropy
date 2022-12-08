@@ -6,6 +6,7 @@ via an ``entry-point`` in the ``pyproject.toml`` file.
 from asdf.extension import ManifestExtension
 from astropy.utils import minversion
 
+from ._manifest import CompoundManifestExtension
 from .converters.coordinates.angle import AngleConverter, LatitudeConverter, LongitudeConverter
 from .converters.coordinates.earth_location import EarthLocationConverter
 from .converters.coordinates.frame import FrameConverter, LegacyICRSConverter
@@ -504,10 +505,13 @@ ASTROPY_EXTENSION = ManifestExtension.from_uri(
 CORE_CONVERTERS = [
     QuantityConverter(),
     TimeConverter(),
-    UnitConverter(),
     ColumnConverter(),
     AsdfTableConverter(),
     AsdfFitsConverter(),
+]
+
+UNIT_CONVETERS = [
+    UnitConverter(),
 ]
 
 
@@ -522,4 +526,12 @@ CORE_MANIFEST_URIS = [
 ]
 
 
-CORE_EXTENSIONS = [ManifestExtension.from_uri(u, converters=CORE_CONVERTERS) for u in CORE_MANIFEST_URIS]
+CORE_EXTENSIONS = [
+    CompoundManifestExtension(
+        [
+            ManifestExtension.from_uri(u, converters=CORE_CONVERTERS),
+            ManifestExtension.from_uri("asdf://astropy.org/astropy/manifests/units-1.0.0", converters=UNIT_CONVETERS),
+        ]
+    )
+    for u in CORE_MANIFEST_URIS
+]
