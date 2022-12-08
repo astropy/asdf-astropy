@@ -2,6 +2,7 @@
 ------------------
 
 - Update pins for ``asdf``, ``asdf-coordinates-schemas``, ``numpy``, and ``packaging``. [#164]
+- Add serialization support for non-VOunits. [#142]
 
 0.3.0 (2022-11-29)
 ------------------
