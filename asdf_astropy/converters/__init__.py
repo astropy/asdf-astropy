@@ -11,6 +11,7 @@ __all__ = [
     "EquivalencyConverter",
     "QuantityConverter",
     "UnitConverter",
+    "MagUnitConverter",
     "FitsConverter",
     "AsdfFitsConverter",
     "AstropyFitsConverter",
@@ -71,4 +72,4 @@ from .transform import (
     TransformConverterBase,
     UnitsMappingConverter,
 )
-from .unit import EquivalencyConverter, QuantityConverter, UnitConverter
+from .unit import EquivalencyConverter, MagUnitConverter, QuantityConverter, UnitConverter
