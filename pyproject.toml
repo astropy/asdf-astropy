@@ -137,3 +137,6 @@ line_length = 120
 [tool.ruff]
 line-length = 120
 extend-exclude = ["docs/*"]
+
+[tool.codespell]
+skip="*.pdf,*.fits,*.asdf,*.egg-info,.tox,build,./tags,.git,./docs/_build"

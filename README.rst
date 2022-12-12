@@ -36,7 +36,7 @@ ASDF serialization support for astropy
 This package includes plugins that provide ASDF serialization support for astropy
 objects.  The plugins are automatically enabled when the package is installed.
 
-The plugins in this package supercede those in the ``astropy.io.misc.asdf`` module;
+The plugins in this package supersede those in the ``astropy.io.misc.asdf`` module;
 when this package is installed, the astropy plugins will be ignored.  The
 ``astropy.io.misc.asdf`` module will be removed in a future version of astropy.
 
