@@ -134,7 +134,6 @@ profile = "black"
 filter_files = true
 line_length = 120
 
-[tool.autoflake]
-remove-all-unused-imports = true
-ignore-init-module-imports = true
-remove-unused-variables = true
+[tool.ruff]
+line-length = 120
+extend-exclude = ["docs/*"]
