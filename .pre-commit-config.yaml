@@ -46,7 +46,7 @@ repos:
       args: ["--py38-plus"]
 
 - repo: https://github.com/charliermarsh/ruff-pre-commit
-  rev: "v0.0.194"
+  rev: "v0.0.206"
   hooks:
     - id: ruff
       args: ["--fix", "--force-exclude"]
