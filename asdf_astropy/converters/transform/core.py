@@ -62,7 +62,6 @@ class TransformConverterBase(Converter):
         dict
             ASDF node.
         """
-        pass  # pragma: no cover
 
     @abc.abstractmethod
     def from_yaml_tree_transform(self, node, tag, ctx):
@@ -86,7 +85,6 @@ class TransformConverterBase(Converter):
         astropy.modeling.Model
             The resulting model instance.
         """
-        pass  # pragma: no cover
 
     def to_yaml_tree(self, model, tag, ctx):
         from astropy.modeling.core import CompoundModel
