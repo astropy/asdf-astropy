@@ -60,7 +60,7 @@ def test_table_io_custom_tree(tmpdir):
     table = make_table()
 
     def make_custom_tree(tab):
-        return dict(foo=dict(bar=tab))
+        return {"foo": {"bar": tab}}
 
     table.write(tmpfile, make_tree=make_custom_tree)
 

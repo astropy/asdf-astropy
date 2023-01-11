@@ -150,9 +150,10 @@ select = [
     "FBT", # flake8-boolean-trap
     "B", # flake8-bugbear
     "A", # flake8-builtins
+    "C4", # flake8-comprehension
 ]
 extend-ignore = [
-    "B905", # Requires python 3.10 (use zip strict
+    "B905", # Requires python 3.10 (use zip strict)
 ]
 extend-exclude = ["docs/*"]
 

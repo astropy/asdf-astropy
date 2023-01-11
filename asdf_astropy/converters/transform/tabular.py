@@ -20,7 +20,7 @@ class TabularConverter(TransformConverterBase):
         if model.fill_value is not None:
             node["fill_value"] = model.fill_value
         node["lookup_table"] = model.lookup_table
-        node["points"] = [p for p in model.points]
+        node["points"] = list(model.points)
         node["method"] = str(model.method)
         node["bounds_error"] = model.bounds_error
 
