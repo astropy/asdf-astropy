@@ -35,7 +35,8 @@ def read_table(filename, data_key=None, find_table=None, **kwargs):
         `~astropy.table.Table` instance
     """
     if data_key and find_table:
-        raise ValueError("Options 'data_key' and 'find_table' are not compatible")
+        msg = "Options 'data_key' and 'find_table' are not compatible"
+        raise ValueError(msg)
 
     with asdf.open(filename, **kwargs) as af:
         if find_table:
@@ -72,7 +73,8 @@ def write_table(table, filename, data_key=None, make_tree=None, **kwargs):
         tree to be created.
     """
     if data_key and make_tree:
-        raise ValueError("Options 'data_key' and 'make_tree' are not compatible")
+        msg = "Options 'data_key' and 'make_tree' are not compatible"
+        raise ValueError(msg)
 
     if make_tree:
         tree = make_tree(table)

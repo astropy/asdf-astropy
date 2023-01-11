@@ -70,7 +70,8 @@ class PolynomialConverter(TransformConverterBase):
             shape = coefficients.shape
             degree = shape[0] - 1
             if shape[0] != shape[1]:
-                raise TypeError("Coefficients must be an (n+1, n+1) matrix")
+                msg = "Coefficients must be an (n+1, n+1) matrix"
+                raise TypeError(msg)
 
             coeffs = {}
             for i in range(shape[0]):
@@ -82,7 +83,8 @@ class PolynomialConverter(TransformConverterBase):
                 degree, x_domain=x_domain, y_domain=y_domain, x_window=x_window, y_window=y_window, **coeffs
             )
         else:
-            raise NotImplementedError("astropy supports only 1D or 2D polynomial models")
+            msg = "astropy supports only 1D or 2D polynomial models"
+            raise NotImplementedError(msg)
 
         return model
 
@@ -173,6 +175,7 @@ class OrthoPolynomialConverter(TransformConverterBase):
                 x_degree, y_degree, x_domain=x_domain, y_domain=y_domain, x_window=x_window, y_window=y_window, **coeffs
             )
         else:
-            raise NotImplementedError("astropy supports only 1D or 2D polynomial models")
+            msg = "astropy supports only 1D or 2D polynomial models"
+            raise NotImplementedError(msg)
 
         return model

@@ -54,7 +54,8 @@ class AsdfTableConverter(Converter):
     types = []
 
     def to_yaml_tree(self, obj, tag, ctx):
-        raise NotImplementedError("astropy does not support writing astropy.table.Table with the ASDF table-1.0.0 tag")
+        msg = "astropy does not support writing astropy.table.Table with the ASDF table-1.0.0 tag"
+        raise NotImplementedError(msg)
 
     def from_yaml_tree(self, node, tag, ctx):
         from astropy.table import Table

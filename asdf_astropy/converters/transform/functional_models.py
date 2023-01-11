@@ -25,7 +25,8 @@ class ConstantConverter(TransformConverterBase):
 
         if parse_tag_version(tag) < self._2D_MIN_VERSION:
             if not isinstance(model, Const1D):
-                raise TypeError(f"{tag} does not support models with > 1 dimension")
+                msg = f"{tag} does not support models with > 1 dimension"
+                raise TypeError(msg)
             return {"value": parameter_to_value(model.amplitude)}
         else:
             if isinstance(model, Const1D):

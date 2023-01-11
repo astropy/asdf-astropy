@@ -54,7 +54,8 @@ class ProjectionConverter(TransformConverterBase):
         elif isinstance(model, self.sky2pix_type):
             direction = "sky2pix"
         else:
-            raise TypeError(f"Unrecognized projection model type: {type(model)}")
+            msg = f"Unrecognized projection model type: {type(model)}"
+            raise TypeError(msg)
 
         node = {p: parameter_to_value(getattr(model, p)) for p in model.param_names}
         node["direction"] = direction
@@ -67,7 +68,8 @@ class ProjectionConverter(TransformConverterBase):
         elif node["direction"] == "sky2pix":
             model_type = self.sky2pix_type
         else:
-            raise ValueError(f"Unrecognized projection direction: {node['direction']}")
+            msg = f"Unrecognized projection direction: {node['direction']}"
+            raise ValueError(msg)
 
         model_kwargs = {}
         for param in model_type.param_names:

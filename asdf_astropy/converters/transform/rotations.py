@@ -75,7 +75,8 @@ class RotationSequenceConverter(TransformConverterBase):
         elif isinstance(model, rotations.RotationSequence3D):
             node["rotation_type"] = "cartesian"
         else:
-            raise ValueError(f"Cannot serialize model of type {type(model)}")
+            msg = f"Cannot serialize model of type {type(model)}"
+            raise ValueError(msg)
         return node
 
     def from_yaml_tree_transform(self, node, tag, ctx):
@@ -89,4 +90,5 @@ class RotationSequenceConverter(TransformConverterBase):
         elif rotation_type == "spherical":
             return rotations.SphericalRotationSequence(angles, axes_order=axes_order)
         else:
-            raise ValueError(f"Unrecognized rotation_type: {rotation_type}")
+            msg = f"Unrecognized rotation_type: {rotation_type}"
+            raise ValueError(msg)

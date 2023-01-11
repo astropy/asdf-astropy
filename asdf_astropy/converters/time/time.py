@@ -77,7 +77,8 @@ class TimeConverter(Converter):
             time = Time(node)
             asdf_format = _ASTROPY_FORMAT_TO_ASDF_FORMAT.get(time.format, time.format)
             if asdf_format not in _GUESSABLE_FORMATS:
-                raise ValueError(f"ASDF time '{node}' is not one of the recognized implicit formats")
+                msg = f"ASDF time '{node}' is not one of the recognized implicit formats"
+                raise ValueError(msg)
 
             return time
 

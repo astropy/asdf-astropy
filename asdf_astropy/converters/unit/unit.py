@@ -22,7 +22,8 @@ class UnitConverter(Converter):
         try:
             return obj.to_string(format="vounit")
         except (UnitsError, ValueError) as e:
-            raise ValueError(f"Unit '{obj}' is not representable as VOUnit and cannot be serialized to ASDF") from e
+            msg = f"Unit '{obj}' is not representable as VOUnit and cannot be serialized to ASDF"
+            raise ValueError(msg) from e
 
     def from_yaml_tree(self, node, tag, ctx):
         from astropy.units import Unit

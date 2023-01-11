@@ -51,6 +51,7 @@ class TabularConverter(TransformConverterBase):
                 fill_value=fill_value,
             )
         else:
-            raise NotImplementedError("tabular models with ndim > 2 are not supported ")
+            msg = "tabular models with ndim > 2 are not supported "
+            raise NotImplementedError(msg)
 
         return model

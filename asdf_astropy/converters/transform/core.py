@@ -143,14 +143,16 @@ class TransformConverterBase(Converter):
                 if minversion("astropy", "5.1"):
                     kwargs = {"_preserve_ignore": True}
                 else:
-                    raise RuntimeError("Bounding box ignored arguments are only supported by astropy 5.1+")
+                    msg = "Bounding box ignored arguments are only supported by astropy 5.1+"
+                    raise RuntimeError(msg)
             else:
                 kwargs = {}
 
             bbox = ModelBoundingBox.validate(model, bbox, **kwargs)
         else:
             if len(bbox.ignored) > 0:
-                raise RuntimeError("asdf-transform-schemas > 0.2.2 in order to serialize a bounding_box with ignored")
+                msg = "asdf-transform-schemas > 0.2.2 in order to serialize a bounding_box with ignored"
+                raise RuntimeError(msg)
 
             bbox = bbox.bounding_box(order="C")
             if model.n_inputs == 1:
@@ -168,7 +170,8 @@ class TransformConverterBase(Converter):
         if minversion("asdf_transform_schemas", "0.2.2", inclusive=False):
             node["bounding_box"] = bbox
         else:
-            raise RuntimeError("asdf-transform-schemas > 0.2.2 in order to serialize a compound bounding_box")
+            msg = "asdf-transform-schemas > 0.2.2 in order to serialize a compound bounding_box"
+            raise RuntimeError(msg)
 
     def from_yaml_tree(self, node, tag, ctx):
         from astropy.modeling.core import CompoundModel
@@ -211,7 +214,8 @@ class TransformConverterBase(Converter):
             elif callable(bounding_box):
                 model.bounding_box = bounding_box(model)
             else:
-                raise TypeError(f"Cannot form bounding_box from: {bounding_box}")
+                msg = f"Cannot form bounding_box from: {bounding_box}"
+                raise TypeError(msg)
 
 
 class SimpleTransformConverter(TransformConverterBase):
