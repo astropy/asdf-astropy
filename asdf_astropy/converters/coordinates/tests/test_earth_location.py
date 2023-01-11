@@ -35,15 +35,16 @@ def test_serialization(earth_location, tmp_path):
         assert (af["earth_location"] == earth_location).all()
 
 
-@pytest.fixture
-def builtin_site_registry():
+@pytest.fixture()
+def _builtin_site_registry():
     orig_sites = getattr(EarthLocation, "_site_registry", None)
     EarthLocation._get_site_registry(force_builtin=True)
     yield
     EarthLocation._site_registry = orig_sites
 
 
-def test_earthlocation_site(tmp_path, builtin_site_registry):
+@pytest.mark.usefixtures("_builtin_site_registry")
+def test_earthlocation_site(tmp_path):
     earth_location = EarthLocation.of_site("greenwich")
 
     file_path = tmp_path / "test.asdf"

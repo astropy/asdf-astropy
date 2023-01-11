@@ -54,7 +54,7 @@ def pytest_configure(config):
 
 
 @pytest.fixture(autouse=True)
-def remove_astropy_extensions():
+def _remove_astropy_extensions():
     """
     Disable the old astropy extension so that it doesn't
     confuse our test results.
