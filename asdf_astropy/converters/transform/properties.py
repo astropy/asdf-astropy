@@ -66,7 +66,6 @@ class CompoundBoundingBoxConverter(Converter):
         order = node["order"] if "order" in node else "C"
 
         def create_bounding_box(model):
-            # bounding_boxes = {key: bbox(model) for key, bbox in bboxes.items()}
 
             if not minversion("astropy", "5.1"):
                 if len(ignored) > 0:
