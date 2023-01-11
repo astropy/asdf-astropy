@@ -11,7 +11,7 @@ from astropy.version import version as astropy_version
 
 # For Astropy 3.0 and later, we can use the standalone pytest plugin
 if astropy_version < "3.0":
-    from astropy.tests.pytest_plugins import *  # noqa: F403, F401
+    from astropy.tests.pytest_plugins import *  # noqa: F403
 
     del pytest_report_header
     ASTROPY_HEADER = True
