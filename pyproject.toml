@@ -166,6 +166,7 @@ select = [
     "ERA", # eradicate
     "PD", # pandas-vet
     "PGH", # pygrep-hooks
+    "PLC", "PLE", "PLR", "PLW", # Pylint
 ]
 extend-ignore = [
     "B905", # Requires python 3.10 (use zip strict)
