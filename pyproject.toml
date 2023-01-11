@@ -139,6 +139,8 @@ line-length = 120
 select = [
     "F", # Pyflakes
     "E", "W", # pycodestyle
+    # "C90", # mccabe
+    "I", # isort
 ]
 extend-exclude = ["docs/*"]
 
