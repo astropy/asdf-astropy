@@ -148,6 +148,10 @@ select = [
     "S", # flake8-bandit
     "BLE", # flake8-blind-except
     "FBT", # flake8-boolean-trap
+    "B", # flake8-bugbear
+]
+extend-ignore = [
+    "B905", # Requires python 3.10 (use zip strict
 ]
 extend-exclude = ["docs/*"]
 

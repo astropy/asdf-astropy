@@ -455,7 +455,7 @@ def test_single_model(tmpdir, model):
 
 def get_all_models():
     def _iterate_model_classes():
-        for key, value in itertools.chain(
+        for _key, value in itertools.chain(
             astropy_models.__dict__.items(), astropy.modeling.math_functions.__dict__.items()
         ):
             if (
