@@ -164,6 +164,7 @@ select = [
     # "ARG", # flake8-unused-arguments
     # "DTZ", # flake8-datetimez
     "ERA", # eradicate
+    "PD", # pandas-vet
 ]
 extend-ignore = [
     "B905", # Requires python 3.10 (use zip strict)
