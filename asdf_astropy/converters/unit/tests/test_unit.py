@@ -12,7 +12,7 @@ def vounit_compatible(unit):
         try:
             unit.to_string(format="vounit")
             return True
-        except Exception:
+        except Exception:  # noqa: BLE001
             return False
 
 
