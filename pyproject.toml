@@ -147,6 +147,7 @@ select = [
     # "ANN", # flake8-annotations
     "S", # flake8-bandit
     "BLE", # flake8-blind-except
+    "FBT", # flake8-boolean-trap
 ]
 extend-exclude = ["docs/*"]
 
