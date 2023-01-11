@@ -37,7 +37,7 @@ class FrameConverter(Converter):
         # TODO: Figure out why we can't use the frame_attributes
         # values and document.
         frame_attributes = {}
-        for attr in obj.frame_attributes.keys():
+        for attr in obj.frame_attributes:
             value = getattr(obj, attr, None)
             if value is not None:
                 frame_attributes[attr] = value

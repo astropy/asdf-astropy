@@ -14,10 +14,7 @@ REPRESENTATION_CLASSES = [
 def create_representation(rep_class):
     kwargs = {}
     for attr_name, attr_type in rep_class.attr_classes.items():
-        if issubclass(attr_type, Angle):
-            value = random((100,)) * u.deg
-        else:
-            value = random((100,)) * u.km
+        value = random((100,)) * u.deg if issubclass(attr_type, Angle) else random((100,)) * u.km
         kwargs[attr_name] = value
 
     return rep_class(**kwargs)

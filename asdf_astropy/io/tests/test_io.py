@@ -23,7 +23,7 @@ def test_table_io(tmpdir):
 
     # Simple sanity check using ASDF directly
     with asdf.open(tmpfile) as af:
-        assert "data" in af.keys()
+        assert "data" in af
         assert isinstance(af["data"], Table)
         assert all(af["data"] == table)
 
@@ -41,7 +41,7 @@ def test_table_io_custom_key(tmpdir):
 
     # Simple sanity check using ASDF directly
     with asdf.open(tmpfile) as af:
-        assert "something" in af.keys()
+        assert "something" in af
         assert "data" not in af.keys()
         assert isinstance(af["something"], Table)
         assert all(af["something"] == table)
@@ -66,7 +66,7 @@ def test_table_io_custom_tree(tmpdir):
 
     # Simple sanity check using ASDF directly
     with asdf.open(tmpfile) as af:
-        assert "foo" in af.keys()
+        assert "foo" in af
         assert "bar" in af["foo"]
         assert "data" not in af.keys()
         assert all(af["foo"]["bar"] == table)

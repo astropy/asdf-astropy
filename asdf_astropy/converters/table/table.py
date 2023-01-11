@@ -34,10 +34,7 @@ class ColumnConverter(Converter):
             # and documentation.
             data = data._make_array()
 
-        if isinstance(data, MaskedArray):
-            column_class = MaskedColumn
-        else:
-            column_class = Column
+        column_class = MaskedColumn if isinstance(data, MaskedArray) else Column
 
         return column_class(
             data=data,
@@ -88,10 +85,7 @@ class AstropyTableConverter(Converter):
     def from_yaml_tree(self, node, tag, ctx):
         from astropy.table import QTable, Table
 
-        if node.get("qtable", False):
-            table = QTable(meta=node.get("meta"))
-        else:
-            table = Table(meta=node.get("meta"))
+        table = QTable(meta=node.get("meta")) if node.get("qtable", False) else Table(meta=node.get("meta"))
 
         for name, column in zip(node["colnames"], node["columns"]):
             table[name] = column

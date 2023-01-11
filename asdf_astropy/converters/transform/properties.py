@@ -18,15 +18,9 @@ class ModelBoundingBoxConverter(Converter):
 
         intervals = {_input: tuple(interval) for _input, interval in node["intervals"].items()}
 
-        if "ignore" in node:
-            ignored = node["ignore"]
-        else:
-            ignored = []
+        ignored = node["ignore"] if "ignore" in node else []
 
-        if "order" in node:
-            order = node["order"]
-        else:
-            order = "C"
+        order = node["order"] if "order" in node else "C"
 
         def create_bounding_box(model, cbbox=None):
             if cbbox is None:
@@ -67,15 +61,9 @@ class CompoundBoundingBoxConverter(Converter):
         selector_args = tuple((selector["argument"], selector["ignore"]) for selector in node["selector_args"])
         bboxes = {tuple(bbox["key"]): bbox["bbox"] for bbox in node["cbbox"]}
 
-        if "ignore" in node:
-            ignored = node["ignore"]
-        else:
-            ignored = []
+        ignored = node["ignore"] if "ignore" in node else []
 
-        if "order" in node:
-            order = node["order"]
-        else:
-            order = "C"
+        order = node["order"] if "order" in node else "C"
 
         def create_bounding_box(model):
             # bounding_boxes = {key: bbox(model) for key, bbox in bboxes.items()}

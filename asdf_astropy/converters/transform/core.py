@@ -116,9 +116,8 @@ class TransformConverterBase(Converter):
                 node["bounds"] = bounds_nondefaults
 
         # model input_units_equivalencies
-        if not isinstance(model, CompoundModel):
-            if model.input_units_equivalencies:
-                node["input_units_equivalencies"] = model.input_units_equivalencies
+        if not isinstance(model, CompoundModel) and model.input_units_equivalencies:
+            node["input_units_equivalencies"] = model.input_units_equivalencies
 
         return node
 
@@ -155,10 +154,7 @@ class TransformConverterBase(Converter):
                 raise RuntimeError(msg)
 
             bbox = bbox.bounding_box(order="C")
-            if model.n_inputs == 1:
-                bbox = list(bbox)
-            else:
-                bbox = [list(item) for item in bbox]
+            bbox = list(bbox) if model.n_inputs == 1 else [list(item) for item in bbox]
 
         node["bounding_box"] = bbox
 
@@ -195,10 +191,9 @@ class TransformConverterBase(Converter):
                 param_and_model_constraints[constraint] = node[constraint]
         model._initialize_constraints(param_and_model_constraints)
 
-        if "input_units_equivalencies" in node:
-            # this still writes eqs. for compound, but operates on each sub model
-            if not isinstance(model, CompoundModel):
-                model.input_units_equivalencies = node["input_units_equivalencies"]
+        # this still writes eqs. for compound, but operates on each sub model
+        if "input_units_equivalencies" in node and not isinstance(model, CompoundModel):
+            model.input_units_equivalencies = node["input_units_equivalencies"]
 
         yield model
 

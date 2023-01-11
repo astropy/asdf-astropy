@@ -58,10 +58,14 @@ class CompoundConverter(TransformConverterBase):
     def to_yaml_tree_transform(self, model, tag, ctx):
         left = model.left
 
-        if isinstance(model.right, dict):
-            right = {"keys": list(model.right.keys()), "values": list(model.right.values())}
-        else:
-            right = model.right
+        right = (
+            {
+                "keys": list(model.right.keys()),
+                "values": list(model.right.values()),
+            }
+            if isinstance(model.right, dict)
+            else model.right
+        )
 
         return {"forward": [left, right]}
 

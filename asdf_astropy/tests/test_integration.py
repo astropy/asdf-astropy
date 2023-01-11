@@ -64,9 +64,7 @@ def test_no_astropy_import():
     at import time.
     """
 
-    keys = [
-        k for k in sys.modules.keys() if k.startswith("asdf_astropy") or any(k.startswith(m) for m in _ASTROPY_MODULES)
-    ]
+    keys = [k for k in sys.modules if k.startswith("asdf_astropy") or any(k.startswith(m) for m in _ASTROPY_MODULES)]
     for key in keys:
         del sys.modules[key]
 
@@ -75,4 +73,4 @@ def test_no_astropy_import():
     integration.get_resource_mappings()
     integration.get_extensions()
 
-    assert not any(k for k in sys.modules.keys() if any(k.startswith(m) for m in _ASTROPY_MODULES))
+    assert not any(k for k in sys.modules if any(k.startswith(m) for m in _ASTROPY_MODULES))
