@@ -149,6 +149,7 @@ select = [
     "BLE", # flake8-blind-except
     "FBT", # flake8-boolean-trap
     "B", # flake8-bugbear
+    "A", # flake8-builtins
 ]
 extend-ignore = [
     "B905", # Requires python 3.10 (use zip strict
