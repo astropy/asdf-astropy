@@ -141,6 +141,8 @@ select = [
     "E", "W", # pycodestyle
     # "C90", # mccabe
     "I", # isort
+    # "D", # pydocstyle
+    "N", # pep8-naming
 ]
 extend-exclude = ["docs/*"]
 
