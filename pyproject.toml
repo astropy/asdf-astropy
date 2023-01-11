@@ -136,6 +136,10 @@ line_length = 120
 
 [tool.ruff]
 line-length = 120
+select = [
+    "F", # Pyflakes
+    "E", "W", # pycodestyle
+]
 extend-exclude = ["docs/*"]
 
 [tool.codespell]
