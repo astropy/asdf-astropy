@@ -143,6 +143,7 @@ select = [
     "I", # isort
     # "D", # pydocstyle
     "N", # pep8-naming
+    "YTT", # flake8-2020
 ]
 extend-exclude = ["docs/*"]
 
