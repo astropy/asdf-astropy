@@ -1,4 +1,5 @@
-from ..helpers import get_tag_name
+from asdf_astropy.converters.helpers import get_tag_name
+
 from .core import TransformConverterBase
 
 __all__ = ["CompoundConverter"]

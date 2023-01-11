@@ -1,6 +1,7 @@
 from packaging.version import parse as parse_version
 
-from ..helpers import parse_tag_version
+from asdf_astropy.converters.helpers import parse_tag_version
+
 from .core import TransformConverterBase, parameter_to_value
 
 

@@ -1,4 +1,4 @@
-from ..unit.quantity import QuantityConverter
+from asdf_astropy.converters.unit.quantity import QuantityConverter
 
 
 class AngleConverter(QuantityConverter):

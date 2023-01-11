@@ -2,7 +2,7 @@ import abc
 
 from asdf.extension import Converter
 
-from ..utils import import_type
+from asdf_astropy.converters.utils import import_type
 
 
 def parameter_to_value(param):
