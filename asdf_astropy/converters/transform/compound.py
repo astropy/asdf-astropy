@@ -84,8 +84,6 @@ class CompoundConverter(TransformConverterBase):
 
         if oper == "fix_inputs":
             right = dict(zip(right["keys"], right["values"]))
-            model = CompoundModel("fix_inputs", left, right)
-        else:
-            model = getattr(left, oper)(right)
+            return CompoundModel("fix_inputs", left, right)
 
-        return model
+        return getattr(left, oper)(right)

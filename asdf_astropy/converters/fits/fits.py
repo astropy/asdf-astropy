@@ -12,12 +12,14 @@ def _card_to_node(card):
 
     if card.comment:
         return [card.keyword, value, card.comment]
-    elif value:
+
+    if value:
         return [card.keyword, value]
-    elif card.keyword:
+
+    if card.keyword:
         return [card.keyword]
-    else:
-        return []
+
+    return []
 
 
 class FitsConverter(Converter):

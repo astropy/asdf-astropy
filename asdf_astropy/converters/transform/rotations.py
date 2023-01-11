@@ -47,10 +47,11 @@ class Rotate3DConverter(TransformConverterBase):
 
         if node["direction"] == "native2celestial":
             return rotations.RotateNative2Celestial(node["phi"], node["theta"], node["psi"])
-        elif node["direction"] == "celestial2native":
+
+        if node["direction"] == "celestial2native":
             return rotations.RotateCelestial2Native(node["phi"], node["theta"], node["psi"])
-        else:
-            return rotations.EulerAngleRotation(node["phi"], node["theta"], node["psi"], axes_order=node["direction"])
+
+        return rotations.EulerAngleRotation(node["phi"], node["theta"], node["psi"], axes_order=node["direction"])
 
 
 class RotationSequenceConverter(TransformConverterBase):
@@ -87,8 +88,9 @@ class RotationSequenceConverter(TransformConverterBase):
         rotation_type = node["rotation_type"]
         if rotation_type == "cartesian":
             return rotations.RotationSequence3D(angles, axes_order=axes_order)
-        elif rotation_type == "spherical":
+
+        if rotation_type == "spherical":
             return rotations.SphericalRotationSequence(angles, axes_order=axes_order)
-        else:
-            msg = f"Unrecognized rotation_type: {rotation_type}"
-            raise ValueError(msg)
+
+        msg = f"Unrecognized rotation_type: {rotation_type}"
+        raise ValueError(msg)

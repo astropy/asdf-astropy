@@ -86,8 +86,8 @@ class CompoundBoundingBoxConverter(Converter):
                         "Deserializing ignored elements of a compound bounding box is only supported for astropy 5.1+."
                     )
                     raise RuntimeError(msg)
-                else:
-                    cbbox = CompoundBoundingBox({}, model, selector_args, order=order)
+
+                cbbox = CompoundBoundingBox({}, model, selector_args, order=order)
             else:
                 cbbox = CompoundBoundingBox({}, model, selector_args, ignored=ignored, order=order)
 

@@ -22,8 +22,8 @@ def parameter_to_value(param):
 
     if param.unit is not None:
         return u.Quantity(param)
-    else:
-        return param.value
+
+    return param.value
 
 
 # One converter, UnitsMappingConverter, does not inherit
