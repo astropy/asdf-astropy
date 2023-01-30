@@ -144,8 +144,16 @@ extend-ignore = [
     "ANN", # flake8-annotations
     "ARG", # flake8-unused-arguments
     "DTZ", # flake8-datetimez
+    "PTH", # flake8-use-pathlib
     # Individually ignored checks
     "B905", # Requires python 3.10 (use zip strict)
+    "PLR2004", # Magic value used
+
+    "COM812", # Trailing comma used
+    "RUF005", # Use list expansion instead of contatenation
+    "TRY004", # Prefer `TypeError` over `ValueError`
+    "TRY300", # Move statement outside of `try` block
+    "INP001", # Implicit package
 ]
 extend-exclude = ["docs/*"]
 
