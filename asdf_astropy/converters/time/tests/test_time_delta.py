@@ -14,7 +14,7 @@ def create_time_deltas():
     for format_ in TimeDelta.FORMATS:
         result.append(TimeDelta(Time.now() - Time.now(), format=format_))
 
-    for scale in list(TimeDelta.SCALES) + [None]:
+    for scale in [*list(TimeDelta.SCALES), None]:
         result.append(TimeDelta(0.125 * u.day, scale=scale))
 
     return result
