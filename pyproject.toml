@@ -148,8 +148,6 @@ extend-ignore = [
     # Individually ignored checks
     "B905", # Requires python 3.10 (use zip strict)
     "PLR2004", # Magic value used
-
-    "INP001", # Implicit package
 ]
 extend-exclude = ["docs/*"]
 
