@@ -99,7 +99,10 @@ def create_examples():
               unit: !unit/unit-1.0.0 m
           format: jyear""",
             "truth": Time(
-                2000.0, location=EarthLocation(x=6378100 * u.m, y=0 * u.m, z=0 * u.m), scale="tdb", format="jyear"
+                2000.0,
+                location=EarthLocation(x=6378100 * u.m, y=0 * u.m, z=0 * u.m),
+                scale="tdb",
+                format="jyear",
             ),
         },
     ]

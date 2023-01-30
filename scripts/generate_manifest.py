@@ -37,7 +37,7 @@ if __name__ == "__main__":
     manifest["description"] = MultilineString(
         "A set of tags for serializing astropy objects.  This does not include most\n"
         "model classes, which are handled by an implementation of the ASDF\n"
-        "transform extension."
+        "transform extension.",
     )
     manifest["asdf_standard_requirement"] = {
         "gte": "1.1.0",

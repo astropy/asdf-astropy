@@ -28,7 +28,7 @@ class ModelBoundingBoxConverter(Converter):
             else:
                 # Hack to pass compound_bounding_box selector_args ignore in 5.0.4+
                 ignore = list(
-                    set(ignored + [get_name(model, get_index(model, key)) for key in cbbox.selector_args.ignore])
+                    set(ignored + [get_name(model, get_index(model, key)) for key in cbbox.selector_args.ignore]),
                 )
                 # Add in globally ignored inputs from the compound_bounding_box in 5.1+
                 if minversion("astropy", "5.1"):

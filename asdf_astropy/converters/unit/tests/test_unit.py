@@ -52,6 +52,7 @@ def test_error(unit, tmp_path):
     with asdf.AsdfFile() as af:
         af["unit"] = unit
         with pytest.raises(
-            ValueError, match=r"Unit '.*' is not representable as VOUnit and cannot be serialized to ASDF"
+            ValueError,
+            match=r"Unit '.*' is not representable as VOUnit and cannot be serialized to ASDF",
         ):
             af.write_to(file_path)

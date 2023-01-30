@@ -81,7 +81,12 @@ class PolynomialConverter(TransformConverterBase):
                         name = "c" + str(i) + "_" + str(j)
                         coeffs[name] = coefficients[i, j]
             model = Polynomial2D(
-                degree, x_domain=x_domain, y_domain=y_domain, x_window=x_window, y_window=y_window, **coeffs
+                degree,
+                x_domain=x_domain,
+                y_domain=y_domain,
+                x_window=x_window,
+                y_window=y_window,
+                **coeffs,
             )
         else:
             msg = "astropy supports only 1D or 2D polynomial models"
@@ -173,7 +178,13 @@ class OrthoPolynomialConverter(TransformConverterBase):
                     name = f"c{i}_{j}"
                     coeffs[name] = coefficients[i, j]
             model = model_type(
-                x_degree, y_degree, x_domain=x_domain, y_domain=y_domain, x_window=x_window, y_window=y_window, **coeffs
+                x_degree,
+                y_degree,
+                x_domain=x_domain,
+                y_domain=y_domain,
+                x_window=x_window,
+                y_window=y_window,
+                **coeffs,
             )
         else:
             msg = "astropy supports only 1D or 2D polynomial models"
