@@ -41,7 +41,7 @@ class TabularConverter(TransformConverterBase):
                 bounds_error=node["bounds_error"],
                 fill_value=fill_value,
             )
-        elif dim == 2:
+        elif dim == 2:  # noqa: PLR2004
             points = tuple(node["points"])
             model = tabular.Tabular2D(
                 points=points,

@@ -47,7 +47,7 @@ class ConstantConverter(TransformConverterBase):
         if node["dimensions"] == 1:
             return Const1D(node["value"])
 
-        if node["dimensions"] == 2:
+        if node["dimensions"] == 2:  # noqa: PLR2004
             return Const2D(node["value"])
 
         msg = f"Invalid dimensions: {node['dimensions']}"

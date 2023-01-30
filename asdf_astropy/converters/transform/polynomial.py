@@ -65,7 +65,7 @@ class PolynomialConverter(TransformConverterBase):
 
             model = Polynomial1D(coefficients.size - 1, domain=domain, window=window)
             model.parameters = coefficients
-        elif n_dim == 2:
+        elif n_dim == 2:  # noqa: PLR2004
             x_domain, y_domain = tuple(node.get("domain", (None, None)))
             x_window, y_window = tuple(node.get("window", (None, None)))
             shape = coefficients.shape
@@ -166,7 +166,7 @@ class OrthoPolynomialConverter(TransformConverterBase):
             window = node.get("window", None)
             model = model_type(coefficients.size - 1, domain=domain, window=window)
             model.parameters = coefficients
-        elif n_dim == 2:
+        elif n_dim == 2:  # noqa: PLR2004
             x_domain, y_domain = tuple(node.get("domain", (None, None)))
             x_window, y_window = tuple(node.get("window", (None, None)))
             coeffs = {}

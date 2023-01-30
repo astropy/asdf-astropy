@@ -147,7 +147,6 @@ extend-ignore = [
     "PTH", # flake8-use-pathlib
     # Individually ignored checks
     "B905", # Requires python 3.10 (use zip strict)
-    "PLR2004", # Magic value used
 ]
 extend-exclude = ["docs/*"]
 
