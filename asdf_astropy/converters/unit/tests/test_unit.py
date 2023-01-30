@@ -11,9 +11,10 @@ def vounit_compatible(unit):
         warnings.simplefilter("ignore", category=units.UnitsWarning)
         try:
             unit.to_string(format="vounit")
-            return True
         except Exception:  # noqa: BLE001
             return False
+
+        return True
 
 
 def create_units():
