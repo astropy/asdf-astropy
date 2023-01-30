@@ -144,7 +144,6 @@ extend-ignore = [
     "ANN", # flake8-annotations
     "ARG", # flake8-unused-arguments
     "DTZ", # flake8-datetimez
-    "PTH", # flake8-use-pathlib
     # Individually ignored checks
     "B905", # Requires python 3.10 (use zip strict)
 ]

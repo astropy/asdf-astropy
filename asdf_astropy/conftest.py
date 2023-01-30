@@ -3,7 +3,7 @@
 # get picked up when running the tests inside an interpreter using
 # packagename.test
 
-import os
+from pathlib import Path
 
 import asdf
 import pytest
@@ -35,7 +35,7 @@ def pytest_configure(config):
 
         from . import __version__
 
-        packagename = os.path.basename(os.path.dirname(__file__))
+        packagename = Path(__file__).parent.name
         TESTED_VERSIONS[packagename] = __version__
 
 

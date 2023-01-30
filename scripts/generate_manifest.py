@@ -60,5 +60,5 @@ if __name__ == "__main__":
 
         manifest["tags"].append(tag_def)
 
-    with open(args.output_path, "w") as f:
+    with Path(args.output_path).open("w") as f:
         yaml.dump(manifest, f, sort_keys=False)
