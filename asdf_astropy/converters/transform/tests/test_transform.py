@@ -690,7 +690,7 @@ def test_rotation_errors():
     mdl = astropy_models.Const1D(5)
     mdl.angles = mk.MagicMock()
     mdl.axes_order = mk.MagicMock()
-    with pytest.raises(ValueError, match=r"Cannot serialize model of type *"):
+    with pytest.raises(TypeError, match=r"Cannot serialize model of type *"):
         converter.to_yaml_tree_transform(mdl, mk.MagicMock(), mk.MagicMock())
 
     # from yaml error

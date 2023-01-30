@@ -77,7 +77,7 @@ class RotationSequenceConverter(TransformConverterBase):
             node["rotation_type"] = "cartesian"
         else:
             msg = f"Cannot serialize model of type {type(model)}"
-            raise ValueError(msg)
+            raise TypeError(msg)
         return node
 
     def from_yaml_tree_transform(self, node, tag, ctx):

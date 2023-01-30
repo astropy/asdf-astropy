@@ -149,7 +149,6 @@ extend-ignore = [
     "B905", # Requires python 3.10 (use zip strict)
     "PLR2004", # Magic value used
 
-    "TRY004", # Prefer `TypeError` over `ValueError`
     "TRY300", # Move statement outside of `try` block
     "INP001", # Implicit package
 ]
