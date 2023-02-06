@@ -8,7 +8,6 @@ from asdf_astropy.io.connect import read_table, write_table
 
 
 def make_table():
-
     a = [1, 4, 5]
     b = [2.0, 5.0, 8.2]
     c = ["x", "y", "z"]
@@ -16,7 +15,6 @@ def make_table():
 
 
 def test_table_io(tmpdir):
-
     tmpfile = str(tmpdir.join("table.asdf"))
 
     table = make_table()
@@ -35,7 +33,6 @@ def test_table_io(tmpdir):
 
 
 def test_table_io_custom_key(tmpdir):
-
     tmpfile = str(tmpdir.join("table.asdf"))
 
     table = make_table()
@@ -58,7 +55,6 @@ def test_table_io_custom_key(tmpdir):
 
 
 def test_table_io_custom_tree(tmpdir):
-
     tmpfile = str(tmpdir.join("table.asdf"))
 
     table = make_table()
