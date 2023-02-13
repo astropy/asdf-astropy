@@ -66,7 +66,6 @@ class CompoundBoundingBoxConverter(Converter):
         order = node["order"] if "order" in node else "C"
 
         def create_bounding_box(model):
-
             if not minversion("astropy", "5.1"):
                 if len(ignored) > 0:
                     msg = (
