@@ -135,6 +135,7 @@ filter_files = true
 line_length = 120
 
 [tool.ruff]
+target-version = "py38"
 line-length = 120
 select = ["ALL"]
 extend-ignore = [
@@ -145,11 +146,8 @@ extend-ignore = [
     "ARG", # flake8-unused-arguments
     "DTZ", # flake8-datetimez
     # Individually ignored checks
-    "B905", # Requires python 3.10 (use zip strict)
-
     "SLF001", # private-member-access
     "PLR0915", # too-many-statements
-    "UP036", # Version block is outdated
 ]
 extend-exclude = ["docs/*"]
 
