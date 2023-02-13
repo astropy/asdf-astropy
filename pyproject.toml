@@ -147,7 +147,6 @@ extend-ignore = [
     "DTZ", # flake8-datetimez
     # Individually ignored checks
     "SLF001", # private-member-access
-    "PLR0915", # too-many-statements
 ]
 extend-exclude = ["docs/*"]
 

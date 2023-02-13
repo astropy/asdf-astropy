@@ -100,7 +100,7 @@ def assert_model_roundtrip(model, tmpdir, version=None):
         return af["model"]
 
 
-def create_single_models():
+def create_single_models():  # noqa: PLR0915
     model_with_bounding_box = astropy_models.Shift(10)
     model_with_bounding_box.bounding_box = ((1, 7),)
 
