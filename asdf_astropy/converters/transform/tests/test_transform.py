@@ -834,11 +834,15 @@ model: !transform/concatenate-1.2.0
         else:
             asdf.open(buff)
     else:
-        with pytest.raises(
-            RuntimeError,
-            match=r"Deserializing ignored elements of a compound bounding box is only supported for astropy 5.1+.",
-        ):
-            asdf.open(buff)
+        if not minversion("asdf_transform_schemas", "0.2.2", inclusive=False):
+            with pytest.raises(TypeError, match=r"Cannot form bounding_box from: *"):
+                asdf.open(buff)
+        else:
+            with pytest.raises(
+                RuntimeError,
+                match=r"Deserializing ignored elements of a compound bounding box is only supported for astropy 5.1+.",
+            ):
+                asdf.open(buff)
 
 
 def test_serialize_bbox(tmpdir):
@@ -860,8 +864,18 @@ def test_serialize_bbox(tmpdir):
         bbox = ModelBoundingBox({"x": (1, 2)}, mdl, ignored=["y"])
         mdl._user_bounding_box = bbox
 
-        with pytest.raises(RuntimeError, match=r"Bounding box ignored arguments are only supported by astropy 5.1+"):
-            assert_model_roundtrip(mdl, tmpdir)
+        if minversion("asdf_transform_schemas", "0.2.2", inclusive=False):
+            with pytest.raises(
+                RuntimeError,
+                match=r"Bounding box ignored arguments are only supported by astropy 5.1+",
+            ):
+                assert_model_roundtrip(mdl, tmpdir)
+        else:
+            with pytest.raises(
+                RuntimeError,
+                match=r"asdf-transform-schemas > 0.2.2 in order to serialize a bounding_box with ignored",
+            ):
+                assert_model_roundtrip(mdl, tmpdir)
 
 
 def test_serialize_cbbox(tmpdir):
