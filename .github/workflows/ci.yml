@@ -44,8 +44,23 @@ jobs:
         - linux: py39-transformlts-cov
       coverage: codecov
 
+  asdf-schemas:
+    needs: [setup]
+    uses: OpenAstronomy/github-actions-workflows/.github/workflows/tox.yml@v1
+    with:
+      cache-path: ~/.cache/pip
+      cache-key: pip-${{ needs.setup.outputs.requirements-hash }}
+      cache-restore-keys: |
+        pip-
+      default_python: '3.10'
+      envs: |
+        - linux: asdf
+        - linux: asdf-standard
+        - linux: asdf-transform-schemas
+        - linux: asdf-coordinates-schemas
+
   test:
-    needs: [core, asdf-transform-schemas]
+    needs: [core, asdf-schemas]
     uses: OpenAstronomy/github-actions-workflows/.github/workflows/tox.yml@v1
     with:
       cache-path: ~/.cache/pip
@@ -62,7 +77,7 @@ jobs:
           python-version: 3.11.0
 
   numpy:
-    needs: [core, asdf-transform-schemas]
+    needs: [core, asdf-schemas]
     uses: OpenAstronomy/github-actions-workflows/.github/workflows/tox.yml@v1
     with:
       cache-path: ~/.cache/pip
@@ -78,7 +93,7 @@ jobs:
         - linux: py39-test-numpy122
 
   wheel_building:
-    needs: [core, asdf-transform-schemas]
+    needs: [core, asdf-schemas]
     permissions:
       contents: none
     uses: OpenAstronomy/github-actions-workflows/.github/workflows/publish_pure_python.yml@v1
@@ -88,32 +103,3 @@ jobs:
       upload_to_anaconda: false
       test_extras: test
       test_command: pytest --pyargs asdf_astropy
-
-  asdf-transform-schemas:
-    name: Run asdf-transform-schemas development tests
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout asdf-astropy
-        uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
-          path: asdf-astropy
-      - name: Checkout asdf-transform-schemas-dev
-        uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
-          repository: asdf-format/asdf-transform-schemas
-          ref: master
-          path: asdf-transform-schemas
-      - name: Set up Python 3.9
-        uses: actions/setup-python@v2
-        with:
-          python-version: 3.9
-      - name: Install asdf-astropy
-        run: cd asdf-astropy && pip install .[test]
-      - name: Install asdf-transform-schemas
-        run: cd asdf-transform-schemas && pip install -e .[test]
-      - name: Pip Freeze
-        run: pip freeze
-      - name: Run asdf-transform-schemas development tests
-        run: cd asdf-transform-schemas && pytest
