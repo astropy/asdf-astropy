@@ -390,7 +390,7 @@ if minversion("astropy", "5.1.0"):
         SimpleTransformConverter(
             ["tag:stsci.edu:asdf/transform/schechter1d-*"],
             "astropy.modeling.powerlaws.Schechter1D",
-        )
+        ),
     )
 
 

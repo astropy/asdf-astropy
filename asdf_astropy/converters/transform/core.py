@@ -2,7 +2,7 @@ import abc
 
 from asdf.extension import Converter
 
-from ..utils import import_type
+from asdf_astropy.converters.utils import import_type
 
 
 def parameter_to_value(param):
@@ -22,8 +22,8 @@ def parameter_to_value(param):
 
     if param.unit is not None:
         return u.Quantity(param)
-    else:
-        return param.value
+
+    return param.value
 
 
 # One converter, UnitsMappingConverter, does not inherit
@@ -62,7 +62,6 @@ class TransformConverterBase(Converter):
         dict
             ASDF node.
         """
-        pass  # pragma: no cover
 
     @abc.abstractmethod
     def from_yaml_tree_transform(self, node, tag, ctx):
@@ -86,7 +85,6 @@ class TransformConverterBase(Converter):
         astropy.modeling.Model
             The resulting model instance.
         """
-        pass  # pragma: no cover
 
     def to_yaml_tree(self, model, tag, ctx):
         from astropy.modeling.core import CompoundModel
@@ -116,9 +114,8 @@ class TransformConverterBase(Converter):
                 node["bounds"] = bounds_nondefaults
 
         # model input_units_equivalencies
-        if not isinstance(model, CompoundModel):
-            if model.input_units_equivalencies:
-                node["input_units_equivalencies"] = model.input_units_equivalencies
+        if not isinstance(model, CompoundModel) and model.input_units_equivalencies:
+            node["input_units_equivalencies"] = model.input_units_equivalencies
 
         return node
 
@@ -143,20 +140,19 @@ class TransformConverterBase(Converter):
                 if minversion("astropy", "5.1"):
                     kwargs = {"_preserve_ignore": True}
                 else:
-                    raise RuntimeError("Bounding box ignored arguments are only supported by astropy 5.1+")
+                    msg = "Bounding box ignored arguments are only supported by astropy 5.1+"
+                    raise RuntimeError(msg)
             else:
                 kwargs = {}
 
             bbox = ModelBoundingBox.validate(model, bbox, **kwargs)
         else:
             if len(bbox.ignored) > 0:
-                raise RuntimeError("asdf-transform-schemas > 0.2.2 in order to serialize a bounding_box with ignored")
+                msg = "asdf-transform-schemas > 0.2.2 in order to serialize a bounding_box with ignored"
+                raise RuntimeError(msg)
 
             bbox = bbox.bounding_box(order="C")
-            if model.n_inputs == 1:
-                bbox = list(bbox)
-            else:
-                bbox = [list(item) for item in bbox]
+            bbox = list(bbox) if model.n_inputs == 1 else [list(item) for item in bbox]
 
         node["bounding_box"] = bbox
 
@@ -168,7 +164,8 @@ class TransformConverterBase(Converter):
         if minversion("asdf_transform_schemas", "0.2.2", inclusive=False):
             node["bounding_box"] = bbox
         else:
-            raise RuntimeError("asdf-transform-schemas > 0.2.2 in order to serialize a compound bounding_box")
+            msg = "asdf-transform-schemas > 0.2.2 in order to serialize a compound bounding_box"
+            raise RuntimeError(msg)
 
     def from_yaml_tree(self, node, tag, ctx):
         from astropy.modeling.core import CompoundModel
@@ -192,10 +189,9 @@ class TransformConverterBase(Converter):
                 param_and_model_constraints[constraint] = node[constraint]
         model._initialize_constraints(param_and_model_constraints)
 
-        if "input_units_equivalencies" in node:
-            # this still writes eqs. for compound, but operates on each sub model
-            if not isinstance(model, CompoundModel):
-                model.input_units_equivalencies = node["input_units_equivalencies"]
+        # this still writes eqs. for compound, but operates on each sub model
+        if "input_units_equivalencies" in node and not isinstance(model, CompoundModel):
+            model.input_units_equivalencies = node["input_units_equivalencies"]
 
         yield model
 
@@ -211,7 +207,8 @@ class TransformConverterBase(Converter):
             elif callable(bounding_box):
                 model.bounding_box = bounding_box(model)
             else:
-                raise TypeError(f"Cannot form bounding_box from: {bounding_box}")
+                msg = f"Cannot form bounding_box from: {bounding_box}"
+                raise TypeError(msg)
 
 
 class SimpleTransformConverter(TransformConverterBase):

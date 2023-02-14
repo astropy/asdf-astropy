@@ -66,15 +66,15 @@ class UnitsMappingConverter(Converter):
         inputs = []
         outputs = []
         for i, o, m in zip(model.inputs, model.outputs, model.mapping):
-            input = {
+            input_ = {
                 "name": i,
                 "allow_dimensionless": model.input_units_allow_dimensionless[i],
             }
             if m[0] is not None:
-                input["unit"] = m[0]
+                input_["unit"] = m[0]
             if model.input_units_equivalencies is not None and i in model.input_units_equivalencies:
-                input["equivalencies"] = model.input_units_equivalencies[i]
-            inputs.append(input)
+                input_["equivalencies"] = model.input_units_equivalencies[i]
+            inputs.append(input_)
 
             output = {
                 "name": o,

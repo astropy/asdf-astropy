@@ -86,7 +86,7 @@ hdul: !fits/fits-1.0.0
     buff = yaml_to_asdf(yaml)
     with asdf.open(buff) as af:
         hdul = af["hdul"]
-        assert len(hdul) == 3
+        assert len(hdul) == 3  # noqa: PLR2004
         assert hdul[0].header["FILENAME"] == "MiriDarkReferenceModel_test.fits"
         assert hdul[0].data is None
         assert hdul[1].header["EXTNAME"] == "SCI"

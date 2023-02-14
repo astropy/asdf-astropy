@@ -5,19 +5,18 @@ from asdf.tags.core.ndarray import NDArrayType
 def _card_to_node(card):
     from astropy.io.fits import Undefined
 
-    if isinstance(card.value, Undefined):
-        value = ""
-    else:
-        value = card.value
+    value = "" if isinstance(card.value, Undefined) else card.value
 
     if card.comment:
         return [card.keyword, value, card.comment]
-    elif value:
+
+    if value:
         return [card.keyword, value]
-    elif card.keyword:
+
+    if card.keyword:
         return [card.keyword]
-    else:
-        return []
+
+    return []
 
 
 class FitsConverter(Converter):

@@ -11,9 +11,10 @@ def vounit_compatible(unit):
         warnings.simplefilter("ignore", category=units.UnitsWarning)
         try:
             unit.to_string(format="vounit")
-            return True
-        except Exception:
+        except Exception:  # noqa: BLE001
             return False
+
+        return True
 
 
 def create_units():
@@ -52,6 +53,7 @@ def test_error(unit, tmp_path):
     with asdf.AsdfFile() as af:
         af["unit"] = unit
         with pytest.raises(
-            ValueError, match=r"Unit '.*' is not representable as VOUnit and cannot be serialized to ASDF"
+            ValueError,
+            match=r"Unit '.*' is not representable as VOUnit and cannot be serialized to ASDF",
         ):
             af.write_to(file_path)

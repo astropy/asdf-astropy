@@ -1,4 +1,5 @@
-from ..helpers import get_tag_name
+from asdf_astropy.converters.helpers import get_tag_name
+
 from .core import TransformConverterBase
 
 __all__ = ["CompoundConverter"]
@@ -58,10 +59,14 @@ class CompoundConverter(TransformConverterBase):
     def to_yaml_tree_transform(self, model, tag, ctx):
         left = model.left
 
-        if isinstance(model.right, dict):
-            right = {"keys": list(model.right.keys()), "values": list(model.right.values())}
-        else:
-            right = model.right
+        right = (
+            {
+                "keys": list(model.right.keys()),
+                "values": list(model.right.values()),
+            }
+            if isinstance(model.right, dict)
+            else model.right
+        )
 
         return {"forward": [left, right]}
 
@@ -72,18 +77,18 @@ class CompoundConverter(TransformConverterBase):
 
         left = node["forward"][0]
         if not isinstance(left, Model):
-            raise TypeError(f"Unknown left model type '{node['forward'][0]._tag}'")
+            msg = f"Unknown left model type '{node['forward'][0]._tag}'"
+            raise TypeError(msg)
 
         right = node["forward"][1]
         if (oper == "fix_inputs" and not isinstance(right, dict)) or (
             oper != "fix_inputs" and not isinstance(right, Model)
         ):
-            raise TypeError(f"Unknown right model type '{node['forward'][1]._tag}'")
+            msg = f"Unknown right model type '{node['forward'][1]._tag}'"
+            raise TypeError(msg)
 
         if oper == "fix_inputs":
             right = dict(zip(right["keys"], right["values"]))
-            model = CompoundModel("fix_inputs", left, right)
-        else:
-            model = getattr(left, oper)(right)
+            return CompoundModel("fix_inputs", left, right)
 
-        return model
+        return getattr(left, oper)(right)

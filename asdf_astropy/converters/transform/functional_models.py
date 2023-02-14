@@ -1,6 +1,7 @@
 from packaging.version import parse as parse_version
 
-from ..helpers import parse_tag_version
+from asdf_astropy.converters.helpers import parse_tag_version
+
 from .core import TransformConverterBase, parameter_to_value
 
 
@@ -25,21 +26,29 @@ class ConstantConverter(TransformConverterBase):
 
         if parse_tag_version(tag) < self._2D_MIN_VERSION:
             if not isinstance(model, Const1D):
-                raise TypeError(f"{tag} does not support models with > 1 dimension")
+                msg = f"{tag} does not support models with > 1 dimension"
+                raise TypeError(msg)
+
             return {"value": parameter_to_value(model.amplitude)}
-        else:
-            if isinstance(model, Const1D):
-                dimension = 1
-            elif isinstance(model, Const2D):
-                dimension = 2
-            return {"value": parameter_to_value(model.amplitude), "dimensions": dimension}
+
+        if isinstance(model, Const1D):
+            dimension = 1
+        elif isinstance(model, Const2D):
+            dimension = 2
+
+        return {"value": parameter_to_value(model.amplitude), "dimensions": dimension}
 
     def from_yaml_tree_transform(self, node, tag, ctx):
         from astropy.modeling.functional_models import Const1D, Const2D
 
         if parse_tag_version(tag) < self._2D_MIN_VERSION:
             return Const1D(node["value"])
-        elif node["dimensions"] == 1:
+
+        if node["dimensions"] == 1:
             return Const1D(node["value"])
-        elif node["dimensions"] == 2:
+
+        if node["dimensions"] == 2:  # noqa: PLR2004
             return Const2D(node["value"])
+
+        msg = f"Invalid dimensions: {node['dimensions']}"
+        raise RuntimeError(msg)

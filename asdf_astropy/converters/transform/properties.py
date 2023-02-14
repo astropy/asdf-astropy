@@ -18,15 +18,9 @@ class ModelBoundingBoxConverter(Converter):
 
         intervals = {_input: tuple(interval) for _input, interval in node["intervals"].items()}
 
-        if "ignore" in node:
-            ignored = node["ignore"]
-        else:
-            ignored = []
+        ignored = node["ignore"] if "ignore" in node else []
 
-        if "order" in node:
-            order = node["order"]
-        else:
-            order = "C"
+        order = node["order"] if "order" in node else "C"
 
         def create_bounding_box(model, cbbox=None):
             if cbbox is None:
@@ -34,7 +28,7 @@ class ModelBoundingBoxConverter(Converter):
             else:
                 # Hack to pass compound_bounding_box selector_args ignore in 5.0.4+
                 ignore = list(
-                    set(ignored + [get_name(model, get_index(model, key)) for key in cbbox.selector_args.ignore])
+                    set(ignored + [get_name(model, get_index(model, key)) for key in cbbox.selector_args.ignore]),
                 )
                 # Add in globally ignored inputs from the compound_bounding_box in 5.1+
                 if minversion("astropy", "5.1"):
@@ -67,26 +61,19 @@ class CompoundBoundingBoxConverter(Converter):
         selector_args = tuple((selector["argument"], selector["ignore"]) for selector in node["selector_args"])
         bboxes = {tuple(bbox["key"]): bbox["bbox"] for bbox in node["cbbox"]}
 
-        if "ignore" in node:
-            ignored = node["ignore"]
-        else:
-            ignored = []
+        ignored = node["ignore"] if "ignore" in node else []
 
-        if "order" in node:
-            order = node["order"]
-        else:
-            order = "C"
+        order = node["order"] if "order" in node else "C"
 
         def create_bounding_box(model):
-            # bounding_boxes = {key: bbox(model) for key, bbox in bboxes.items()}
-
             if not minversion("astropy", "5.1"):
                 if len(ignored) > 0:
-                    raise RuntimeError(
+                    msg = (
                         "Deserializing ignored elements of a compound bounding box is only supported for astropy 5.1+."
                     )
-                else:
-                    cbbox = CompoundBoundingBox({}, model, selector_args, order=order)
+                    raise RuntimeError(msg)
+
+                cbbox = CompoundBoundingBox({}, model, selector_args, order=order)
             else:
                 cbbox = CompoundBoundingBox({}, model, selector_args, ignored=ignored, order=order)
 

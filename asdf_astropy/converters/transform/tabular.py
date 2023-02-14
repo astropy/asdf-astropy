@@ -20,7 +20,7 @@ class TabularConverter(TransformConverterBase):
         if model.fill_value is not None:
             node["fill_value"] = model.fill_value
         node["lookup_table"] = model.lookup_table
-        node["points"] = [p for p in model.points]
+        node["points"] = list(model.points)
         node["method"] = str(model.method)
         node["bounds_error"] = model.bounds_error
 
@@ -41,7 +41,7 @@ class TabularConverter(TransformConverterBase):
                 bounds_error=node["bounds_error"],
                 fill_value=fill_value,
             )
-        elif dim == 2:
+        elif dim == 2:  # noqa: PLR2004
             points = tuple(node["points"])
             model = tabular.Tabular2D(
                 points=points,
@@ -51,6 +51,7 @@ class TabularConverter(TransformConverterBase):
                 fill_value=fill_value,
             )
         else:
-            raise NotImplementedError("tabular models with ndim > 2 are not supported ")
+            msg = "tabular models with ndim > 2 are not supported "
+            raise NotImplementedError(msg)
 
         return model

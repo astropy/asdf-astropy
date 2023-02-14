@@ -38,26 +38,28 @@ def test_serialization(quantity, tmp_path):
 
 
 def test_read_untagged_unit():
-    yaml = """
+    value = 2.71828
+    yaml = f"""
 quantity: !unit/quantity-1.1.0
-  value: 2.71828
+  value: {value}
   unit: kpc
     """
     buff = helpers.yaml_to_asdf(yaml)
     with asdf.open(buff) as af:
-        assert af["quantity"].value == 2.71828
+        assert af["quantity"].value == value
         assert af["quantity"].unit.is_equivalent(units.kpc)
 
 
 def test_read_tagged_unit():
-    yaml = """
+    value = 2.71828
+    yaml = f"""
 quantity: !unit/quantity-1.1.0
-  value: 2.71828
+  value: {value}
   unit: !unit/unit-1.0.0 kpc
     """
     buff = helpers.yaml_to_asdf(yaml)
     with asdf.open(buff) as af:
-        assert af["quantity"].value == 2.71828
+        assert af["quantity"].value == value
         assert af["quantity"].unit.is_equivalent(units.kpc)
 
 

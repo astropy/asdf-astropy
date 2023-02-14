@@ -44,25 +44,33 @@ def create_bounding_boxes():
             [
                 ModelBoundingBox((9, 10), astropy_models.Polynomial2D(1), ignored=["x"]),
                 ModelBoundingBox((11, 12), astropy_models.Polynomial2D(1), ignored=["y"]),
-            ]
+            ],
         )
 
     compound_bounding_box = [
         CompoundBoundingBox({(1,): (0, 1), (2,): (2, 3)}, astropy_models.Polynomial2D(1), [("x", True)]),
         CompoundBoundingBox(
-            {(1,): ((0, 1), (-1, 0)), (2,): ((2, 3), (-3, -2))}, astropy_models.Polynomial2D(1), [("x", False)]
+            {(1,): ((0, 1), (-1, 0)), (2,): ((2, 3), (-3, -2))},
+            astropy_models.Polynomial2D(1),
+            [("x", False)],
         ),
     ]
     if minversion("astropy", "5.1"):
         compound_bounding_box.extend(
             [
                 CompoundBoundingBox(
-                    {(1,): (0, 1), (2,): (2, 3)}, astropy_models.Polynomial2D(1), [("x", False)], ignored=["x"]
+                    {(1,): (0, 1), (2,): (2, 3)},
+                    astropy_models.Polynomial2D(1),
+                    [("x", False)],
+                    ignored=["x"],
                 ),
                 CompoundBoundingBox(
-                    {(1,): (0, 1), (2,): (2, 3)}, astropy_models.Polynomial2D(1), [("x", False)], ignored=["y"]
+                    {(1,): (0, 1), (2,): (2, 3)},
+                    astropy_models.Polynomial2D(1),
+                    [("x", False)],
+                    ignored=["y"],
                 ),
-            ]
+            ],
         )
 
     return model_bounding_box + compound_bounding_box
@@ -92,7 +100,7 @@ def assert_model_roundtrip(model, tmpdir, version=None):
         return af["model"]
 
 
-def create_single_models():
+def create_single_models():  # noqa: PLR0915
     model_with_bounding_box = astropy_models.Shift(10)
     model_with_bounding_box.bounding_box = ((1, 7),)
 
@@ -100,7 +108,13 @@ def create_single_models():
     model_with_user_inverse.inverse = astropy_models.Shift(-7)
 
     model_with_constraints = astropy_models.Legendre2D(
-        x_degree=1, y_degree=1, c0_0=1, c0_1=2, c1_0=3, fixed={"c1_0": True, "c0_1": True}, bounds={"c0_0": (-10, 10)}
+        x_degree=1,
+        y_degree=1,
+        c0_0=1,
+        c0_1=2,
+        c1_0=3,
+        fixed={"c1_0": True, "c0_1": True},
+        bounds={"c0_0": (-10, 10)},
     )
 
     model_with_custom_inputs_outputs = astropy_models.Gaussian2D()
@@ -231,7 +245,19 @@ def create_single_models():
         astropy_models.Spline1D(
             np.array([-3.0, -3.0, -3.0, -3.0, -1.0, 0.0, 1.0, 3.0, 3.0, 3.0, 3.0]),
             np.array(
-                [0.10412331, 0.07013616, -0.18799552, 1.35953147, -0.15282581, 0.03923, -0.04297299, 0.0, 0.0, 0.0, 0.0]
+                [
+                    0.10412331,
+                    0.07013616,
+                    -0.18799552,
+                    1.35953147,
+                    -0.15282581,
+                    0.03923,
+                    -0.04297299,
+                    0.0,
+                    0.0,
+                    0.0,
+                    0.0,
+                ],
             ),
             3,
         ),
@@ -248,7 +274,8 @@ def create_single_models():
         astropy_models.SmoothlyBrokenPowerLaw1D(amplitude=10.0, x_break=5.0, alpha_1=2.0, alpha_2=3.0, delta=0.5),
         # astropy.modeling.projections
         astropy_models.AffineTransformation2D(
-            matrix=np.array([[1.0, 2.0], [3.0, 4.0]]), translation=np.array([5.0, 6.0])
+            matrix=np.array([[1.0, 2.0], [3.0, 4.0]]),
+            translation=np.array([5.0, 6.0]),
         ),
         astropy_models.Pix2Sky_Airy(theta_b=75.8),
         astropy_models.Sky2Pix_Airy(theta_b=75.8),
@@ -368,7 +395,10 @@ def create_single_models():
         }
         if minversion("astropy", "5.1"):
             bounding_box = CompoundBoundingBox.validate(
-                model, bounding_boxes, selector_args=[("x", True)], ignored=["y"]
+                model,
+                bounding_boxes,
+                selector_args=[("x", True)],
+                ignored=["y"],
             )
             model.bounding_box = bounding_box
             result.append(model)
@@ -455,8 +485,9 @@ def test_single_model(tmpdir, model):
 
 def get_all_models():
     def _iterate_model_classes():
-        for key, value in itertools.chain(
-            astropy_models.__dict__.items(), astropy.modeling.math_functions.__dict__.items()
+        for _key, value in itertools.chain(
+            astropy_models.__dict__.items(),
+            astropy.modeling.math_functions.__dict__.items(),
         ):
             if (
                 isinstance(value, type)
@@ -547,21 +578,24 @@ def test_units_mapping(tmpdir):
 
     # With equivalencies:
     model = astropy_models.UnitsMapping(
-        ((u.m, u.dimensionless_unscaled),), input_units_equivalencies={"x": u.equivalencies.spectral()}
+        ((u.m, u.dimensionless_unscaled),),
+        input_units_equivalencies={"x": u.equivalencies.spectral()},
     )
     result = assert_model_roundtrip(model, tmpdir)
     assert result.mapping == model.mapping
 
     # Allow dimensionless on all inputs:
     model = astropy_models.UnitsMapping(
-        ((u.m, u.dimensionless_unscaled), (u.s, u.Hz)), input_units_allow_dimensionless=True
+        ((u.m, u.dimensionless_unscaled), (u.s, u.Hz)),
+        input_units_allow_dimensionless=True,
     )
     result = assert_model_roundtrip(model, tmpdir)
     assert result.mapping == model.mapping
 
     # Allow dimensionless selectively:
     model = astropy_models.UnitsMapping(
-        ((u.m, u.dimensionless_unscaled), (u.s, u.Hz)), input_units_allow_dimensionless={"x0": True, "x1": False}
+        ((u.m, u.dimensionless_unscaled), (u.s, u.Hz)),
+        input_units_allow_dimensionless={"x0": True, "x1": False},
     )
     result = assert_model_roundtrip(model, tmpdir)
     assert result.mapping == model.mapping
@@ -589,11 +623,26 @@ def test_1d_polynomial_with_asdf_standard_version(tmpdir, standard_version, mode
     [
         astropy_models.Polynomial2D(2, c0_0=3, c1_0=5, c0_1=7),
         astropy_models.Polynomial2D(
-            2, c0_0=3, c1_0=5, c0_1=7, x_domain=[-2, 2], y_domain=[-4, 4], x_window=[-6, 6], y_window=[-8, 8]
+            2,
+            c0_0=3,
+            c1_0=5,
+            c0_1=7,
+            x_domain=[-2, 2],
+            y_domain=[-4, 4],
+            x_window=[-6, 6],
+            y_window=[-8, 8],
         ),
         astropy_models.Chebyshev2D(1, 1, c0_0=1, c0_1=2, c1_0=3, x_domain=[-2, 2], y_domain=[-2, 2]),
         astropy_models.Chebyshev2D(
-            1, 1, c0_0=1, c0_1=2, c1_0=3, x_domain=[-2, 2], y_domain=[-2, 2], x_window=[-0.5, 0.5], y_window=[-0.1, 0.5]
+            1,
+            1,
+            c0_0=1,
+            c0_1=2,
+            c1_0=3,
+            x_domain=[-2, 2],
+            y_domain=[-2, 2],
+            x_window=[-0.5, 0.5],
+            y_window=[-0.1, 0.5],
         ),
     ],
 )
@@ -641,7 +690,7 @@ def test_rotation_errors():
     mdl = astropy_models.Const1D(5)
     mdl.angles = mk.MagicMock()
     mdl.axes_order = mk.MagicMock()
-    with pytest.raises(ValueError, match=r"Cannot serialize model of type *"):
+    with pytest.raises(TypeError, match=r"Cannot serialize model of type *"):
         converter.to_yaml_tree_transform(mdl, mk.MagicMock(), mk.MagicMock())
 
     # from yaml error
@@ -803,7 +852,8 @@ def test_serialize_bbox(tmpdir):
             assert_model_roundtrip(mdl, tmpdir)
         else:
             with pytest.raises(
-                RuntimeError, match=r"asdf-transform-schemas > 0.2.2 in order to serialize a bounding_box with ignored"
+                RuntimeError,
+                match=r"asdf-transform-schemas > 0.2.2 in order to serialize a bounding_box with ignored",
             ):
                 assert_model_roundtrip(mdl, tmpdir)
     else:
@@ -828,6 +878,7 @@ def test_serialize_cbbox(tmpdir):
         assert_model_roundtrip(mdl, tmpdir)
     else:
         with pytest.raises(
-            RuntimeError, match=r"asdf-transform-schemas > 0.2.2 in order to serialize a compound bounding_box"
+            RuntimeError,
+            match=r"asdf-transform-schemas > 0.2.2 in order to serialize a compound bounding_box",
         ):
             assert_model_roundtrip(mdl, tmpdir)

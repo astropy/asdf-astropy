@@ -50,19 +50,20 @@ class TimeConverter(Converter):
             # The 1.0.0 and 1.1.0 tags differ in how location is represented.
             # In 1.0.0, there is a single "unit" property that is shared among
             # x, y, and z, and in 1.1.0 each is a quantity with its own unit.
-            if tag.endswith("1.0.0"):
-                location = {
+            location = (
+                {
                     "x": obj.location.x.value,
                     "y": obj.location.y.value,
                     "z": obj.location.z.value,
                     "unit": obj.location.unit,
                 }
-            else:
-                location = {
+                if tag.endswith("1.0.0")
+                else {
                     "x": obj.location.x,
                     "y": obj.location.y,
                     "z": obj.location.z,
                 }
+            )
 
             node["location"] = location
 
@@ -77,7 +78,8 @@ class TimeConverter(Converter):
             time = Time(node)
             asdf_format = _ASTROPY_FORMAT_TO_ASDF_FORMAT.get(time.format, time.format)
             if asdf_format not in _GUESSABLE_FORMATS:
-                raise ValueError(f"ASDF time '{node}' is not one of the recognized implicit formats")
+                msg = f"ASDF time '{node}' is not one of the recognized implicit formats"
+                raise ValueError(msg)
 
             return time
 

@@ -87,14 +87,17 @@ def test_tags():
 def test_legacy_icrs_serialize():
     converter = LegacyICRSConverter()
 
-    frame = ICRS(ra=Longitude(25, unit=u.deg), dec=Latitude(45, unit=u.deg))
+    ra = 25
+    dec = 45
+
+    frame = ICRS(ra=Longitude(ra, unit=u.deg), dec=Latitude(dec, unit=u.deg))
     node = converter.to_yaml_tree(frame, mk.MagicMock(), mk.MagicMock())
 
-    assert node["ra"]["value"] == 25
+    assert node["ra"]["value"] == ra
     assert node["ra"]["unit"] == "deg"
     assert node["ra"]["wrap_angle"] == 360 * u.deg
 
-    assert node["dec"]["value"] == 45
+    assert node["dec"]["value"] == dec
     assert node["dec"]["unit"] == "deg"
 
 

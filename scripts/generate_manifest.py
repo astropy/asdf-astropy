@@ -37,7 +37,7 @@ if __name__ == "__main__":
     manifest["description"] = MultilineString(
         "A set of tags for serializing astropy objects.  This does not include most\n"
         "model classes, which are handled by an implementation of the ASDF\n"
-        "transform extension."
+        "transform extension.",
     )
     manifest["asdf_standard_requirement"] = {
         "gte": "1.1.0",
@@ -60,5 +60,5 @@ if __name__ == "__main__":
 
         manifest["tags"].append(tag_def)
 
-    with open(args.output_path, "w") as f:
+    with Path(args.output_path).open("w") as f:
         yaml.dump(manifest, f, sort_keys=False)

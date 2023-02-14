@@ -1,7 +1,8 @@
 import numpy as np
 from packaging.version import parse as parse_version
 
-from ..helpers import parse_tag_version
+from asdf_astropy.converters.helpers import parse_tag_version
+
 from .core import TransformConverterBase
 
 
@@ -64,13 +65,14 @@ class PolynomialConverter(TransformConverterBase):
 
             model = Polynomial1D(coefficients.size - 1, domain=domain, window=window)
             model.parameters = coefficients
-        elif n_dim == 2:
+        elif n_dim == 2:  # noqa: PLR2004
             x_domain, y_domain = tuple(node.get("domain", (None, None)))
             x_window, y_window = tuple(node.get("window", (None, None)))
             shape = coefficients.shape
             degree = shape[0] - 1
             if shape[0] != shape[1]:
-                raise TypeError("Coefficients must be an (n+1, n+1) matrix")
+                msg = "Coefficients must be an (n+1, n+1) matrix"
+                raise TypeError(msg)
 
             coeffs = {}
             for i in range(shape[0]):
@@ -79,10 +81,16 @@ class PolynomialConverter(TransformConverterBase):
                         name = "c" + str(i) + "_" + str(j)
                         coeffs[name] = coefficients[i, j]
             model = Polynomial2D(
-                degree, x_domain=x_domain, y_domain=y_domain, x_window=x_window, y_window=y_window, **coeffs
+                degree,
+                x_domain=x_domain,
+                y_domain=y_domain,
+                x_window=x_window,
+                y_window=y_window,
+                **coeffs,
             )
         else:
-            raise NotImplementedError("astropy supports only 1D or 2D polynomial models")
+            msg = "astropy supports only 1D or 2D polynomial models"
+            raise NotImplementedError(msg)
 
         return model
 
@@ -158,7 +166,7 @@ class OrthoPolynomialConverter(TransformConverterBase):
             window = node.get("window", None)
             model = model_type(coefficients.size - 1, domain=domain, window=window)
             model.parameters = coefficients
-        elif n_dim == 2:
+        elif n_dim == 2:  # noqa: PLR2004
             x_domain, y_domain = tuple(node.get("domain", (None, None)))
             x_window, y_window = tuple(node.get("window", (None, None)))
             coeffs = {}
@@ -170,9 +178,16 @@ class OrthoPolynomialConverter(TransformConverterBase):
                     name = f"c{i}_{j}"
                     coeffs[name] = coefficients[i, j]
             model = model_type(
-                x_degree, y_degree, x_domain=x_domain, y_domain=y_domain, x_window=x_window, y_window=y_window, **coeffs
+                x_degree,
+                y_degree,
+                x_domain=x_domain,
+                y_domain=y_domain,
+                x_window=x_window,
+                y_window=y_window,
+                **coeffs,
             )
         else:
-            raise NotImplementedError("astropy supports only 1D or 2D polynomial models")
+            msg = "astropy supports only 1D or 2D polynomial models"
+            raise NotImplementedError(msg)
 
         return model

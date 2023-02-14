@@ -137,9 +137,8 @@ table: !<tag:astropy.org:astropy/table/table-1.0.0>
 
     buff = yaml_to_asdf(yaml)
 
-    with pytest.raises(ValueError, match="Inconsistent data column lengths"):
-        with asdf.open(buff):
-            pass
+    with pytest.raises(ValueError, match="Inconsistent data column lengths"), asdf.open(buff):
+        pass
 
 
 def test_masked_table(tmp_path):

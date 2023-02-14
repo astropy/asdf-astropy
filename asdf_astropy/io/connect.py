@@ -1,4 +1,6 @@
 # This file connects ASDF to the astropy.table.Table class
+import contextlib
+
 import asdf
 from astropy.io import registry as io_registry
 from astropy.table import Table
@@ -35,13 +37,14 @@ def read_table(filename, data_key=None, find_table=None, **kwargs):
         `~astropy.table.Table` instance
     """
     if data_key and find_table:
-        raise ValueError("Options 'data_key' and 'find_table' are not compatible")
+        msg = "Options 'data_key' and 'find_table' are not compatible"
+        raise ValueError(msg)
 
     with asdf.open(filename, **kwargs) as af:
         if find_table:
             return find_table(af.tree)
-        else:
-            return af[data_key or "data"]
+
+        return af[data_key or "data"]
 
 
 def write_table(table, filename, data_key=None, make_tree=None, **kwargs):
@@ -72,12 +75,10 @@ def write_table(table, filename, data_key=None, make_tree=None, **kwargs):
         tree to be created.
     """
     if data_key and make_tree:
-        raise ValueError("Options 'data_key' and 'make_tree' are not compatible")
+        msg = "Options 'data_key' and 'make_tree' are not compatible"
+        raise ValueError(msg)
 
-    if make_tree:
-        tree = make_tree(table)
-    else:
-        tree = {data_key or "data": table}
+    tree = make_tree(table) if make_tree else {data_key or "data": table}
 
     with asdf.AsdfFile(tree) as af:
         af.write_to(filename, **kwargs)
@@ -87,11 +88,9 @@ def asdf_identify(origin, filepath, fileobj, *args, **kwargs):
     return filepath is not None and filepath.endswith(".asdf")
 
 
-try:
+# This means we're using an older version of astropy
+# and it has already claimed the 'asdf' identifier.
+with contextlib.suppress(io_registry.IORegistryError):
     io_registry.register_reader("asdf", Table, read_table)
     io_registry.register_writer("asdf", Table, write_table)
     io_registry.register_identifier("asdf", Table, asdf_identify)
-except io_registry.IORegistryError:
-    # This means we're using an older version of astropy
-    # and it has already claimed the 'asdf' identifier.
-    pass
