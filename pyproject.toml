@@ -1,10 +1,10 @@
 [project]
-name = 'asdf_astropy'
-description = 'ASDF serialization support for astropy'
+name = "asdf_astropy"
+description = "ASDF serialization support for astropy"
 readme = 'README.rst'
-requires-python = '>=3.8'
 license = { file = 'LICENSE.rst' }
 authors = [{ name = 'The Astropy Developers', email = 'astropy.team@gmail.com' }]
+requires-python = '>=3.8'
 classifiers = [
     'Programming Language :: Python',
     'Programming Language :: Python :: 3',
@@ -13,51 +13,53 @@ classifiers = [
     'Programming Language :: Python :: 3.10',
     'Development Status :: 5 - Production/Stable',
 ]
+dynamic = [
+  'version',
+]
 dependencies = [
-    'astropy >=5.0.4',
-    'asdf >=2.13.0',
-    'numpy >=1.20',
-    'asdf-coordinates-schemas >=0.1.0',
-    'asdf-transform-schemas >=0.2.2',
-    'importlib_resources >=3; python_version <"3.9"',
-    'packaging >=19.0',
+  "asdf>=2.13",
+  "asdf-coordinates-schemas>=0.1",
+  "asdf-transform-schemas>=0.2.2",
+  "astropy>=5.0.4",
+  'importlib_resources>=3; python_version < "3.9"',
+  "numpy>=1.20",
+  "packaging>=19",
 ]
-dynamic = ['version']
-
 [project.optional-dependencies]
-test = [
-    'pytest-astropy',
-    'coverage',
-    'scipy',
-]
 docs = [
-    'tomli',
-    'sphinx',
-    'sphinx-astropy',
-    'sphinx-automodapi',
-    'sphinx-asdf',
-    'graphviz',
-    'matplotlib',
-    'docutils',
+  "docutils",
+  "graphviz",
+  "matplotlib",
+  "sphinx",
+  "sphinx-asdf",
+  "sphinx-astropy",
+  "sphinx-automodapi",
+  "tomli",
+]
+test = [
+  "coverage",
+  "pytest-astropy",
+  "scipy",
 ]
 
 [project.urls]
-'tracker' = 'https://github.com/astropy/asdf-astropy/issues'
 'documentation' = 'https://asdf-astropy.readthedocs.io/en/latest/'
 'repository' = 'https://github.com/astropy/asdf-astropy'
+'tracker' = 'https://github.com/astropy/asdf-astropy/issues'
 
 [project.entry-points]
-'asdf.extensions' = { asdf-astropy = 'asdf_astropy.integration:get_extensions' }
-'asdf.resource_mappings' = { asdf-astropy = 'asdf_astropy.integration:get_resource_mappings' }
+'asdf.extensions' = {asdf-astropy = 'asdf_astropy.integration:get_extensions'}
+'asdf.resource_mappings' = {asdf-astropy = 'asdf_astropy.integration:get_resource_mappings'}
+
 
 [build-system]
-requires = [
-    "setuptools>=60",
-    "setuptools_scm[toml]>=3.4",
-    "wheel",
-    "oldest-supported-numpy",
-]
 build-backend = 'setuptools.build_meta'
+requires = [
+  "oldest-supported-numpy",
+  "setuptools>=60",
+  "setuptools_scm[toml]>=3.4",
+  "wheel",
+]
 
 [tool.setuptools_scm]
 write_to = "asdf_astropy/_version.py"
