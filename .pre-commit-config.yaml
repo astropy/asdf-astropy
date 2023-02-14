@@ -39,6 +39,11 @@ repos:
       additional_dependencies:
         - tomli
 
+- repo: https://github.com/ikamensh/flynt/
+  rev: '0.77'
+  hooks:
+    - id: flynt
+
 - repo: https://github.com/charliermarsh/ruff-pre-commit
   rev: "v0.0.246"
   hooks:
