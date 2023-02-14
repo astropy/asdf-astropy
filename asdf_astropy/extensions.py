@@ -531,7 +531,7 @@ CORE_EXTENSIONS = [
         [
             ManifestExtension.from_uri(u, converters=CORE_CONVERTERS),
             ManifestExtension.from_uri("asdf://astropy.org/astropy/manifests/units-1.0.0", converters=UNIT_CONVETERS),
-        ]
+        ],
     )
     for u in CORE_MANIFEST_URIS
 ]
