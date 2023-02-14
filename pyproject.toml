@@ -15,12 +15,12 @@ classifiers = [
 ]
 dependencies = [
     'astropy >=5.0.4',
-    'asdf >=2.8.0',
-    'numpy',
-    'asdf-coordinates-schemas',
+    'asdf >=2.13.0',
+    'numpy >=1.20',
+    'asdf-coordinates-schemas >=0.1.0',
     'asdf-transform-schemas >=0.2.2',
     'importlib_resources >=3; python_version <"3.9"',
-    'packaging >=16.0',
+    'packaging >=19.0',
 ]
 dynamic = ['version']
 
