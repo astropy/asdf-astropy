@@ -1,3 +1,8 @@
+0.4.0 (unreleased)
+------------------
+
+- Update pins for ``asdf``, ``asdf-coordinates-schemas``, ``numpy``, and ``packaging``. [#164]
+
 0.3.0 (2022-11-29)
 ------------------
 

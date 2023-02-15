@@ -73,8 +73,37 @@ jobs:
         - linux: py310-test
         - macos: py39-test
         - windows: py39-test
+
+  dev:
+    needs: [core, asdf-schemas]
+    uses: OpenAstronomy/github-actions-workflows/.github/workflows/tox.yml@v1
+    with:
+      cache-path: ~/.cache/pip
+      cache-key: pip-${{ needs.setup.outputs.requirements-hash }}
+      cache-restore-keys: |
+        pip-
+      # Any env name which does not start with `pyXY` will use this Python version.
+      default_python: '3.9'
+      envs: |
+        - linux: py38-test-devdeps
+        - linux: py39-test-devdeps
+        - linux: py310-test-devdeps
         - linux: py311-test-devdeps
-          python-version: 3.11.0
+
+  oldest:
+    needs: [core, asdf-schemas]
+    uses: OpenAstronomy/github-actions-workflows/.github/workflows/tox.yml@v1
+    with:
+      cache-path: ~/.cache/pip
+      cache-key: pip-${{ needs.setup.outputs.requirements-hash }}
+      cache-restore-keys: |
+        pip-
+      # Any env name which does not start with `pyXY` will use this Python version.
+      default_python: '3.9'
+      envs: |
+        - linux: py38-test-oldestdeps-cov
+        - linux: py39-test-oldestdeps-cov
+      coverage: codecov
 
   numpy:
     needs: [core, asdf-schemas]
