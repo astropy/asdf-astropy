@@ -39,11 +39,10 @@ repos:
       additional_dependencies:
         - tomli
 
-- repo: https://github.com/asottile/pyupgrade
-  rev: v3.3.1
+- repo: https://github.com/ikamensh/flynt/
+  rev: '0.77'
   hooks:
-    - id: pyupgrade
-      args: ["--py38-plus"]
+    - id: flynt
 
 - repo: https://github.com/charliermarsh/ruff-pre-commit
   rev: "v0.0.246"
@@ -66,8 +65,12 @@ repos:
   hooks:
     - id: blacken-docs
 
-- repo: https://github.com/PyCQA/bandit
-  rev: 1.7.4
+- repo: https://github.com/tox-dev/pyproject-fmt
+  rev: "0.6.0"
   hooks:
-    - id: bandit
-      args: ["-c", "bandit.yaml"]
+    - id: pyproject-fmt
+
+- repo: https://github.com/abravalheri/validate-pyproject
+  rev: "v0.12.1"
+  hooks:
+    - id: validate-pyproject
