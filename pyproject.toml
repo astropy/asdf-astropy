@@ -1,5 +1,5 @@
 [project]
-name = "asdf_astropy"
+name = "asdf-astropy"
 description = "ASDF serialization support for astropy"
 readme = 'README.rst'
 license = { file = 'LICENSE.rst' }
@@ -41,16 +41,13 @@ test = [
   "pytest-astropy",
   "scipy",
 ]
-
 [project.urls]
 'documentation' = 'https://asdf-astropy.readthedocs.io/en/latest/'
 'repository' = 'https://github.com/astropy/asdf-astropy'
 'tracker' = 'https://github.com/astropy/asdf-astropy/issues'
-
 [project.entry-points]
 'asdf.extensions' = {asdf-astropy = 'asdf_astropy.integration:get_extensions'}
 'asdf.resource_mappings' = {asdf-astropy = 'asdf_astropy.integration:get_resource_mappings'}
-
 
 [build-system]
 build-backend = 'setuptools.build_meta'
@@ -61,14 +58,32 @@ requires = [
   "wheel",
 ]
 
-[tool.setuptools_scm]
-write_to = "asdf_astropy/_version.py"
-
 [tool.setuptools]
 packages = ["asdf_astropy", "asdf_astropy.resources"]
 
 [tool.setuptools.package-data]
 "asdf_astropy.resources" = ["asdf_astropy/resources/**/**/*.yaml"]
+
+[tool.setuptools_scm]
+write_to = "asdf_astropy/_version.py"
+
+[tool.black]
+line-length = 120
+force-exclude = '''
+^/(
+  (
+      \.eggs
+    | \.git
+    | \.pytest_cache
+    | \.tox
+  )/
+)
+'''
+
+[tool.isort]
+profile = "black"
+filter_files = true
+line_length = 120
 
 [tool.pytest.ini_options]
 testpaths = ['asdf_astropy', 'docs']
@@ -117,24 +132,6 @@ exclude_lines = [
     # Don't complain about IPython completion helper
     'def _ipython_key_completions_',
 ]
-
-[tool.black]
-line-length = 120
-force-exclude = '''
-^/(
-  (
-      \.eggs
-    | \.git
-    | \.pytest_cache
-    | \.tox
-  )/
-)
-'''
-
-[tool.isort]
-profile = "black"
-filter_files = true
-line_length = 120
 
 [tool.ruff]
 target-version = "py38"
