@@ -1,0 +1,18 @@
+%YAML 1.1
+---
+$schema: "http://stsci.edu/schemas/yaml-schema/draft-01"
+id: "http://astropy.org/schemas/astropy/units/magunit-1.0.0"
+
+title: |
+  Represents a Magnitude Unit
+
+description: |
+  Represents the serialization of the MagUnit units built into
+  astropy.
+
+type: object
+properties:
+  unit:
+    oneOf:
+      - tag: "tag:stsci.edu:asdf/unit/unit-1.0.0"
+      - tag: "tag:astropy.org:astropy/units/unit-1.0.0"

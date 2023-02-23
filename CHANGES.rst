@@ -3,6 +3,7 @@
 
 - Update pins for ``asdf``, ``asdf-coordinates-schemas``, ``numpy``, and ``packaging``. [#164]
 - Add serialization support for non-VOunits. [#142]
+- Add serialization support for ``MagUnit`` based units. [#146]
 
 0.3.0 (2022-11-29)
 ------------------

@@ -17,3 +17,9 @@ tags:
     description: |-
       Supports serialization of equivalencies between units
       in certain contexts
+  - tag_uri: tag:astropy.org:astropy/units/magunit-1.0.0
+    schema_uri: http://astropy.org/schemas/astropy/units/magunit-1.0.0
+    title: Represents a Magnitude Unit
+    description: |-
+      Represents the serialization of the MagUnit units built into
+      astropy.

@@ -29,6 +29,7 @@ from .converters.transform.rotations import Rotate3DConverter, RotationSequenceC
 from .converters.transform.spline import SplineConverter
 from .converters.transform.tabular import TabularConverter
 from .converters.unit.equivalency import EquivalencyConverter
+from .converters.unit.magunit import MagUnitConverter
 from .converters.unit.quantity import QuantityConverter
 from .converters.unit.unit import UnitConverter
 
@@ -512,6 +513,7 @@ CORE_CONVERTERS = [
 UNIT_CONVETERS = [
     UnitConverter(),
     EquivalencyConverter(),
+    MagUnitConverter(),
 ]
 
 
