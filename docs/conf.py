@@ -80,8 +80,9 @@ copyright = f"{datetime.datetime.now().year}, {configuration['authors'][0]}"
 # |version| and |release|, also used in various other places throughout the
 # built documents.
 
-import_module(configuration["name"])
-package = sys.modules[configuration["name"]]
+module_name = project.replace("-", "_")
+import_module(module_name)
+package = sys.modules[module_name]
 
 # The short X.Y version.
 version = package.__version__.split("-", 1)[0]
