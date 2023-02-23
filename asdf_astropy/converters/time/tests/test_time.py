@@ -4,6 +4,7 @@ from datetime import datetime
 import asdf
 import numpy as np
 import pytest
+from asdf.testing.helpers import yaml_to_asdf
 from astropy import units as u
 from astropy.coordinates import EarthLocation
 from astropy.time import Time
@@ -110,7 +111,7 @@ def create_examples():
 
 @pytest.mark.parametrize("example", create_examples())
 def test_read_examples(example):
-    buff = asdf.tests.helpers.yaml_to_asdf(f"example: {example['example'].strip()}")
+    buff = yaml_to_asdf(f"example: {example['example'].strip()}")
     with asdf.AsdfFile() as af:
         af._open_impl(af, buff, mode="rw")
         assert np.all(af["example"] == example["truth"])

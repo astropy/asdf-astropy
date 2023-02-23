@@ -2,7 +2,7 @@ import warnings
 
 import asdf
 import pytest
-from asdf.tests import helpers
+from asdf.testing import helpers
 from astropy import units
 
 

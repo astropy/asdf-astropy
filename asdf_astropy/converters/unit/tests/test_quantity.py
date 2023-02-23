@@ -1,7 +1,7 @@
 import asdf
 import numpy as np
 import pytest
-from asdf.tests import helpers
+from asdf.testing import helpers
 from astropy import units
 from astropy.units import Quantity
 from numpy.testing import assert_array_equal

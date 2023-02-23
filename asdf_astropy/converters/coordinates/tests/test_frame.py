@@ -3,6 +3,7 @@ import unittest.mock as mk
 import asdf
 import numpy as np
 import pytest
+from asdf.testing.helpers import yaml_to_asdf
 from astropy import units as u
 from astropy.coordinates import (
     CIRS,
@@ -114,7 +115,7 @@ def test_legacy_icrs_deseialize():
       unit: deg"""
     truth = ICRS(ra=Longitude(25, unit=u.deg), dec=Latitude(45, unit=u.deg))
 
-    buff = asdf.tests.helpers.yaml_to_asdf(f"example: {example.strip()}")
+    buff = yaml_to_asdf(f"example: {example.strip()}")
     with asdf.AsdfFile() as af:
         af._open_impl(af, buff, mode="rw")
         assert_frame_equal(af["example"], truth)

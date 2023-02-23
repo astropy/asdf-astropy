@@ -2,7 +2,7 @@ import asdf
 import astropy.units as u
 import numpy as np
 import pytest
-from asdf.tests.helpers import yaml_to_asdf
+from asdf.testing.helpers import yaml_to_asdf
 from astropy.coordinates import EarthLocation, SkyCoord
 from astropy.table import Column, MaskedColumn, NdarrayMixin, QTable, Table
 from astropy.time import Time, TimeDelta
