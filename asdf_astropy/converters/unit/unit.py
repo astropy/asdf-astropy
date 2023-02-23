@@ -1,8 +1,13 @@
+import warnings
+
 from asdf.extension import Converter
 
 
 class UnitConverter(Converter):
-    tags = ["tag:stsci.edu:asdf/unit/unit-*"]
+    tags = [
+        "tag:stsci.edu:asdf/unit/unit-*",
+        "tag:astropy.org:astropy/units/unit-*",
+    ]
 
     types = [
         "astropy.units.core.CompositeUnit",
@@ -16,16 +21,30 @@ class UnitConverter(Converter):
         "astropy.units.function.mixin.RegularFunctionUnit",
     ]
 
-    def to_yaml_tree(self, obj, tag, ctx):
-        from astropy.units import UnitsError
+    def select_tag(self, obj, tags, ctx):
+        from astropy.units import UnitsError, UnitsWarning
 
-        try:
+        with warnings.catch_warnings():
+            warnings.simplefilter("ignore", category=UnitsWarning)
+
+            try:
+                obj.to_string(format="vounit")
+            except (UnitsError, ValueError):
+                return next(t for t in tags if "astropy.org" in t)
+
+            return next(t for t in tags if "stsci.edu" in t)
+
+    def to_yaml_tree(self, obj, tag, ctx):
+        if "stsci.edu" in tag:
             return obj.to_string(format="vounit")
-        except (UnitsError, ValueError) as e:
-            msg = f"Unit '{obj}' is not representable as VOUnit and cannot be serialized to ASDF"
-            raise ValueError(msg) from e
+
+        return obj.to_string()
 
     def from_yaml_tree(self, node, tag, ctx):
         from astropy.units import Unit
 
-        return Unit(node, format="vounit", parse_strict="silent")
+        kwargs = {"parse_strict": "silent"}
+        if "stsci.edu" in tag:
+            kwargs["format"] = "vounit"
+
+        return Unit(node, **kwargs)
