@@ -43,6 +43,28 @@ def assert_table_roundtrip(table, tmp_path):
     return helpers.assert_table_roundtrip(table, tmp_path)
 
 
+def test_deprecations(tmp_path):
+    rows = [(1, 2.0, "x"), (4, 5.0, "y"), (5, 8.2, "z")]
+
+    table = Table(rows=rows, names=("a", "b", "c"), dtype=("i4", "f8", "S1"))
+    table.columns["a"].description = "RA"
+    table.columns["a"].unit = "degree"
+    table.columns["a"].meta = {"foo": "bar"}
+    table.columns["c"].description = "Some description of some sort"
+
+    # Test assert_description_equal deprecation
+    with pytest.warns(DeprecationWarning, match=".*assert_description_equal.*"):
+        assert_description_equal("a", "a")
+
+    # Test assert_table_equal deprecation
+    with pytest.warns(DeprecationWarning, match=".*assert_table_equal.*"):
+        assert_table_equal(table, table)
+
+    # Test assert_table_roundtrip deprecation
+    with pytest.warns(DeprecationWarning, match=".*assert_table_roundtrip.*"):
+        assert_table_roundtrip(table, tmp_path)
+
+
 def test_table(tmp_path):
     rows = [(1, 2.0, "x"), (4, 5.0, "y"), (5, 8.2, "z")]
 

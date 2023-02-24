@@ -34,7 +34,19 @@ def assert_model_roundtrip(model, tmp_path, version=None):
     )
     warnings.warn(message, DeprecationWarning)
 
-    return helpers.assert_bounding_box_roundtrip(model, tmp_path, version=version)
+    return helpers.assert_model_roundtrip(model, tmp_path, version=version)
+
+
+def test_deprecations(tmp_path):
+    # Test assert_bounding_box_roundtrip deprecation
+    bbox = ModelBoundingBox((0, 1), astropy_models.Polynomial1D(1))
+    with pytest.warns(DeprecationWarning, match=".*assert_bounding_box_roundtrip.*"):
+        assert_bounding_box_roundtrip(bbox, tmp_path)
+
+    # Test assert_model_roundtrip deprecation
+    model = astropy_models.Gaussian2D()
+    with pytest.warns(DeprecationWarning, match=".*assert_model_roundtrip.*"):
+        assert_model_roundtrip(model, tmp_path)
 
 
 def create_bounding_boxes():
