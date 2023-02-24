@@ -68,11 +68,12 @@ jobs:
       cache-restore-keys: |
         pip-
       # Any env name which does not start with `pyXY` will use this Python version.
-      default_python: '3.9'
+      default_python: '3.10'
       envs: |
         - linux: py310-test-parallel
-        - macos: py39-test-parallel
-        - windows: py39-test-parallel
+        - linux: py311-test-parallel
+        - macos: py311-test-parallel
+        - windows: py311-test-parallel
 
   dev:
     needs: [core, asdf-schemas]
@@ -86,7 +87,6 @@ jobs:
       default_python: '3.9'
       envs: |
         - linux: py38-test-devdeps-parallel
-        - linux: py39-test-devdeps-parallel
         - linux: py310-test-devdeps-parallel
         - linux: py311-test-devdeps-parallel
 
@@ -118,8 +118,10 @@ jobs:
       envs: |
         - linux: py39-test-numpy119-parallel
         - linux: py39-test-numpy120-parallel
-        - linux: py39-test-numpy121-parallel
-        - linux: py39-test-numpy122-parallel
+        - linux: py310-test-numpy121-parallel
+        - linux: py310-test-numpy122-parallel
+        - linux: py311-test-numpy123-parallel
+        - linux: py311-test-numpy124-parallel
 
   wheel_building:
     permissions:
