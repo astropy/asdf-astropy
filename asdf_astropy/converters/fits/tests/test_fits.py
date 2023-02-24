@@ -1,7 +1,7 @@
 import asdf
 import numpy as np
 import pytest
-from asdf.tests.helpers import yaml_to_asdf
+from asdf.testing.helpers import yaml_to_asdf
 from astropy.io import fits
 from numpy.testing import assert_array_equal
 

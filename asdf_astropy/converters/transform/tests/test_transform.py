@@ -6,7 +6,7 @@ import astropy
 import astropy.modeling
 import numpy as np
 import pytest
-from asdf.tests.helpers import yaml_to_asdf
+from asdf.testing.helpers import yaml_to_asdf
 from astropy import units as u
 from astropy.modeling import models as astropy_models
 from astropy.modeling.bounding_box import CompoundBoundingBox, ModelBoundingBox
