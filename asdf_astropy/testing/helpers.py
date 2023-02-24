@@ -1,13 +1,22 @@
-from numpy.testing import assert_array_almost_equal, assert_array_equal
+"""
+Helpers for testing astropy objects in ASDF files.
+"""
+from numpy import testing
 
 
 def assert_earth_location_equal(a, b):
+    """
+    Assert earth location objects are equal.
+    """
     __tracebackhide__ = True
 
     assert (a == b).all()
 
 
 def assert_representation_equal(a, b):
+    """
+    Assert representation objects are equal.
+    """
     from astropy import units
 
     __tracebackhide__ = True
@@ -19,6 +28,9 @@ def assert_representation_equal(a, b):
 
 
 def assert_sky_coord_equal(a, b):
+    """
+    Assert sky coordinate objects are equal.
+    """
     __tracebackhide__ = True
 
     assert a.is_equivalent_frame(b)
@@ -29,6 +41,9 @@ def assert_sky_coord_equal(a, b):
 
 
 def assert_frame_equal(a, b):
+    """
+    Assert frame objects are equal.
+    """
     __tracebackhide__ = True
 
     assert type(a) is type(b)
@@ -44,6 +59,9 @@ def assert_frame_equal(a, b):
 
 
 def assert_spectral_coord_equal(a, b):
+    """
+    Assert spectral coordinate objects are equal.
+    """
     from astropy.tests.helper import assert_quantity_allclose
 
     __tracebackhide__ = True
@@ -55,6 +73,9 @@ def assert_spectral_coord_equal(a, b):
 
 
 def assert_time_equal(a, b):
+    """
+    Assert time objects are equal
+    """
     from astropy.coordinates import EarthLocation
 
     assert a.format == b.format
@@ -67,64 +88,36 @@ def assert_time_equal(a, b):
         assert a.location == b.location
 
     if a.format == "plot_date":
-        assert_array_almost_equal(a.value, b.value)
+        testing.assert_array_almost_equal(a.value, b.value)
     else:
-        assert_array_equal(a, b)
+        testing.assert_array_equal(a, b)
 
 
 def assert_time_delta_equal(a, b):
-    assert_array_equal(a.jd, b.jd)
-    assert_array_equal(a.jd2, b.jd2)
-    assert_array_equal(a.sec, b.sec)
+    """
+    Assert time delta objects are equal
+    """
+    testing.assert_array_equal(a.jd, b.jd)
+    testing.assert_array_equal(a.jd2, b.jd2)
+    testing.assert_array_equal(a.sec, b.sec)
 
 
 def assert_hdu_list_equal(a, b):
+    """
+    Assert fits hdulists are equal.
+    """
     assert len(a) == len(b)
     for hdu_a, hdu_b in zip(a, b):
-        assert_array_equal(hdu_a.data, hdu_b.data)
+        testing.assert_array_equal(hdu_a.data, hdu_b.data)
         assert len(hdu_a.header.cards) == len(hdu_b.header.cards)
         for card_a, card_b in zip(hdu_a.header.cards, hdu_b.header.cards):
             assert tuple(card_a) == tuple(card_b)
 
 
-def assert_model_equal(a, b):
-    """
-    Assert that two model instances are equivalent.
-    """
-    if a is None and b is None:
-        return
-
-    assert a.__class__ == b.__class__
-
-    assert a.name == b.name
-    assert a.inputs == b.inputs
-    assert a.input_units == b.input_units
-    assert a.outputs == b.outputs
-    assert a.input_units_allow_dimensionless == b.input_units_allow_dimensionless
-    assert a.input_units_equivalencies == b.input_units_equivalencies
-
-    assert_array_equal(a.parameters, b.parameters)
-
-    assert a._user_bounding_box == b._user_bounding_box
-    try:
-        a_bounding_box = a.bounding_box
-    except NotImplementedError:
-        a_bounding_box = None
-
-    try:
-        b_bounding_box = b.bounding_box
-    except NotImplementedError:
-        b_bounding_box = None
-
-    assert a_bounding_box == b_bounding_box
-
-    assert a.fixed == b.fixed
-    assert a.bounds == b.bounds
-
-    assert_model_equal(a._user_inverse, b._user_inverse)
-
-
 def assert_description_equal(a, b):
+    """
+    Assert table descriptions are equal.
+    """
     if a in ("", None) and b in ("", None):
         return
 
@@ -132,6 +125,9 @@ def assert_description_equal(a, b):
 
 
 def assert_table_equal(a, b):
+    """
+    Assert astropy tables are equal.
+    """
     from astropy.table import Column, MaskedColumn
 
     assert type(a) == type(b)
@@ -139,7 +135,7 @@ def assert_table_equal(a, b):
 
     assert len(a) == len(b)
     for row_a, row_b in zip(a, b):
-        assert_array_equal(row_a, row_b)
+        testing.assert_array_equal(row_a, row_b)
 
     assert a.colnames == b.colnames
     for column_name in a.colnames:
@@ -149,8 +145,8 @@ def assert_table_equal(a, b):
             assert_description_equal(col_a.description, col_b.description)
             assert col_a.unit == col_b.unit
             assert col_a.meta == col_b.meta
-            assert_array_equal(col_a.data, col_b.data)
-            assert_array_equal(
+            testing.assert_array_equal(col_a.data, col_b.data)
+            testing.assert_array_equal(
                 getattr(col_a, "mask", [False] * len(col_a)),
                 getattr(col_b, "mask", [False] * len(col_b)),
             )
@@ -171,6 +167,43 @@ def assert_table_roundtrip(table, tmp_path):
     with asdf.open(file_path) as af:
         assert_table_equal(table, af["table"])
         return af["table"]
+
+
+def assert_model_equal(a, b):
+    """
+    Assert that two model instances are equivalent.
+    """
+    if a is None and b is None:
+        return
+
+    assert a.__class__ == b.__class__
+
+    assert a.name == b.name
+    assert a.inputs == b.inputs
+    assert a.input_units == b.input_units
+    assert a.outputs == b.outputs
+    assert a.input_units_allow_dimensionless == b.input_units_allow_dimensionless
+    assert a.input_units_equivalencies == b.input_units_equivalencies
+
+    testing.assert_array_equal(a.parameters, b.parameters)
+
+    assert a._user_bounding_box == b._user_bounding_box
+    try:
+        a_bounding_box = a.bounding_box
+    except NotImplementedError:
+        a_bounding_box = None
+
+    try:
+        b_bounding_box = b.bounding_box
+    except NotImplementedError:
+        b_bounding_box = None
+
+    assert a_bounding_box == b_bounding_box
+
+    assert a.fixed == b.fixed
+    assert a.bounds == b.bounds
+
+    assert_model_equal(a._user_inverse, b._user_inverse)
 
 
 def assert_bounding_box_roundtrip(bounding_box, tmp_path, version=None):
