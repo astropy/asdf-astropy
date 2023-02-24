@@ -173,14 +173,14 @@ def assert_table_roundtrip(table, tmp_path):
         return af["table"]
 
 
-def assert_bounding_box_roundtrip(bounding_box, tmpdir, version=None):
+def assert_bounding_box_roundtrip(bounding_box, tmp_path, version=None):
     """
     Assert that a bounding_box can be written to an ASDF file and read back
     in without losing any of its essential properties.
     """
     import asdf
 
-    path = str(tmpdir / "test.asdf")
+    path = str(tmp_path / "test.asdf")
 
     with asdf.AsdfFile({"bounding_box": bounding_box}, version=version) as af:
         af.write_to(path)
@@ -189,14 +189,14 @@ def assert_bounding_box_roundtrip(bounding_box, tmpdir, version=None):
         assert bounding_box == af["bounding_box"](bounding_box._model)
 
 
-def assert_model_roundtrip(model, tmpdir, version=None):
+def assert_model_roundtrip(model, tmp_path, version=None):
     """
     Assert that a model can be written to an ASDF file and read back
     in without losing any of its essential properties.
     """
     import asdf
 
-    path = str(tmpdir / "test.asdf")
+    path = str(tmp_path / "test.asdf")
 
     with asdf.AsdfFile({"model": model}, version=version) as af:
         af.write_to(path)
