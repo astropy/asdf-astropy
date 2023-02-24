@@ -37,11 +37,11 @@ jobs:
       # Any env name which does not start with `pyXY` will use this Python version.
       default_python: '3.9'
       envs: |
-        - linux: py39-cov
-        - linux: py39-test-devdeps-cov
-        - linux: py38-test-cov
-        - linux: py39-astropylts-cov
-        - linux: py39-transformlts-cov
+        - linux: py39-parallel-cov
+        - linux: py39-test-devdeps-parallel-cov
+        - linux: py38-test-parallel-cov
+        - linux: py39-astropylts-parallel-cov
+        - linux: py39-transformlts-parallel-cov
       coverage: codecov
 
   asdf-schemas:
@@ -70,9 +70,9 @@ jobs:
       # Any env name which does not start with `pyXY` will use this Python version.
       default_python: '3.9'
       envs: |
-        - linux: py310-test
-        - macos: py39-test
-        - windows: py39-test
+        - linux: py310-test-parallel
+        - macos: py39-test-parallel
+        - windows: py39-test-parallel
 
   dev:
     needs: [core, asdf-schemas]
@@ -85,10 +85,10 @@ jobs:
       # Any env name which does not start with `pyXY` will use this Python version.
       default_python: '3.9'
       envs: |
-        - linux: py38-test-devdeps
-        - linux: py39-test-devdeps
-        - linux: py310-test-devdeps
-        - linux: py311-test-devdeps
+        - linux: py38-test-devdeps-parallel
+        - linux: py39-test-devdeps-parallel
+        - linux: py310-test-devdeps-parallel
+        - linux: py311-test-devdeps-parallel
 
   oldest:
     needs: [core, asdf-schemas]
@@ -101,8 +101,8 @@ jobs:
       # Any env name which does not start with `pyXY` will use this Python version.
       default_python: '3.9'
       envs: |
-        - linux: py38-test-oldestdeps-cov
-        - linux: py39-test-oldestdeps-cov
+        - linux: py38-test-oldestdeps-parallel-cov
+        - linux: py39-test-oldestdep-parallels-cov
       coverage: codecov
 
   numpy:
@@ -116,13 +116,12 @@ jobs:
       # Any env name which does not start with `pyXY` will use this Python version.
       default_python: '3.9'
       envs: |
-        - linux: py39-test-numpy119
-        - linux: py39-test-numpy120
-        - linux: py39-test-numpy121
-        - linux: py39-test-numpy122
+        - linux: py39-test-numpy119-parallel
+        - linux: py39-test-numpy120-parallel
+        - linux: py39-test-numpy121-parallel
+        - linux: py39-test-numpy122-parallel
 
   wheel_building:
-    needs: [core, asdf-schemas]
     permissions:
       contents: none
     uses: OpenAstronomy/github-actions-workflows/.github/workflows/publish_pure_python.yml@v1
