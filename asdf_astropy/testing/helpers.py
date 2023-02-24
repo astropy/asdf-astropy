@@ -122,3 +122,52 @@ def assert_model_equal(a, b):
     assert a.bounds == b.bounds
 
     assert_model_equal(a._user_inverse, b._user_inverse)
+
+
+def assert_description_equal(a, b):
+    if a in ("", None) and b in ("", None):
+        return
+
+    assert a == b
+
+
+def assert_table_equal(a, b):
+    from astropy.table import Column, MaskedColumn
+
+    assert type(a) == type(b)
+    assert a.meta == b.meta
+
+    assert len(a) == len(b)
+    for row_a, row_b in zip(a, b):
+        assert_array_equal(row_a, row_b)
+
+    assert a.colnames == b.colnames
+    for column_name in a.colnames:
+        col_a = a[column_name]
+        col_b = b[column_name]
+        if isinstance(col_a, (Column, MaskedColumn)) and isinstance(col_b, (Column, MaskedColumn)):
+            assert_description_equal(col_a.description, col_b.description)
+            assert col_a.unit == col_b.unit
+            assert col_a.meta == col_b.meta
+            assert_array_equal(col_a.data, col_b.data)
+            assert_array_equal(
+                getattr(col_a, "mask", [False] * len(col_a)),
+                getattr(col_b, "mask", [False] * len(col_b)),
+            )
+
+
+def assert_table_roundtrip(table, tmp_path):
+    """
+    Assert that a table can be written to an ASDF file and read back
+    in without losing any of its essential properties.
+    """
+    import asdf
+
+    file_path = tmp_path / "testable.asdf"
+
+    with asdf.AsdfFile({"table": table}) as af:
+        af.write_to(file_path)
+
+    with asdf.open(file_path) as af:
+        assert_table_equal(table, af["table"])
+        return af["table"]

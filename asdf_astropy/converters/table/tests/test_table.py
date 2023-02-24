@@ -1,64 +1,46 @@
+import warnings
+
 import asdf
 import astropy.units as u
 import numpy as np
 import pytest
 from asdf.testing.helpers import yaml_to_asdf
 from astropy.coordinates import EarthLocation, SkyCoord
-from astropy.table import Column, MaskedColumn, NdarrayMixin, QTable, Table
+from astropy.table import NdarrayMixin, QTable, Table
 from astropy.time import Time, TimeDelta
 from numpy.testing import assert_array_equal
 
-from asdf_astropy.testing.helpers import (
-    assert_earth_location_equal,
-    assert_sky_coord_equal,
-    assert_time_delta_equal,
-    assert_time_equal,
-)
+from asdf_astropy.testing import helpers
 
 
 def assert_description_equal(a, b):
-    if a in ("", None) and b in ("", None):
-        return
+    message = (
+        "asdf_astropy.converters.table.tests.test_table.assert_description_equal is deprecated."
+        "Use asdf_astropy.testing.helpers.assert_description_equal instead."
+    )
+    warnings.warn(message, DeprecationWarning)
 
-    assert a == b
+    return helpers.assert_description_equal(a, b)
 
 
 def assert_table_equal(a, b):
-    assert type(a) == type(b)
-    assert a.meta == b.meta
+    message = (
+        "asdf_astropy.converters.table.tests.test_table.assert_table_equal is deprecated."
+        "Use asdf_astropy.testing.helpers.assert_table_equal instead."
+    )
+    warnings.warn(message, DeprecationWarning)
 
-    assert len(a) == len(b)
-    for row_a, row_b in zip(a, b):
-        assert_array_equal(row_a, row_b)
-
-    assert a.colnames == b.colnames
-    for column_name in a.colnames:
-        col_a = a[column_name]
-        col_b = b[column_name]
-        if isinstance(col_a, (Column, MaskedColumn)) and isinstance(col_b, (Column, MaskedColumn)):
-            assert_description_equal(col_a.description, col_b.description)
-            assert col_a.unit == col_b.unit
-            assert col_a.meta == col_b.meta
-            assert_array_equal(col_a.data, col_b.data)
-            assert_array_equal(
-                getattr(col_a, "mask", [False] * len(col_a)),
-                getattr(col_b, "mask", [False] * len(col_b)),
-            )
+    return helpers.assert_table_equal(a, b)
 
 
 def assert_table_roundtrip(table, tmp_path):
-    """
-    Assert that a table can be written to an ASDF file and read back
-    in without losing any of its essential properties.
-    """
-    file_path = tmp_path / "testable.asdf"
+    message = (
+        "asdf_astropy.converters.table.tests.test_table.assert_table_roundtrip is deprecated."
+        "Use asdf_astropy.testing.helpers.assert_table_roundtrip instead."
+    )
+    warnings.warn(message, DeprecationWarning)
 
-    with asdf.AsdfFile({"table": table}) as af:
-        af.write_to(file_path)
-
-    with asdf.open(file_path) as af:
-        assert_table_equal(table, af["table"])
-        return af["table"]
+    return helpers.assert_table_roundtrip(table, tmp_path)
 
 
 def test_table(tmp_path):
@@ -70,7 +52,7 @@ def test_table(tmp_path):
     table.columns["a"].meta = {"foo": "bar"}
     table.columns["c"].description = "Some description of some sort"
 
-    assert_table_roundtrip(table, tmp_path)
+    helpers.assert_table_roundtrip(table, tmp_path)
 
 
 def test_array_columns(tmp_path):
@@ -81,7 +63,7 @@ def test_array_columns(tmp_path):
 
     table = Table(data, copy=False)
 
-    assert_table_roundtrip(table, tmp_path)
+    helpers.assert_table_roundtrip(table, tmp_path)
 
 
 def test_structured_array_columns(tmp_path):
@@ -92,7 +74,7 @@ def test_structured_array_columns(tmp_path):
 
     table = Table(rows, copy=False)
 
-    assert_table_roundtrip(table, tmp_path)
+    helpers.assert_table_roundtrip(table, tmp_path)
 
 
 def test_table_row_order(tmp_path):
@@ -104,7 +86,7 @@ def test_table_row_order(tmp_path):
     table.columns["a"].meta = {"foo": "bar"}
     table.columns["c"].description = "Some description of some sort"
 
-    assert_table_roundtrip(table, tmp_path)
+    helpers.assert_table_roundtrip(table, tmp_path)
 
 
 def test_table_inline(tmp_path):
@@ -117,7 +99,7 @@ def test_table_inline(tmp_path):
 
     with asdf.config_context() as config:
         config.array_inline_threshold = 64
-        assert_table_roundtrip(table, tmp_path)
+        helpers.assert_table_roundtrip(table, tmp_path)
 
 
 def test_mismatched_columns():
@@ -150,7 +132,7 @@ def test_masked_table(tmp_path):
     table.columns["a"].mask = [True, False, True]
     table.columns["c"].description = "Some description of some sort"
 
-    assert_table_roundtrip(table, tmp_path)
+    helpers.assert_table_roundtrip(table, tmp_path)
 
 
 def test_quantity_mixin(tmp_path):
@@ -159,7 +141,7 @@ def test_quantity_mixin(tmp_path):
     table["b"] = ["x", "y", "z"]
     table["c"] = [2.0, 5.0, 8.2] * u.m
 
-    assert_table_roundtrip(table, tmp_path)
+    helpers.assert_table_roundtrip(table, tmp_path)
 
 
 def test_time_mixin(tmp_path):
@@ -168,8 +150,8 @@ def test_time_mixin(tmp_path):
     table["b"] = ["x", "y"]
     table["c"] = Time(["2001-01-02T12:34:56", "2001-02-03T00:01:02"])
 
-    result = assert_table_roundtrip(table, tmp_path)
-    assert_time_equal(result["c"], table["c"])
+    result = helpers.assert_table_roundtrip(table, tmp_path)
+    helpers.assert_time_equal(result["c"], table["c"])
 
 
 def test_timedelta_mixin(tmp_path):
@@ -178,8 +160,8 @@ def test_timedelta_mixin(tmp_path):
     table["b"] = ["x", "y"]
     table["c"] = TimeDelta([1, 2] * u.day)
 
-    result = assert_table_roundtrip(table, tmp_path)
-    assert_time_delta_equal(result["c"], table["c"])
+    result = helpers.assert_table_roundtrip(table, tmp_path)
+    helpers.assert_time_delta_equal(result["c"], table["c"])
 
 
 def test_skycoord_mixin(tmp_path):
@@ -196,7 +178,7 @@ def test_skycoord_mixin(tmp_path):
         af.write_to(file_path)
 
     with asdf.open(file_path) as af:
-        assert_sky_coord_equal(af["table"]["c"], table["c"])
+        helpers.assert_sky_coord_equal(af["table"]["c"], table["c"])
 
 
 def test_earthlocation_mixin(tmp_path):
@@ -205,8 +187,8 @@ def test_earthlocation_mixin(tmp_path):
     table["b"] = ["x", "y"]
     table["c"] = EarthLocation(x=[1, 2] * u.km, y=[3, 4] * u.km, z=[5, 6] * u.km)
 
-    result = assert_table_roundtrip(table, tmp_path)
-    assert_earth_location_equal(result["c"], table["c"])
+    result = helpers.assert_table_roundtrip(table, tmp_path)
+    helpers.assert_earth_location_equal(result["c"], table["c"])
 
 
 def test_ndarray_mixin(tmp_path):
@@ -215,7 +197,7 @@ def test_ndarray_mixin(tmp_path):
     table["b"] = ["x", "y"]
     table["c"] = NdarrayMixin([5, 6])
 
-    assert_table_roundtrip(table, tmp_path)
+    helpers.assert_table_roundtrip(table, tmp_path)
 
 
 def test_asdf_table():
