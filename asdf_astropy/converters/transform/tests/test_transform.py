@@ -1,5 +1,6 @@
 import itertools
 import unittest.mock as mk
+import warnings
 
 import asdf
 import astropy
@@ -13,21 +14,43 @@ from astropy.modeling.bounding_box import CompoundBoundingBox, ModelBoundingBox
 from astropy.utils import minversion
 
 from asdf_astropy import integration
-from asdf_astropy.testing.helpers import assert_model_equal
+from asdf_astropy.testing import helpers
 
 
-def assert_bounding_box_roundtrip(bounding_box, tmpdir, version=None):
-    """
-    Assert that a bounding_box can be written to an ASDF file and read back
-    in without losing any of its essential properties.
-    """
-    path = str(tmpdir / "test.asdf")
+def assert_bounding_box_roundtrip(bounding_box, tmp_path, version=None):
+    message = (
+        "asdf_astropy.converters.transforms.tests.test_transform.assert_bounding_box_round_trip is deprecated."
+        "Use asdf_astropy.testing.helpers.assert_bounding_box_roundtrip instead."
+    )
+    warnings.warn(message, DeprecationWarning)
 
-    with asdf.AsdfFile({"bounding_box": bounding_box}, version=version) as af:
-        af.write_to(path)
+    return helpers.assert_bounding_box_roundtrip(bounding_box, tmp_path, version=version)
 
-    with asdf.open(path) as af:
-        assert bounding_box == af["bounding_box"](bounding_box._model)
+
+def assert_model_roundtrip(model, tmp_path, version=None):
+    message = (
+        "asdf_astropy.converters.transforms.tests.test_transform.assert_model_round_trip is deprecated."
+        "Use asdf_astropy.testing.helpers.assert_model_roundtrip instead."
+    )
+    warnings.warn(message, DeprecationWarning)
+
+    return helpers.assert_model_roundtrip(model, tmp_path, version=version)
+
+
+@pytest.mark.skipif(
+    not minversion("asdf_transform_schemas", "0.2.2", inclusive=False),
+    reason="Schema not present until versions after asdf-transform-schemas 0.2.2",
+)
+def test_deprecations(tmp_path):
+    # Test assert_bounding_box_roundtrip deprecation
+    bbox = ModelBoundingBox((0, 1), astropy_models.Polynomial1D(1))
+    with pytest.warns(DeprecationWarning, match=".*assert_bounding_box_roundtrip.*"):
+        assert_bounding_box_roundtrip(bbox, tmp_path)
+
+    # Test assert_model_roundtrip deprecation
+    model = astropy_models.Gaussian2D()
+    with pytest.warns(DeprecationWarning, match=".*assert_model_roundtrip.*"):
+        assert_model_roundtrip(model, tmp_path)
 
 
 def create_bounding_boxes():
@@ -81,23 +104,8 @@ def create_bounding_boxes():
     not minversion("asdf_transform_schemas", "0.2.2", inclusive=False),
     reason="Schema not present until versions after asdf-transform-schemas 0.2.2",
 )
-def test_round_trip_bounding_box(bbox, tmpdir):
-    assert_bounding_box_roundtrip(bbox, tmpdir)
-
-
-def assert_model_roundtrip(model, tmpdir, version=None):
-    """
-    Assert that a model can be written to an ASDF file and read back
-    in without losing any of its essential properties.
-    """
-    path = str(tmpdir / "test.asdf")
-
-    with asdf.AsdfFile({"model": model}, version=version) as af:
-        af.write_to(path)
-
-    with asdf.open(path) as af:
-        assert_model_equal(model, af["model"])
-        return af["model"]
+def test_round_trip_bounding_box(bbox, tmp_path):
+    helpers.assert_bounding_box_roundtrip(bbox, tmp_path)
 
 
 def create_single_models():  # noqa: PLR0915
@@ -479,8 +487,8 @@ if minversion("astropy", "5.1") and not minversion("asdf_transform_schemas", "0.
 
 
 @pytest.mark.parametrize("model", create_single_models())
-def test_single_model(tmpdir, model):
-    assert_model_roundtrip(model, tmpdir)
+def test_single_model(tmp_path, model):
+    helpers.assert_model_roundtrip(model, tmp_path)
 
 
 def get_all_models():
@@ -516,16 +524,16 @@ def test_all_models_supported(model):
     assert extension_manager.handles_type(model), message
 
 
-def test_legacy_const(tmpdir):
+def test_legacy_const(tmp_path):
     with asdf.config_context() as config:
         config.remove_extension("asdf://asdf-format.org/transform/extensions/transform-1.5.0")
 
         model = astropy_models.Const1D(amplitude=5.0)
-        assert_model_roundtrip(model, tmpdir, version="1.3.0")
+        helpers.assert_model_roundtrip(model, tmp_path, version="1.3.0")
 
         model = astropy_models.Const2D(amplitude=5.0)
         with pytest.raises(TypeError, match=r".* does not support models with > 1 dimension"):
-            assert_model_roundtrip(model, tmpdir, version="1.3.0")
+            helpers.assert_model_roundtrip(model, tmp_path, version="1.3.0")
 
 
 COMPOUND_OPERATORS = [
@@ -540,40 +548,40 @@ COMPOUND_OPERATORS = [
 
 
 @pytest.mark.parametrize("operator", COMPOUND_OPERATORS)
-def test_compound_model(tmpdir, operator):
+def test_compound_model(tmp_path, operator):
     left_model = astropy_models.Shift(5)
     right_model = astropy_models.Shift(-1)
     model = getattr(left_model, operator)(right_model)
-    result = assert_model_roundtrip(model, tmpdir)
-    assert_model_equal(result.left, left_model)
-    assert_model_equal(result.right, right_model)
+    result = helpers.assert_model_roundtrip(model, tmp_path)
+    helpers.assert_model_equal(result.left, left_model)
+    helpers.assert_model_equal(result.right, right_model)
     assert result.op == model.op
 
 
-def test_fix_inputs(tmpdir):
+def test_fix_inputs(tmp_path):
     model = astropy_models.Gaussian2D(1, 2, 3, 4, 5)
     fixed_model = astropy_models.fix_inputs(model, {"x": 2.5})
-    result = assert_model_roundtrip(fixed_model, tmpdir)
-    assert_model_equal(result.left, model)
+    result = helpers.assert_model_roundtrip(fixed_model, tmp_path)
+    helpers.assert_model_equal(result.left, model)
     assert result.right == fixed_model.right
     assert result.op == fixed_model.op
 
 
-def test_units_mapping(tmpdir):
+def test_units_mapping(tmp_path):
     # Basic mapping between units:
     model = astropy_models.UnitsMapping(((u.m, u.dimensionless_unscaled),))
     model.name = "foo"
-    result = assert_model_roundtrip(model, tmpdir)
+    result = helpers.assert_model_roundtrip(model, tmp_path)
     assert result.mapping == model.mapping
 
     # Remove units:
     model = astropy_models.UnitsMapping(((u.m, None),))
-    result = assert_model_roundtrip(model, tmpdir)
+    result = helpers.assert_model_roundtrip(model, tmp_path)
     assert result.mapping == model.mapping
 
     # Change a model to accept any units:
     model = astropy_models.UnitsMapping(((None, u.m),))
-    result = assert_model_roundtrip(model, tmpdir)
+    result = helpers.assert_model_roundtrip(model, tmp_path)
     assert result.mapping == model.mapping
 
     # With equivalencies:
@@ -581,7 +589,7 @@ def test_units_mapping(tmpdir):
         ((u.m, u.dimensionless_unscaled),),
         input_units_equivalencies={"x": u.equivalencies.spectral()},
     )
-    result = assert_model_roundtrip(model, tmpdir)
+    result = helpers.assert_model_roundtrip(model, tmp_path)
     assert result.mapping == model.mapping
 
     # Allow dimensionless on all inputs:
@@ -589,7 +597,7 @@ def test_units_mapping(tmpdir):
         ((u.m, u.dimensionless_unscaled), (u.s, u.Hz)),
         input_units_allow_dimensionless=True,
     )
-    result = assert_model_roundtrip(model, tmpdir)
+    result = helpers.assert_model_roundtrip(model, tmp_path)
     assert result.mapping == model.mapping
 
     # Allow dimensionless selectively:
@@ -597,7 +605,7 @@ def test_units_mapping(tmpdir):
         ((u.m, u.dimensionless_unscaled), (u.s, u.Hz)),
         input_units_allow_dimensionless={"x0": True, "x1": False},
     )
-    result = assert_model_roundtrip(model, tmpdir)
+    result = helpers.assert_model_roundtrip(model, tmp_path)
     assert result.mapping == model.mapping
 
 
@@ -611,8 +619,8 @@ def test_units_mapping(tmpdir):
         astropy_models.Chebyshev1D(2, c0=2, c1=3, c2=0.5, domain=[-2, 2], window=[-0.5, 0.5]),
     ],
 )
-def test_1d_polynomial_with_asdf_standard_version(tmpdir, standard_version, model):
-    result = assert_model_roundtrip(model, tmpdir, version=standard_version)
+def test_1d_polynomial_with_asdf_standard_version(tmp_path, standard_version, model):
+    result = helpers.assert_model_roundtrip(model, tmp_path, version=standard_version)
     assert result.domain == model.domain
     assert result.window == model.window
 
@@ -646,15 +654,15 @@ def test_1d_polynomial_with_asdf_standard_version(tmpdir, standard_version, mode
         ),
     ],
 )
-def test_2d_polynomial_with_asdf_standard_version(tmpdir, standard_version, model):
-    result = assert_model_roundtrip(model, tmpdir, version=standard_version)
+def test_2d_polynomial_with_asdf_standard_version(tmp_path, standard_version, model):
+    result = helpers.assert_model_roundtrip(model, tmp_path, version=standard_version)
     assert result.x_domain == model.x_domain
     assert result.y_domain == model.y_domain
     assert result.x_window == model.x_window
     assert result.y_window == model.y_window
 
 
-def test_deserialize_compound_user_inverse(tmpdir):
+def test_deserialize_compound_user_inverse(tmp_path):
     """
     Confirm that we are able to correctly reconstruct a
     compound model with a user inverse set on one of its
@@ -845,7 +853,7 @@ model: !transform/concatenate-1.2.0
                 asdf.open(buff)
 
 
-def test_serialize_bbox(tmpdir):
+def test_serialize_bbox(tmp_path):
     mdl = astropy_models.Const2D(3)
 
     if minversion("astropy", "5.1"):
@@ -853,13 +861,13 @@ def test_serialize_bbox(tmpdir):
 
         bind_bounding_box(mdl, (1, 2), ignored="y")
         if minversion("asdf_transform_schemas", "0.2.2", inclusive=False):
-            assert_model_roundtrip(mdl, tmpdir)
+            helpers.assert_model_roundtrip(mdl, tmp_path)
         else:
             with pytest.raises(
                 RuntimeError,
                 match=r"asdf-transform-schemas > 0.2.2 in order to serialize a bounding_box with ignored",
             ):
-                assert_model_roundtrip(mdl, tmpdir)
+                helpers.assert_model_roundtrip(mdl, tmp_path)
     else:
         bbox = ModelBoundingBox({"x": (1, 2)}, mdl, ignored=["y"])
         mdl._user_bounding_box = bbox
@@ -869,16 +877,16 @@ def test_serialize_bbox(tmpdir):
                 RuntimeError,
                 match=r"Bounding box ignored arguments are only supported by astropy 5.1+",
             ):
-                assert_model_roundtrip(mdl, tmpdir)
+                helpers.assert_model_roundtrip(mdl, tmp_path)
         else:
             with pytest.raises(
                 RuntimeError,
                 match=r"asdf-transform-schemas > 0.2.2 in order to serialize a bounding_box with ignored",
             ):
-                assert_model_roundtrip(mdl, tmpdir)
+                helpers.assert_model_roundtrip(mdl, tmp_path)
 
 
-def test_serialize_cbbox(tmpdir):
+def test_serialize_cbbox(tmp_path):
     mdl = astropy_models.Shift(1) & astropy_models.Scale(2) & astropy_models.Identity(1)
     mdl.inputs = ("x", "y", "slit_id")
     bounding_boxes = {
@@ -889,10 +897,10 @@ def test_serialize_cbbox(tmpdir):
     mdl.bounding_box = bounding_box
 
     if minversion("asdf_transform_schemas", "0.2.2", inclusive=False):
-        assert_model_roundtrip(mdl, tmpdir)
+        helpers.assert_model_roundtrip(mdl, tmp_path)
     else:
         with pytest.raises(
             RuntimeError,
             match=r"asdf-transform-schemas > 0.2.2 in order to serialize a compound bounding_box",
         ):
-            assert_model_roundtrip(mdl, tmpdir)
+            helpers.assert_model_roundtrip(mdl, tmp_path)

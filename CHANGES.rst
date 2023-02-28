@@ -4,6 +4,8 @@
 - Update pins for ``asdf``, ``asdf-coordinates-schemas``, ``numpy``, and ``packaging``. [#164]
 - Add serialization support for non-VOunits. [#142]
 - Add serialization support for ``MagUnit`` based units. [#146]
+- Document and add ``assert_model_roundtrip`` and ``assert_table_roundtrip`` to
+  ``asdf_astropy.testing.helpers``. [#170]
 
 0.3.0 (2022-11-29)
 ------------------
