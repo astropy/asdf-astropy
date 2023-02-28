@@ -37,6 +37,10 @@ def assert_model_roundtrip(model, tmp_path, version=None):
     return helpers.assert_model_roundtrip(model, tmp_path, version=version)
 
 
+@pytest.mark.skipif(
+    not minversion("asdf_transform_schemas", "0.2.2", inclusive=False),
+    reason="Schema not present until versions after asdf-transform-schemas 0.2.2",
+)
 def test_deprecations(tmp_path):
     # Test assert_bounding_box_roundtrip deprecation
     bbox = ModelBoundingBox((0, 1), astropy_models.Polynomial1D(1))
