@@ -1,7 +1,7 @@
 """
 Helpers for testing astropy objects in ASDF files.
 """
-from numpy import testing
+import numpy as np
 
 
 def assert_earth_location_equal(a, b):
@@ -88,18 +88,18 @@ def assert_time_equal(a, b):
         assert a.location == b.location
 
     if a.format == "plot_date":
-        testing.assert_array_almost_equal(a.value, b.value)
+        np.testing.assert_array_almost_equal(a.value, b.value)
     else:
-        testing.assert_array_equal(a, b)
+        np.testing.assert_array_equal(a, b)
 
 
 def assert_time_delta_equal(a, b):
     """
     Assert time delta objects are equal
     """
-    testing.assert_array_equal(a.jd, b.jd)
-    testing.assert_array_equal(a.jd2, b.jd2)
-    testing.assert_array_equal(a.sec, b.sec)
+    np.testing.assert_array_equal(a.jd, b.jd)
+    np.testing.assert_array_equal(a.jd2, b.jd2)
+    np.testing.assert_array_equal(a.sec, b.sec)
 
 
 def assert_hdu_list_equal(a, b):
@@ -108,7 +108,7 @@ def assert_hdu_list_equal(a, b):
     """
     assert len(a) == len(b)
     for hdu_a, hdu_b in zip(a, b):
-        testing.assert_array_equal(hdu_a.data, hdu_b.data)
+        np.testing.assert_array_equal(hdu_a.data, hdu_b.data)
         assert len(hdu_a.header.cards) == len(hdu_b.header.cards)
         for card_a, card_b in zip(hdu_a.header.cards, hdu_b.header.cards):
             assert tuple(card_a) == tuple(card_b)
@@ -135,7 +135,7 @@ def assert_table_equal(a, b):
 
     assert len(a) == len(b)
     for row_a, row_b in zip(a, b):
-        testing.assert_array_equal(row_a, row_b)
+        np.testing.assert_array_equal(row_a, row_b)
 
     assert a.colnames == b.colnames
     for column_name in a.colnames:
@@ -145,8 +145,8 @@ def assert_table_equal(a, b):
             assert_description_equal(col_a.description, col_b.description)
             assert col_a.unit == col_b.unit
             assert col_a.meta == col_b.meta
-            testing.assert_array_equal(col_a.data, col_b.data)
-            testing.assert_array_equal(
+            np.testing.assert_array_equal(col_a.data, col_b.data)
+            np.testing.assert_array_equal(
                 getattr(col_a, "mask", [False] * len(col_a)),
                 getattr(col_b, "mask", [False] * len(col_b)),
             )
@@ -185,7 +185,7 @@ def assert_model_equal(a, b):
     assert a.input_units_allow_dimensionless == b.input_units_allow_dimensionless
     assert a.input_units_equivalencies == b.input_units_equivalencies
 
-    testing.assert_array_equal(a.parameters, b.parameters)
+    np.testing.assert_array_equal(a.parameters, b.parameters)
 
     assert a._user_bounding_box == b._user_bounding_box
     try:
