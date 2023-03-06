@@ -841,16 +841,17 @@ model: !transform/concatenate-1.2.0
                 asdf.open(buff)
         else:
             asdf.open(buff)
+
+    elif not minversion("asdf_transform_schemas", "0.2.2", inclusive=False):
+        with pytest.raises(TypeError, match=r"Cannot form bounding_box from: *"):
+            asdf.open(buff)
+
     else:
-        if not minversion("asdf_transform_schemas", "0.2.2", inclusive=False):
-            with pytest.raises(TypeError, match=r"Cannot form bounding_box from: *"):
-                asdf.open(buff)
-        else:
-            with pytest.raises(
-                RuntimeError,
-                match=r"Deserializing ignored elements of a compound bounding box is only supported for astropy 5.1+.",
-            ):
-                asdf.open(buff)
+        with pytest.raises(
+            RuntimeError,
+            match=r"Deserializing ignored elements of a compound bounding box is only supported for astropy 5.1+.",
+        ):
+            asdf.open(buff)
 
 
 def test_serialize_bbox(tmp_path):
