@@ -18,7 +18,7 @@ def assert_description_equal(a, b):
         "asdf_astropy.converters.table.tests.test_table.assert_description_equal is deprecated."
         "Use asdf_astropy.testing.helpers.assert_description_equal instead."
     )
-    warnings.warn(message, DeprecationWarning)
+    warnings.warn(message, DeprecationWarning, stacklevel=2)
 
     return helpers.assert_description_equal(a, b)
 
@@ -28,7 +28,7 @@ def assert_table_equal(a, b):
         "asdf_astropy.converters.table.tests.test_table.assert_table_equal is deprecated."
         "Use asdf_astropy.testing.helpers.assert_table_equal instead."
     )
-    warnings.warn(message, DeprecationWarning)
+    warnings.warn(message, DeprecationWarning, stacklevel=2)
 
     return helpers.assert_table_equal(a, b)
 
@@ -38,7 +38,7 @@ def assert_table_roundtrip(table, tmp_path):
         "asdf_astropy.converters.table.tests.test_table.assert_table_roundtrip is deprecated."
         "Use asdf_astropy.testing.helpers.assert_table_roundtrip instead."
     )
-    warnings.warn(message, DeprecationWarning)
+    warnings.warn(message, DeprecationWarning, stacklevel=2)
 
     return helpers.assert_table_roundtrip(table, tmp_path)
 

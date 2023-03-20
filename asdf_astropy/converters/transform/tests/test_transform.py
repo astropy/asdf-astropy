@@ -22,7 +22,7 @@ def assert_bounding_box_roundtrip(bounding_box, tmp_path, version=None):
         "asdf_astropy.converters.transforms.tests.test_transform.assert_bounding_box_round_trip is deprecated."
         "Use asdf_astropy.testing.helpers.assert_bounding_box_roundtrip instead."
     )
-    warnings.warn(message, DeprecationWarning)
+    warnings.warn(message, DeprecationWarning, stacklevel=2)
 
     return helpers.assert_bounding_box_roundtrip(bounding_box, tmp_path, version=version)
 
@@ -32,7 +32,7 @@ def assert_model_roundtrip(model, tmp_path, version=None):
         "asdf_astropy.converters.transforms.tests.test_transform.assert_model_round_trip is deprecated."
         "Use asdf_astropy.testing.helpers.assert_model_roundtrip instead."
     )
-    warnings.warn(message, DeprecationWarning)
+    warnings.warn(message, DeprecationWarning, stacklevel=2)
 
     return helpers.assert_model_roundtrip(model, tmp_path, version=version)
 
