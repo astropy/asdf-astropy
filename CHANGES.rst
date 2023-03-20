@@ -1,4 +1,4 @@
-0.4.0 (unreleased)
+0.4.0 (2023-03-20)
 ------------------
 
 - Update pins for ``asdf``, ``asdf-coordinates-schemas``, ``numpy``, and ``packaging``. [#164]
