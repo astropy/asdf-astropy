@@ -40,12 +40,12 @@ repos:
         - tomli
 
 - repo: https://github.com/ikamensh/flynt/
-  rev: '0.77'
+  rev: '0.78'
   hooks:
     - id: flynt
 
 - repo: https://github.com/charliermarsh/ruff-pre-commit
-  rev: "v0.0.257"
+  rev: "v0.0.259"
   hooks:
     - id: ruff
       args: ["--fix"]
