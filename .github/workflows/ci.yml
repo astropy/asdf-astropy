@@ -39,7 +39,6 @@ jobs:
       envs: |
         - linux: py39-parallel-cov
         - linux: py39-test-devdeps-parallel-cov
-        - linux: py38-test-parallel-cov
         - linux: py39-astropylts-parallel-cov
         - linux: py39-transformlts-parallel-cov
       coverage: codecov
@@ -86,7 +85,6 @@ jobs:
       # Any env name which does not start with `pyXY` will use this Python version.
       default_python: '3.9'
       envs: |
-        - linux: py38-test-devdeps-parallel
         - linux: py310-test-devdeps-parallel
         - linux: py311-test-devdeps-parallel
 
@@ -101,7 +99,6 @@ jobs:
       # Any env name which does not start with `pyXY` will use this Python version.
       default_python: '3.9'
       envs: |
-        - linux: py38-test-oldestdeps-parallel-cov
         - linux: py39-test-oldestdep-parallels-cov
       coverage: codecov
 
