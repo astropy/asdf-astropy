@@ -6,11 +6,12 @@ license = { file = 'LICENSE.rst' }
 authors = [{ name = 'The Astropy Developers', email = 'astropy.team@gmail.com' }]
 requires-python = '>=3.9'
 classifiers = [
-    'Programming Language :: Python',
-    'Programming Language :: Python :: 3',
-    'Programming Language :: Python :: 3.9',
-    'Programming Language :: Python :: 3.10',
-    'Development Status :: 5 - Production/Stable',
+  'Development Status :: 5 - Production/Stable',
+  'Programming Language :: Python',
+  "Programming Language :: Python :: 3 :: Only",
+  'Programming Language :: Python :: 3.9',
+  'Programming Language :: Python :: 3.10',
+  'Programming Language :: Python :: 3.11',
 ]
 dynamic = [
   'version',
@@ -142,6 +143,7 @@ extend-ignore = [
     "ANN", # flake8-annotations
     "ARG", # flake8-unused-arguments
     "DTZ", # flake8-datetimez
+    "TD", # flake8-todos
     # Individually ignored checks
     "SLF001", # private-member-access
 ]
