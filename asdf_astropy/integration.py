@@ -1,11 +1,6 @@
-import sys
+import importlib.resources as importlib_resources
 
 from asdf.resource import DirectoryResourceMapping
-
-if sys.version_info < (3, 9):
-    import importlib_resources
-else:
-    import importlib.resources as importlib_resources
 
 
 def get_resource_mappings():

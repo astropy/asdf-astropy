@@ -1,3 +1,8 @@
+0.5.0 (unreleased)
+------------------
+
+- Drop support for Python 3.8 in accordance with NEP 29. [#180]
+
 0.4.0 (2023-03-20)
 ------------------
 
