@@ -19,7 +19,7 @@ the interface used by **asdf-astropy** to extend **ASDF** is given preference ov
     **asdf-astropy** is installed.
 
 The only users of **astropy.io.misc.asdf** that need to do any code migration aside from adding
-an **asdf-astropy** dependency are those who directly use the objects (based on `~asdf.types.CustomType`)
+an **asdf-astropy** dependency are those who directly use the objects (based on **asdf.types.CustomType**)
 defined in **astropy.io.misc.asdf** to create their own **ASDF** `~asdf.extension._converter.Converter`
 extensions. Clear instructions on how to create the new converter extensions for **ASDF** can be found
 in :ref:`asdf:extending_converters`.
