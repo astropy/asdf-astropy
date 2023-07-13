@@ -4,12 +4,11 @@ from asdf.extension import Converter
 
 
 class UnitConverter(Converter):
-    tags = [
+    tags = (
         "tag:stsci.edu:asdf/unit/unit-*",
         "tag:astropy.org:astropy/units/unit-*",
-    ]
-
-    types = [
+    )
+    types = (
         "astropy.units.core.CompositeUnit",
         "astropy.units.core.IrreducibleUnit",
         "astropy.units.core.NamedUnit",
@@ -19,7 +18,7 @@ class UnitConverter(Converter):
         "astropy.units.core.UnrecognizedUnit",
         "astropy.units.function.mixin.IrreducibleFunctionUnit",
         "astropy.units.function.mixin.RegularFunctionUnit",
-    ]
+    )
 
     def select_tag(self, obj, tags, ctx):
         from astropy.units import UnitsError, UnitsWarning

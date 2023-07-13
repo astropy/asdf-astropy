@@ -2,9 +2,8 @@ from asdf.extension import Converter
 
 
 class TimeDeltaConverter(Converter):
-    tags = ["tag:astropy.org:astropy/time/timedelta-*"]
-
-    types = ["astropy.time.core.TimeDelta"]
+    tags = ("tag:astropy.org:astropy/time/timedelta-*",)
+    types = ("astropy.time.core.TimeDelta",)
 
     def to_yaml_tree(self, obj, tag, ctx):
         return obj.info._represent_as_dict()

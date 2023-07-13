@@ -7,13 +7,12 @@ class Rotate3DConverter(TransformConverterBase):
     use the rotate3d tag.
     """
 
-    tags = ["tag:stsci.edu:asdf/transform/rotate3d-*"]
-
-    types = [
+    tags = ("tag:stsci.edu:asdf/transform/rotate3d-*",)
+    types = (
         "astropy.modeling.rotations.RotateNative2Celestial",
         "astropy.modeling.rotations.RotateCelestial2Native",
         "astropy.modeling.rotations.EulerAngleRotation",
-    ]
+    )
 
     def to_yaml_tree_transform(self, model, tag, ctx):
         from astropy.modeling import rotations
@@ -59,12 +58,11 @@ class RotationSequenceConverter(TransformConverterBase):
     ASDF support for serializing rotation sequence models.
     """
 
-    tags = ["tag:stsci.edu:asdf/transform/rotate_sequence_3d-*"]
-
-    types = [
+    tags = ("tag:stsci.edu:asdf/transform/rotate_sequence_3d-*",)
+    types = (
         "astropy.modeling.rotations.RotationSequence3D",
         "astropy.modeling.rotations.SphericalRotationSequence",
-    ]
+    )
 
     def to_yaml_tree_transform(self, model, tag, ctx):
         from astropy.modeling import rotations

@@ -55,9 +55,8 @@ class MathFunctionsConverter(TransformConverterBase):
     each of which corresponds to a numpy ufunc.
     """
 
-    tags = ["tag:stsci.edu:asdf/transform/math_functions-*"]
-
-    types = ["astropy.modeling.math_functions." + m for m in _MODEL_NAMES]
+    tags = ("tag:stsci.edu:asdf/transform/math_functions-*",)
+    types = tuple("astropy.modeling.math_functions." + m for m in _MODEL_NAMES)
 
     def to_yaml_tree_transform(self, model, tag, ctx):
         return {"func_name": model.func.__name__}
