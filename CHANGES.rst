@@ -4,6 +4,8 @@
 - Drop support for Python 3.8 in accordance with NEP 29. [#180]
 - Update ``RepresentationConverter`` for new class paths in astropy [#181]
 
+- Fix mutable class variables being used by converters. [#187]
+
 0.4.0 (2023-03-20)
 ------------------
 
