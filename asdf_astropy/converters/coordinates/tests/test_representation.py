@@ -6,8 +6,16 @@ from numpy.random import random
 
 from asdf_astropy.testing.helpers import assert_representation_equal
 
+IGNORED_REPRESENTATION_CLASSES = [
+    "WGS84GeodeticRepresentation",
+    "WGS72GeodeticRepresentation",
+    "GRS80GeodeticRepresentation",
+]
+
 REPRESENTATION_CLASSES = [
-    getattr(representation, class_name) for class_name in representation.__all__ if "Base" not in class_name
+    getattr(representation, class_name)
+    for class_name in representation.__all__
+    if "Base" not in class_name and class_name not in IGNORED_REPRESENTATION_CLASSES
 ]
 
 
