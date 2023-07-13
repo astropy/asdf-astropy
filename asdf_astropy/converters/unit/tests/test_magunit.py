@@ -4,7 +4,7 @@ from astropy import units
 
 
 def create_builtin_units():
-    return [u for u in list(units.__dict__.values()) if isinstance(u, units.MagUnit)]
+    return {u for u in list(units.__dict__.values()) if isinstance(u, units.MagUnit)}
 
 
 @pytest.mark.parametrize("unit", create_builtin_units())
@@ -34,7 +34,7 @@ def create_magunits():
             else:
                 magunits.append(magunit)
 
-    return magunits
+    return set(magunits)
 
 
 @pytest.mark.parametrize("unit", create_magunits())
