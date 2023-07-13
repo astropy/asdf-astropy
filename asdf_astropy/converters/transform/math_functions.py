@@ -48,6 +48,8 @@ _MODEL_NAMES = [
     "True_divideUfunc",
 ]
 
+_MODEL_TYPES = [f"astropy.modeling.math_functions.{m}" for m in _MODEL_NAMES]
+
 
 class MathFunctionsConverter(TransformConverterBase):
     """
@@ -55,9 +57,13 @@ class MathFunctionsConverter(TransformConverterBase):
     each of which corresponds to a numpy ufunc.
     """
 
-    tags = ["tag:stsci.edu:asdf/transform/math_functions-*"]
+    @property
+    def tags(self):
+        return ["tag:stsci.edu:asdf/transform/math_functions-*"]
 
-    types = ["astropy.modeling.math_functions." + m for m in _MODEL_NAMES]
+    @property
+    def types(self):
+        return _MODEL_TYPES
 
     def to_yaml_tree_transform(self, model, tag, ctx):
         return {"func_name": model.func.__name__}

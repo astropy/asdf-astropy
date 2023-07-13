@@ -14,12 +14,16 @@ class ConstantConverter(TransformConverterBase):
     # previously all values were 1D.
     _2D_MIN_VERSION = parse_version("1.4.0")
 
-    tags = ["tag:stsci.edu:asdf/transform/constant-*"]
+    @property
+    def tags(self):
+        return ["tag:stsci.edu:asdf/transform/constant-*"]
 
-    types = [
-        "astropy.modeling.functional_models.Const1D",
-        "astropy.modeling.functional_models.Const2D",
-    ]
+    @property
+    def types(self):
+        return [
+            "astropy.modeling.functional_models.Const1D",
+            "astropy.modeling.functional_models.Const2D",
+        ]
 
     def to_yaml_tree_transform(self, model, tag, ctx):
         from astropy.modeling.functional_models import Const1D, Const2D

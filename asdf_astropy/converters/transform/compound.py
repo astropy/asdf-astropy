@@ -34,18 +34,22 @@ class CompoundConverter(TransformConverterBase):
     ASDF serialization support for CompoundModel.
     """
 
-    tags = [
-        "tag:stsci.edu:asdf/transform/add-*",
-        "tag:stsci.edu:asdf/transform/subtract-*",
-        "tag:stsci.edu:asdf/transform/multiply-*",
-        "tag:stsci.edu:asdf/transform/divide-*",
-        "tag:stsci.edu:asdf/transform/power-*",
-        "tag:stsci.edu:asdf/transform/compose-*",
-        "tag:stsci.edu:asdf/transform/concatenate-*",
-        "tag:stsci.edu:asdf/transform/fix_inputs-*",
-    ]
+    @property
+    def tags(self):
+        return [
+            "tag:stsci.edu:asdf/transform/add-*",
+            "tag:stsci.edu:asdf/transform/subtract-*",
+            "tag:stsci.edu:asdf/transform/multiply-*",
+            "tag:stsci.edu:asdf/transform/divide-*",
+            "tag:stsci.edu:asdf/transform/power-*",
+            "tag:stsci.edu:asdf/transform/compose-*",
+            "tag:stsci.edu:asdf/transform/concatenate-*",
+            "tag:stsci.edu:asdf/transform/fix_inputs-*",
+        ]
 
-    types = ["astropy.modeling.core.CompoundModel"]
+    @property
+    def types(self):
+        return ["astropy.modeling.core.CompoundModel"]
 
     def select_tag(self, model, tags, ctx):
         tag_name = _OPERATOR_TO_TAG_NAME[model.op]

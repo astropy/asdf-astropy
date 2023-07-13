@@ -3,9 +3,13 @@ from asdf.tags.core.ndarray import NDArrayType
 
 
 class SpectralCoordConverter(Converter):
-    tags = ["tag:astropy.org:astropy/coordinates/spectralcoord-*"]
+    @property
+    def tags(self):
+        return ["tag:astropy.org:astropy/coordinates/spectralcoord-*"]
 
-    types = ["astropy.coordinates.spectral_coordinate.SpectralCoord"]
+    @property
+    def types(self):
+        return ["astropy.coordinates.spectral_coordinate.SpectralCoord"]
 
     def to_yaml_tree(self, obj, tag, ctx):
         node = {

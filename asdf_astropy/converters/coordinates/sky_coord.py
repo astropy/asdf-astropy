@@ -2,9 +2,13 @@ from asdf.extension import Converter
 
 
 class SkyCoordConverter(Converter):
-    tags = ["tag:astropy.org:astropy/coordinates/skycoord-*"]
+    @property
+    def tags(self):
+        return ["tag:astropy.org:astropy/coordinates/skycoord-*"]
 
-    types = ["astropy.coordinates.sky_coordinate.SkyCoord"]
+    @property
+    def types(self):
+        return ["astropy.coordinates.sky_coordinate.SkyCoord"]
 
     def to_yaml_tree(self, obj, tag, ctx):
         return obj.info._represent_as_dict()
