@@ -18,11 +18,11 @@ def vounit_compatible(unit):
 
 
 def create_vounits():
-    return [u for u in list(units.__dict__.values()) if isinstance(u, units.UnitBase) and vounit_compatible(u)]
+    return {u for u in list(units.__dict__.values()) if isinstance(u, units.UnitBase) and vounit_compatible(u)}
 
 
 def create_non_vounits():
-    return [u for u in list(units.__dict__.values()) if isinstance(u, units.UnitBase) and not vounit_compatible(u)]
+    return {u for u in list(units.__dict__.values()) if isinstance(u, units.UnitBase) and not vounit_compatible(u)}
 
 
 @pytest.mark.parametrize("unit", create_vounits())
