@@ -34,7 +34,7 @@ def create_magunits():
             else:
                 magunits.append(magunit)
 
-    return set(magunits)
+    return frozenset(magunits)
 
 
 @pytest.mark.parametrize("unit", create_magunits())
