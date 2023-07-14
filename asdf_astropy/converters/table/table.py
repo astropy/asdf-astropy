@@ -3,12 +3,11 @@ from asdf.tags.core.ndarray import NDArrayType
 
 
 class ColumnConverter(Converter):
-    tags = ["tag:stsci.edu:asdf/core/column-*"]
-
-    types = [
+    tags = ("tag:stsci.edu:asdf/core/column-*",)
+    types = (
         "astropy.table.column.Column",
         "astropy.table.column.MaskedColumn",
-    ]
+    )
 
     def to_yaml_tree(self, obj, tag, ctx):
         node = {"data": obj.data, "name": obj.name}
@@ -46,9 +45,8 @@ class ColumnConverter(Converter):
 
 
 class AsdfTableConverter(Converter):
-    tags = ["tag:stsci.edu:asdf/core/table-*"]
-
-    types = []
+    tags = ("tag:stsci.edu:asdf/core/table-*",)
+    types = ()
 
     def to_yaml_tree(self, obj, tag, ctx):
         msg = "astropy does not support writing astropy.table.Table with the ASDF table-1.0.0 tag"
@@ -61,12 +59,11 @@ class AsdfTableConverter(Converter):
 
 
 class AstropyTableConverter(Converter):
-    tags = ["tag:astropy.org:astropy/table/table-*"]
-
-    types = [
+    tags = ("tag:astropy.org:astropy/table/table-*",)
+    types = (
         "astropy.table.table.Table",
         "astropy.table.table.QTable",
-    ]
+    )
 
     def to_yaml_tree(self, obj, tag, ctx):
         from astropy.table import QTable

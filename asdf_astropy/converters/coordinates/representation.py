@@ -2,9 +2,8 @@ from asdf.extension import Converter
 
 
 class RepresentationConverter(Converter):
-    tags = ["tag:astropy.org:astropy/coordinates/representation-*"]
-
-    types = [
+    tags = ("tag:astropy.org:astropy/coordinates/representation-*",)
+    types = (
         "astropy.coordinates.representation.CartesianDifferential",
         "astropy.coordinates.representation.CartesianRepresentation",
         "astropy.coordinates.representation.CylindricalDifferential",
@@ -34,7 +33,7 @@ class RepresentationConverter(Converter):
         "astropy.coordinates.representation.spherical.UnitSphericalRepresentation",
         "astropy.coordinates.representation.spherical.UnitSphericalDifferential",
         "astropy.coordinates.representation.spherical.UnitSphericalCosLatDifferential",
-    ]
+    )
 
     def to_yaml_tree(self, obj, tag, ctx):
         components = {}

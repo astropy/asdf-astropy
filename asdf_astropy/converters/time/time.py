@@ -12,9 +12,8 @@ _ASTROPY_FORMAT_TO_ASDF_FORMAT = {
 
 
 class TimeConverter(Converter):
-    tags = ["tag:stsci.edu:asdf/time/time-*"]
-
-    types = ["astropy.time.core.Time"]
+    tags = ("tag:stsci.edu:asdf/time/time-*",)
+    types = ("astropy.time.core.Time",)
 
     def to_yaml_tree(self, obj, tag, ctx):
         from astropy.time import Time

@@ -66,10 +66,10 @@ class FitsConverter(Converter):
 
 
 class AsdfFitsConverter(FitsConverter):
-    tags = ["tag:stsci.edu:asdf/fits/fits-*"]
-    types = []
+    tags = ("tag:stsci.edu:asdf/fits/fits-*",)
+    types = ()
 
 
 class AstropyFitsConverter(FitsConverter):
-    tags = ["tag:astropy.org:astropy/fits/fits-*"]
-    types = ["astropy.io.fits.hdu.hdulist.HDUList"]
+    tags = ("tag:astropy.org:astropy/fits/fits-*",)
+    types = ("astropy.io.fits.hdu.hdulist.HDUList",)

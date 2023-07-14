@@ -54,11 +54,10 @@ class FrameConverter(Converter):
 
 
 class LegacyICRSConverter(Converter):
-    tags = ["tag:astropy.org:astropy/coordinates/frames/icrs-1.0.0"]
-
+    tags = ("tag:astropy.org:astropy/coordinates/frames/icrs-1.0.0",)
     # Leave the types list empty so that the 1.1.0 ICRS converter
     # is used on write.
-    types = []
+    types = ()
 
     def to_yaml_tree(self, obj, tag, ctx):
         from astropy.units import Quantity

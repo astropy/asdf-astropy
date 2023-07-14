@@ -8,12 +8,11 @@ class TabularConverter(TransformConverterBase):
     ASDF support for serializing tabular models.
     """
 
-    tags = ["tag:stsci.edu:asdf/transform/tabular-*"]
-
-    types = [
+    tags = ("tag:stsci.edu:asdf/transform/tabular-*",)
+    types = (
         "astropy.modeling.tabular.Tabular1D",
         "astropy.modeling.tabular.Tabular2D",
-    ]
+    )
 
     def to_yaml_tree_transform(self, model, tag, ctx):
         node = {}

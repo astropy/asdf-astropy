@@ -3,8 +3,8 @@ from astropy.utils import minversion
 
 
 class ModelBoundingBoxConverter(Converter):
-    tags = ["tag:stsci.edu:asdf/transform/property/bounding_box-1.0.0"]
-    types = ["astropy.modeling.bounding_box.ModelBoundingBox"]
+    tags = ("tag:stsci.edu:asdf/transform/property/bounding_box-1.0.0",)
+    types = ("astropy.modeling.bounding_box.ModelBoundingBox",)
 
     def to_yaml_tree(self, bbox, tag, ctx):
         return {
@@ -40,8 +40,8 @@ class ModelBoundingBoxConverter(Converter):
 
 
 class CompoundBoundingBoxConverter(Converter):
-    tags = ["tag:stsci.edu:asdf/transform/property/compound_bounding_box-1.0.0"]
-    types = ["astropy.modeling.bounding_box.CompoundBoundingBox"]
+    tags = ("tag:stsci.edu:asdf/transform/property/compound_bounding_box-1.0.0",)
+    types = ("astropy.modeling.bounding_box.CompoundBoundingBox",)
 
     def to_yaml_tree(self, cbbox, tag, ctx):
         node = {

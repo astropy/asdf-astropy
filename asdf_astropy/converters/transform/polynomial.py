@@ -16,12 +16,11 @@ class PolynomialConverter(TransformConverterBase):
     # versions because they don't validate.
     _DOMAIN_WINDOW_MIN_VERSION = parse_version("1.2.0")
 
-    tags = ["tag:stsci.edu:asdf/transform/polynomial-*"]
-
-    types = [
+    tags = ("tag:stsci.edu:asdf/transform/polynomial-*",)
+    types = (
         "astropy.modeling.polynomial.Polynomial1D",
         "astropy.modeling.polynomial.Polynomial2D",
-    ]
+    )
 
     def to_yaml_tree_transform(self, model, tag, ctx):
         from astropy.modeling.polynomial import Polynomial1D, Polynomial2D
@@ -95,6 +94,18 @@ class PolynomialConverter(TransformConverterBase):
         return model
 
 
+_CLASS_NAME_TO_POLY_INFO = {
+    "Legendre1D": ("legendre", 1),
+    "Legendre2D": ("legendre", 2),
+    "Chebyshev1D": ("chebyshev", 1),
+    "Chebyshev2D": ("chebyshev", 2),
+    "Hermite1D": ("hermite", 1),
+    "Hermite2D": ("hermite", 2),
+}
+
+_POLY_INFO_TO_CLASS_NAME = {v: k for k, v in _CLASS_NAME_TO_POLY_INFO.items()}
+
+
 class OrthoPolynomialConverter(TransformConverterBase):
     """
     ASDF support for serializing models that inherit
@@ -102,30 +113,19 @@ class OrthoPolynomialConverter(TransformConverterBase):
     """
 
     # Map of model class name to (polynomial type, number of dimensions) tuple:
-    _CLASS_NAME_TO_POLY_INFO = {
-        "Legendre1D": ("legendre", 1),
-        "Legendre2D": ("legendre", 2),
-        "Chebyshev1D": ("chebyshev", 1),
-        "Chebyshev2D": ("chebyshev", 2),
-        "Hermite1D": ("hermite", 1),
-        "Hermite2D": ("hermite", 2),
-    }
 
-    _POLY_INFO_TO_CLASS_NAME = {v: k for k, v in _CLASS_NAME_TO_POLY_INFO.items()}
-
-    tags = ["tag:stsci.edu:asdf/transform/ortho_polynomial-*"]
-
-    types = [
+    tags = ("tag:stsci.edu:asdf/transform/ortho_polynomial-*",)
+    types = (
         "astropy.modeling.polynomial.Legendre1D",
         "astropy.modeling.polynomial.Legendre2D",
         "astropy.modeling.polynomial.Chebyshev1D",
         "astropy.modeling.polynomial.Chebyshev2D",
         "astropy.modeling.polynomial.Hermite1D",
         "astropy.modeling.polynomial.Hermite2D",
-    ]
+    )
 
     def to_yaml_tree_transform(self, model, tag, ctx):
-        poly_type = self._CLASS_NAME_TO_POLY_INFO[model.__class__.__name__][0]
+        poly_type = _CLASS_NAME_TO_POLY_INFO[model.__class__.__name__][0]
         if model.n_inputs == 1:
             coefficients = np.array(model.parameters)
         else:
@@ -157,7 +157,7 @@ class OrthoPolynomialConverter(TransformConverterBase):
         poly_type = node["polynomial_type"]
         n_dim = coefficients.ndim
 
-        class_name = self._POLY_INFO_TO_CLASS_NAME[(poly_type, n_dim)]
+        class_name = _POLY_INFO_TO_CLASS_NAME[(poly_type, n_dim)]
         model_type = getattr(polynomial, class_name)
 
         coefficients = np.asarray(node["coefficients"])

@@ -6,8 +6,8 @@ class SplineConverter(TransformConverterBase):
     ASDF support for serializing 1D spline models
     """
 
-    tags = ["tag:stsci.edu:asdf/transform/spline1d-*"]
-    types = ["astropy.modeling.spline.Spline1D"]
+    tags = ("tag:stsci.edu:asdf/transform/spline1d-*",)
+    types = ("astropy.modeling.spline.Spline1D",)
 
     def to_yaml_tree_transform(self, model, tag, ctx):
         return {"knots": model.t, "coefficients": model.c, "degree": model.degree}

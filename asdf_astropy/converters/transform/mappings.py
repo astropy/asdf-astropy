@@ -8,9 +8,8 @@ class IdentityConverter(TransformConverterBase):
     ASDF support for serializing the Identity model.
     """
 
-    tags = ["tag:stsci.edu:asdf/transform/identity-*"]
-
-    types = ["astropy.modeling.mappings.Identity"]
+    tags = ("tag:stsci.edu:asdf/transform/identity-*",)
+    types = ("astropy.modeling.mappings.Identity",)
 
     def to_yaml_tree_transform(self, model, tag, ctx):
         node = {}
@@ -29,9 +28,8 @@ class RemapAxesConverter(TransformConverterBase):
     ASDF support for serializing the Mapping model
     """
 
-    tags = ["tag:stsci.edu:asdf/transform/remap_axes-*"]
-
-    types = ["astropy.modeling.mappings.Mapping"]
+    tags = ("tag:stsci.edu:asdf/transform/remap_axes-*",)
+    types = ("astropy.modeling.mappings.Mapping",)
 
     def to_yaml_tree_transform(self, model, tag, ctx):
         node = {"mapping": list(model.mapping)}
@@ -53,9 +51,8 @@ class UnitsMappingConverter(Converter):
     from other models.
     """
 
-    tags = ["tag:astropy.org:astropy/transform/units_mapping-*"]
-
-    types = ["astropy.modeling.mappings.UnitsMapping"]
+    tags = ("tag:astropy.org:astropy/transform/units_mapping-*",)
+    types = ("astropy.modeling.mappings.UnitsMapping",)
 
     def to_yaml_tree(self, model, tag, ctx):
         node = {}
