@@ -11,7 +11,7 @@ classifiers = [
   "Programming Language :: Python :: 3 :: Only",
   'Programming Language :: Python :: 3.9',
   'Programming Language :: Python :: 3.10',
-  'Programming Language :: Python :: 3.11',
+  "Programming Language :: Python :: 3.11",
 ]
 dynamic = [
   'version',
@@ -79,6 +79,29 @@ force-exclude = '''
 )
 '''
 
+[tool.ruff]
+target-version = "py38"
+line-length = 120
+select = ["ALL"]
+extend-ignore = [
+    # Ignore check groups
+    "C90", # mccabe
+    "D", # pydocstyle
+    "ANN", # flake8-annotations
+    "ARG", # flake8-unused-arguments
+    "DTZ", # flake8-datetimez
+    "TD", # flake8-todos
+    "FIX", # flake8-fixme
+    # Individually ignored checks
+    "SLF001", # private-member-access
+]
+extend-exclude = ["docs/*"]
+
+[tool.ruff.per-file-ignores]
+"test_*.py" = ["S101"]
+"asdf_astropy/testing/helpers.py" = ["S101"]
+"scripts/generate_manifest.py" = ["S101", "SLOT000"]
+
 [tool.isort]
 profile = "black"
 filter_files = true
@@ -131,28 +154,6 @@ exclude_lines = [
     # Don't complain about IPython completion helper
     'def _ipython_key_completions_',
 ]
-
-[tool.ruff]
-target-version = "py38"
-line-length = 120
-select = ["ALL"]
-extend-ignore = [
-    # Ignore check groups
-    "C90", # mccabe
-    "D", # pydocstyle
-    "ANN", # flake8-annotations
-    "ARG", # flake8-unused-arguments
-    "DTZ", # flake8-datetimez
-    "TD", # flake8-todos
-    # Individually ignored checks
-    "SLF001", # private-member-access
-]
-extend-exclude = ["docs/*"]
-
-[tool.ruff.per-file-ignores]
-"test_*.py" = ["S101"]
-"asdf_astropy/testing/helpers.py" = ["S101"]
-"scripts/generate_manifest.py" = ["S101"]
 
 [tool.codespell]
 skip="*.pdf,*.fits,*.asdf,*.egg-info,.tox,build,./tags,.git,./docs/_build"
