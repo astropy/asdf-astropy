@@ -32,7 +32,7 @@ repos:
     - id: text-unicode-replacement-char
 
 - repo: https://github.com/codespell-project/codespell
-  rev: v2.2.4
+  rev: v2.2.5
   hooks:
     - id: codespell
       args: ["--write-changes"]
@@ -40,12 +40,12 @@ repos:
         - tomli
 
 - repo: https://github.com/ikamensh/flynt/
-  rev: '0.78'
+  rev: '1.0.0'
   hooks:
     - id: flynt
 
-- repo: https://github.com/charliermarsh/ruff-pre-commit
-  rev: "v0.0.269"
+- repo: https://github.com/astral-sh/ruff-pre-commit
+  rev: "v0.0.280"
   hooks:
     - id: ruff
       args: ["--fix"]
@@ -56,19 +56,14 @@ repos:
     - id: isort
 
 - repo: https://github.com/psf/black
-  rev: 23.3.0
+  rev: 23.7.0
   hooks:
     - id: black
 
 - repo: https://github.com/asottile/blacken-docs
-  rev: 1.13.0
+  rev: 1.15.0
   hooks:
     - id: blacken-docs
-
-- repo: https://github.com/tox-dev/pyproject-fmt
-  rev: "0.11.2"
-  hooks:
-    - id: pyproject-fmt
 
 - repo: https://github.com/abravalheri/validate-pyproject
   rev: "v0.13"
