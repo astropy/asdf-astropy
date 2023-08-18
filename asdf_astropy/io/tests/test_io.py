@@ -42,7 +42,7 @@ def test_table_io_custom_key(tmp_path):
     # Simple sanity check using ASDF directly
     with asdf.open(tmp_file) as af:
         assert "something" in af
-        assert "data" not in af.keys()
+        assert "data" not in af
         assert isinstance(af["something"], Table)
         assert all(af["something"] == table)
 
@@ -68,7 +68,7 @@ def test_table_io_custom_tree(tmp_path):
     with asdf.open(tmp_file) as af:
         assert "foo" in af
         assert "bar" in af["foo"]
-        assert "data" not in af.keys()
+        assert "data" not in af
         assert all(af["foo"]["bar"] == table)
 
     # Now test using table reader
