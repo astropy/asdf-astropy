@@ -51,10 +51,8 @@ test = [
 [build-system]
 build-backend = 'setuptools.build_meta'
 requires = [
-  "oldest-supported-numpy",
   "setuptools>=60",
   "setuptools_scm[toml]>=3.4",
-  "wheel",
 ]
 
 [tool.setuptools]
