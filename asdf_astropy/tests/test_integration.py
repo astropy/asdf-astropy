@@ -1,3 +1,4 @@
+import io
 import sys
 from pathlib import Path
 
@@ -74,3 +75,27 @@ def test_no_astropy_import():
     integration.get_extensions()
 
     assert not any(k for k in sys.modules if any(k.startswith(m) for m in _ASTROPY_MODULES))
+
+
+def test_no_core_extension_overwrite():
+    """
+    Check that this package (even though it implements converters for core types)
+    does not overwrite the core extension provided by asdf
+    """
+    import astropy.units as u
+
+    # define a tree with a unit that will be serialized by this package
+    # the tree itself will be serialized by asdf (which should result in
+    # including asdf as a used extension)
+    tree = {"meter": u.m}
+
+    bio = io.BytesIO()
+    asdf.AsdfFile(tree).write_to(bio)
+    bio.seek(0)
+
+    with asdf.open(bio) as af:
+        packages = [ext["software"]["name"] for ext in af.tree["history"]["extensions"]]
+        # check that both asdf and asdf-astropy are recorded as being used to
+        # generate the file
+        assert "asdf" in packages
+        assert "asdf-astropy" in packages

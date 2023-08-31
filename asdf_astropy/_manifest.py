@@ -1,3 +1,4 @@
+import re
 from itertools import chain
 
 from asdf import extension
@@ -10,10 +11,13 @@ class CompoundManifestExtension(extension.Extension):
 
     def __init__(self, extensions):
         self._extensions = extensions
+        # overwrite extension uri from first extension (the one from asdf-standard)
+        # so that this extension uses a new, unique uri
+        self._extension_uri = re.sub("asdf-format", "astropy", extensions[0].extension_uri)
 
     @property
     def extension_uri(self):
-        return self._extensions[0].extension_uri
+        return self._extension_uri
 
     @property
     def asdf_standard_requirement(self):

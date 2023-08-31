@@ -6,6 +6,7 @@
 - Update Converters so that all Class Variables are immutable [#188]
 - Remove ``oldest-supported-numpy`` from ``pyproject.toml`` ``build-system``
   as this was never needed and will cause problems building on python 3.12 betas. [#193]
+- Use unique uri for extensions that implement converters for core asdf types [#199]
 
 0.4.0 (2023-03-20)
 ------------------
