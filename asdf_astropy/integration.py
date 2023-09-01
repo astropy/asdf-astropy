@@ -36,7 +36,7 @@ def get_extensions():
     from . import extensions
 
     return [
-        extensions.ASTROPY_EXTENSION,
+        *extensions.ASTROPY_EXTENSIONS,
         extensions.COORDINATES_EXTENSION,
         *extensions.TRANSFORM_EXTENSIONS,
         *extensions.CORE_EXTENSIONS,

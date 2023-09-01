@@ -219,7 +219,8 @@ def test_ndarray_mixin(tmp_path):
     table["b"] = ["x", "y"]
     table["c"] = NdarrayMixin([5, 6])
 
-    helpers.assert_table_roundtrip(table, tmp_path)
+    result = helpers.assert_table_roundtrip(table, tmp_path)
+    assert isinstance(result["c"], NdarrayMixin)
 
 
 def test_asdf_table():
