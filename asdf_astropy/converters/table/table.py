@@ -88,3 +88,21 @@ class AstropyTableConverter(Converter):
             table[name] = column
 
         return table
+
+
+class NdarrayMixinConverter(Converter):
+    tags = ("tag:astropy.org:astropy/table/ndarraymixin-*",)
+    types = ("astropy.table.ndarray_mixin.NdarrayMixin",)
+
+    def to_yaml_tree(self, obj, tag, ctx):
+        import numpy as np
+
+        return {"array": np.asarray(obj)}
+
+    def from_yaml_tree(self, node, tag, ctx):
+        from astropy.table import NdarrayMixin
+
+        arr = node["array"]
+
+        # this will trigger reading the ASDF block that contains the array data
+        return arr.view(NdarrayMixin)

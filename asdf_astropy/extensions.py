@@ -14,7 +14,7 @@ from .converters.coordinates.representation import RepresentationConverter
 from .converters.coordinates.sky_coord import SkyCoordConverter
 from .converters.coordinates.spectral_coord import SpectralCoordConverter
 from .converters.fits.fits import AsdfFitsConverter, AstropyFitsConverter
-from .converters.table.table import AsdfTableConverter, AstropyTableConverter, ColumnConverter
+from .converters.table.table import AsdfTableConverter, AstropyTableConverter, ColumnConverter, NdarrayMixinConverter
 from .converters.time.time import TimeConverter
 from .converters.time.time_delta import TimeDeltaConverter
 from .converters.transform.compound import CompoundConverter
@@ -40,7 +40,7 @@ __all__ = [
     "COORDINATES_CONVERTERS",
     "ASTROPY_CONVERTERS",
     "COORDINATES_EXTENSION",
-    "ASTROPY_EXTENSION",
+    "ASTROPY_EXTENSIONS",
     "CORE_CONVERTERS",
     "CORE_MANIFEST_URIS",
     "CORE_EXTENSIONS",
@@ -481,6 +481,7 @@ ASTROPY_CONVERTERS = [
     TimeDeltaConverter(),
     AstropyTableConverter(),
     AstropyFitsConverter(),
+    NdarrayMixinConverter(),
 ]
 
 
@@ -490,13 +491,22 @@ COORDINATES_EXTENSION = ManifestExtension.from_uri(
 )
 
 
-ASTROPY_EXTENSION = ManifestExtension.from_uri(
+_ASTROPY_EXTENSION_MANIFEST_URIS = [
+    "asdf://astropy.org/astropy/manifests/astropy-1.1.0",
     "asdf://astropy.org/astropy/manifests/astropy-1.0.0",
-    # This prevents a warning about a missing extension when opening
-    # files written by older versions of astropy:
-    legacy_class_names=["astropy.io.misc.asdf.extension.AstropyExtension"],
-    converters=ASTROPY_CONVERTERS,
-)
+]
+
+
+ASTROPY_EXTENSIONS = [
+    ManifestExtension.from_uri(
+        manifest_uri,
+        # This prevents a warning about a missing extension when opening
+        # files written by older versions of astropy:
+        legacy_class_names=["astropy.io.misc.asdf.extension.AstropyExtension"],
+        converters=ASTROPY_CONVERTERS,
+    )
+    for manifest_uri in _ASTROPY_EXTENSION_MANIFEST_URIS
+]
 
 # These tags are part of the ASDF Standard,
 # but we want to override serialization here so that users can

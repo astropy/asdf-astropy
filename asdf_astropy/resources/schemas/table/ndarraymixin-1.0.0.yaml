@@ -1,0 +1,17 @@
+%YAML 1.1
+---
+$schema: "http://stsci.edu/schemas/yaml-schema/draft-01"
+id: "http://astropy.org/schemas/astropy/table/ndarraymixin-1.0.0"
+
+title: >
+  title: NdarrayMixin column.
+
+description: |
+  Represents an astropy.table.NdarrayMixin instance.
+
+type: object
+properties:
+  array:
+    tag: "tag:stsci.edu:asdf/core/ndarray-*"
+additionalProperties: false
+required: [array]
