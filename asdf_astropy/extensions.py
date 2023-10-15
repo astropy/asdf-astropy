@@ -14,7 +14,7 @@ from .converters.coordinates.representation import RepresentationConverter
 from .converters.coordinates.sky_coord import SkyCoordConverter
 from .converters.coordinates.spectral_coord import SpectralCoordConverter
 from .converters.fits.fits import AsdfFitsConverter, AstropyFitsConverter
-from .converters.table.table import AsdfTableConverter, AstropyTableConverter, ColumnConverter, NdarrayMixinConverter
+from .converters.table.table import AsdfTableConverter, AsdfTableConverterReadOnly, AstropyTableConverter, ColumnConverter, NdarrayMixinConverter
 from .converters.time.time import TimeConverter
 from .converters.time.time_delta import TimeDeltaConverter
 from .converters.transform.compound import CompoundConverter
@@ -516,11 +516,15 @@ CORE_CONVERTERS = [
     QuantityConverter(),
     TimeConverter(),
     ColumnConverter(),
-    AsdfTableConverter(),
+    AsdfTableConverterReadOnly(),
     AsdfFitsConverter(),
 ]
 
-UNIT_CONVETERS = [
+CORE_TABLE_CONVERTERS = [
+    AsdfTableConverter(),
+]
+
+UNIT_CONVERTERS = [
     UnitConverter(),
     EquivalencyConverter(),
     MagUnitConverter(),
@@ -542,8 +546,14 @@ CORE_EXTENSIONS = [
     CompoundManifestExtension(
         [
             ManifestExtension.from_uri(u, converters=CORE_CONVERTERS),
-            ManifestExtension.from_uri("asdf://astropy.org/astropy/manifests/units-1.0.0", converters=UNIT_CONVETERS),
+            ManifestExtension.from_uri("asdf://astropy.org/astropy/manifests/units-1.0.0", converters=UNIT_CONVERTERS),
         ],
     )
+    for u in CORE_MANIFEST_URIS
+]
+
+
+CORE_TABLE_EXTENSIONS = [
+    ManifestExtension.from_uri(u, converters=CORE_TABLE_CONVERTERS)
     for u in CORE_MANIFEST_URIS
 ]

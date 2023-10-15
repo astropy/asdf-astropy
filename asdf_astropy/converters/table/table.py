@@ -1,5 +1,6 @@
 from asdf.extension import Converter
 from asdf.tags.core.ndarray import NDArrayType
+from asdf.tagged import TaggedDict
 
 
 class ColumnConverter(Converter):
@@ -45,17 +46,51 @@ class ColumnConverter(Converter):
 
 
 class AsdfTableConverter(Converter):
-    tags = ("tag:stsci.edu:asdf/core/table-*",)
-    types = ()
-
-    def to_yaml_tree(self, obj, tag, ctx):
-        msg = "astropy does not support writing astropy.table.Table with the ASDF table-1.0.0 tag"
-        raise NotImplementedError(msg)
+    tags = (
+        "tag:stsci.edu:asdf/core/table-1.0.0",
+        "tag:stsci.edu:asdf/core/table-1.1.0",
+    )
+    types = (
+        "astropy.table.table.Table",
+        "astropy.table.table.QTable",
+    )
 
     def from_yaml_tree(self, node, tag, ctx):
         from astropy.table import Table
 
         return Table(node["columns"], meta=node.get("meta"))
+
+    def to_yaml_tree(self, obj, tag, ctx):
+        from astropy.table import Column, QTable, Table
+
+        if isinstance(obj, QTable):
+            obj = Table(obj)
+
+        for column in obj.columns.values():
+            if not isinstance(column, Column):
+                msg = f"The ASDF table converter does not support columns of type '{type(column)}'";
+                raise NotImplementedError(msg)
+
+        node = {
+            "columns": [c for c in obj.columns.values()]
+        }
+
+        if obj.meta:
+            node["meta"] = obj.meta
+
+        return node
+
+
+class AsdfTableConverterReadOnly(AsdfTableConverter):
+    types = ()
+
+    def to_yaml_tree(self, obj, tag, ctx):
+        msg = (
+            "The default configuration of asdf-astropy does not support writing "
+            f"astropy.table.Table with the {tag} tag.  "
+            "Call asdf_astropy.configure_core_table_support(asdf.get_config()) to use the ASDF core table tags."
+        )
+        raise NotImplementedError(msg)
 
 
 class AstropyTableConverter(Converter):

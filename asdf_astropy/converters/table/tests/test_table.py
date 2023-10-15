@@ -1,6 +1,7 @@
 import warnings
 
 import asdf
+import asdf_astropy
 import astropy.units as u
 import numpy as np
 import pytest
@@ -270,3 +271,22 @@ table: !core/table-1.0.0
         assert table["c"].name == "c"
         assert table["c"].description == "The target name"
         assert_array_equal(table["c"].data, np.array([b"d", b"e", b"f"]))
+
+
+def test_write_asdf_table(tmp_path):
+    with asdf.config_context() as config:
+        asdf_astropy.configure_core_table_support(config)
+
+        table = Table()
+        table["a"] = [1, 2]
+        table["b"] = ["x", "y"]
+
+        helpers.assert_table_roundtrip(table, tmp_path)
+
+        file_path = tmp_path / "test_tag.asdf"
+        with asdf.AsdfFile() as af:
+            af["table"] = table
+            af.write_to(file_path)
+
+        with asdf.open(file_path, _force_raw_types=True) as af:
+            assert af["table"]._tag.startswith("tag:stsci.edu:asdf/core/table-")
