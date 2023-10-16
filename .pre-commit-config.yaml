@@ -66,6 +66,6 @@ repos:
     - id: blacken-docs
 
 - repo: https://github.com/abravalheri/validate-pyproject
-  rev: "v0.14"
+  rev: "v0.15"
   hooks:
     - id: validate-pyproject
