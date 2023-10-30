@@ -485,6 +485,9 @@ if minversion("astropy", "5.1") and not minversion("asdf-transform-schemas", "0.
 if minversion("astropy", "5.1") and not minversion("asdf_transform_schemas", "0.2.2", inclusive=False):
     UNSUPPORTED_MODELS.append(astropy.modeling.powerlaws.Schechter1D)
 
+if minversion("astropy", "6.0.dev"):
+    UNSUPPORTED_MODELS.append(astropy.modeling.functional_models.GeneralSersic2D)
+
 
 @pytest.mark.parametrize("model", create_single_models())
 def test_single_model(tmp_path, model):
