@@ -1,7 +1,7 @@
 ASDF serialization support for astropy
 --------------------------------------
 
-.. image:: https://github.com/astropy/asdf-astropy/workflows/CI/badge.svg
+.. image:: https://github.com/astropy/asdf-astropy/actions/workflows/ci.yml/badge.svg
     :target: https://github.com/astropy/asdf-astropy/actions
     :alt: CI Status
 
