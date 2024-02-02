@@ -37,8 +37,8 @@ def get_extensions():
 
     return [
         *extensions.ASTROPY_EXTENSIONS,
-        extensions.COORDINATES_EXTENSION,
+        *extensions.COORDINATES_EXTENSIONS,
         *extensions.TRANSFORM_EXTENSIONS,
-        *extensions.CORE_EXTENSIONS,
         *extensions.UNIT_EXTENSIONS,
+        *extensions.CORE_EXTENSIONS,
     ]
