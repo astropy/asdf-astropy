@@ -83,7 +83,7 @@ hdul: !fits/fits-1.0.0
       - [BUNIT, DN, Units of the error array]
     """
 
-    buff = yaml_to_asdf(yaml)
+    buff = yaml_to_asdf(yaml, version="1.5.0")
     with asdf.open(buff) as af:
         hdul = af["hdul"]
         assert len(hdul) == 3  # noqa: PLR2004
