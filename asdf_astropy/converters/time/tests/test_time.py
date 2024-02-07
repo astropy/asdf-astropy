@@ -111,7 +111,7 @@ def create_examples():
 
 @pytest.mark.parametrize("example", create_examples())
 def test_read_examples(example):
-    buff = yaml_to_asdf(f"example: {example['example'].strip()}")
+    buff = yaml_to_asdf(f"example: {example['example'].strip()}", version="1.5.0")
     with asdf.AsdfFile() as af:
         af._open_impl(af, buff, mode="rw")
         assert np.all(af["example"] == example["truth"])
