@@ -21,6 +21,7 @@ description: |
 examples:
   -
     - A table stored in column-major order, with each column in a separate block
+    - asdf-standard-1.5.0
     - |
         !<tag:astropy.org:astropy/table/table-1.0.0>
           columns:
@@ -54,6 +55,7 @@ examples:
 
   -
     - A table stored in row-major order, all stored in the same block
+    - asdf-standard-1.5.0
     - |
         !<tag:astropy.org:astropy/table/table-1.0.0>
           columns:

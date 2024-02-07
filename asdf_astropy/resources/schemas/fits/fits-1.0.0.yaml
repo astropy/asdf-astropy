@@ -20,6 +20,7 @@ description: |
 examples:
   -
     - A simple FITS file with a primary header and two extensions
+    - asdf-standard-1.5.0
     - |
         !<tag:astropy.org:astropy/fits/fits-1.0.0>
             - header:
