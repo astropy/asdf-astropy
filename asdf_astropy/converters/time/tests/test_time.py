@@ -133,6 +133,10 @@ def create_formats():
 
     formats = []
     for format_ in TIME_FORMATS:
+        if format_ == "stardate":
+            # stardate is not a documented format for astropy
+            # https://docs.astropy.org/en/latest/time/index.html#time-format
+            continue
         new = Time("B2000.0")
         new.format = format_
         formats.append(new)
