@@ -18,6 +18,7 @@ dynamic = [
 ]
 dependencies = [
   "asdf>=2.13",
+  "asdf-standard @ git+https://github.com/braingram/asdf-standard.git@split_core",
   "asdf-coordinates-schemas>=0.1",
   "asdf-transform-schemas>=0.2.2",
   "astropy>=5.0.4",
