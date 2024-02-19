@@ -1,0 +1,23 @@
+name: Compare ASDF support
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+      - '*.x'
+    tags:
+      - '*'
+  pull_request:
+
+# Only cancel in-progress jobs or runs for the current workflow
+#   This cancels the already triggered workflows for a specific PR without canceling
+#   other instances of this workflow (other PRs, scheduled triggers, etc) when something
+#   within that PR re-triggers this CI
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  compare_asdf_support:
+    uses: braingram/asdf-actions/.github/workflows/compare_asdf_support.yml@main
