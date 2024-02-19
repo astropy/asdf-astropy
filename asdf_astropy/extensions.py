@@ -6,7 +6,6 @@ via an ``entry-point`` in the ``pyproject.toml`` file.
 from asdf.extension import ManifestExtension
 from astropy.utils import minversion
 
-from ._manifest import CompoundManifestExtension
 from .converters.coordinates.angle import AngleConverter, LatitudeConverter, LongitudeConverter
 from .converters.coordinates.earth_location import EarthLocationConverter
 from .converters.coordinates.frame import FrameConverter, LegacyICRSConverter
@@ -508,6 +507,19 @@ ASTROPY_EXTENSIONS = [
     for manifest_uri in _ASTROPY_EXTENSION_MANIFEST_URIS
 ]
 
+UNIT_CONVERTERS = [
+    UnitConverter(),
+    EquivalencyConverter(),
+    MagUnitConverter(),
+]
+
+UNIT_EXTENSIONS = [
+    ManifestExtension.from_uri(
+        "asdf://astropy.org/astropy/manifests/units-1.0.0",
+        converters=UNIT_CONVERTERS,
+    ),
+]
+
 # These tags are part of the ASDF Standard,
 # but we want to override serialization here so that users can
 # work with nice astropy objects for those entities.
@@ -520,13 +532,6 @@ CORE_CONVERTERS = [
     AsdfFitsConverter(),
 ]
 
-UNIT_CONVETERS = [
-    UnitConverter(),
-    EquivalencyConverter(),
-    MagUnitConverter(),
-]
-
-
 CORE_MANIFEST_URIS = [
     "asdf://asdf-format.org/core/manifests/core-1.0.0",
     "asdf://asdf-format.org/core/manifests/core-1.1.0",
@@ -538,12 +543,4 @@ CORE_MANIFEST_URIS = [
 ]
 
 
-CORE_EXTENSIONS = [
-    CompoundManifestExtension(
-        [
-            ManifestExtension.from_uri(u, converters=CORE_CONVERTERS),
-            ManifestExtension.from_uri("asdf://astropy.org/astropy/manifests/units-1.0.0", converters=UNIT_CONVETERS),
-        ],
-    )
-    for u in CORE_MANIFEST_URIS
-]
+CORE_EXTENSIONS = [ManifestExtension.from_uri(u, converters=CORE_CONVERTERS) for u in CORE_MANIFEST_URIS]

@@ -40,4 +40,5 @@ def get_extensions():
         extensions.COORDINATES_EXTENSION,
         *extensions.TRANSFORM_EXTENSIONS,
         *extensions.CORE_EXTENSIONS,
+        *extensions.UNIT_EXTENSIONS,
     ]
