@@ -163,6 +163,7 @@ def create_single_models():  # noqa: PLR0915
         astropy_models.Scale(3.4),
         astropy_models.Sersic1D(amplitude=10.0, r_eff=1.0, n=4.0),
         astropy_models.Sersic2D(amplitude=10.0, r_eff=1.0, n=4.0, x_0=0.5, y_0=1.5, ellip=0.0, theta=0.0),
+        astropy_models.GeneralSersic2D(amplitude=10.0, r_eff=1.0, n=4.0, x_0=0.5, y_0=1.5, ellip=0.0, theta=0.0, c=0.5),
         astropy_models.Shift(2.0),
         astropy_models.Shift(2.0 * u.deg),
         astropy_models.Scale(3.4 * u.deg),
@@ -485,13 +486,14 @@ if minversion("astropy", "5.1") and not minversion("asdf-transform-schemas", "0.
 if minversion("astropy", "5.1") and not minversion("asdf_transform_schemas", "0.2.2", inclusive=False):
     UNSUPPORTED_MODELS.append(astropy.modeling.powerlaws.Schechter1D)
 
-if minversion("astropy", "6.0.dev"):
-    UNSUPPORTED_MODELS.append(astropy.modeling.functional_models.GeneralSersic2D)
-
 
 @pytest.mark.parametrize("model", create_single_models())
 def test_single_model(tmp_path, model):
-    helpers.assert_model_roundtrip(model, tmp_path)
+    kwargs = {}
+    # GeneralSersic2D is only supported in asdf standard 1.6.0
+    if isinstance(model, astropy_models.GeneralSersic2D):
+        kwargs["version"] = "1.6.0"
+    helpers.assert_model_roundtrip(model, tmp_path, **kwargs)
 
 
 def get_all_models():

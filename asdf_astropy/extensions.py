@@ -87,6 +87,10 @@ TRANSFORM_CONVERTERS = [
         "astropy.modeling.functional_models.Gaussian2D",
     ),
     SimpleTransformConverter(
+        ["tag:stsci.edu:asdf/transform/general_sersic2d-*"],
+        "astropy.modeling.functional_models.GeneralSersic2D",
+    ),
+    SimpleTransformConverter(
         ["tag:stsci.edu:asdf/transform/king_projected_analytic1d-*"],
         "astropy.modeling.functional_models.KingProjectedAnalytic1D",
     ),
