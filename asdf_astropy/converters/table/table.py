@@ -3,7 +3,10 @@ from asdf.tags.core.ndarray import NDArrayType
 
 
 class ColumnConverter(Converter):
-    tags = ("tag:stsci.edu:asdf/core/column-*",)
+    tags = (
+        "tag:stsci.edu:asdf/core/column-*",
+        "tag:stsci.edu:asdf/table/column-*",
+    )
     types = (
         "astropy.table.column.Column",
         "astropy.table.column.MaskedColumn",
@@ -45,7 +48,10 @@ class ColumnConverter(Converter):
 
 
 class AsdfTableConverter(Converter):
-    tags = ("tag:stsci.edu:asdf/core/table-*",)
+    tags = (
+        "tag:stsci.edu:asdf/core/table-*",
+        "tag:stsci.edu:asdf/table/table-*",
+    )
     types = ()
 
     def to_yaml_tree(self, obj, tag, ctx):

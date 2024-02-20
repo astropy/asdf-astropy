@@ -1,3 +1,8 @@
+0.6.0 (unreleased)
+------------------
+
+- Add support for GeneralSersic2D transform. [#221]
+
 0.5.0 (2023-11-15)
 ------------------
 

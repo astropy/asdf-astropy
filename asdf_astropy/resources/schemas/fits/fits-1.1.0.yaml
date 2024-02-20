@@ -1,7 +1,7 @@
 %YAML 1.1
 ---
 $schema: "http://stsci.edu/schemas/yaml-schema/draft-01"
-id: "http://astropy.org/schemas/astropy/fits/fits-1.0.0"
+id: "http://astropy.org/schemas/astropy/fits/fits-1.1.0"
 title: >
   A FITS file inside of an ASDF file.
 description: |
@@ -20,9 +20,9 @@ description: |
 examples:
   -
     - A simple FITS file with a primary header and two extensions
-    - asdf-standard-1.5.0
+    - asdf-standard-1.6.0
     - |
-        !<tag:astropy.org:astropy/fits/fits-1.0.0>
+        !<tag:astropy.org:astropy/fits/fits-1.1.0>
             - header:
               - [SIMPLE, true, conforms to FITS standard]
               - [BITPIX, 8, array data type]
@@ -38,7 +38,7 @@ examples:
               - ['', Information about the observation]
               - []
               - [DATE-OBS, '2013-08-30T10:49:55.000000', The date the observation was made (UTC)]
-            - data: !core/ndarray-1.0.0
+            - data: !core/ndarray-1.1.0
                 datatype: float32
                 shape: [2, 3, 3, 4]
                 source: 0
@@ -55,7 +55,7 @@ examples:
               - [GCOUNT, 1, number of groups]
               - [EXTNAME, SCI, extension name]
               - [BUNIT, DN, Units of the data array]
-            - data: !core/ndarray-1.0.0
+            - data: !core/ndarray-1.1.0
                 datatype: float32
                 shape: [2, 3, 3, 4]
                 source: 1
@@ -74,7 +74,7 @@ examples:
               - [BUNIT, DN, Units of the error array]
 
 allOf:
-  - tag: "tag:astropy.org:astropy/fits/fits-1.0.0"
+  - tag: "tag:astropy.org:astropy/fits/fits-1.1.0"
   - type: array
     items:
       type: object
@@ -84,9 +84,10 @@ allOf:
         data:
           description: "The data part of the HDU."
           anyOf:
-            - $ref: "http://stsci.edu/schemas/asdf/core/ndarray-1.0.0"
-            - $ref: "../table/table-1.0.0"
+            - $ref: "http://stsci.edu/schemas/asdf/core/ndarray-1.1.0"
+            - $ref: "../table/table-1.2.0"
             # Retain backwards compatibility with table defined by ASDF Standard
+            - $ref: "http://stsci.edu/schemas/asdf/table/table-1.1.0"
             - $ref: "http://stsci.edu/schemas/asdf/core/table-1.0.0"
             - type: "null"
           default: null
