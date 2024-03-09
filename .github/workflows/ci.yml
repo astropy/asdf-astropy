@@ -38,7 +38,7 @@ jobs:
       default_python: '3.9'
       envs: |
         - linux: py39-parallel-cov
-        - linux: py39-test-devdeps-parallel-cov
+        - linux: py311-test-devdeps-parallel-cov
         - linux: py39-astropylts-parallel-cov
         - linux: py39-transformlts-parallel-cov
       coverage: codecov
@@ -71,6 +71,7 @@ jobs:
       envs: |
         - linux: py310-test-parallel
         - linux: py311-test-parallel
+        - linux: py312-test-parallel
         - macos: py311-test-parallel
         - windows: py311-test-parallel
 
