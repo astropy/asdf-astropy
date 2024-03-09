@@ -1,3 +1,12 @@
+0.6.0 (unreleased)
+------------------
+
+- Add python 3.12 support. [#219]
+- Update ASDF standard 1.6.0 support. [#219]
+- Increase minimum versions for ``asdf-coordinates-schemas``
+  ``asdf-transform-schemas`` and list ``asdf-standard`` as
+  a dependency. [#219]
+
 0.5.0 (2023-11-15)
 ------------------
 
