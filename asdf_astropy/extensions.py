@@ -3,9 +3,6 @@ This module builds all of the ASDF extensions which will be registered by `asdf_
 via an ``entry-point`` in the ``pyproject.toml`` file.
 """
 
-import asdf_coordinates_schemas
-import asdf_standard
-import asdf_transform_schemas
 from asdf.extension import ManifestExtension
 from astropy.utils import minversion
 
@@ -402,6 +399,7 @@ if minversion("astropy", "5.1.0"):
 # The order here is important; asdf will prefer to use extensions
 # that occur earlier in the list.
 TRANSFORM_MANIFEST_URIS = [
+    "asdf://asdf-format.org/transform/manifests/transform-1.6.0",
     "asdf://asdf-format.org/transform/manifests/transform-1.5.0",
     "asdf://asdf-format.org/transform/manifests/transform-1.4.0",
     "asdf://asdf-format.org/transform/manifests/transform-1.3.0",
@@ -409,12 +407,6 @@ TRANSFORM_MANIFEST_URIS = [
     "asdf://asdf-format.org/transform/manifests/transform-1.1.0",
     "asdf://asdf-format.org/transform/manifests/transform-1.0.0",
 ]
-
-if asdf_transform_schemas.__version__ > "0.4.0":
-    TRANSFORM_MANIFEST_URIS.insert(
-        0,
-        "asdf://asdf-format.org/transform/manifests/transform-1.6.0",
-    )
 
 TRANSFORM_EXTENSIONS = [
     ManifestExtension.from_uri(
@@ -493,14 +485,9 @@ ASTROPY_CONVERTERS = [
 ]
 
 _COORDINATES_MANIFEST_URIS = [
+    "asdf://asdf-format.org/astronomy/coordinates/manifests/coordinates-1.1.0",
     "asdf://asdf-format.org/astronomy/coordinates/manifests/coordinates-1.0.0",
 ]
-
-if asdf_coordinates_schemas.__version__ > "0.2.0":
-    _COORDINATES_MANIFEST_URIS.insert(
-        0,
-        "asdf://asdf-format.org/astronomy/coordinates/manifests/coordinates-1.1.0",
-    )
 
 COORDINATES_EXTENSIONS = [
     ManifestExtension.from_uri(
@@ -565,6 +552,7 @@ UNIT_EXTENSIONS = [
 # up to asdf 1.5.0 many tags supported by asdf-astropy
 # were defined in core manifests
 CORE_MANIFEST_URIS = [
+    "asdf://asdf-format.org/astronomy/manifests/astronomy-1.0.0",
     "asdf://asdf-format.org/core/manifests/core-1.5.0",
     "asdf://asdf-format.org/core/manifests/core-1.4.0",
     "asdf://asdf-format.org/core/manifests/core-1.3.0",
@@ -572,9 +560,5 @@ CORE_MANIFEST_URIS = [
     "asdf://asdf-format.org/core/manifests/core-1.1.0",
     "asdf://asdf-format.org/core/manifests/core-1.0.0",
 ]
-# TODO update this version check when the next asdf-standard release is made
-if asdf_standard.__version__ > "1.0.3":
-    CORE_MANIFEST_URIS.insert(0, "asdf://asdf-format.org/astronomy/manifests/astronomy-1.0.0")
-
 
 CORE_EXTENSIONS = [ManifestExtension.from_uri(u, converters=CORE_CONVERTERS) for u in CORE_MANIFEST_URIS]
