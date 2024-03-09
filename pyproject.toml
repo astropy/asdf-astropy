@@ -18,8 +18,9 @@ dynamic = [
 ]
 dependencies = [
   "asdf>=2.13",
-  "asdf-coordinates-schemas>=0.1",
-  "asdf-transform-schemas>=0.2.2",
+  "asdf-coordinates-schemas>=0.3",
+  "asdf-transform-schemas>=0.5",
+  "asdf-standard>=1.1.0",
   "astropy>=5.0.4",
   "numpy>=1.20",
   "packaging>=19",
