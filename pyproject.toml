@@ -40,6 +40,7 @@ test = [
   "coverage",
   "pytest-astropy",
   "scipy",
+  "pytest<8.1",
 ]
 [project.urls]
 'documentation' = 'https://asdf-astropy.readthedocs.io/en/latest/'
