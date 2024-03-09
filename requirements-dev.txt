@@ -3,5 +3,5 @@ git+https://github.com/asdf-format/asdf
 git+https://github.com/asdf-format/asdf-standard.git
 git+https://github.com/asdf-format/asdf-transform-schemas
 
-scipy>=0.0.dev0
-numpy>=0.0.dev0
+#scipy>=0.0.dev0
+#numpy>=0.0.dev0
