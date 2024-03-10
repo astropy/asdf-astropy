@@ -6,7 +6,6 @@ via an ``entry-point`` in the ``pyproject.toml`` file.
 from asdf.extension import ManifestExtension
 from astropy.utils import minversion
 
-from ._manifest import CompoundManifestExtension
 from .converters.coordinates.angle import AngleConverter, LatitudeConverter, LongitudeConverter
 from .converters.coordinates.earth_location import EarthLocationConverter
 from .converters.coordinates.frame import FrameConverter, LegacyICRSConverter
@@ -39,11 +38,12 @@ __all__ = [
     "TRANSFORM_EXTENSIONS",
     "COORDINATES_CONVERTERS",
     "ASTROPY_CONVERTERS",
-    "COORDINATES_EXTENSION",
+    "COORDINATES_EXTENSIONS",
     "ASTROPY_EXTENSIONS",
     "CORE_CONVERTERS",
     "CORE_MANIFEST_URIS",
     "CORE_EXTENSIONS",
+    "UNIT_EXTENSIONS",
 ]
 
 TRANSFORM_CONVERTERS = [
@@ -399,6 +399,7 @@ if minversion("astropy", "5.1.0"):
 # The order here is important; asdf will prefer to use extensions
 # that occur earlier in the list.
 TRANSFORM_MANIFEST_URIS = [
+    "asdf://asdf-format.org/transform/manifests/transform-1.6.0",
     "asdf://asdf-format.org/transform/manifests/transform-1.5.0",
     "asdf://asdf-format.org/transform/manifests/transform-1.4.0",
     "asdf://asdf-format.org/transform/manifests/transform-1.3.0",
@@ -406,7 +407,6 @@ TRANSFORM_MANIFEST_URIS = [
     "asdf://asdf-format.org/transform/manifests/transform-1.1.0",
     "asdf://asdf-format.org/transform/manifests/transform-1.0.0",
 ]
-
 
 TRANSFORM_EXTENSIONS = [
     ManifestExtension.from_uri(
@@ -484,14 +484,22 @@ ASTROPY_CONVERTERS = [
     NdarrayMixinConverter(),
 ]
 
-
-COORDINATES_EXTENSION = ManifestExtension.from_uri(
+_COORDINATES_MANIFEST_URIS = [
+    "asdf://asdf-format.org/astronomy/coordinates/manifests/coordinates-1.1.0",
     "asdf://asdf-format.org/astronomy/coordinates/manifests/coordinates-1.0.0",
-    converters=COORDINATES_CONVERTERS,
-)
+]
+
+COORDINATES_EXTENSIONS = [
+    ManifestExtension.from_uri(
+        manifest_uri,
+        converters=COORDINATES_CONVERTERS,
+    )
+    for manifest_uri in _COORDINATES_MANIFEST_URIS
+]
 
 
 _ASTROPY_EXTENSION_MANIFEST_URIS = [
+    "asdf://astropy.org/astropy/manifests/astropy-1.2.0",
     "asdf://astropy.org/astropy/manifests/astropy-1.1.0",
     "asdf://astropy.org/astropy/manifests/astropy-1.0.0",
 ]
@@ -508,42 +516,49 @@ ASTROPY_EXTENSIONS = [
     for manifest_uri in _ASTROPY_EXTENSION_MANIFEST_URIS
 ]
 
+
 # These tags are part of the ASDF Standard,
 # but we want to override serialization here so that users can
 # work with nice astropy objects for those entities.
-
-CORE_CONVERTERS = [
-    QuantityConverter(),
-    TimeConverter(),
-    ColumnConverter(),
-    AsdfTableConverter(),
+_FITS_CONVERTERS = [
     AsdfFitsConverter(),
 ]
 
-UNIT_CONVETERS = [
+_TIME_CONVERTERS = [
+    TimeConverter(),
+]
+
+_TABLE_CONVERTERS = [
+    ColumnConverter(),
+    AsdfTableConverter(),
+]
+
+_UNIT_CONVERTERS = [
     UnitConverter(),
     EquivalencyConverter(),
     MagUnitConverter(),
+    QuantityConverter(),
 ]
 
+CORE_CONVERTERS = _FITS_CONVERTERS + _TIME_CONVERTERS + _TABLE_CONVERTERS + _UNIT_CONVERTERS
 
+UNIT_EXTENSIONS = [
+    ManifestExtension.from_uri(
+        "asdf://astropy.org/astropy/manifests/units-1.0.0",
+        converters=_UNIT_CONVERTERS,
+    ),
+]
+
+# up to asdf 1.5.0 many tags supported by asdf-astropy
+# were defined in core manifests
 CORE_MANIFEST_URIS = [
-    "asdf://asdf-format.org/core/manifests/core-1.0.0",
-    "asdf://asdf-format.org/core/manifests/core-1.1.0",
-    "asdf://asdf-format.org/core/manifests/core-1.2.0",
-    "asdf://asdf-format.org/core/manifests/core-1.3.0",
-    "asdf://asdf-format.org/core/manifests/core-1.4.0",
+    "asdf://asdf-format.org/astronomy/manifests/astronomy-1.0.0",
     "asdf://asdf-format.org/core/manifests/core-1.5.0",
-    "asdf://asdf-format.org/core/manifests/core-1.6.0",
+    "asdf://asdf-format.org/core/manifests/core-1.4.0",
+    "asdf://asdf-format.org/core/manifests/core-1.3.0",
+    "asdf://asdf-format.org/core/manifests/core-1.2.0",
+    "asdf://asdf-format.org/core/manifests/core-1.1.0",
+    "asdf://asdf-format.org/core/manifests/core-1.0.0",
 ]
 
-
-CORE_EXTENSIONS = [
-    CompoundManifestExtension(
-        [
-            ManifestExtension.from_uri(u, converters=CORE_CONVERTERS),
-            ManifestExtension.from_uri("asdf://astropy.org/astropy/manifests/units-1.0.0", converters=UNIT_CONVETERS),
-        ],
-    )
-    for u in CORE_MANIFEST_URIS
-]
+CORE_EXTENSIONS = [ManifestExtension.from_uri(u, converters=CORE_CONVERTERS) for u in CORE_MANIFEST_URIS]

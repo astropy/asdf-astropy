@@ -38,7 +38,7 @@ jobs:
       default_python: '3.9'
       envs: |
         - linux: py39-parallel-cov
-        - linux: py39-test-devdeps-parallel-cov
+        - linux: py311-test-devdeps-parallel-cov
         - linux: py39-astropylts-parallel-cov
         - linux: py39-transformlts-parallel-cov
       coverage: codecov
@@ -71,6 +71,7 @@ jobs:
       envs: |
         - linux: py310-test-parallel
         - linux: py311-test-parallel
+        - linux: py312-test-parallel
         - macos: py311-test-parallel
         - windows: py311-test-parallel
 
@@ -87,6 +88,7 @@ jobs:
       envs: |
         - linux: py310-test-devdeps-parallel
         - linux: py311-test-devdeps-parallel
+        - linux: py311-test-devdeps-numpydev-parallel
 
   oldest:
     needs: [core, asdf-schemas]
@@ -101,24 +103,6 @@ jobs:
       envs: |
         - linux: py39-test-oldestdep-parallels-cov
       coverage: codecov
-
-  numpy:
-    needs: [core, asdf-schemas]
-    uses: OpenAstronomy/github-actions-workflows/.github/workflows/tox.yml@v1
-    with:
-      cache-path: ~/.cache/pip
-      cache-key: pip-${{ needs.setup.outputs.requirements-hash }}
-      cache-restore-keys: |
-        pip-
-      # Any env name which does not start with `pyXY` will use this Python version.
-      default_python: '3.9'
-      envs: |
-        - linux: py39-test-numpy119-parallel
-        - linux: py39-test-numpy120-parallel
-        - linux: py310-test-numpy121-parallel
-        - linux: py310-test-numpy122-parallel
-        - linux: py311-test-numpy123-parallel
-        - linux: py311-test-numpy124-parallel
 
   wheel_building:
     permissions:

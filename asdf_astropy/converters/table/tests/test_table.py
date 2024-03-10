@@ -139,7 +139,7 @@ table: !<tag:astropy.org:astropy/table/table-1.0.0>
   colnames: [a, b]
     """
 
-    buff = yaml_to_asdf(yaml)
+    buff = yaml_to_asdf(yaml, version="1.5.0")
 
     with pytest.raises(ValueError, match="Inconsistent data column lengths"), asdf.open(buff):
         pass
@@ -251,7 +251,7 @@ table: !core/table-1.0.0
       description: The target name
       name: c
     """
-    buff = yaml_to_asdf(yaml)
+    buff = yaml_to_asdf(yaml, version="1.5.0")
 
     with asdf.open(buff) as af:
         table = af["table"]

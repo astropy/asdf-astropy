@@ -44,7 +44,7 @@ quantity: !unit/quantity-1.1.0
   value: {value}
   unit: kpc
     """
-    buff = helpers.yaml_to_asdf(yaml)
+    buff = helpers.yaml_to_asdf(yaml, version="1.5.0")
     with asdf.open(buff) as af:
         assert af["quantity"].value == value
         assert af["quantity"].unit.is_equivalent(units.kpc)
@@ -57,7 +57,7 @@ quantity: !unit/quantity-1.1.0
   value: {value}
   unit: !unit/unit-1.0.0 kpc
     """
-    buff = helpers.yaml_to_asdf(yaml)
+    buff = helpers.yaml_to_asdf(yaml, version="1.5.0")
     with asdf.open(buff) as af:
         assert af["quantity"].value == value
         assert af["quantity"].unit.is_equivalent(units.kpc)
@@ -69,7 +69,7 @@ quantity: !unit/quantity-1.1.0
   value: !core/ndarray-1.0.0 [1.0, 2.0, 3.0, 4.0]
   unit: km
     """
-    buff = helpers.yaml_to_asdf(yaml)
+    buff = helpers.yaml_to_asdf(yaml, version="1.5.0")
     with asdf.open(buff) as af:
         assert_array_equal(af["quantity"].value, np.array([1.0, 2.0, 3.0, 4.0]))
         assert af["quantity"].unit.is_equivalent(units.km)

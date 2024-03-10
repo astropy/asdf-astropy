@@ -529,6 +529,7 @@ def test_all_models_supported(model):
 
 def test_legacy_const(tmp_path):
     with asdf.config_context() as config:
+        config.remove_extension("asdf://asdf-format.org/transform/extensions/transform-1.6.0")
         config.remove_extension("asdf://asdf-format.org/transform/extensions/transform-1.5.0")
 
         model = astropy_models.Const1D(amplitude=5.0)
