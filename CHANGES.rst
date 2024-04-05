@@ -1,3 +1,9 @@
+0.6.1 (2024-04-05)
+------------------
+
+- update ``copy`` usage in ``Quantity`` converter to
+  deal with astropy 6.1 changes. [#224]
+
 0.6.0 (2024-03-13)
 ------------------
 
