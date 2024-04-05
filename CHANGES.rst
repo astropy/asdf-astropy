@@ -1,4 +1,4 @@
-0.6.1 (unreleased)
+0.6.1 (2024-04-05)
 ------------------
 
 - update ``copy`` usage in ``Quantity`` converter to
