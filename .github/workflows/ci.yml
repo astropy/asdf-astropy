@@ -39,8 +39,7 @@ jobs:
       envs: |
         - linux: py39-parallel-cov
         - linux: py311-test-devdeps-parallel-cov
-        - linux: py39-astropylts-parallel-cov
-        - linux: py39-transformlts-parallel-cov
+        - linux: py312-test-predeps-parallel-cov
       coverage: codecov
 
   asdf-schemas:
