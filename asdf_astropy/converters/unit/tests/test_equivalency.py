@@ -12,7 +12,6 @@ def create_equivalencies():
     result = [
         eq.plate_scale(0.3 * u.deg / u.mm),
         eq.pixel_scale(0.5 * u.deg / u.pix),
-        eq.spectral_density(350 * u.nm, factor=2),
         eq.spectral_density(350 * u.nm),
         eq.spectral(),
         eq.brightness_temperature(500 * u.GHz),
@@ -39,6 +38,10 @@ def create_equivalencies():
     if Version(astropy.__version__) >= Version("4.1"):
         result.append(eq.pixel_scale(100.0 * u.pix / u.cm))
 
+    # the factor argument to spectral density is deprecated in astropy 7
+    # skip this test to avoid test failures due to the deprecation warning
+    if Version(astropy.__version__) < Version("7.0.0.dev"):
+        result.append(eq.spectral_density(350 * u.nm, factor=2))
     return result
 
 
