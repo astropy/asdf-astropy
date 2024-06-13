@@ -21,6 +21,9 @@ class EquivalencyConverter(Converter):
             equivalency_method = with_H0 if name == "with_H0" else getattr(equivalencies, name)
 
             kwargs = dict(zip(equivalency_node["kwargs_names"], equivalency_node["kwargs_values"]))
+            # astropy 7.0 deprecated factor, if it's None, don't provide it to spectral_density
+            if "factor" in kwargs and name == "spectral_density" and kwargs["factor"] is None:
+                del kwargs["factor"]
             components.append(equivalency_method(**kwargs))
 
         # The Equivalency class is a UserList that overrides __add__ to

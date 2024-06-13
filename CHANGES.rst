@@ -1,3 +1,10 @@
+0.6.2 (unreleased)
+------------------
+
+- strip None factor for spectral_density in equivalency converter
+  to avoid deprecation warnings for astropy 7. [#229]
+
+
 0.6.1 (2024-04-05)
 ------------------
 
