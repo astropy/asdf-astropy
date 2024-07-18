@@ -6,6 +6,7 @@
 
 - drop support for python 3.9. [#232]
 
+- replace usages of ``copy_arrays`` with ``memmap`` [#230]
 
 0.6.1 (2024-04-05)
 ------------------

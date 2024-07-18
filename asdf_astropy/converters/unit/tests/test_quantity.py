@@ -1,3 +1,5 @@
+import importlib.metadata
+
 import asdf
 import numpy as np
 import pytest
@@ -5,6 +7,13 @@ from asdf.testing import helpers
 from astropy import units
 from astropy.units import Quantity
 from numpy.testing import assert_array_equal
+
+
+def asdf_open_memory_mapping_kwarg(memmap: bool) -> dict:
+    if tuple(int(part) for part in importlib.metadata.version("asdf").split(".")) >= (3, 1, 0):
+        return {"memmap": memmap}
+    else :
+        return {"copy_arrays": not memmap}
 
 
 def create_quantities():
@@ -77,7 +86,7 @@ quantity: !unit/quantity-1.1.0
 
 def test_memmap(tmp_path):
     """
-    Test that memmap (copy_arrays=False) works with quantities.
+    Test that memmap (memmap=True) works with quantities.
 
     Unfortunately, this is not a simple `isinstance(obj, np.memmap)`
     Instead it requires a more complicated check.
@@ -95,7 +104,7 @@ def test_memmap(tmp_path):
         af.write_to(file_path)
 
     # Update a value in the ASDF file
-    with asdf.open(file_path, mode="rw", copy_arrays=False) as af:
+    with asdf.open(file_path, mode="rw", **asdf_open_memory_mapping_kwarg(memmap=True)) as af:
         assert (af.tree["quantity"] == quantity).all()
         assert af.tree["quantity"][-1, -1] != new_value
 
@@ -105,7 +114,7 @@ def test_memmap(tmp_path):
         assert (af.tree["quantity"] != quantity).any()
         assert (af.tree["quantity"] == new_quantity).all()
 
-    with asdf.open(file_path, mode="rw", copy_arrays=False) as af:
+    with asdf.open(file_path, mode="rw", **asdf_open_memory_mapping_kwarg(memmap=True)) as af:
         assert af.tree["quantity"][-1, -1] == new_value
         assert (af.tree["quantity"] != quantity).any()
         assert (af.tree["quantity"] == new_quantity).all()
@@ -113,7 +122,7 @@ def test_memmap(tmp_path):
 
 def test_no_memmap(tmp_path):
     """
-    Test that turning off memmap (copy_arrays=True) works as expected for quantities
+    Test that turning off memmap (memmap=False) works as expected for quantities
     """
     file_path = tmp_path / "test.asdf"
     quantity = Quantity(np.arange(100, dtype=np.float64).reshape(5, 20), units.km)
@@ -128,7 +137,7 @@ def test_no_memmap(tmp_path):
         af.write_to(file_path)
 
     # Update a value in the ASDF file
-    with asdf.open(file_path, mode="rw", copy_arrays=True) as af:
+    with asdf.open(file_path, mode="rw", asdf_open_memory_mapping_kwarg(memmap=False)) as af:
         assert (af.tree["quantity"] == quantity).all()
         assert af.tree["quantity"][-1, -1] != new_value
 
@@ -138,7 +147,7 @@ def test_no_memmap(tmp_path):
         assert (af.tree["quantity"] != quantity).any()
         assert (af.tree["quantity"] == new_quantity).all()
 
-    with asdf.open(file_path, mode="rw", copy_arrays=True) as af:
+    with asdf.open(file_path, mode="rw", asdf_open_memory_mapping_kwarg(memmap=False)) as af:
         assert af.tree["quantity"][-1, -1] != new_value
         assert (af.tree["quantity"] != new_quantity).any()
         assert (af.tree["quantity"] == quantity).all()
