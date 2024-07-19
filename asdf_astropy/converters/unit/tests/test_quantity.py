@@ -1,16 +1,15 @@
-import importlib.metadata
-
 import asdf
 import numpy as np
 import pytest
 from asdf.testing import helpers
 from astropy import units
 from astropy.units import Quantity
+from astropy.utils.introspection import minversion
 from numpy.testing import assert_array_equal
 
 
 def asdf_open_memory_mapping_kwarg(memmap: bool) -> dict:
-    if tuple(int(part) for part in importlib.metadata.version("asdf").split(".")) >= (3, 1, 0):
+    if minversion("asdf", "3.1.0"):
         return {"memmap": memmap}
     else :
         return {"copy_arrays": not memmap}
