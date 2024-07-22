@@ -11,7 +11,7 @@ from numpy.testing import assert_array_equal
 def asdf_open_memory_mapping_kwarg(memmap: bool) -> dict:
     if minversion("asdf", "3.1.0"):
         return {"memmap": memmap}
-    else :
+    else:
         return {"copy_arrays": not memmap}
 
 
@@ -136,7 +136,7 @@ def test_no_memmap(tmp_path):
         af.write_to(file_path)
 
     # Update a value in the ASDF file
-    with asdf.open(file_path, mode="rw", asdf_open_memory_mapping_kwarg(memmap=False)) as af:
+    with asdf.open(file_path, mode="rw", **asdf_open_memory_mapping_kwarg(memmap=False)) as af:
         assert (af.tree["quantity"] == quantity).all()
         assert af.tree["quantity"][-1, -1] != new_value
 
@@ -146,7 +146,7 @@ def test_no_memmap(tmp_path):
         assert (af.tree["quantity"] != quantity).any()
         assert (af.tree["quantity"] == new_quantity).all()
 
-    with asdf.open(file_path, mode="rw", asdf_open_memory_mapping_kwarg(memmap=False)) as af:
+    with asdf.open(file_path, mode="rw", **asdf_open_memory_mapping_kwarg(memmap=False)) as af:
         assert af.tree["quantity"][-1, -1] != new_value
         assert (af.tree["quantity"] != new_quantity).any()
         assert (af.tree["quantity"] == quantity).all()
