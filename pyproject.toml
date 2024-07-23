@@ -94,6 +94,7 @@ extend-ignore = [
     "FIX", # flake8-fixme
     # Individually ignored checks
     "SLF001", # private-member-access
+    "FBT001", # boolean positional arguments in function definition
 ]
 extend-exclude = ["docs/*"]
 
