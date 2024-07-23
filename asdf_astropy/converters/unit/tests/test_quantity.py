@@ -11,8 +11,7 @@ from numpy.testing import assert_array_equal
 def asdf_open_memory_mapping_kwarg(memmap: bool) -> dict:
     if minversion("asdf", "3.1.0"):
         return {"memmap": memmap}
-    else:
-        return {"copy_arrays": not memmap}
+    return {"copy_arrays": not memmap}
 
 
 def create_quantities():
