@@ -10,18 +10,19 @@ class FitsWCSConverter(Converter):
     such as tabular or distortion WCSes.
 
     Future work:
-        - Until the support for tabular and distortion WCSes is added, throw error for such WCSes when passed through in the converter
+        - Until the support for tabular and distortion WCSes is added,
+          throw error for such WCSes when passed through in the converter
         - Implement mechanisms to detect tabular and distortion WCSes and support their serialization
     """
+
     tags = ("tag:astropy.org:astropy/fits/fitswcs-*",)
-    types = ("astropy.wcs.wcs.WCS", )
+    types = ("astropy.wcs.wcs.WCS",)
 
     def from_yaml_tree(self, node, tag, ctx):
         from astropy.wcs import WCS
 
         header = node["header"]
-        wcs = WCS(header)
-        return wcs
+        return WCS(header)
 
     def to_yaml_tree(self, wcs, tag, ctx):
         node = {}
