@@ -15,6 +15,7 @@ __all__ = [
     "FitsConverter",
     "AsdfFitsConverter",
     "AstropyFitsConverter",
+    "FitsWCSConverter",
     "ColumnConverter",
     "AstropyTableConverter",
     "AsdfTableConverter",
@@ -52,7 +53,7 @@ from .coordinates import (
     SkyCoordConverter,
     SpectralCoordConverter,
 )
-from .fits import AsdfFitsConverter, AstropyFitsConverter, FitsConverter
+from .fits import AsdfFitsConverter, AstropyFitsConverter, FitsConverter, FitsWCSConverter
 from .nddata import UncertaintyConverter
 from .table import AsdfTableConverter, AstropyTableConverter, ColumnConverter, NdarrayMixinConverter
 from .time import TimeConverter, TimeDeltaConverter
