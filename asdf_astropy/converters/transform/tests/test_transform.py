@@ -77,24 +77,19 @@ def create_bounding_boxes():
             astropy_models.Polynomial2D(1),
             [("x", False)],
         ),
+        CompoundBoundingBox(
+            {(1,): (0, 1), (2,): (2, 3)},
+            astropy_models.Polynomial2D(1),
+            [("x", False)],
+            ignored=["x"],
+        ),
+        CompoundBoundingBox(
+            {(1,): (0, 1), (2,): (2, 3)},
+            astropy_models.Polynomial2D(1),
+            [("x", False)],
+            ignored=["y"],
+        ),
     ]
-    if minversion("astropy", "5.1"):
-        compound_bounding_box.extend(
-            [
-                CompoundBoundingBox(
-                    {(1,): (0, 1), (2,): (2, 3)},
-                    astropy_models.Polynomial2D(1),
-                    [("x", False)],
-                    ignored=["x"],
-                ),
-                CompoundBoundingBox(
-                    {(1,): (0, 1), (2,): (2, 3)},
-                    astropy_models.Polynomial2D(1),
-                    [("x", False)],
-                    ignored=["y"],
-                ),
-            ],
-        )
 
     return model_bounding_box + compound_bounding_box
 
