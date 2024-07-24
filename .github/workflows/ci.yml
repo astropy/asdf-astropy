@@ -35,9 +35,9 @@ jobs:
       cache-restore-keys: |
         pip-
       # Any env name which does not start with `pyXY` will use this Python version.
-      default_python: '3.9'
+      default_python: '3.12'
       envs: |
-        - linux: py39-parallel-cov
+        - linux: py310-test-parallel-cov
         - linux: py311-test-devdeps-parallel-cov
         - linux: py312-test-predeps-parallel-cov
       coverage: codecov
@@ -50,7 +50,7 @@ jobs:
       cache-key: pip-${{ needs.setup.outputs.requirements-hash }}
       cache-restore-keys: |
         pip-
-      default_python: '3.10'
+      default_python: '3.12'
       envs: |
         - linux: asdf
         - linux: asdf-standard
@@ -66,7 +66,7 @@ jobs:
       cache-restore-keys: |
         pip-
       # Any env name which does not start with `pyXY` will use this Python version.
-      default_python: '3.10'
+      default_python: '3.12'
       envs: |
         - linux: py310-test-parallel
         - linux: py311-test-parallel
@@ -83,7 +83,7 @@ jobs:
       cache-restore-keys: |
         pip-
       # Any env name which does not start with `pyXY` will use this Python version.
-      default_python: '3.9'
+      default_python: '3.12'
       envs: |
         - linux: py310-test-devdeps-parallel
         - linux: py311-test-devdeps-parallel
@@ -98,9 +98,9 @@ jobs:
       cache-restore-keys: |
         pip-
       # Any env name which does not start with `pyXY` will use this Python version.
-      default_python: '3.9'
+      default_python: '3.10'
       envs: |
-        - linux: py39-test-oldestdep-parallels-cov
+        - linux: py310-test-oldestdeps-parallel-cov
       coverage: codecov
 
   wheel_building:
