@@ -14,4 +14,4 @@ allOf:
   - type: object
     properties:
       header:
-        type: object 
+        type: object
