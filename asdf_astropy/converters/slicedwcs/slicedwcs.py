@@ -27,10 +27,7 @@ class SlicedWCSConverter(Converter):
         return SlicedLowLevelWCS(wcs, slice_array)
 
     def to_yaml_tree(self, sl, tag, ctx):
-        import astropy
-
         node = {}
-        if isinstance(sl._wcs, astropy.wcs.WCS):
-            node["wcs"] = sl._wcs
+        node["wcs"] = sl._wcs
         node["slices_array"] = [str(item) for item in sl._slices_array]
         return node
