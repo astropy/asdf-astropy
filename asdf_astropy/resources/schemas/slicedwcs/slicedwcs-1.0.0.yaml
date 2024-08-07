@@ -1,0 +1,19 @@
+%YAML 1.1
+---
+$schema: "http://stsci.edu/schemas/yaml-schema/draft-01"
+id: "http://astropy.org/schemas/astropy/slicedwcs/slicedwcs-1.0.0"
+
+title:
+  Represents the SlicedLowLevelWCS object
+
+description:
+  Represents the SlicedLowLevelWCS object
+
+allOf:
+  - tag: "tag:astropy.org:astropy/slicedwcs/slicedwcs-1.0.0"
+  - type: object
+    properties:
+      wcs:
+        tag: "tag:astropy.org:astropy/fits/fitswcs-1.0.0"
+      slices_array:
+        type: array
