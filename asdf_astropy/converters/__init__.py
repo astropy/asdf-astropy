@@ -19,6 +19,9 @@ __all__ = [
     "AstropyTableConverter",
     "AsdfTableConverter",
     "NdarrayMixinConverter",
+    "UncertaintyConverter",
+    "StdDevUncertaintyConverter",
+    "UnknownUncertaintyConverter",
     "TimeDeltaConverter",
     "TimeConverter",
     "CompoundConverter",
@@ -73,4 +76,5 @@ from .transform import (
     TransformConverterBase,
     UnitsMappingConverter,
 )
+from .uncertainty import StdDevUncertaintyConverter, UncertaintyConverter, UnknownUncertaintyConverter
 from .unit import EquivalencyConverter, MagUnitConverter, QuantityConverter, UnitConverter

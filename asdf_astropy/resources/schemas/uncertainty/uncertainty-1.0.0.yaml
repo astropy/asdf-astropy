@@ -1,0 +1,21 @@
+%YAML 1.1
+---
+$schema: "http://stsci.edu/schemas/yaml-schema/draft-01"
+id: "http://astropy.org/schemas/astropy/uncertainty/uncertainty-1.0.0"
+
+title:
+  Represents the astropy.nddata.NDUncertainty object
+
+description:
+  Represents the astropy.nddata.NDUncertainty object
+
+allOf:
+  - tag: "tag:astropy.org:astropy/uncertainty/uncertainty-1.0.0"
+  - type: object
+    properties:
+      array:
+        type: object
+      unit:
+        anyOf:
+          - tag: "tag:stsci.edu:asdf/unit/unit-*"
+          - tag: "tag:astropy.org:astropy/units/unit-1.*"
