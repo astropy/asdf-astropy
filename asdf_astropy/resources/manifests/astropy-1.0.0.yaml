@@ -28,16 +28,6 @@ tags:
     be accessible in its proper form in the ASDF file.
 
     Only image and binary table extensions are supported.
-- tag_uri: tag:astropy.org:astropy/fits/fitswcs-1.0.0
-  schema_uri: http://astropy.org/schemas/astropy/fits/fitswcs-1.0.0
-  title: Represents an astropy.wcs.WCS object
-  description: |-
-    Supports serialization of the simple wcs objects header
-- tag_uri: tag:astropy.org:astropy/slicedwcs/slicedwcs-1.0.0
-  schema_uri: http://astropy.org/schemas/astropy/slicedwcs/slicedwcs-1.0.0
-  title: Represents a SlicedLowLevelWCS object
-  description: |-
-    Supports serialization of the sliced_wcs objects
 - tag_uri: tag:astropy.org:astropy/table/table-1.0.0
   schema_uri: http://astropy.org/schemas/astropy/table/table-1.0.0
   title: A table.

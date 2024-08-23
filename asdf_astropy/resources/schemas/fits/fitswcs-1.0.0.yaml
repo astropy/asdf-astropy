@@ -10,8 +10,7 @@ description:
   Represents the fits object
 
 allOf:
-  - tag: "tag:astropy.org:astropy/fits/fitswcs-1.0.0"
   - type: object
     properties:
-      header:
-        type: object
+      hdu:
+        tag: "tag:stsci.edu:asdf/fits/fits-*"
