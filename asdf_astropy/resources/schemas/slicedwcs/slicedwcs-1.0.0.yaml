@@ -10,11 +10,10 @@ description:
   Represents the SlicedLowLevelWCS object
 
 allOf:
-  - tag: "tag:astropy.org:astropy/slicedwcs/slicedwcs-1.0.0"
   - type: object
     properties:
       wcs:
-        tag: "tag:astropy.org:astropy/fits/fitswcs-1.0.0"
+        tag: "tag:astropy.org:astropy/fits/fitswcs-1*"
       slices_array:
         type: array
         items:
@@ -22,4 +21,4 @@ allOf:
             - type: integer
             - type: object
 
-    required: ["wcs", "slices_array"]
+      required: ["wcs", "slices_array"]
