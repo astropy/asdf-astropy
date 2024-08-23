@@ -17,3 +17,9 @@ allOf:
         tag: "tag:astropy.org:astropy/fits/fitswcs-1.0.0"
       slices_array:
         type: array
+        items:
+          - oneOf:
+            - type: integer
+            - type: object
+
+    required: ["wcs", "slices_array"]
