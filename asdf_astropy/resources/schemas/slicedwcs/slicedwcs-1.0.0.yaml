@@ -21,4 +21,4 @@ allOf:
             - type: integer
             - type: object
 
-      required: ["wcs", "slices_array"]
+    required: ["wcs", "slices_array"]

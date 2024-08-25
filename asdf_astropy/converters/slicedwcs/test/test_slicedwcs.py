@@ -1,9 +1,7 @@
-import warnings
-
 import asdf
 import numpy as np
 import pytest
-from astropy.wcs import WCS, FITSFixedWarning
+from astropy.wcs import WCS
 from astropy.wcs.wcsapi.wrappers.sliced_wcs import SlicedLowLevelWCS
 
 
@@ -23,17 +21,15 @@ def create_wcs():
     return [wcs0, wcs1, wcs2, wcs_ellipsis, wcs3]
 
 
+@pytest.mark.filterwarnings("ignore::astropy.wcs.wcs.FITSFixedWarning")
 @pytest.mark.parametrize("sl_wcs", create_wcs())
 def test_sliced_wcs_serialization(sl_wcs, tmp_path):
     file_path = tmp_path / "test_slicedwcs.asdf"
-    with asdf.AsdfFile() as af, warnings.catch_warnings():
-        warnings.simplefilter("ignore", FITSFixedWarning)
+    with asdf.AsdfFile() as af:
         af["sl_wcs"] = sl_wcs
         af.write_to(file_path)
 
-    with warnings.catch_warnings():
-        warnings.simplefilter("ignore", FITSFixedWarning)
-        with asdf.open(file_path) as af:
-            loaded_sl_wcs = af["sl_wcs"]
-            assert sl_wcs._wcs.to_header() == loaded_sl_wcs._wcs.to_header()
-            assert sl_wcs._slices_array == loaded_sl_wcs._slices_array
+    with asdf.open(file_path) as af:
+        loaded_sl_wcs = af["sl_wcs"]
+        assert sl_wcs._wcs.to_header() == loaded_sl_wcs._wcs.to_header()
+        assert sl_wcs._slices_array == loaded_sl_wcs._slices_array
