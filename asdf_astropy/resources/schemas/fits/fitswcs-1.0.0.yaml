@@ -13,6 +13,6 @@ allOf:
   - type: object
     properties:
       hdu:
-        tag: "tag:stsci.edu:asdf/fits/fits-*"
+        tag: "tag:astropy.org:astropy/fits/fits-*"
 
-      required: ["hdu"]
+    required: ["hdu"]
