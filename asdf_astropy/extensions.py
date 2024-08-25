@@ -27,6 +27,11 @@ from .converters.transform.properties import CompoundBoundingBoxConverter, Model
 from .converters.transform.rotations import Rotate3DConverter, RotationSequenceConverter
 from .converters.transform.spline import SplineConverter
 from .converters.transform.tabular import TabularConverter
+from .converters.uncertainty.uncertainty import (
+    StdDevUncertaintyConverter,
+    UncertaintyConverter,
+    UnknownUncertaintyConverter,
+)
 from .converters.unit.equivalency import EquivalencyConverter
 from .converters.unit.magunit import MagUnitConverter
 from .converters.unit.quantity import QuantityConverter
@@ -482,6 +487,9 @@ ASTROPY_CONVERTERS = [
     AstropyTableConverter(),
     AstropyFitsConverter(),
     NdarrayMixinConverter(),
+    UncertaintyConverter(),
+    StdDevUncertaintyConverter(),
+    UnknownUncertaintyConverter(),
 ]
 
 _COORDINATES_MANIFEST_URIS = [

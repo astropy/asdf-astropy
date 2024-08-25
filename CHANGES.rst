@@ -8,6 +8,8 @@
 
 - replace usages of ``copy_arrays`` with ``memmap`` [#230]
 
+- Add support for astropy.nddata.StdDevUncertainty and astropy.nddata.UnknownUncertainty[#239]
+
 0.6.1 (2024-04-05)
 ------------------
 
