@@ -8,7 +8,7 @@
 
 - replace usages of ``copy_arrays`` with ``memmap`` [#230]
 
-- Add support for astropy.wcs.WCS and astropy.wcs.wcsapi.SlicedLowLevelWCS [##235]
+- Add support for astropy.wcs.WCS and astropy.wcs.wcsapi.SlicedLowLevelWCS [#235]
 
 0.6.1 (2024-04-05)
 ------------------
