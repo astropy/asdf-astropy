@@ -13,6 +13,7 @@ def create_wcs():
     wcs.wcs.crval = 4.0, 0.0, 4.0e9, 3
     wcs.wcs.crpix = 6.0, 7.0, 11.0, 11.0
     wcs.wcs.cname = "Right Ascension", "Declination", "Frequency", "Time"
+
     wcs0 = SlicedLowLevelWCS(wcs, 1)
     wcs1 = SlicedLowLevelWCS(wcs, [slice(None), slice(None), slice(None), 10])
     wcs3 = SlicedLowLevelWCS(SlicedLowLevelWCS(wcs, slice(None)), [slice(3), slice(None), slice(None), 10])
