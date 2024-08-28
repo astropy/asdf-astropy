@@ -4,7 +4,7 @@ import pytest
 from astropy import wcs
 
 
-def create_sip_wcs():
+def create_sip_distortion_wcs():
     rng = np.random.default_rng()
     twcs = wcs.WCS(naxis=2)
     twcs.wcs.crval = [251.29, 57.58]
@@ -52,7 +52,7 @@ def create_sip_wcs():
     return (twcs, img_world_wcs)
 
 
-@pytest.mark.parametrize("wcs", create_sip_wcs())
+@pytest.mark.parametrize("wcs", create_sip_distortion_wcs())
 @pytest.mark.filterwarnings("ignore::astropy.wcs.wcs.FITSFixedWarning")
 @pytest.mark.filterwarnings(
     "ignore:Some non-standard WCS keywords were excluded:astropy.utils.exceptions.AstropyWarning",
