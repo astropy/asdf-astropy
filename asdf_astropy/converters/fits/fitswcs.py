@@ -8,10 +8,12 @@ class FitsWCSConverter(Converter):
     def from_yaml_tree(self, node, tag, ctx):
         from astropy.wcs import WCS
 
-        primary_hdu = node["hdu"][0]
-        return WCS(primary_hdu.header)
+        return WCS(node["hdu"][0].header, fobj=node["hdu"])
 
     def to_yaml_tree(self, wcs, tag, ctx):
         node = {}
-        node["hdu"] = wcs.to_fits()
+        if wcs.sip is not None:
+            node["hdu"] = wcs.to_fits(relax=True)
+        else:
+            node["hdu"] = wcs.to_fits()
         return node
