@@ -4,7 +4,7 @@ import pytest
 from astropy import wcs
 
 
-def create_sip_distortion_wcs():
+def create_sip_distortion_and_tabular_wcs():
     rng = np.random.default_rng()
     twcs = wcs.WCS(naxis=2)
     twcs.wcs.crval = [251.29, 57.58]
@@ -52,7 +52,7 @@ def create_sip_distortion_wcs():
     return (twcs, img_world_wcs)
 
 
-@pytest.mark.parametrize("wcs", create_sip_distortion_wcs())
+@pytest.mark.parametrize("wcs", create_sip_distortion_and_tabular_wcs())
 @pytest.mark.filterwarnings("ignore::astropy.wcs.wcs.FITSFixedWarning")
 @pytest.mark.filterwarnings(
     "ignore:Some non-standard WCS keywords were excluded:astropy.utils.exceptions.AstropyWarning",
@@ -66,15 +66,3 @@ def test_wcs_serialization(wcs, tmp_path):
     with asdf.open(file_path) as af:
         loaded_wcs = af["wcs"]
         assert wcs.to_header() == loaded_wcs.to_header()
-
-
-@pytest.mark.xfail(reason="Tabular WCS serialization is currently not supported")
-def test_tabular_wcs_serialization(tab_wcs_2di, tmp_path):
-    file_path = tmp_path / "test_wcs.asdf"
-    with asdf.AsdfFile() as af:
-        af["wcs"] = tab_wcs_2di
-        af.write_to(file_path)
-
-    with asdf.open(file_path) as af:
-        loaded_wcs = af["wcs"]
-        assert tab_wcs_2di.to_header() == loaded_wcs.to_header()
