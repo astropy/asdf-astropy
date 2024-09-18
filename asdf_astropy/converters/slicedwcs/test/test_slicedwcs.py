@@ -4,6 +4,8 @@ import pytest
 from astropy.wcs import WCS
 from astropy.wcs.wcsapi.wrappers.sliced_wcs import SlicedLowLevelWCS
 
+from asdf_astropy.testing.helpers import assert_hdu_list_equal
+
 
 def create_wcs():
     wcs = WCS(naxis=4)
@@ -32,5 +34,5 @@ def test_sliced_wcs_serialization(sl_wcs, tmp_path):
 
     with asdf.open(file_path) as af:
         loaded_sl_wcs = af["sl_wcs"]
-        assert sl_wcs._wcs.to_header() == loaded_sl_wcs._wcs.to_header()
+        assert_hdu_list_equal(sl_wcs._wcs.to_fits(), loaded_sl_wcs._wcs.to_fits())
         assert sl_wcs._slices_array == loaded_sl_wcs._slices_array

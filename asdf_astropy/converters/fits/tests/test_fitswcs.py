@@ -3,9 +3,11 @@ import numpy as np
 import pytest
 from astropy import wcs
 
+from asdf_astropy.testing.helpers import assert_hdu_list_equal
 
-def create_sip_distortion_and_tabular_wcs():
-    rng = np.random.default_rng()
+
+def create_sip_distortion_wcs():
+    rng = np.random.default_rng(42)
     twcs = wcs.WCS(naxis=2)
     twcs.wcs.crval = [251.29, 57.58]
     twcs.wcs.cdelt = [1, 1]
@@ -22,6 +24,27 @@ def create_sip_distortion_and_tabular_wcs():
     twcs.sip = wcs.Sip(a, b, None, None, twcs.wcs.crpix)
     twcs.wcs.set()
 
+    return (twcs,)
+
+
+@pytest.mark.xfail(reason="Fails due to normalization differences when using wcs.to_fits().")
+@pytest.mark.parametrize("wcs", create_sip_distortion_wcs())
+@pytest.mark.filterwarnings("ignore::astropy.wcs.wcs.FITSFixedWarning")
+@pytest.mark.filterwarnings(
+    "ignore:Some non-standard WCS keywords were excluded:astropy.utils.exceptions.AstropyWarning",
+)
+def test_sip_wcs_serialization(wcs, tmp_path):
+    file_path = tmp_path / "test_wcs.asdf"
+    with asdf.AsdfFile() as af:
+        af["wcs"] = wcs
+        af.write_to(file_path)
+
+    with asdf.open(file_path) as af:
+        loaded_wcs = af["wcs"]
+        assert_hdu_list_equal(wcs.to_fits(relax=True), loaded_wcs.to_fits(relax=True))
+
+
+def create_tabular_wcs():
     # Creates a WCS object with distortion lookup tables
     img_world_wcs = wcs.WCS(naxis=2)
     img_world_wcs.wcs.crpix = 1, 1
@@ -49,15 +72,15 @@ def create_sip_distortion_and_tabular_wcs():
     img_world_wcs.cpdis1 = map_x
     img_world_wcs.cpdis2 = map_y
 
-    return (twcs, img_world_wcs)
+    return (img_world_wcs,)
 
 
-@pytest.mark.parametrize("wcs", create_sip_distortion_and_tabular_wcs())
+@pytest.mark.parametrize("wcs", create_tabular_wcs())
 @pytest.mark.filterwarnings("ignore::astropy.wcs.wcs.FITSFixedWarning")
 @pytest.mark.filterwarnings(
     "ignore:Some non-standard WCS keywords were excluded:astropy.utils.exceptions.AstropyWarning",
 )
-def test_wcs_serialization(wcs, tmp_path):
+def test_twcs_serialization(wcs, tmp_path):
     file_path = tmp_path / "test_wcs.asdf"
     with asdf.AsdfFile() as af:
         af["wcs"] = wcs
@@ -66,3 +89,4 @@ def test_wcs_serialization(wcs, tmp_path):
     with asdf.open(file_path) as af:
         loaded_wcs = af["wcs"]
         assert wcs.to_header() == loaded_wcs.to_header()
+        assert_hdu_list_equal(wcs.to_fits(), loaded_wcs.to_fits())
