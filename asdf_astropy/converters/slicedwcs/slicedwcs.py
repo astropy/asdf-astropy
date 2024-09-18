@@ -24,9 +24,9 @@ class SlicedWCSConverter(Converter):
             if isinstance(s, slice):
                 node["slices_array"].append(
                     {
-                        "start": s.start if s.start is not None else None,
-                        "stop": s.stop if s.stop is not None else None,
-                        "step": s.step if s.step is not None else None,
+                        "start": s.start,
+                        "stop": s.stop,
+                        "step": s.step,
                     },
                 )
             else:
