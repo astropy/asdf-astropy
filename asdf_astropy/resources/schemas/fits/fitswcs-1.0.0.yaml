@@ -1,0 +1,18 @@
+%YAML 1.1
+---
+$schema: "http://stsci.edu/schemas/yaml-schema/draft-01"
+id: "http://astropy.org/schemas/astropy/fits/fitswcs-1.0.0"
+
+title: Represents the fits object
+
+description: Represents the FITS WCS object, the HDUlist of the FITS header is preserved
+  during serialization and during deserialization the WCS object is recreated
+  from the HDUlist.
+
+allOf:
+  - type: object
+    properties:
+      hdu:
+        tag: "tag:astropy.org:astropy/fits/fits-*"
+
+    required: ["hdu"]

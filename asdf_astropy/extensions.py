@@ -31,6 +31,8 @@ from .converters.unit.equivalency import EquivalencyConverter
 from .converters.unit.magunit import MagUnitConverter
 from .converters.unit.quantity import QuantityConverter
 from .converters.unit.unit import UnitConverter
+from .converters.wcs.fitswcs import FitsWCSConverter
+from .converters.wcs.slicedwcs import SlicedWCSConverter
 
 __all__ = [
     "TRANSFORM_CONVERTERS",
@@ -482,6 +484,8 @@ ASTROPY_CONVERTERS = [
     AstropyTableConverter(),
     AstropyFitsConverter(),
     NdarrayMixinConverter(),
+    FitsWCSConverter(),
+    SlicedWCSConverter(),
 ]
 
 _COORDINATES_MANIFEST_URIS = [
@@ -499,6 +503,7 @@ COORDINATES_EXTENSIONS = [
 
 
 _ASTROPY_EXTENSION_MANIFEST_URIS = [
+    "asdf://astropy.org/astropy/manifests/astropy-1.3.0",
     "asdf://astropy.org/astropy/manifests/astropy-1.2.0",
     "asdf://astropy.org/astropy/manifests/astropy-1.1.0",
     "asdf://astropy.org/astropy/manifests/astropy-1.0.0",
