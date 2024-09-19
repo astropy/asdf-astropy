@@ -33,6 +33,8 @@ from .converters.unit.equivalency import EquivalencyConverter
 from .converters.unit.magunit import MagUnitConverter
 from .converters.unit.quantity import QuantityConverter
 from .converters.unit.unit import UnitConverter
+from .converters.wcs.fitswcs import FitsWCSConverter
+from .converters.wcs.slicedwcs import SlicedWCSConverter
 
 __all__ = [
     "TRANSFORM_CONVERTERS",
