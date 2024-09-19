@@ -77,9 +77,6 @@ def create_tabular_wcs():
 
 @pytest.mark.parametrize("wcs", create_tabular_wcs())
 @pytest.mark.filterwarnings("ignore::astropy.wcs.wcs.FITSFixedWarning")
-@pytest.mark.filterwarnings(
-    "ignore:Some non-standard WCS keywords were excluded:astropy.utils.exceptions.AstropyWarning",
-)
 def test_twcs_serialization(wcs, tmp_path):
     file_path = tmp_path / "test_wcs.asdf"
     with asdf.AsdfFile() as af:

@@ -13,8 +13,6 @@ from .converters.coordinates.representation import RepresentationConverter
 from .converters.coordinates.sky_coord import SkyCoordConverter
 from .converters.coordinates.spectral_coord import SpectralCoordConverter
 from .converters.fits.fits import AsdfFitsConverter, AstropyFitsConverter
-from .converters.fits.fitswcs import FitsWCSConverter
-from .converters.slicedwcs.slicedwcs import SlicedWCSConverter
 from .converters.table.table import AsdfTableConverter, AstropyTableConverter, ColumnConverter, NdarrayMixinConverter
 from .converters.time.time import TimeConverter
 from .converters.time.time_delta import TimeDeltaConverter
@@ -33,6 +31,8 @@ from .converters.unit.equivalency import EquivalencyConverter
 from .converters.unit.magunit import MagUnitConverter
 from .converters.unit.quantity import QuantityConverter
 from .converters.unit.unit import UnitConverter
+from .converters.wcs.fitswcs import FitsWCSConverter
+from .converters.wcs.slicedwcs import SlicedWCSConverter
 
 __all__ = [
     "TRANSFORM_CONVERTERS",
