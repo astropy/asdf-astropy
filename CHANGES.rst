@@ -8,6 +8,8 @@
 
 - replace usages of ``copy_arrays`` with ``memmap`` [#230]
 
+- require asdf 2.14.4 [#241]
+
 0.6.1 (2024-04-05)
 ------------------
 
