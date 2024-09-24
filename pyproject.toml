@@ -17,7 +17,7 @@ dynamic = [
   'version',
 ]
 dependencies = [
-  "asdf>=2.14",
+  "asdf>=2.14.4",
   "asdf-coordinates-schemas>=0.3",
   "asdf-transform-schemas>=0.5",
   "asdf-standard>=1.1.0",
