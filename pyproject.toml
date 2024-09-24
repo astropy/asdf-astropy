@@ -17,7 +17,7 @@ dynamic = [
   'version',
 ]
 dependencies = [
-  "asdf>=2.13",
+  "asdf>=2.14.4",
   "asdf-coordinates-schemas>=0.3",
   "asdf-transform-schemas>=0.5",
   "asdf-standard>=1.1.0",
@@ -39,8 +39,8 @@ docs = [
 test = [
   "coverage",
   "pytest-astropy",
-  "scipy",
   "pytest",
+  "scipy",  # indirect requirement via astropy
 ]
 [project.urls]
 'documentation' = 'https://asdf-astropy.readthedocs.io/en/latest/'
@@ -92,6 +92,7 @@ extend-ignore = [
     "DTZ", # flake8-datetimez
     "TD", # flake8-todos
     "FIX", # flake8-fixme
+    "SIM", # flake8-simplify
     # Individually ignored checks
     "SLF001", # private-member-access
     "FBT001", # boolean positional arguments in function definition

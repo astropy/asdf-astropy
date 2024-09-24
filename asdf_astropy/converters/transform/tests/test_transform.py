@@ -9,6 +9,7 @@ import numpy as np
 import pytest
 from asdf.testing.helpers import yaml_to_asdf
 from astropy import units as u
+from astropy.modeling import bind_bounding_box
 from astropy.modeling import models as astropy_models
 from astropy.modeling.bounding_box import CompoundBoundingBox, ModelBoundingBox
 from astropy.utils import minversion
@@ -37,10 +38,6 @@ def assert_model_roundtrip(model, tmp_path, version=None):
     return helpers.assert_model_roundtrip(model, tmp_path, version=version)
 
 
-@pytest.mark.skipif(
-    not minversion("asdf_transform_schemas", "0.2.2", inclusive=False),
-    reason="Schema not present until versions after asdf-transform-schemas 0.2.2",
-)
 def test_deprecations(tmp_path):
     # Test assert_bounding_box_roundtrip deprecation
     bbox = ModelBoundingBox((0, 1), astropy_models.Polynomial1D(1))
@@ -60,15 +57,12 @@ def create_bounding_boxes():
         ModelBoundingBox(((5, 6), (7, 8)), astropy_models.Polynomial2D(1), order="F"),
     ]
 
-    # ignore option is not properly supported until astropy versions with the bug fix from:
-    # astropy/astropy#13032 (milestone 5.0.5) is included
-    if minversion("astropy", "5.0.4", inclusive=False):
-        model_bounding_box.extend(
-            [
-                ModelBoundingBox((9, 10), astropy_models.Polynomial2D(1), ignored=["x"]),
-                ModelBoundingBox((11, 12), astropy_models.Polynomial2D(1), ignored=["y"]),
-            ],
-        )
+    model_bounding_box.extend(
+        [
+            ModelBoundingBox((9, 10), astropy_models.Polynomial2D(1), ignored=["x"]),
+            ModelBoundingBox((11, 12), astropy_models.Polynomial2D(1), ignored=["y"]),
+        ],
+    )
 
     compound_bounding_box = [
         CompoundBoundingBox({(1,): (0, 1), (2,): (2, 3)}, astropy_models.Polynomial2D(1), [("x", True)]),
@@ -95,10 +89,6 @@ def create_bounding_boxes():
 
 
 @pytest.mark.parametrize("bbox", create_bounding_boxes())
-@pytest.mark.skipif(
-    not minversion("asdf_transform_schemas", "0.2.2", inclusive=False),
-    reason="Schema not present until versions after asdf-transform-schemas 0.2.2",
-)
 def test_round_trip_bounding_box(bbox, tmp_path):
     helpers.assert_bounding_box_roundtrip(bbox, tmp_path)
 
@@ -378,33 +368,32 @@ def create_single_models():  # noqa: PLR0915
     model.bounding_box = ((1, 2), (3, 4), (5, 6))
     result.append(model)
 
-    if minversion("asdf_transform_schemas", "0.2.2", inclusive=False):
-        # model with compound bounding box
-        model = astropy_models.Shift(1) & astropy_models.Scale(2) & astropy_models.Identity(1)
-        model.inputs = ("x", "y", "slit_id")
-        bounding_boxes = {
-            (0,): ((-0.5, 1047.5), (-0.5, 2047.5)),
-            (1,): ((-0.5, 3047.5), (-0.5, 4047.5)),
-        }
-        bounding_box = CompoundBoundingBox.validate(model, bounding_boxes, selector_args=[("slit_id", True)], order="F")
-        model.bounding_box = bounding_box
-        result.append(model)
+    # model with compound bounding box
+    model = astropy_models.Shift(1) & astropy_models.Scale(2) & astropy_models.Identity(1)
+    model.inputs = ("x", "y", "slit_id")
+    bounding_boxes = {
+        (0,): ((-0.5, 1047.5), (-0.5, 2047.5)),
+        (1,): ((-0.5, 3047.5), (-0.5, 4047.5)),
+    }
+    bounding_box = CompoundBoundingBox.validate(model, bounding_boxes, selector_args=[("slit_id", True)], order="F")
+    model.bounding_box = bounding_box
+    result.append(model)
 
-        model = astropy_models.Shift(1) & astropy_models.Shift(2) & astropy_models.Shift(3)
-        model.inputs = ("x", "y", "z")
-        bounding_boxes = {
-            (0,): (1.0, 2.0),
-            (1,): (3.0, 4.0),
-        }
-        if minversion("astropy", "5.1"):
-            bounding_box = CompoundBoundingBox.validate(
-                model,
-                bounding_boxes,
-                selector_args=[("x", True)],
-                ignored=["y"],
-            )
-            model.bounding_box = bounding_box
-            result.append(model)
+    model = astropy_models.Shift(1) & astropy_models.Shift(2) & astropy_models.Shift(3)
+    model.inputs = ("x", "y", "z")
+    bounding_boxes = {
+        (0,): (1.0, 2.0),
+        (1,): (3.0, 4.0),
+    }
+
+    bounding_box = CompoundBoundingBox.validate(
+        model,
+        bounding_boxes,
+        selector_args=[("x", True)],
+        ignored=["y"],
+    )
+    model.bounding_box = bounding_box
+    result.append(model)
 
     result.append(astropy_models.Plummer1D(mass=10.0, r_plum=5.0))
 
@@ -443,8 +432,7 @@ def create_single_models():  # noqa: PLR0915
 
     result.extend([astropy_models.fix_inputs(m, {"x": 45}), astropy_models.fix_inputs(m, {0: 45})])
 
-    if minversion("astropy", "5.1") and minversion("asdf-transform-schemas", "0.2.3"):
-        result.append(astropy_models.Schechter1D(phi_star=1.0, m_star=2.0, alpha=3.0))
+    result.append(astropy_models.Schechter1D(phi_star=1.0, m_star=2.0, alpha=3.0))
 
     return result
 
@@ -471,14 +459,6 @@ UNSUPPORTED_MODELS = [
     # https://github.com/astropy/asdf-astropy/issues/6
     astropy.modeling.physical_models.NFW,
 ]
-
-if minversion("astropy", "5.1") and not minversion("asdf-transform-schemas", "0.2.3"):
-    UNSUPPORTED_MODELS.append(astropy.modeling.powerlaws.Schechter1D)
-
-
-# Model added in astropy 5.1 and schema added after asdf-transform 0.2.2
-if minversion("astropy", "5.1") and not minversion("asdf_transform_schemas", "0.2.2", inclusive=False):
-    UNSUPPORTED_MODELS.append(astropy.modeling.powerlaws.Schechter1D)
 
 if minversion("astropy", "6.0.dev"):
     UNSUPPORTED_MODELS.append(astropy.modeling.functional_models.GeneralSersic2D)
@@ -760,10 +740,6 @@ def test_compound_errors():
         converter.from_yaml_tree_transform(node, tag, mk.MagicMock())
 
 
-@pytest.mark.skipif(
-    not minversion("asdf_transform_schemas", "0.2.2", inclusive=False),
-    reason="Schema not present until versions after asdf-transform-schemas 0.2.2",
-)
 def test_bounding_box_missing_attributes():
     yaml = """
 model: !transform/constant-1.4.0
@@ -833,57 +809,13 @@ model: !transform/concatenate-1.2.0
     ignore: [x1]
     """
     buff = yaml_to_asdf(yaml)
-
-    if minversion("astropy", "5.1"):
-        if not minversion("asdf_transform_schemas", "0.2.2", inclusive=False):
-            with pytest.raises(TypeError, match=r"Cannot form bounding_box from: *"):
-                asdf.open(buff)
-        else:
-            asdf.open(buff)
-
-    elif not minversion("asdf_transform_schemas", "0.2.2", inclusive=False):
-        with pytest.raises(TypeError, match=r"Cannot form bounding_box from: *"):
-            asdf.open(buff)
-
-    else:
-        with pytest.raises(
-            RuntimeError,
-            match=r"Deserializing ignored elements of a compound bounding box is only supported for astropy 5.1+.",
-        ):
-            asdf.open(buff)
+    asdf.open(buff)
 
 
 def test_serialize_bbox(tmp_path):
     mdl = astropy_models.Const2D(3)
-
-    if minversion("astropy", "5.1"):
-        from astropy.modeling import bind_bounding_box
-
-        bind_bounding_box(mdl, (1, 2), ignored="y")
-        if minversion("asdf_transform_schemas", "0.2.2", inclusive=False):
-            helpers.assert_model_roundtrip(mdl, tmp_path)
-        else:
-            with pytest.raises(
-                RuntimeError,
-                match=r"asdf-transform-schemas > 0.2.2 in order to serialize a bounding_box with ignored",
-            ):
-                helpers.assert_model_roundtrip(mdl, tmp_path)
-    else:
-        bbox = ModelBoundingBox({"x": (1, 2)}, mdl, ignored=["y"])
-        mdl._user_bounding_box = bbox
-
-        if minversion("asdf_transform_schemas", "0.2.2", inclusive=False):
-            with pytest.raises(
-                RuntimeError,
-                match=r"Bounding box ignored arguments are only supported by astropy 5.1+",
-            ):
-                helpers.assert_model_roundtrip(mdl, tmp_path)
-        else:
-            with pytest.raises(
-                RuntimeError,
-                match=r"asdf-transform-schemas > 0.2.2 in order to serialize a bounding_box with ignored",
-            ):
-                helpers.assert_model_roundtrip(mdl, tmp_path)
+    bind_bounding_box(mdl, (1, 2), ignored="y")
+    helpers.assert_model_roundtrip(mdl, tmp_path)
 
 
 def test_serialize_cbbox(tmp_path):
@@ -896,11 +828,4 @@ def test_serialize_cbbox(tmp_path):
     bounding_box = CompoundBoundingBox.validate(mdl, bounding_boxes, selector_args=[("slit_id", True)], order="F")
     mdl.bounding_box = bounding_box
 
-    if minversion("asdf_transform_schemas", "0.2.2", inclusive=False):
-        helpers.assert_model_roundtrip(mdl, tmp_path)
-    else:
-        with pytest.raises(
-            RuntimeError,
-            match=r"asdf-transform-schemas > 0.2.2 in order to serialize a compound bounding_box",
-        ):
-            helpers.assert_model_roundtrip(mdl, tmp_path)
+    helpers.assert_model_roundtrip(mdl, tmp_path)

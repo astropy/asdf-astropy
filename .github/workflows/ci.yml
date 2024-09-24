@@ -38,8 +38,8 @@ jobs:
       default_python: '3.12'
       envs: |
         - linux: py310-test-parallel-cov
-        - linux: py311-test-devdeps-parallel-cov
-        - linux: py312-test-predeps-parallel-cov
+        - linux: py311-test-parallel-cov
+        - linux: py312-test-parallel-cov
       coverage: codecov
 
   asdf-schemas:
@@ -68,9 +68,6 @@ jobs:
       # Any env name which does not start with `pyXY` will use this Python version.
       default_python: '3.12'
       envs: |
-        - linux: py310-test-parallel
-        - linux: py311-test-parallel
-        - linux: py312-test-parallel
         - macos: py311-test-parallel
         - windows: py311-test-parallel
 
@@ -85,9 +82,9 @@ jobs:
       # Any env name which does not start with `pyXY` will use this Python version.
       default_python: '3.12'
       envs: |
-        - linux: py310-test-devdeps-parallel
-        - linux: py311-test-devdeps-parallel
-        - linux: py311-test-devdeps-numpydev-parallel
+        - linux: py312-test-predeps-parallel
+        - linux: py313-test-devdeps-parallel
+        - linux: py312-test-devdeps-numpydev-parallel
 
   oldest:
     needs: [core, asdf-schemas]
