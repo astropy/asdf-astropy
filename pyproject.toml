@@ -92,6 +92,7 @@ extend-ignore = [
     "DTZ", # flake8-datetimez
     "TD", # flake8-todos
     "FIX", # flake8-fixme
+    "SIM", # flake8-simplify
     # Individually ignored checks
     "SLF001", # private-member-access
     "FBT001", # boolean positional arguments in function definition

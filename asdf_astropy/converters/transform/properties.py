@@ -1,5 +1,4 @@
 from asdf.extension import Converter
-from astropy.utils import minversion
 
 
 class ModelBoundingBoxConverter(Converter):
@@ -31,8 +30,7 @@ class ModelBoundingBoxConverter(Converter):
                     set(ignored + [get_name(model, get_index(model, key)) for key in cbbox.selector_args.ignore]),
                 )
                 # Add in globally ignored inputs from the compound_bounding_box in 5.1+
-                if minversion("astropy", "5.1"):
-                    ignore = list(set(ignore + [get_name(model, get_index(model, key)) for key in cbbox.ignored]))
+                ignore = list(set(ignore + [get_name(model, get_index(model, key)) for key in cbbox.ignored]))
 
             return ModelBoundingBox(intervals, model, ignored=ignore, order=order)
 
@@ -50,8 +48,7 @@ class CompoundBoundingBoxConverter(Converter):
             "order": cbbox.order,
         }
 
-        if minversion("astropy", "5.1"):
-            node["ignore"] = cbbox.ignored_inputs
+        node["ignore"] = cbbox.ignored_inputs
 
         return node
 
@@ -66,16 +63,7 @@ class CompoundBoundingBoxConverter(Converter):
         order = node["order"] if "order" in node else "C"
 
         def create_bounding_box(model):
-            if not minversion("astropy", "5.1"):
-                if len(ignored) > 0:
-                    msg = (
-                        "Deserializing ignored elements of a compound bounding box is only supported for astropy 5.1+."
-                    )
-                    raise RuntimeError(msg)
-
-                cbbox = CompoundBoundingBox({}, model, selector_args, order=order)
-            else:
-                cbbox = CompoundBoundingBox({}, model, selector_args, ignored=ignored, order=order)
+            cbbox = CompoundBoundingBox({}, model, selector_args, ignored=ignored, order=order)
 
             for key, bb in bboxes.items():
                 cbbox[key] = bb(model, cbbox)

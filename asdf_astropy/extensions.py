@@ -4,7 +4,6 @@ via an ``entry-point`` in the ``pyproject.toml`` file.
 """
 
 from asdf.extension import ManifestExtension
-from astropy.utils import minversion
 
 from .converters.coordinates.angle import AngleConverter, LatitudeConverter, LongitudeConverter
 from .converters.coordinates.earth_location import EarthLocationConverter
@@ -385,16 +384,11 @@ TRANSFORM_CONVERTERS = [
     # astropy.modeling.bounding_box
     ModelBoundingBoxConverter(),
     CompoundBoundingBoxConverter(),
+    SimpleTransformConverter(
+        ["tag:stsci.edu:asdf/transform/schechter1d-*"],
+        "astropy.modeling.powerlaws.Schechter1D",
+    ),
 ]
-
-if minversion("astropy", "5.1.0"):
-    TRANSFORM_CONVERTERS.append(
-        SimpleTransformConverter(
-            ["tag:stsci.edu:asdf/transform/schechter1d-*"],
-            "astropy.modeling.powerlaws.Schechter1D",
-        ),
-    )
-
 
 # The order here is important; asdf will prefer to use extensions
 # that occur earlier in the list.
