@@ -40,6 +40,7 @@ test = [
   "coverage",
   "pytest-astropy",
   "pytest",
+  "scipy",  # indirect requirement via astropy
 ]
 [project.urls]
 'documentation' = 'https://asdf-astropy.readthedocs.io/en/latest/'
