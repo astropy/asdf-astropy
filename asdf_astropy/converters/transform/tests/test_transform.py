@@ -463,6 +463,9 @@ UNSUPPORTED_MODELS = [
 if minversion("astropy", "6.0.dev"):
     UNSUPPORTED_MODELS.append(astropy.modeling.functional_models.GeneralSersic2D)
 
+if minversion("astropy", "7.0.dev"):
+    UNSUPPORTED_MODELS.append(astropy.modeling.functional_models.Lorentz2D)
+
 
 @pytest.mark.parametrize("model", create_single_models())
 def test_single_model(tmp_path, model):
