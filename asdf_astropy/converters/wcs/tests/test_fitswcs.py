@@ -1,47 +1,34 @@
-import asdf
 import numpy as np
 import pytest
-from astropy import wcs
+from astropy.wcs import WCS, DistortionLookupTable, Sip
 
-from asdf_astropy.testing.helpers import assert_hdu_list_equal
+from asdf_astropy.testing.helpers import assert_wcs_roundtrip
 
 
 def create_sip_distortion_wcs():
     rng = np.random.default_rng(42)
-    twcs = wcs.WCS(naxis=2)
-    twcs.wcs.crval = [251.29, 57.58]
-    twcs.wcs.cdelt = [1, 1]
-    twcs.wcs.crpix = [507, 507]
-    twcs.wcs.pc = np.array([[7.7e-6, 3.3e-5], [3.7e-5, -6.8e-6]])
-    twcs._naxis = [1014, 1014]
-    twcs.wcs.ctype = ["RA---TAN-SIP", "DEC--TAN-SIP"]
+    wcs = WCS(naxis=2)
+    wcs.wcs.crval = [251.29, 57.58]
+    wcs.wcs.cdelt = [1, 1]
+    wcs.wcs.crpix = [507, 507]
+    wcs.wcs.pc = np.array([[7.7e-6, 3.3e-5], [3.7e-5, -6.8e-6]])
+    wcs._naxis = [1014, 1014]
+    wcs.wcs.ctype = ["RA---TAN-SIP", "DEC--TAN-SIP"]
 
     # Generate random SIP coefficients
     a = rng.uniform(low=-1e-5, high=1e-5, size=(5, 5))
     b = rng.uniform(low=-1e-5, high=1e-5, size=(5, 5))
 
     # Assign SIP coefficients
-    twcs.sip = wcs.Sip(a, b, None, None, twcs.wcs.crpix)
-    twcs.wcs.set()
+    wcs.sip = Sip(a, b, None, None, wcs.wcs.crpix)
+    wcs.wcs.set()
 
-    return (twcs,)
-
-
-@pytest.mark.parametrize("wcs", create_sip_distortion_wcs())
-def test_sip_wcs_serialization(wcs, tmp_path):
-    file_path = tmp_path / "test_wcs.asdf"
-    with asdf.AsdfFile() as af:
-        af["wcs"] = wcs
-        af.write_to(file_path)
-
-    with asdf.open(file_path) as af:
-        loaded_wcs = af["wcs"]
-        assert_hdu_list_equal(wcs.to_fits(relax=True), loaded_wcs.to_fits(relax=True))
+    return wcs
 
 
 def create_tabular_wcs():
     # Creates a WCS object with distortion lookup tables
-    img_world_wcs = wcs.WCS(naxis=2)
+    img_world_wcs = WCS(naxis=2)
     img_world_wcs.wcs.crpix = 1, 1
     img_world_wcs.wcs.crval = 0, 0
     img_world_wcs.wcs.cdelt = 1, 1
@@ -49,7 +36,7 @@ def create_tabular_wcs():
     # Create maps with zero distortion except at one particular pixel
     x_dist_array = np.zeros((25, 25))
     x_dist_array[10, 20] = 0.5
-    map_x = wcs.DistortionLookupTable(
+    map_x = DistortionLookupTable(
         x_dist_array.astype(np.float32),
         (5, 10),
         (10, 20),
@@ -57,7 +44,7 @@ def create_tabular_wcs():
     )
     y_dist_array = np.zeros((25, 25))
     y_dist_array[10, 5] = 0.7
-    map_y = wcs.DistortionLookupTable(
+    map_y = DistortionLookupTable(
         y_dist_array.astype(np.float32),
         (5, 10),
         (10, 20),
@@ -67,16 +54,11 @@ def create_tabular_wcs():
     img_world_wcs.cpdis1 = map_x
     img_world_wcs.cpdis2 = map_y
 
-    return (img_world_wcs,)
+    return img_world_wcs
 
 
-@pytest.mark.parametrize("wcs", create_tabular_wcs())
-def test_twcs_serialization(wcs, tmp_path):
-    file_path = tmp_path / "test_wcs.asdf"
-    with asdf.AsdfFile() as af:
-        af["wcs"] = wcs
-        af.write_to(file_path)
-
-    with asdf.open(file_path) as af:
-        loaded_wcs = af["wcs"]
-        assert_hdu_list_equal(wcs.to_fits(relax=True), loaded_wcs.to_fits(relax=True))
+@pytest.mark.parametrize("version", ["1.5.0", "1.6.0"])
+@pytest.mark.parametrize("wcs_gen", [create_tabular_wcs, create_sip_distortion_wcs])
+def test_roundtrip(wcs_gen, tmp_path, version):
+    wcs = wcs_gen()
+    assert_wcs_roundtrip(wcs, tmp_path, version)
