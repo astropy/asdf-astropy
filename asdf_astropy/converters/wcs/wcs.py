@@ -1,5 +1,7 @@
 from asdf.extension import Converter
 
+# These attributes don't end up in the hdulist and
+# instead will be stored in "attrs"
 _WCS_ATTRS = ("naxis", "colsel", "keysel", "key", "pixel_shape", "pixel_bounds")
 
 

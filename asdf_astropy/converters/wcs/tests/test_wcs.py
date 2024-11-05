@@ -5,6 +5,17 @@ from astropy.wcs import WCS, DistortionLookupTable, Sip
 from asdf_astropy.testing.helpers import assert_wcs_roundtrip
 
 
+def create_empty_wcs():
+    return WCS()
+
+
+def create_wcs_with_attrs():
+    wcs = WCS(naxis=3)
+    wcs.pixel_shape = [100, 200, 300]
+    wcs.pixel_bounds = [[11, 22], [33, 45], [55, 67]]
+    return wcs
+
+
 def create_sip_distortion_wcs():
     rng = np.random.default_rng(42)
     wcs = WCS(naxis=2)
@@ -58,7 +69,10 @@ def create_tabular_wcs():
 
 
 @pytest.mark.parametrize("version", ["1.5.0", "1.6.0"])
-@pytest.mark.parametrize("wcs_gen", [create_tabular_wcs, create_sip_distortion_wcs])
+@pytest.mark.parametrize(
+    "wcs_gen",
+    [create_empty_wcs, create_wcs_with_attrs, create_tabular_wcs, create_sip_distortion_wcs],
+)
 def test_roundtrip(wcs_gen, tmp_path, version):
     wcs = wcs_gen()
     assert_wcs_roundtrip(wcs, tmp_path, version)
