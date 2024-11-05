@@ -5,7 +5,8 @@ id: "http://astropy.org/schemas/astropy/wcs/slicedwcs-1.0.0"
 
 title: Represents the SlicedLowLevelWCS object
 
-description: The SlicedLowLevelWCS class is a wrapper class for WCS that applies slices
+description: >-
+  The SlicedLowLevelWCS class is a wrapper class for WCS that applies slices
   to the WCS, allowing certain pixel and world dimensions to be retained or
   dropped.
   It manages the slicing and coordinate transformations while preserving
