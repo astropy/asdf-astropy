@@ -10,17 +10,21 @@ class FitsWCSConverter(Converter):
     def from_yaml_tree(self, node, tag, ctx):
         from astropy.wcs import WCS
 
-        if naxis := node["attrs"].pop("naxis"):
-            node["hdu"][0].header["naxis"] = naxis
+        hdulist = node["hdulist"]
+        attrs = node["attrs"]
 
-        pixel_shape = node["attrs"].pop("pixel_shape")
-        pixel_bounds = node["attrs"].pop("pixel_bounds")
+        if naxis := attrs.pop("naxis"):
+            hdulist[0].header["naxis"] = naxis
 
-        wcs = WCS(node["hdu"][0].header, fobj=node["hdu"], **node["attrs"])
+        pixel_shape = attrs.pop("pixel_shape")
+        pixel_bounds = attrs.pop("pixel_bounds")
+
+        wcs = WCS(hdulist[0].header, fobj=hdulist, **attrs)
 
         if wcs.sip is not None:
             # work around a bug in astropy where sip headers lose precision
-            wcs.sip = wcs._read_sip_kw(node["hdu"][0].header, node["attrs"].get("key", " "))
+            # see https://github.com/astropy/astropy/issues/17334
+            wcs.sip = wcs._read_sip_kw(hdulist[0].header, attrs.get("key", " "))
             wcs.wcs.set()
 
         wcs.pixel_shape = pixel_shape
@@ -30,4 +34,4 @@ class FitsWCSConverter(Converter):
     def to_yaml_tree(self, wcs, tag, ctx):
         hdulist = wcs.to_fits(relax=True)
         attrs = {a: getattr(wcs, a) for a in _WCS_ATTRS if hasattr(wcs, a)}
-        return {"hdu": hdulist, "attrs": attrs}
+        return {"hdulist": hdulist, "attrs": attrs}

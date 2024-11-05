@@ -12,7 +12,9 @@ description: Represents the FITS WCS object, the HDUlist of the FITS header is p
 allOf:
   - type: object
     properties:
-      hdu:
+      hdulist:
         tag: "tag:astropy.org:astropy/fits/fits-*"
+      attrs:
+        type: object
 
-    required: ["hdu"]
+    required: ["hdulist", "attrs"]
