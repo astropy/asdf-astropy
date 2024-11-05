@@ -9,20 +9,17 @@ class SlicedWCSConverter(Converter):
         from astropy.wcs.wcsapi.wrappers.sliced_wcs import SlicedLowLevelWCS
 
         wcs = node["wcs"]
-        slice_array = []
         slice_array = [
             s if isinstance(s, int) else slice(s["start"], s["stop"], s["step"]) for s in node["slices_array"]
         ]
         return SlicedLowLevelWCS(wcs, slice_array)
 
     def to_yaml_tree(self, sl, tag, ctx):
-        node = {}
-        node["wcs"] = sl._wcs
-        node["slices_array"] = []
+        slices_array = []
 
         for s in sl._slices_array:
             if isinstance(s, slice):
-                node["slices_array"].append(
+                slices_array.append(
                     {
                         "start": s.start,
                         "stop": s.stop,
@@ -30,5 +27,8 @@ class SlicedWCSConverter(Converter):
                     },
                 )
             else:
-                node["slices_array"].append(s)
-        return node
+                slices_array.append(s)
+        return {
+            "wcs": sl._wcs,
+            "slices_array": slices_array,
+        }
