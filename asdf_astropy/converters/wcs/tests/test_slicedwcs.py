@@ -24,7 +24,6 @@ def create_wcs():
     return [wcs0, wcs1, wcs2, wcs_ellipsis, wcs3]
 
 
-@pytest.mark.filterwarnings("ignore::astropy.wcs.wcs.FITSFixedWarning")
 @pytest.mark.parametrize("sl_wcs", create_wcs())
 def test_sliced_wcs_serialization(sl_wcs, tmp_path):
     file_path = tmp_path / "test_slicedwcs.asdf"

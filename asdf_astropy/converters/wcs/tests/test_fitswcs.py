@@ -27,12 +27,7 @@ def create_sip_distortion_wcs():
     return (twcs,)
 
 
-@pytest.mark.xfail(reason="Fails due to normalization differences when using wcs.to_fits().")
 @pytest.mark.parametrize("wcs", create_sip_distortion_wcs())
-@pytest.mark.filterwarnings("ignore::astropy.wcs.wcs.FITSFixedWarning")
-@pytest.mark.filterwarnings(
-    "ignore:Some non-standard WCS keywords were excluded:astropy.utils.exceptions.AstropyWarning",
-)
 def test_sip_wcs_serialization(wcs, tmp_path):
     file_path = tmp_path / "test_wcs.asdf"
     with asdf.AsdfFile() as af:
@@ -76,7 +71,6 @@ def create_tabular_wcs():
 
 
 @pytest.mark.parametrize("wcs", create_tabular_wcs())
-@pytest.mark.filterwarnings("ignore::astropy.wcs.wcs.FITSFixedWarning")
 def test_twcs_serialization(wcs, tmp_path):
     file_path = tmp_path / "test_wcs.asdf"
     with asdf.AsdfFile() as af:
@@ -85,5 +79,4 @@ def test_twcs_serialization(wcs, tmp_path):
 
     with asdf.open(file_path) as af:
         loaded_wcs = af["wcs"]
-        assert wcs.to_header() == loaded_wcs.to_header()
-        assert_hdu_list_equal(wcs.to_fits(), loaded_wcs.to_fits())
+        assert_hdu_list_equal(wcs.to_fits(relax=True), loaded_wcs.to_fits(relax=True))
