@@ -12,7 +12,7 @@
 
 - Add support for astropy.nddata.uncertainty classes [#239]
 
-- Add support for astropy.wcs.WCS and astropy.wcs.wcsapi.SlicedLowLevelWCS [#235]
+- Add support for astropy.wcs.WCS and astropy.wcs.wcsapi.SlicedLowLevelWCS [#246]
 
 0.6.1 (2024-04-05)
 ------------------
