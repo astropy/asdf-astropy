@@ -54,8 +54,8 @@ tags:
   title: NdarrayMixin column.
   description: |-
     Represents an astropy.table.NdarrayMixin instance.
-- tag_uri: tag:astropy.org:astropy/slicedwcs/slicedwcs-1.0.0
-  schema_uri: http://astropy.org/schemas/astropy/slicedwcs/slicedwcs-1.0.0
+- tag_uri: tag:astropy.org:astropy/wcs/slicedwcs-1.0.0
+  schema_uri: http://astropy.org/schemas/astropy/wcs/slicedwcs-1.0.0
   title: Represents an instance of SlicedLowLevelWCS
   description: |-
     The SlicedLowLevelWCS class is a wrapper class for WCS that applies slices
@@ -64,8 +64,8 @@ tags:
 
     It manages the slicing and coordinate transformations while preserving
     the underlying WCS object.
-- tag_uri: tag:astropy.org:astropy/fits/fitswcs-1.0.0
-  schema_uri: http://astropy.org/schemas/astropy/fits/fitswcs-1.0.0
+- tag_uri: tag:astropy.org:astropy/wcs/wcs-1.0.0
+  schema_uri: http://astropy.org/schemas/astropy/wcs/wcs-1.0.0
   title: FITS WCS (World Coordinate System) Converter
   description: |-
     Represents the FITS WCS object, the HDUlist of the FITS header is preserved

@@ -2,7 +2,7 @@ from asdf.extension import Converter
 
 
 class SlicedWCSConverter(Converter):
-    tags = ("tag:astropy.org:astropy/slicedwcs/slicedwcs-*",)
+    tags = ("tag:astropy.org:astropy/wcs/slicedwcs-*",)
     types = ("astropy.wcs.wcsapi.wrappers.sliced_wcs.SlicedLowLevelWCS",)
 
     def from_yaml_tree(self, node, tag, ctx):

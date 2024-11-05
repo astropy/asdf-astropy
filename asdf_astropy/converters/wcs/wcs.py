@@ -3,8 +3,8 @@ from asdf.extension import Converter
 _WCS_ATTRS = ("naxis", "colsel", "keysel", "key", "pixel_shape", "pixel_bounds")
 
 
-class FitsWCSConverter(Converter):
-    tags = ("tag:astropy.org:astropy/fits/fitswcs-*",)
+class WCSConverter(Converter):
+    tags = ("tag:astropy.org:astropy/wcs/wcs-*",)
     types = ("astropy.wcs.wcs.WCS",)
 
     def from_yaml_tree(self, node, tag, ctx):

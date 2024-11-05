@@ -1,7 +1,7 @@
 %YAML 1.1
 ---
 $schema: "http://stsci.edu/schemas/yaml-schema/draft-01"
-id: "http://astropy.org/schemas/astropy/slicedwcs/slicedwcs-1.0.0"
+id: "http://astropy.org/schemas/astropy/wcs/slicedwcs-1.0.0"
 
 title: Represents the SlicedLowLevelWCS object
 
@@ -15,7 +15,7 @@ allOf:
   - type: object
     properties:
       wcs:
-        tag: "tag:astropy.org:astropy/fits/fitswcs-1*"
+        tag: "tag:astropy.org:astropy/wcs/wcs-1*"
       slices_array:
         type: array
         items:
