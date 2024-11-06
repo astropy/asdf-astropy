@@ -21,6 +21,7 @@ __all__ = [
     "NdarrayMixinConverter",
     "StdDevUncertaintyConverter",
     "UnknownUncertaintyConverter",
+    "VarianceUncertaintyConverter",
     "TimeDeltaConverter",
     "TimeConverter",
     "CompoundConverter",
@@ -54,7 +55,7 @@ from .coordinates import (
     SpectralCoordConverter,
 )
 from .fits import AsdfFitsConverter, AstropyFitsConverter, FitsConverter
-from .nddata import StdDevUncertaintyConverter, UnknownUncertaintyConverter
+from .nddata import StdDevUncertaintyConverter, UnknownUncertaintyConverter, VarianceUncertaintyConverter
 from .table import AsdfTableConverter, AstropyTableConverter, ColumnConverter, NdarrayMixinConverter
 from .time import TimeConverter, TimeDeltaConverter
 from .transform import (

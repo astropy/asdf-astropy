@@ -32,3 +32,14 @@ class UnknownUncertaintyConverter(_UncertaintyBaseConverter):
 
         array, unit = super().from_yaml_tree(node, tag, ctx)
         return UnknownUncertainty(array=array, unit=unit)
+
+
+class VarianceUncertaintyConverter(_UncertaintyBaseConverter):
+    tags = ("tag:astropy.org:astropy/nddata/varianceuncertainty-*",)
+    types = ("astropy.nddata.nduncertainty.VarianceUncertainty",)
+
+    def from_yaml_tree(self, node, tag, ctx):
+        from astropy.nddata import VarianceUncertainty
+
+        array, unit = super().from_yaml_tree(node, tag, ctx)
+        return VarianceUncertainty(array=array, unit=unit)
