@@ -1,10 +1,4 @@
-from asdf.extension import Converter
-
-
-class UncertaintyConverter(Converter):
-    tags = ("tag:astropy.org:astropy/uncertainty/uncertainty-*",)
-    types = ("astropy.nddata.nduncertainty.Uncertainty",)
-
+class _UncertaintyBaseConverter:
     def from_yaml_tree(self, node, tag, ctx):
         return (node["array"], node.get("unit"))
 
@@ -18,7 +12,7 @@ class UncertaintyConverter(Converter):
         return node
 
 
-class StdDevUncertaintyConverter(UncertaintyConverter):
+class StdDevUncertaintyConverter(_UncertaintyBaseConverter):
     tags = ("tag:astropy.org:astropy/uncertainty/stddevuncertainty-*",)
     types = ("astropy.nddata.nduncertainty.StdDevUncertainty",)
 
@@ -29,7 +23,7 @@ class StdDevUncertaintyConverter(UncertaintyConverter):
         return StdDevUncertainty(array=array, unit=unit)
 
 
-class UnknownUncertaintyConverter(UncertaintyConverter):
+class UnknownUncertaintyConverter(_UncertaintyBaseConverter):
     tags = ("tag:astropy.org:astropy/uncertainty/unknownuncertainty-*",)
     types = ("astropy.nddata.nduncertainty.UnknownUncertainty",)
 
