@@ -54,6 +54,7 @@ from .coordinates import (
     SpectralCoordConverter,
 )
 from .fits import AsdfFitsConverter, AstropyFitsConverter, FitsConverter
+from .nddata import StdDevUncertaintyConverter, UnknownUncertaintyConverter
 from .table import AsdfTableConverter, AstropyTableConverter, ColumnConverter, NdarrayMixinConverter
 from .time import TimeConverter, TimeDeltaConverter
 from .transform import (
@@ -75,5 +76,4 @@ from .transform import (
     TransformConverterBase,
     UnitsMappingConverter,
 )
-from .uncertainty import StdDevUncertaintyConverter, UnknownUncertaintyConverter
 from .unit import EquivalencyConverter, MagUnitConverter, QuantityConverter, UnitConverter

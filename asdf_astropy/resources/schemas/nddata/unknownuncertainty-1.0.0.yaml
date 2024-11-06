@@ -1,7 +1,7 @@
 %YAML 1.1
 ---
 $schema: "http://stsci.edu/schemas/yaml-schema/draft-01"
-id: "http://astropy.org/schemas/astropy/uncertainty/unknownuncertainty-1.0.0"
+id: "http://astropy.org/schemas/astropy/nddata/unknownuncertainty-1.0.0"
 
 title:
   Represents the astropy.nddata.UnknownUncertainty class

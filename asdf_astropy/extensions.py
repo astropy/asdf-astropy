@@ -12,6 +12,7 @@ from .converters.coordinates.representation import RepresentationConverter
 from .converters.coordinates.sky_coord import SkyCoordConverter
 from .converters.coordinates.spectral_coord import SpectralCoordConverter
 from .converters.fits.fits import AsdfFitsConverter, AstropyFitsConverter
+from .converters.nddata.uncertainty import StdDevUncertaintyConverter, UnknownUncertaintyConverter
 from .converters.table.table import AsdfTableConverter, AstropyTableConverter, ColumnConverter, NdarrayMixinConverter
 from .converters.time.time import TimeConverter
 from .converters.time.time_delta import TimeDeltaConverter
@@ -26,7 +27,6 @@ from .converters.transform.properties import CompoundBoundingBoxConverter, Model
 from .converters.transform.rotations import Rotate3DConverter, RotationSequenceConverter
 from .converters.transform.spline import SplineConverter
 from .converters.transform.tabular import TabularConverter
-from .converters.uncertainty.uncertainty import StdDevUncertaintyConverter, UnknownUncertaintyConverter
 from .converters.unit.equivalency import EquivalencyConverter
 from .converters.unit.magunit import MagUnitConverter
 from .converters.unit.quantity import QuantityConverter

@@ -13,7 +13,7 @@ class _UncertaintyBaseConverter:
 
 
 class StdDevUncertaintyConverter(_UncertaintyBaseConverter):
-    tags = ("tag:astropy.org:astropy/uncertainty/stddevuncertainty-*",)
+    tags = ("tag:astropy.org:astropy/nddata/stddevuncertainty-*",)
     types = ("astropy.nddata.nduncertainty.StdDevUncertainty",)
 
     def from_yaml_tree(self, node, tag, ctx):
@@ -24,7 +24,7 @@ class StdDevUncertaintyConverter(_UncertaintyBaseConverter):
 
 
 class UnknownUncertaintyConverter(_UncertaintyBaseConverter):
-    tags = ("tag:astropy.org:astropy/uncertainty/unknownuncertainty-*",)
+    tags = ("tag:astropy.org:astropy/nddata/unknownuncertainty-*",)
     types = ("astropy.nddata.nduncertainty.UnknownUncertainty",)
 
     def from_yaml_tree(self, node, tag, ctx):
