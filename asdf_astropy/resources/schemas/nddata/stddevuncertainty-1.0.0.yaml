@@ -3,10 +3,9 @@
 $schema: "http://stsci.edu/schemas/yaml-schema/draft-01"
 id: "http://astropy.org/schemas/astropy/nddata/stddevuncertainty-1.0.0"
 
-title:
-  Represents the astropy.nddata.StdDevUncertainty class
+title: Represents the astropy.nddata.StdDevUncertainty class
 
-description:
+description: >-
   This object represents the `StdDevUncertainty` class, which is a subclass
   of the `NDUncertainty` class from `astropy.nddata`
 

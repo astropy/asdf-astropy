@@ -3,10 +3,9 @@
 $schema: "http://stsci.edu/schemas/yaml-schema/draft-01"
 id: "http://astropy.org/schemas/astropy/nddata/varianceuncertainty-1.0.0"
 
-title:
-  Represents the astropy.nddata.VarianceUncertainty class
+title: Represents the astropy.nddata.VarianceUncertainty class
 
-description:
+description: >-
   This object represents the `VarianceUncertainty` class, which is a subclass
   of the `NDUncertainty` class from `astropy.nddata`
 
