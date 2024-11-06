@@ -10,7 +10,7 @@
 
 - require asdf 2.14.4 [#241]
 
-- Add support for astropy.nddata.StdDevUncertainty and astropy.nddata.UnknownUncertainty[#239]
+- Add support for astropy.nddata.uncertainty classes [#239]
 
 0.6.1 (2024-04-05)
 ------------------
