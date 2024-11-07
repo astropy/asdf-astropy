@@ -54,18 +54,8 @@ tags:
   title: NdarrayMixin column.
   description: |-
     Represents an astropy.table.NdarrayMixin instance.
-- tag_uri: tag:astropy.org:astropy/nddata/unknownuncertainty-1.0.0
-  schema_uri: http://astropy.org/schemas/astropy/nddata/unknownuncertainty-1.0.0
-  title: Represent the nddata.uncertainty.UnknownUncertainty object
+- tag_uri: tag:astropy.org:astropy/nddata/uncertainty-1.0.0
+  schema_uri: http://astropy.org/schemas/astropy/nddata/uncertainty-1.0.0
+  title: Represent an astropy.nddata uncertainty
   description: |-
-    Represents an instance of the nddata.uncertainty.UnknownUncertainty object
-- tag_uri: tag:astropy.org:astropy/nddata/stddevuncertainty-1.0.0
-  schema_uri: http://astropy.org/schemas/astropy/nddata/stddevuncertainty-1.0.0
-  title: Represent the nddata.uncertainty.StdDevUncertainty object
-  description: |-
-    Represents an instance of the nddata.uncertainty.StdDevUncertainty object
-- tag_uri: tag:astropy.org:astropy/nddata/varianceuncertainty-1.0.0
-  schema_uri: http://astropy.org/schemas/astropy/nddata/varianceuncertainty-1.0.0
-  title: Represent the nddata.uncertainty.VarianceUncertainty object
-  description: |-
-    Represents an instance of the nddata.uncertainty.VarianceUncertainty object
+    Represents an instance of an astropy.nddata uncertainty

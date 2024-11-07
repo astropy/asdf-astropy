@@ -12,11 +12,7 @@ from .converters.coordinates.representation import RepresentationConverter
 from .converters.coordinates.sky_coord import SkyCoordConverter
 from .converters.coordinates.spectral_coord import SpectralCoordConverter
 from .converters.fits.fits import AsdfFitsConverter, AstropyFitsConverter
-from .converters.nddata.uncertainty import (
-    StdDevUncertaintyConverter,
-    UnknownUncertaintyConverter,
-    VarianceUncertaintyConverter,
-)
+from .converters.nddata.uncertainty import UncertaintyConverter
 from .converters.table.table import AsdfTableConverter, AstropyTableConverter, ColumnConverter, NdarrayMixinConverter
 from .converters.time.time import TimeConverter
 from .converters.time.time_delta import TimeDeltaConverter
@@ -481,9 +477,7 @@ ASTROPY_CONVERTERS = [
     AstropyTableConverter(),
     AstropyFitsConverter(),
     NdarrayMixinConverter(),
-    StdDevUncertaintyConverter(),
-    UnknownUncertaintyConverter(),
-    VarianceUncertaintyConverter(),
+    UncertaintyConverter(),
 ]
 
 _COORDINATES_MANIFEST_URIS = [
