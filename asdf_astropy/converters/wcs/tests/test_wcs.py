@@ -1,8 +1,26 @@
+import warnings
+
 import numpy as np
 import pytest
-from astropy.wcs import WCS, DistortionLookupTable, Sip
+from astropy.io import fits
+from astropy.utils.data import get_pkg_data_filename, get_pkg_data_filenames
+from astropy.wcs import WCS, DistortionLookupTable, FITSFixedWarning, Sip
 
 from asdf_astropy.testing.helpers import assert_wcs_roundtrip
+
+_astropy_test_header_filenames = list(get_pkg_data_filenames("tests/data/maps", "astropy.wcs", "*.hdr")) + list(
+    get_pkg_data_filenames("tests/data/spectra", "astropy.wcs", "*.hdr"),
+)
+
+_astropy_test_fits_filenames = [
+    get_pkg_data_filename(f"tests/data/{fn}", "astropy.wcs")
+    for fn in [
+        "ie6d07ujq_wcs.fits",
+        "j94f05bgq_flt.fits",
+        "sip.fits",
+        "sip2.fits",
+    ]
+]
 
 
 def create_empty_wcs():
@@ -76,3 +94,27 @@ def create_tabular_wcs():
 def test_roundtrip(wcs_gen, tmp_path, version):
     wcs = wcs_gen()
     assert_wcs_roundtrip(wcs, tmp_path, version)
+
+
+@pytest.mark.parametrize("fn", _astropy_test_header_filenames)
+@pytest.mark.parametrize("version", ["1.5.0", "1.6.0"])
+def test_astropy_data_header_roundtrip(fn, tmp_path, version):
+    with open(fn) as f:
+        header = f.read()
+
+    with warnings.catch_warnings():
+        warnings.filterwarnings("ignore", category=FITSFixedWarning)
+        wcs = WCS(header)
+
+    assert_wcs_roundtrip(wcs, tmp_path, version)
+
+
+@pytest.mark.parametrize("fn", _astropy_test_fits_filenames)
+@pytest.mark.parametrize("version", ["1.5.0", "1.6.0"])
+def test_astropy_data_fits_roundtrip(fn, tmp_path, version):
+    with fits.open(fn) as ff:
+        with warnings.catch_warnings():
+            warnings.filterwarnings("ignore", category=FITSFixedWarning)
+            wcs = WCS(ff[0].header, ff)
+
+        assert_wcs_roundtrip(wcs, tmp_path, version)
