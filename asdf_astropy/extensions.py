@@ -31,6 +31,8 @@ from .converters.unit.equivalency import EquivalencyConverter
 from .converters.unit.magunit import MagUnitConverter
 from .converters.unit.quantity import QuantityConverter
 from .converters.unit.unit import UnitConverter
+from .converters.wcs.slicedwcs import SlicedWCSConverter
+from .converters.wcs.wcs import WCSConverter
 
 __all__ = [
     "TRANSFORM_CONVERTERS",
@@ -478,6 +480,8 @@ ASTROPY_CONVERTERS = [
     AstropyFitsConverter(),
     NdarrayMixinConverter(),
     UncertaintyConverter(),
+    WCSConverter(),
+    SlicedWCSConverter(),
 ]
 
 _COORDINATES_MANIFEST_URIS = [

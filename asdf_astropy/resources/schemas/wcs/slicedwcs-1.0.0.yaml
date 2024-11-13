@@ -1,0 +1,41 @@
+%YAML 1.1
+---
+$schema: "http://stsci.edu/schemas/yaml-schema/draft-01"
+id: "http://astropy.org/schemas/astropy/wcs/slicedwcs-1.0.0"
+
+title: Represents the SlicedLowLevelWCS object
+
+description: >-
+  The SlicedLowLevelWCS class is a wrapper class for WCS that applies slices
+  to the WCS, allowing certain pixel and world dimensions to be retained or
+  dropped.
+  It manages the slicing and coordinate transformations while preserving
+  the underlying WCS object.
+
+allOf:
+  - type: object
+    properties:
+      wcs:
+        tag: "tag:astropy.org:astropy/wcs/wcs-1*"
+      slices_array:
+        type: array
+        items:
+          - oneOf:
+            - type: integer
+            - type: object
+              properties:
+                start:
+                  anyOf:
+                    - type: integer
+                    - type: "null"
+                stop:
+                  anyOf:
+                    - type: integer
+                    - type: "null"
+                step:
+                  anyOf:
+                    - type: integer
+                    - type: "null"
+
+
+    required: ["wcs", "slices_array"]

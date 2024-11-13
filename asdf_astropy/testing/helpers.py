@@ -152,6 +152,27 @@ def assert_table_equal(a, b):
             )
 
 
+def assert_wcs_equal(a, b):
+    from asdf.tags.core.ndarray import NDArrayType
+
+    from asdf_astropy.converters.wcs.wcs import _WCS_ATTRS
+
+    assert type(a) == type(b)
+    assert_hdu_list_equal(a.to_fits(relax=True), b.to_fits(relax=True))
+    for attr in _WCS_ATTRS:
+        in_a = hasattr(a, attr)
+        in_b = hasattr(b, attr)
+        assert in_a == in_b
+        if not in_a:
+            continue
+        a_val = getattr(a, attr)
+        b_val = getattr(b, attr)
+        if isinstance(a_val, (np.ndarray, NDArrayType)) or isinstance(b_val, (np.ndarray, NDArrayType)):
+            np.testing.assert_array_equal(a_val, b_val)
+        else:
+            assert a_val == b_val
+
+
 def assert_table_roundtrip(table, tmp_path):
     """
     Assert that a table can be written to an ASDF file and read back
@@ -237,3 +258,15 @@ def assert_model_roundtrip(model, tmp_path, version=None):
     with asdf.open(path) as af:
         assert_model_equal(model, af["model"])
         return af["model"]
+
+
+def assert_wcs_roundtrip(wcs, tmp_path, version=None):
+    import asdf
+
+    path = str(tmp_path / "test.asdf")
+
+    with asdf.AsdfFile({"wcs": wcs}, version=version) as af:
+        af.write_to(path)
+
+    with asdf.open(path) as af:
+        assert_wcs_equal(wcs, af["wcs"])

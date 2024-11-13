@@ -81,3 +81,17 @@ units/equivalency-1.0.0
 .. asdf-autoschemas::
 
     units/equivalency-1.0.0
+
+WCS
+---
+
+The following schemas are associated with **astropy** objects from the
+:ref:`astropy-wcs` submodule:
+
+wcs/wcs-1.0.0
+^^^^^^^^^^^^^^^
+
+.. asdf-autoschemas::
+
+    wcs/wcs-1.0.0
+    wcs/slicedwcs-1.0.0

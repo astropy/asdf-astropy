@@ -15,6 +15,8 @@ __all__ = [
     "FitsConverter",
     "AsdfFitsConverter",
     "AstropyFitsConverter",
+    "WCSConverter",
+    "SlicedWCSConverter",
     "ColumnConverter",
     "AstropyTableConverter",
     "AsdfTableConverter",
@@ -76,3 +78,4 @@ from .transform import (
     UnitsMappingConverter,
 )
 from .unit import EquivalencyConverter, MagUnitConverter, QuantityConverter, UnitConverter
+from .wcs import SlicedWCSConverter, WCSConverter

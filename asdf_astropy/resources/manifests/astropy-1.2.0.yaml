@@ -59,3 +59,20 @@ tags:
   title: Represent an astropy.nddata uncertainty
   description: |-
     Represents an instance of an astropy.nddata uncertainty
+- tag_uri: tag:astropy.org:astropy/wcs/slicedwcs-1.0.0
+  schema_uri: http://astropy.org/schemas/astropy/wcs/slicedwcs-1.0.0
+  title: Represents an instance of SlicedLowLevelWCS
+  description: |-
+    The SlicedLowLevelWCS class is a wrapper class for WCS that applies slices
+    to the WCS, allowing certain pixel and world dimensions to be retained or
+    dropped.
+
+    It manages the slicing and coordinate transformations while preserving
+    the underlying WCS object.
+- tag_uri: tag:astropy.org:astropy/wcs/wcs-1.0.0
+  schema_uri: http://astropy.org/schemas/astropy/wcs/wcs-1.0.0
+  title: FITS WCS (World Coordinate System) Converter
+  description: |-
+    Represents the FITS WCS object, the HDUlist of the FITS header is preserved
+    during serialization and during deserialization the WCS object is recreated
+    from the HDUlist.
