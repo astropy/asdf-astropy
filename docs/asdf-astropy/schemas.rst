@@ -30,6 +30,19 @@ fits/fits-1.0.0
 
     fits/fits-1.0.0
 
+NDData
+------
+
+The following schemas are associated with **astropy** objects from the
+:ref:`astropy_nddata` submodule:
+
+nddata/uncertainty-1.0.0
+^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. asdf-autoschemas::
+
+    nddata/uncertainty-1.0.0
+
 Table
 -----
 

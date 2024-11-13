@@ -96,6 +96,7 @@ extend-ignore = [
     # Individually ignored checks
     "SLF001", # private-member-access
     "FBT001", # boolean positional arguments in function definition
+    "RUF012", # mutable class attributes should be annotated with typing.ClassVar
 ]
 extend-exclude = ["docs/*"]
 
