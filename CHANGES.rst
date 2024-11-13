@@ -1,4 +1,4 @@
-0.6.2 (unreleased)
+0.7.0 (2024-11-13)
 ------------------
 
 - strip None factor for spectral_density in equivalency converter
