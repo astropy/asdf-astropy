@@ -29,7 +29,7 @@ jobs:
     with:
       submodules: false
       # Any env name which does not start with `pyXY` will use this Python version.
-      default_python: '3.10'
+      default_python: '3.11'
       envs: |
         - linux: specutils
 
@@ -39,7 +39,7 @@ jobs:
     with:
       submodules: false
       # Any env name which does not start with `pyXY` will use this Python version.
-      default_python: '3.10'
+      default_python: '3.11'
       envs: |
         - linux: gwcs
         - linux: jwst
@@ -52,7 +52,7 @@ jobs:
     with:
       submodules: false
       # Any env name which does not start with `pyXY` will use this Python version.
-      default_python: '3.10'
+      default_python: '3.11'
       envs: |
         - linux: sunpy
         - linux: dkist

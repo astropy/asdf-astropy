@@ -4,14 +4,14 @@ description = "ASDF serialization support for astropy"
 readme = 'README.rst'
 license = { file = 'LICENSE.rst' }
 authors = [{ name = 'The Astropy Developers', email = 'astropy.team@gmail.com' }]
-requires-python = '>=3.10'
+requires-python = '>=3.11'
 classifiers = [
   'Development Status :: 5 - Production/Stable',
   'Programming Language :: Python',
   "Programming Language :: Python :: 3 :: Only",
-  'Programming Language :: Python :: 3.10',
   "Programming Language :: Python :: 3.11",
   "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
 ]
 dynamic = [
   'version',
@@ -21,7 +21,7 @@ dependencies = [
   "asdf-coordinates-schemas>=0.3",
   "asdf-transform-schemas>=0.5",
   "asdf-standard>=1.1.0",
-  "astropy>=5.2.0",
+  "astropy>=7.0.0",
   "numpy>=1.24",
   "packaging>=19",
 ]
@@ -80,7 +80,7 @@ force-exclude = '''
 '''
 
 [tool.ruff]
-target-version = "py38"
+target-version = "py311"
 line-length = 120
 select = ["ALL"]
 extend-ignore = [
