@@ -98,6 +98,8 @@ extend-ignore = [
     "FBT001", # boolean positional arguments in function definition
     "RUF012", # mutable class attributes should be annotated with typing.ClassVar
     "PTH123", # replace open with Path.open
+    "B905", # zip with strict
+    "UP038", # isinstance with | instead of ,
 ]
 extend-exclude = ["docs/*"]
 
