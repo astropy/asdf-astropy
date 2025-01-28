@@ -1,11 +1,4 @@
-from astropy.coordinates.angles import Angle, Latitude, Longitude
-from astropy.utils.masked import Masked
-
 from asdf_astropy.converters.unit.quantity import QuantityConverter
-
-MaskedAngle = Masked(Angle)
-MaskedLatitude = Masked(Latitude)
-MaskedLongitude = Masked(Longitude)
 
 
 class AngleConverter(QuantityConverter):
@@ -13,7 +6,7 @@ class AngleConverter(QuantityConverter):
     types = (
         "astropy.coordinates.angles.Angle",
         "astropy.coordinates.angles.core.Angle",
-        MaskedAngle,
+        "astropy.utils.masked.core.MaskedAngle",
     )
 
     def from_yaml_tree(self, node, tag, ctx):
@@ -27,7 +20,7 @@ class LatitudeConverter(QuantityConverter):
     types = (
         "astropy.coordinates.angles.Latitude",
         "astropy.coordinates.angles.core.Latitude",
-        MaskedLatitude,
+        "astropy.utils.masked.core.MaskedLatitude",
     )
 
     def from_yaml_tree(self, node, tag, ctx):
@@ -41,7 +34,7 @@ class LongitudeConverter(QuantityConverter):
     types = (
         "astropy.coordinates.angles.Longitude",
         "astropy.coordinates.angles.core.Longitude",
-        MaskedLongitude,
+        "astropy.utils.masked.core.MaskedLongitude",
     )
 
     def to_yaml_tree(self, obj, tag, ctx):
