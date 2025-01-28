@@ -111,6 +111,12 @@ def test_table_row_order(tmp_path):
     helpers.assert_table_roundtrip(table, tmp_path)
 
 
+# once asdf 2.14.x can be dropped and the minimum updated 2.15.0 this warning
+# filter can be removed
+@pytest.mark.filterwarnings(
+    "ignore:`product` is deprecated as of NumPy 1.25.0, and will be removed in "
+    "NumPy 2.0. Please use `prod` instead.:DeprecationWarning",
+)
 def test_table_inline(tmp_path):
     rows = [(1, 2.0, "x"), (4, 5.0, "y"), (5, 8.2, "z")]
     table = Table(rows=rows, names=("a", "b", "c"), dtype=("i4", "f8", "S1"))
