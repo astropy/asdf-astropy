@@ -9,11 +9,15 @@ class QuantityConverter(Converter):
         # The Distance class has no tag of its own, so we
         # just serialize it as a quantity.
         "astropy.coordinates.distances.Distance",
+        "astropy.utils.masked.core.MaskedQuantity",
     )
 
     def to_yaml_tree(self, obj, tag, ctx):
+        import numpy as np
+        from astropy.utils.masked import Masked
+
         node = {
-            "value": obj.value,
+            "value": np.ma.asarray(obj.value) if isinstance(obj, Masked) else obj.value,
             "unit": obj.unit,
         }
 
@@ -28,6 +32,7 @@ class QuantityConverter(Converter):
         # astropy 6.1 changed Quantity in a similar way
         import numpy as np
         from astropy.units import Quantity
+        from astropy.utils.masked.core import MaskedQuantity
 
         copy = None if np.lib.NumpyVersion(np.__version__) >= "2.0.0b1" else False
 
@@ -39,4 +44,6 @@ class QuantityConverter(Converter):
             value = value._make_array()
             dtype = value.dtype
 
-        return Quantity(value, unit=node["unit"], copy=copy, dtype=dtype)
+        class_ = MaskedQuantity if isinstance(value, np.ma.MaskedArray) else Quantity
+
+        return class_(value, unit=node["unit"], copy=copy, dtype=dtype)

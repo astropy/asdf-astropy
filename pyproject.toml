@@ -21,7 +21,8 @@ dependencies = [
   "asdf-coordinates-schemas>=0.3",
   "asdf-transform-schemas>=0.5",
   "asdf-standard>=1.1.0",
-  "astropy>=5.2.0",
+  # "astropy>=5.2.0",
+  "astropy @ git+https://github.com/lpsinger/astropy@masked-classes-importable",
   "numpy>=1.24",
   "packaging>=19",
 ]
