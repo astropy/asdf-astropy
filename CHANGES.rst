@@ -1,3 +1,8 @@
+0.8.0 (unreleased)
+------------------
+
+- Add support for masked quantities, angles, and coordinates [#749]
+
 0.7.0 (2024-11-13)
 ------------------
 

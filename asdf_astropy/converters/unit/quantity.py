@@ -1,5 +1,10 @@
+import numpy as np
 from asdf.extension import Converter
 from asdf.tags.core.ndarray import NDArrayType
+from astropy.units import Quantity
+from astropy.utils.masked import Masked
+
+MaskedQuantity = Masked(Quantity)
 
 
 class QuantityConverter(Converter):
@@ -9,11 +14,12 @@ class QuantityConverter(Converter):
         # The Distance class has no tag of its own, so we
         # just serialize it as a quantity.
         "astropy.coordinates.distances.Distance",
+        MaskedQuantity,
     )
 
     def to_yaml_tree(self, obj, tag, ctx):
         node = {
-            "value": obj.value,
+            "value": np.ma.asarray(obj.value) if isinstance(obj, Masked) else obj.value,
             "unit": obj.unit,
         }
 
@@ -39,4 +45,6 @@ class QuantityConverter(Converter):
             value = value._make_array()
             dtype = value.dtype
 
-        return Quantity(value, unit=node["unit"], copy=copy, dtype=dtype)
+        class_ = MaskedQuantity if isinstance(value, np.ma.MaskedArray) else Quantity
+
+        return class_(value, unit=node["unit"], copy=copy, dtype=dtype)
