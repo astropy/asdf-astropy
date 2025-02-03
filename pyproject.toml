@@ -4,14 +4,14 @@ description = "ASDF serialization support for astropy"
 readme = 'README.rst'
 license = { file = 'LICENSE.rst' }
 authors = [{ name = 'The Astropy Developers', email = 'astropy.team@gmail.com' }]
-requires-python = '>=3.10'
+requires-python = '>=3.11'
 classifiers = [
   'Development Status :: 5 - Production/Stable',
   'Programming Language :: Python',
   "Programming Language :: Python :: 3 :: Only",
-  'Programming Language :: Python :: 3.10',
   "Programming Language :: Python :: 3.11",
   "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
 ]
 dynamic = [
   'version',
@@ -22,7 +22,7 @@ dependencies = [
   "asdf-transform-schemas>=0.5",
   "asdf-standard>=1.1.0",
   "astropy>=5.2.0",
-  "numpy>=1.24",
+  "numpy>=1.25",
   "packaging>=19",
 ]
 [project.optional-dependencies]
@@ -80,7 +80,7 @@ force-exclude = '''
 '''
 
 [tool.ruff]
-target-version = "py38"
+target-version = "py311"
 line-length = 120
 select = ["ALL"]
 extend-ignore = [
@@ -98,6 +98,8 @@ extend-ignore = [
     "FBT001", # boolean positional arguments in function definition
     "RUF012", # mutable class attributes should be annotated with typing.ClassVar
     "PTH123", # replace open with Path.open
+    "B905", # zip with strict
+    "UP038", # isinstance with | instead of ,
 ]
 extend-exclude = ["docs/*"]
 
