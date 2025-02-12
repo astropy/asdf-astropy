@@ -41,4 +41,5 @@ def get_extensions():
         *extensions.TRANSFORM_EXTENSIONS,
         *extensions.UNIT_EXTENSIONS,
         *extensions.CORE_EXTENSIONS,
+        *extensions.EMPTY_EXTENSIONS,
     ]
