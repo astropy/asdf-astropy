@@ -1,3 +1,9 @@
+0.7.1 (2025-02-12)
+------------------
+
+- register blank ASDF extensions to prevent warnings for
+  ASDF files generated with asdf-astropy 0.5.0. [#258]
+
 0.7.0 (2024-11-13)
 ------------------
 

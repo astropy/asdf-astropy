@@ -1,5 +1,6 @@
 import io
 import sys
+import warnings
 from pathlib import Path
 
 import asdf
@@ -134,3 +135,40 @@ def test_no_core_extension_overwrite():
         # generate the file
         assert "asdf" in packages
         assert "asdf-astropy" in packages
+
+
+def test_no_warnings_for_astropy_manifest_files():
+    """
+    asdf-astropy 0.5.0 wrote files with astropy.org manifests
+    that were compounds of core and astropy types. These types are
+    now handled by different extensions. This test checks that files
+    generated with the no longer used astropy.org manifests open without
+    warnings.
+    """
+    file_contents = io.BytesIO(
+        b"""#ASDF 1.0.0
+#ASDF_STANDARD 1.5.0
+%YAML 1.1
+%TAG ! tag:stsci.edu:asdf/
+--- !core/asdf-1.1.0
+asdf_library: !core/software-1.0.0 {author: The ASDF Developers, homepage: 'http://github.com/asdf-format/asdf',
+  name: asdf, version: 3.3.0}
+history:
+  extensions:
+  - !core/extension_metadata-1.0.0
+    extension_class: asdf.extension._manifest.ManifestExtension
+    extension_uri: asdf://asdf-format.org/core/extensions/core-1.5.0
+    manifest_software: !core/software-1.0.0 {name: asdf_standard, version: 1.1.1}
+    software: !core/software-1.0.0 {name: asdf, version: 3.3.0}
+  - !core/extension_metadata-1.0.0
+    extension_class: asdf_astropy._manifest.CompoundManifestExtension
+    extension_uri: asdf://astropy.org/core/extensions/core-1.5.0
+    software: !core/software-1.0.0 {name: asdf-astropy, version: 0.5.0}
+u: !unit/unit-1.0.0 m
+...""",
+    )
+    with warnings.catch_warnings():
+        # make sure warnings are errors
+        warnings.simplefilter("error")
+        with asdf.open(file_contents) as af:
+            assert af["u"]  # we don't care about the contents here
