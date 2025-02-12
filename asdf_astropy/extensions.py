@@ -3,7 +3,7 @@ This module builds all of the ASDF extensions which will be registered by `asdf_
 via an ``entry-point`` in the ``pyproject.toml`` file.
 """
 
-from asdf.extension import ManifestExtension
+from asdf.extension import Extension, ManifestExtension
 
 from .converters.coordinates.angle import AngleConverter, LatitudeConverter, LongitudeConverter
 from .converters.coordinates.earth_location import EarthLocationConverter
@@ -563,3 +563,32 @@ CORE_MANIFEST_URIS = [
 ]
 
 CORE_EXTENSIONS = [ManifestExtension.from_uri(u, converters=CORE_CONVERTERS) for u in CORE_MANIFEST_URIS]
+
+
+# asdf-astropy 0.4.0 combined core and unit manifests
+# but registered them with the core uri
+# asdf-astropy 0.5.0 combined core and unit manifests
+# but registered them with the core uri with asdf-format.org
+# swapped with astropy.org
+# To avoid warnings for opening old files we register empty
+# extensions with the astropy.org uris here
+class _EmptyExtension(Extension):
+    def __init__(self, uri):
+        self._uri = uri
+
+    @property
+    def extension_uri(self):
+        return self._uri
+
+
+EMPTY_EXTENSIONS = [
+    _EmptyExtension(uri)
+    for uri in [
+        "asdf://astropy.org/core/extensions/core-1.5.0",
+        "asdf://astropy.org/core/extensions/core-1.4.0",
+        "asdf://astropy.org/core/extensions/core-1.3.0",
+        "asdf://astropy.org/core/extensions/core-1.2.0",
+        "asdf://astropy.org/core/extensions/core-1.1.0",
+        "asdf://astropy.org/core/extensions/core-1.0.0",
+    ]
+]
