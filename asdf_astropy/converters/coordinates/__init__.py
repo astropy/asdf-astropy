@@ -1,10 +1,10 @@
 __all__ = [
     "AngleConverter",
-    "LatitudeConverter",
-    "LongitudeConverter",
     "EarthLocationConverter",
     "FrameConverter",
+    "LatitudeConverter",
     "LegacyICRSConverter",
+    "LongitudeConverter",
     "RepresentationConverter",
     "SkyCoordConverter",
     "SpectralCoordConverter",

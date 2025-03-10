@@ -35,7 +35,7 @@ def test_serialization(earth_location, tmp_path):
         assert (af["earth_location"] == earth_location).all()
 
 
-@pytest.fixture()
+@pytest.fixture
 def _builtin_site_registry():
     orig_sites = getattr(EarthLocation, "_site_registry", None)
     EarthLocation._get_site_registry(force_builtin=True)

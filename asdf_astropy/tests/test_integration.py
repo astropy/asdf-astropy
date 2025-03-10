@@ -61,7 +61,7 @@ _ASTROPY_MODULES = [
 ]
 
 
-@pytest.fixture()
+@pytest.fixture
 def _clean_astropy_imports():
     """Temporally unload all astropy modules used by asdf-astropy"""
 
@@ -92,8 +92,8 @@ def _clean_astropy_imports():
     # Restore the previously imported modules. This is necessary as other code
     # may have already used the modules we removed from the cache (astropy.constants
     # defines some quantities).
-    for name in previous_modules:
-        sys.modules[name] = previous_modules[name]
+    for name, previous_module in previous_modules.items():
+        sys.modules[name] = previous_module
     if isinstance(sys.meta_path[0], _Finder):
         sys.meta_path.pop(0)
 
