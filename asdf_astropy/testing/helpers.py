@@ -1,6 +1,7 @@
 """
 Helpers for testing astropy objects in ASDF files.
 """
+
 import numpy as np
 
 
@@ -130,7 +131,7 @@ def assert_table_equal(a, b):
     """
     from astropy.table import Column, MaskedColumn
 
-    assert type(a) == type(b)
+    assert type(a) is type(b)
     assert a.meta == b.meta
 
     assert len(a) == len(b)
@@ -157,7 +158,7 @@ def assert_wcs_equal(a, b):
 
     from asdf_astropy.converters.wcs.wcs import _WCS_ATTRS
 
-    assert type(a) == type(b)
+    assert type(a) is type(b)
     assert_hdu_list_equal(a.to_fits(relax=True), b.to_fits(relax=True))
     for attr in _WCS_ATTRS:
         in_a = hasattr(a, attr)

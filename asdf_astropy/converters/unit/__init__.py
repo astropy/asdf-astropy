@@ -1,8 +1,8 @@
 __all__ = [
     "EquivalencyConverter",
+    "MagUnitConverter",
     "QuantityConverter",
     "UnitConverter",
-    "MagUnitConverter",
 ]
 
 from .equivalency import EquivalencyConverter

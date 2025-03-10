@@ -1,6 +1,6 @@
 __all__ = [
-    "TimeDeltaConverter",
     "TimeConverter",
+    "TimeDeltaConverter",
 ]
 
 from .time import TimeConverter

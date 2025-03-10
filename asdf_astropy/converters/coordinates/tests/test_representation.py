@@ -2,7 +2,7 @@ import asdf
 import astropy.units as u
 import pytest
 from astropy.coordinates import Angle, representation
-from numpy.random import random
+from numpy.random import default_rng
 
 from asdf_astropy.testing.helpers import assert_representation_equal
 
@@ -20,9 +20,10 @@ REPRESENTATION_CLASSES = [
 
 
 def create_representation(rep_class):
+    rng = default_rng(42)
     kwargs = {}
     for attr_name, attr_type in rep_class.attr_classes.items():
-        value = random((100,)) * u.deg if issubclass(attr_type, Angle) else random((100,)) * u.km
+        value = rng.random((100,)) * u.deg if issubclass(attr_type, Angle) else rng.random((100,)) * u.km
         kwargs[attr_name] = value
 
     return rep_class(**kwargs)

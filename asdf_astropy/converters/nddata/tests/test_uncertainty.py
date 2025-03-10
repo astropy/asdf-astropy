@@ -32,6 +32,6 @@ def test_uncertainty_serialization(uncertainty, tmp_path):
 
     with asdf.open(file_path) as af:
         loaded_uncert = af["uncertainty"]
-        assert type(loaded_uncert) == type(uncertainty)
+        assert type(loaded_uncert) is type(uncertainty)
         assert (loaded_uncert._array == uncertainty._array).all()
         assert loaded_uncert.unit == uncertainty.unit
