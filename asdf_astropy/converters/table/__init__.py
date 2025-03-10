@@ -1,7 +1,7 @@
 __all__ = [
-    "ColumnConverter",
-    "AstropyTableConverter",
     "AsdfTableConverter",
+    "AstropyTableConverter",
+    "ColumnConverter",
     "NdarrayMixinConverter",
 ]
 

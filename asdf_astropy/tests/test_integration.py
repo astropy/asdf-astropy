@@ -61,7 +61,7 @@ _ASTROPY_MODULES = [
 ]
 
 
-@pytest.fixture()
+@pytest.fixture
 def _clean_astropy_imports():
     """Temporally unload all astropy modules used by asdf-astropy"""
 

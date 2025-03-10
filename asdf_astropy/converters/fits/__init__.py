@@ -1,7 +1,7 @@
 __all__ = [
-    "FitsConverter",
     "AsdfFitsConverter",
     "AstropyFitsConverter",
+    "FitsConverter",
 ]
 
 from .fits import AsdfFitsConverter, AstropyFitsConverter, FitsConverter

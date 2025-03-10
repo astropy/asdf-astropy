@@ -3,6 +3,7 @@ Script that creates initial astropy manifest from the schemas
 in the resources directory.  This file can be removed once
 the format of the manifest files has been finalized.
 """
+
 import argparse
 from pathlib import Path
 

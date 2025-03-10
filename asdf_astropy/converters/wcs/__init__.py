@@ -1,6 +1,6 @@
 __all__ = [
-    "WCSConverter",
     "SlicedWCSConverter",
+    "WCSConverter",
 ]
 from .slicedwcs import SlicedWCSConverter
 from .wcs import WCSConverter
