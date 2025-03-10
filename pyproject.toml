@@ -85,17 +85,54 @@ line-length = 120
 extend-exclude = ["docs/*"]
 
 [tool.ruff.lint]
-select = ["ALL"]
+select = [
+    "ERA",
+    "YTT",
+    "S",
+    "BLE",
+    "FBT",
+    "B",
+    "A",
+    "COM",
+    "C4",
+    "CPY",
+    "T10",
+    "EM",
+    "EXE",
+    "INT",
+    "ISC",
+    "ICN",
+    "LOG",
+    "G",
+    "INP",
+    "PIE",
+    "T20",
+    "PYI",
+    "PT",
+    "Q",
+    "RSE",
+    "RET",
+    "SLF",
+    "SLOT",
+    "TID",
+    "PTH",
+    "FLY",
+    "I",
+    "NPY",
+    "N",
+    "PERF",
+    "E",
+    "W",
+    "DOC",
+    "F",
+    "PGH",
+    "PL",
+    "UP",
+    "FURB",
+    "RUF",
+    "TRY",
+]
 extend-ignore = [
-    # Ignore check groups
-    "C90", # mccabe
-    "D", # pydocstyle
-    "ANN", # flake8-annotations
-    "ARG", # flake8-unused-arguments
-    "DTZ", # flake8-datetimez
-    "TD", # flake8-todos
-    "FIX", # flake8-fixme
-    "SIM", # flake8-simplify
     # Individually ignored checks
     "SLF001", # private-member-access
     "FBT001", # boolean positional arguments in function definition
