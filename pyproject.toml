@@ -168,14 +168,12 @@ asdf_schema_tests_enabled = true
 
 [tool.coverage.run]
 omit = [
-    'asdf_astropy/_astropy_init*',
     'asdf_astropy/conftest.py',
     'asdf_astropy/*setup_package*',
     'asdf_astropy/tests/*',
     'asdf_astropy/*/tests/*',
     'asdf_astropy/extern/*',
     'asdf_astropy/version*',
-    '*/asdf_astropy/_astropy_init*',
     '*/asdf_astropy/conftest.py',
     '*/asdf_astropy/*setup_package*',
     '*/asdf_astropy/tests/*',
