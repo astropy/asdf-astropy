@@ -40,7 +40,7 @@ repos:
         - tomli
 
 - repo: https://github.com/astral-sh/ruff-pre-commit
-  rev: "v0.9.10"
+  rev: "v0.11.0"
   hooks:
     - id: ruff
       args: ["--fix"]
@@ -56,6 +56,6 @@ repos:
     - id: blacken-docs
 
 - repo: https://github.com/abravalheri/validate-pyproject
-  rev: "v0.23"
+  rev: "v0.24"
   hooks:
     - id: validate-pyproject
