@@ -1,10 +1,13 @@
 import asdf
 import numpy as np
+import pytest
 from astropy import units as u
 from astropy.utils.masked import Masked
 
-# FIXME: ASTROPY_LT_7_1: Remove once we depend on astropy >= 7.1.
-from asdf_astropy.tests import skip_if_astropy_lt_7_1 as pytestmark  # noqa: F401
+from asdf_astropy.tests.versions import ASTROPY_LT_7_1
+
+if ASTROPY_LT_7_1:
+    pytest.skip(reason="MaskedQuantity support was added in astropy 7.1", allow_module_level=True)
 
 MaskedQuantity = Masked(u.Quantity)
 
