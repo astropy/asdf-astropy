@@ -1,3 +1,5 @@
+import importlib.resources
+
 import asdf
 import numpy as np
 import pytest
@@ -6,6 +8,10 @@ from astropy import units
 from astropy.units import Quantity
 from astropy.utils.introspection import minversion
 from numpy.testing import assert_array_equal
+
+from asdf_astropy.tests.versions import ASTROPY_LT_7_1
+
+from . import resources
 
 
 def asdf_open_memory_mapping_kwarg(memmap: bool) -> dict:
@@ -149,3 +155,10 @@ def test_no_memmap(tmp_path):
         assert af.tree["quantity"][-1, -1] != new_value
         assert (af.tree["quantity"] != new_quantity).any()
         assert (af.tree["quantity"] == quantity).all()
+
+
+@pytest.mark.skipif(not ASTROPY_LT_7_1, reason="MaskedQuantity support was added in astropy 7.1")
+def test_masked_quantity_raises():
+    with pytest.raises(NotImplementedError):
+        with asdf.open(importlib.resources.files(resources) / "test.asdf"):
+            pass
