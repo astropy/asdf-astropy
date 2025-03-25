@@ -5,11 +5,11 @@ from astropy import units as u
 from astropy.coordinates import Angle, EarthLocation, Latitude, Longitude, SkyCoord
 from astropy.utils.masked import Masked
 
-from asdf_astropy.testing.helpers import skip_if_astropy_lt_7_1
+# FIXME: ASTROPY_LT_7_1: Remove once we depend on astropy >= 7.1.
+from asdf_astropy.tests import skip_if_astropy_lt_7_1 as pytestmark  # noqa: F401
 
 
 @pytest.mark.parametrize("angle_class", [Angle, Latitude, Longitude])
-@skip_if_astropy_lt_7_1
 def test_masked_angle(tmp_path, angle_class):
     masked_class = Masked(angle_class)
     file_path = tmp_path / "test.asdf"
@@ -21,7 +21,6 @@ def test_masked_angle(tmp_path, angle_class):
         assert isinstance(af["angle"], masked_class)
 
 
-@skip_if_astropy_lt_7_1
 def test_masked_skycoord(tmp_path):
     ra_deg = [0.0, 1.0, 2.0]
     dec_deg = [2.0, 1.0, 0.0]
@@ -45,7 +44,6 @@ def test_masked_skycoord(tmp_path):
         np.testing.assert_array_equal(out_mask, mask)
 
 
-@skip_if_astropy_lt_7_1
 def test_masked_earth_location(tmp_path):
     x = [0.0, 1.0, 2.0]
     y = [2.0, 1.0, 0.0]

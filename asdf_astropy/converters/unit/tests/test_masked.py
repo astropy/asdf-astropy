@@ -7,7 +7,7 @@ from astropy import units as u
 from astropy.utils.masked import Masked
 
 from asdf_astropy.converters.utils import MaskedClassesRequireAstropy71Error
-from asdf_astropy.testing.helpers import only_if_astropy_lt_7_1, skip_if_astropy_lt_7_1
+from asdf_astropy.tests import only_if_astropy_lt_7_1, skip_if_astropy_lt_7_1
 
 from . import resources
 

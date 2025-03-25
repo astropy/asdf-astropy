@@ -1,7 +1,7 @@
 import pytest
 
 from asdf_astropy.converters.utils import import_masked_type
-from asdf_astropy.testing.helpers import skip_if_astropy_lt_7_1
+from asdf_astropy.tests import skip_if_astropy_lt_7_1
 
 
 @skip_if_astropy_lt_7_1
