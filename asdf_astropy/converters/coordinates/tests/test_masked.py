@@ -3,7 +3,10 @@ import numpy as np
 import pytest
 from astropy import units as u
 from astropy.coordinates import Angle, Latitude, Longitude, SkyCoord
-from astropy.utils.masked import Masked, get_data_and_mask
+from astropy.utils.masked import Masked
+
+# FIXME: Remove once we depend on astropy >= 7.1.
+pytest.importorskip("astropy", minversion="7.1.dev", reason="Masked classes require astropy >= 7.1")
 
 
 @pytest.mark.parametrize("angle_class", [Angle, Latitude, Longitude])
@@ -30,6 +33,9 @@ def test_masked_skycoord(tmp_path):
     with asdf.open(file_path) as af:
         assert af["coord"].ra.unit == u.deg
         assert af["coord"].dec.unit == u.deg
+        # FIXME: move import to module scope once we depend on astropy >= 7.1
+        from astropy.utils.masked import get_data_and_mask
+
         out_data, out_mask = get_data_and_mask(af["coord"].ra.deg)
         np.testing.assert_array_equal(out_data, ra_deg)
         np.testing.assert_array_equal(out_mask, mask)

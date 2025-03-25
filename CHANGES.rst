@@ -3,7 +3,8 @@
 
 - drop support for python 3.10 and numpy 1.24. [#255]
 - remove soon to be deprecated and non-working use of astropy TestRunner. [#263]
-- Add support for masked quantities, angles, and coordinates. [#253]
+- Add support for masked quantities, angles, and coordinates.
+  Requires astropy >= 7.1. [#253]
 
 0.7.1 (2025-02-12)
 ------------------

@@ -1,6 +1,8 @@
 from asdf.extension import Converter
 from asdf.tags.core.ndarray import NDArrayType
 
+from asdf_astropy.converters.utils import import_masked_type
+
 
 class QuantityConverter(Converter):
     tags = ("tag:stsci.edu:asdf/unit/quantity-*",)
@@ -32,7 +34,6 @@ class QuantityConverter(Converter):
         # astropy 6.1 changed Quantity in a similar way
         import numpy as np
         from astropy.units import Quantity
-        from astropy.utils.masked.core import MaskedQuantity
 
         copy = None if np.lib.NumpyVersion(np.__version__) >= "2.0.0b1" else False
 
@@ -44,6 +45,6 @@ class QuantityConverter(Converter):
             value = value._make_array()
             dtype = value.dtype
 
-        class_ = MaskedQuantity if isinstance(value, np.ma.MaskedArray) else Quantity
+        class_ = import_masked_type("Quantity") if isinstance(value, np.ma.MaskedArray) else Quantity
 
         return class_(value, unit=node["unit"], copy=copy, dtype=dtype)
