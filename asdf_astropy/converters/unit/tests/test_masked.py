@@ -1,15 +1,27 @@
+import importlib.resources
+
 import asdf
 import numpy as np
 import pytest
 from astropy import units as u
 from astropy.utils.masked import Masked
 
+from asdf_astropy.converters.utils import MaskedClassesRequireAstropy71Error
+from asdf_astropy.testing.helpers import only_if_astropy_lt_7_1, skip_if_astropy_lt_7_1
+
+from . import resources
+
 MaskedQuantity = Masked(u.Quantity)
 
-# FIXME: Remove once we depend on astropy >= 7.1.
-pytest.importorskip("astropy", minversion="7.1.dev", reason="Masked classes require astropy >= 7.1")
+
+@only_if_astropy_lt_7_1
+def test_masked_quantity_raises():
+    with pytest.raises(MaskedClassesRequireAstropy71Error):
+        with asdf.open(importlib.resources.files(resources) / "test.asdf"):
+            pass
 
 
+@skip_if_astropy_lt_7_1
 def test_masked_quantity(tmp_path):
     data = [1, 2, 3]
     mask = [False, False, True]
