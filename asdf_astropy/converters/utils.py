@@ -20,7 +20,7 @@ def import_type(type_name):
     return getattr(importlib.import_module(module_name), class_name)
 
 
-# FIXME: Remove once we depend on astropy >= 7.1.
+# FIXME: ASTROPY_LT_7_1: Remove once we depend on astropy >= 7.1.
 class MaskedClassesRequireAstropy71Error(NotImplementedError):
     def __init__(self, class_name):
         from astropy import __version__
@@ -30,7 +30,7 @@ class MaskedClassesRequireAstropy71Error(NotImplementedError):
         )
 
 
-# FIXME: Remove once we depend on astropy >= 7.1.
+# FIXME: ASTROPY_LT_7_1: Remove once we depend on astropy >= 7.1.
 def import_masked_type(class_name):
     try:
         return import_type(f"astropy.utils.masked.core.Masked{class_name}")
