@@ -38,6 +38,6 @@ def import_masked_type(class_name):
         from astropy import __version__
         from packaging.version import Version
 
-        if Version(__version__) < Version("7.1dev"):
+        if Version(__version__) < Version("7.1.dev"):
             raise MaskedClassesRequireAstropy71Error(class_name) from e
         raise
