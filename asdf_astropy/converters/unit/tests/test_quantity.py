@@ -169,5 +169,4 @@ quantity: !unit/quantity-1.1.0
 """
     buff = helpers.yaml_to_asdf(yaml, version="1.5.0")
     with pytest.raises(NotImplementedError):
-        with asdf.open(buff):
-            pass
+        asdf.open(buff)
