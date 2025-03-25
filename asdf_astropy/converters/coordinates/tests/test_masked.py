@@ -2,7 +2,7 @@ import asdf
 import numpy as np
 import pytest
 from astropy import units as u
-from astropy.coordinates import Angle, Latitude, Longitude, SkyCoord
+from astropy.coordinates import Angle, EarthLocation, Latitude, Longitude, SkyCoord
 from astropy.utils.masked import Masked
 
 from asdf_astropy.testing.helpers import skip_if_astropy_lt_7_1
@@ -23,8 +23,8 @@ def test_masked_angle(tmp_path, angle_class):
 
 @skip_if_astropy_lt_7_1
 def test_masked_skycoord(tmp_path):
-    ra_deg = [0, 1, 2]
-    dec_deg = [2, 1, 0]
+    ra_deg = [0.0, 1.0, 2.0]
+    dec_deg = [2.0, 1.0, 0.0]
     mask = [False, False, True]
     file_path = tmp_path / "test.asdf"
     with asdf.AsdfFile() as af:
@@ -42,4 +42,33 @@ def test_masked_skycoord(tmp_path):
         np.testing.assert_array_equal(out_mask, mask)
         out_data, out_mask = get_data_and_mask(af["coord"].dec.deg)
         np.testing.assert_array_equal(out_data, dec_deg)
+        np.testing.assert_array_equal(out_mask, mask)
+
+
+@skip_if_astropy_lt_7_1
+def test_masked_earth_location(tmp_path):
+    x = [0.0, 1.0, 2.0]
+    y = [2.0, 1.0, 0.0]
+    z = [1.0, 2.0, 0.0]
+    mask = [False, False, True]
+    file_path = tmp_path / "test.asdf"
+    with asdf.AsdfFile() as af:
+        af["loc"] = EarthLocation.from_geocentric(Masked(x * u.m, mask), Masked(y * u.m, mask), Masked(z * u.m, mask))
+        af.write_to(file_path)
+
+    with asdf.open(file_path) as af:
+        assert af["loc"].x.unit == u.m
+        assert af["loc"].y.unit == u.m
+        assert af["loc"].z.unit == u.m
+        # FIXME: ASTROPY_LT_7_1: move import to module scope once we depend on astropy >= 7.1
+        from astropy.utils.masked import get_data_and_mask
+
+        out_data, out_mask = get_data_and_mask(af["loc"].x.to_value(u.m))
+        np.testing.assert_array_equal(out_data, x)
+        np.testing.assert_array_equal(out_mask, mask)
+        out_data, out_mask = get_data_and_mask(af["loc"].y.to_value(u.m))
+        np.testing.assert_array_equal(out_data, y)
+        np.testing.assert_array_equal(out_mask, mask)
+        out_data, out_mask = get_data_and_mask(af["loc"].z.to_value(u.m))
+        np.testing.assert_array_equal(out_data, z)
         np.testing.assert_array_equal(out_mask, mask)
