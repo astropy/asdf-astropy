@@ -168,5 +168,5 @@ quantity: !unit/quantity-1.1.0
     shape: [3]
 """
     buff = helpers.yaml_to_asdf(yaml, version="1.5.0")
-    with pytest.raises(NotImplementedError):
+    with pytest.raises(NotImplementedError, match="MaskedQuantity support requires astropy 7.1 or later"):
         asdf.open(buff)
