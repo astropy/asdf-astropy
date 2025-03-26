@@ -45,6 +45,12 @@ class QuantityConverter(Converter):
             value = value._make_array()
             dtype = value.dtype
 
-        class_ = import_masked_type("Quantity") if isinstance(value, np.ma.MaskedArray) else Quantity
+        if isinstance(value, np.ma.MaskedArray):
+            if not minversion("astropy", "7.1.dev"):    # ASTROPY_LT_7_1
+                msg = "MaskedQuantity support requires astropy 7.1 or later"
+                raise NotImplementedError(msg)
+            class_ = Masked(Quantity)
+        else:
+            class_ = Quantity
 
         return class_(value, unit=node["unit"], copy=copy, dtype=dtype)
