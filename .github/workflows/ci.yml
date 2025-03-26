@@ -70,6 +70,7 @@ jobs:
       envs: |
         - macos: py311-test-parallel-cov
         - windows: py311-test-parallel-cov
+      coverage: codecov
 
   dev:
     needs: [core, asdf-schemas]
@@ -84,6 +85,7 @@ jobs:
       envs: |
         - linux: py313-test-predeps-parallel-cov
         - linux: py313-test-devdeps-parallel-cov
+      coverage: codecov
 
   oldest:
     needs: [core, asdf-schemas]
