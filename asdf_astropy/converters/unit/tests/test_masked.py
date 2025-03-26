@@ -25,8 +25,6 @@ def test_masked_quantity(tmp_path):
     with asdf.open(file_path) as af:
         assert isinstance(af["quantity"], MaskedQuantity)
         assert af["quantity"].unit == u.yottamole
-        # FIXME: ASTROPY_LT_7_1: move import to module scope once we depend on astropy >= 7.1
-        from astropy.utils.masked import get_data_and_mask
 
         result_data, result_mask = get_data_and_mask(af["quantity"].value)
         np.testing.assert_array_equal(result_data, data)
