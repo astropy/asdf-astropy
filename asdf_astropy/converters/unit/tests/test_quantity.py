@@ -7,6 +7,8 @@ from astropy.units import Quantity
 from astropy.utils.introspection import minversion
 from numpy.testing import assert_array_equal
 
+from asdf_astropy.tests.versions import ASTROPY_GE_7_1
+
 
 def asdf_open_memory_mapping_kwarg(memmap: bool) -> dict:
     if minversion("asdf", "3.1.0"):
@@ -149,3 +151,22 @@ def test_no_memmap(tmp_path):
         assert af.tree["quantity"][-1, -1] != new_value
         assert (af.tree["quantity"] != new_quantity).any()
         assert (af.tree["quantity"] == quantity).all()
+
+
+@pytest.mark.skipif(ASTROPY_GE_7_1, reason="MaskedQuantity support was added in astropy 7.1")
+def test_masked_quantity_raises():
+    yaml = """
+quantity: !unit/quantity-1.1.0
+  unit: !unit/unit-1.0.0 Ymol
+  value: !core/ndarray-1.0.0
+    data: [1.0, 2.0, null]
+    mask: !core/ndarray-1.0.0
+      data: [false, false, true]
+      datatype: bool8
+      shape: [3]
+    datatype: float64
+    shape: [3]
+"""
+    buff = helpers.yaml_to_asdf(yaml, version="1.5.0")
+    with pytest.raises(NotImplementedError, match="MaskedQuantity support requires astropy 7.1 or later"):
+        asdf.open(buff)

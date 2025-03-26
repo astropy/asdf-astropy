@@ -68,8 +68,9 @@ jobs:
       # Any env name which does not start with `pyXY` will use this Python version.
       default_python: '3.13'
       envs: |
-        - macos: py311-test-parallel
-        - windows: py311-test-parallel
+        - macos: py311-test-parallel-cov
+        - windows: py311-test-parallel-cov
+      coverage: codecov
 
   dev:
     needs: [core, asdf-schemas]
@@ -82,8 +83,9 @@ jobs:
       # Any env name which does not start with `pyXY` will use this Python version.
       default_python: '3.13'
       envs: |
-        - linux: py313-test-predeps-parallel
-        - linux: py313-test-devdeps-parallel
+        - linux: py313-test-predeps-parallel-cov
+        - linux: py313-test-devdeps-parallel-cov
+      coverage: codecov
 
   oldest:
     needs: [core, asdf-schemas]
