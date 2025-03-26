@@ -1,8 +1,6 @@
 from asdf.extension import Converter
 from asdf.tags.core.ndarray import NDArrayType
 
-from asdf_astropy.converters.utils import import_masked_type
-
 
 class QuantityConverter(Converter):
     tags = ("tag:stsci.edu:asdf/unit/quantity-*",)
