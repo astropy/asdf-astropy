@@ -15,15 +15,17 @@ else:
 
 @pytest.mark.parametrize("angle_class", [Angle, Latitude, Longitude])
 def test_masked_angle(tmp_path, angle_class):
+    angle = [1, 2, 3]
+    mask = [False, False, True]
     masked_class = Masked(angle_class)
     file_path = tmp_path / "test.asdf"
     with asdf.AsdfFile() as af:
-        af["angle"] = Masked(angle_class([1, 2, 3] * u.deg), [False, False, True])
+        af["angle"] = Masked(angle_class(angle * u.deg), mask)
         af.write_to(file_path)
 
     with asdf.open(file_path) as af:
         assert isinstance(af["angle"], masked_class)
-        out_data, out_mask = get_data_and_mask(af["angle"])
+        out_data, out_mask = get_data_and_mask(af["angle"].to_value(u.deg))
         np.testing.assert_array_equal(out_data, angle)
         np.testing.assert_array_equal(out_mask, mask)
 
