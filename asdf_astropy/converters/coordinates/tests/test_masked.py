@@ -23,6 +23,9 @@ def test_masked_angle(tmp_path, angle_class):
 
     with asdf.open(file_path) as af:
         assert isinstance(af["angle"], masked_class)
+        out_data, out_mask = get_data_and_mask(af["angle"])
+        np.testing.assert_array_equal(out_data, angle)
+        np.testing.assert_array_equal(out_mask, mask)
 
 
 def test_masked_skycoord(tmp_path):
