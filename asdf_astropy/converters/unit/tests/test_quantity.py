@@ -7,7 +7,7 @@ from astropy.units import Quantity
 from astropy.utils.introspection import minversion
 from numpy.testing import assert_array_equal
 
-from asdf_astropy.tests.versions import ASTROPY_LT_7_1
+from asdf_astropy.tests.versions import ASTROPY_GE_7_1
 
 
 def asdf_open_memory_mapping_kwarg(memmap: bool) -> dict:
@@ -153,7 +153,7 @@ def test_no_memmap(tmp_path):
         assert (af.tree["quantity"] == quantity).all()
 
 
-@pytest.mark.skipif(not ASTROPY_LT_7_1, reason="MaskedQuantity support was added in astropy 7.1")
+@pytest.mark.skipif(not ASTROPY_GE_7_1, reason="MaskedQuantity support was added in astropy 7.1")
 def test_masked_quantity_raises():
     yaml = """
 quantity: !unit/quantity-1.1.0

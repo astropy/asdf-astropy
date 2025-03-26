@@ -1,4 +1,3 @@
-import astropy
-from packaging.version import Version
+from astropy.utils import minversion
 
-ASTROPY_LT_7_1 = Version(astropy.__version__) < Version("7.1.dev")
+ASTROPY_GE_7_1 = minversion("astropy", "7.1.dev")

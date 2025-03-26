@@ -5,12 +5,12 @@ from astropy import units as u
 from astropy.coordinates import Angle, EarthLocation, Latitude, Longitude, SkyCoord
 from astropy.utils.masked import Masked
 
-from asdf_astropy.tests.versions import ASTROPY_LT_7_1
+from asdf_astropy.tests.versions import ASTROPY_GE_7_1
 
-if ASTROPY_LT_7_1:
-    pytest.skip(reason="MaskedQuantity support was added in astropy 7.1", allow_module_level=True)
-else:
+if ASTROPY_GE_7_1:
     from astropy.utils.masked import get_data_and_mask
+else:
+    pytest.skip(reason="MaskedQuantity support was added in astropy 7.1", allow_module_level=True)
 
 
 @pytest.mark.parametrize("angle_class", [Angle, Latitude, Longitude])

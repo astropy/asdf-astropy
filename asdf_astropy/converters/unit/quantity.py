@@ -47,7 +47,7 @@ class QuantityConverter(Converter):
             from astropy.utils import minversion
             from astropy.utils.masked import Masked
 
-            if not minversion("astropy", "7.1.dev"):  # ASTROPY_LT_7_1
+            if not minversion("astropy", "7.1.dev"):  # ASTROPY_GE_7_1
                 msg = "MaskedQuantity support requires astropy 7.1 or later"
                 raise NotImplementedError(msg)
             class_ = Masked(Quantity)
