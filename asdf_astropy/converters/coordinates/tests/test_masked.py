@@ -9,6 +9,8 @@ from asdf_astropy.tests.versions import ASTROPY_LT_7_1
 
 if ASTROPY_LT_7_1:
     pytest.skip(reason="MaskedQuantity support was added in astropy 7.1", allow_module_level=True)
+else:
+    from astropy.utils.masked import get_data_and_mask
 
 
 @pytest.mark.parametrize("angle_class", [Angle, Latitude, Longitude])
