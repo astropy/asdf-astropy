@@ -60,8 +60,6 @@ def test_masked_earth_location(tmp_path):
         assert af["loc"].x.unit == u.m
         assert af["loc"].y.unit == u.m
         assert af["loc"].z.unit == u.m
-        # FIXME: ASTROPY_LT_7_1: move import to module scope once we depend on astropy >= 7.1
-        from astropy.utils.masked import get_data_and_mask
 
         out_data, out_mask = get_data_and_mask(af["loc"].x.to_value(u.m))
         np.testing.assert_array_equal(out_data, x)
