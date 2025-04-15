@@ -7,6 +7,7 @@ import importlib.metadata
 from importlib.util import find_spec
 
 import asdf
+import asdf_standard
 from asdf.extension import Extension, ManifestExtension
 
 from .converters.coordinates.angle import AngleConverter, LatitudeConverter, LongitudeConverter
@@ -585,12 +586,12 @@ _UNIT_CONVERTERS = [
 
 CORE_CONVERTERS = _FITS_CONVERTERS + _TIME_CONVERTERS + _TABLE_CONVERTERS + _UNIT_CONVERTERS
 
-UNIT_EXTENSIONS = [
-    ManifestExtension.from_uri(
-        "asdf://astropy.org/astropy/manifests/units-1.0.0",
-        converters=_UNIT_CONVERTERS,
-    ),
+ASTROPY_UNIT_MANIFESTS = [
+    "asdf://astropy.org/astropy/manifests/units-1.1.0",
+    "asdf://astropy.org/astropy/manifests/units-1.0.0",
 ]
+
+UNIT_EXTENSIONS = [ManifestExtension.from_uri(u, converters=_UNIT_CONVERTERS) for u in ASTROPY_UNIT_MANIFESTS]
 
 # up to asdf 1.5.0 many tags supported by asdf-astropy
 # were defined in core manifests
@@ -603,6 +604,8 @@ CORE_MANIFEST_URIS = [
     "asdf://asdf-format.org/core/manifests/core-1.1.0",
     "asdf://asdf-format.org/core/manifests/core-1.0.0",
 ]
+if asdf_standard.__version__ > "1.1.1":
+    CORE_MANIFEST_URIS.insert(0, "asdf://asdf-format.org/astronomy/manifests/astronomy-1.1.0")
 
 if importlib.metadata.version("asdf-standard") > "1.2.0":
     CORE_MANIFEST_URIS.insert(0, "asdf://asdf-format.org/astronomy/manifests/astronomy-1.1.0")
