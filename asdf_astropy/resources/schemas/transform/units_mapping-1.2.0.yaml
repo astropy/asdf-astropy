@@ -88,7 +88,9 @@ definitions:
       unit:
         description: |
           Expected unit.
-        $ref: "http://stsci.edu/schemas/asdf/unit/unit-1.0.0"
+        anyOf:
+          - tag: "tag:stsci.edu:asdf/unit/unit-*"
+          - tag: "tag:astropy.org:astropy/units/unit-1.*"
       equivalencies:
         description: |
           Equivalencies to apply when converting value to expected unit.
