@@ -8,6 +8,14 @@ description: |-
 asdf_standard_requirement:
   gte: 1.6.0
 tags:
+  # unit/unit is duplicated from the core to allow the unit converter to select
+  # the core tag for vo units
+  - tag_uri: tag:stsci.edu:asdf/unit/unit-1.0.0
+    schema_uri: http://stsci.edu/schemas/asdf/unit/unit-1.0.0
+    title: Physical unit.
+    description: |-
+      This represents a physical unit, in [VOUnit syntax, Version 1.0](http://www.ivoa.net/documents/VOUnits/index.html).
+      Where units are not explicitly tagged, they are assumed to be in VOUnit syntax.
   - tag_uri: tag:astropy.org:astropy/units/unit-1.0.0
     schema_uri: http://stsci.edu/schemas/asdf/unit/unit-1.0.0
     title: Represents an astropy derived unit
