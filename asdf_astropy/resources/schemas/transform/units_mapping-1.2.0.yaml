@@ -1,7 +1,7 @@
 %YAML 1.1
 ---
 $schema: "http://stsci.edu/schemas/yaml-schema/draft-01"
-id: "http://astropy.org/schemas/astropy/transform/units_mapping-1.1.0"
+id: "http://astropy.org/schemas/astropy/transform/units_mapping-1.2.0"
 
 title: |
   Mapper that operates on the units of the input.
@@ -16,7 +16,7 @@ examples:
     - Assign units of seconds to dimensionless input.
     - asdf-standard-1.6.0
     - |
-      !<tag:astropy.org:astropy/transform/units_mapping-1.1.0>
+      !<tag:astropy.org:astropy/transform/units_mapping-1.2.0>
         unit_inputs:
           - name: x
             unit: !unit/unit-1.0.0
@@ -27,7 +27,7 @@ examples:
     - Convert input to meters, then assign dimensionless units.
     - asdf-standard-1.6.0
     - |
-      !<tag:astropy.org:astropy/transform/units_mapping-1.1.0>
+      !<tag:astropy.org:astropy/transform/units_mapping-1.2.0>
         unit_inputs:
           - name: x
             unit: !unit/unit-1.0.0 m
@@ -39,7 +39,7 @@ examples:
     - Convert input to meters, then drop units entirely.
     - asdf-standard-1.6.0
     - |
-      !<tag:astropy.org:astropy/transform/units_mapping-1.1.0>
+      !<tag:astropy.org:astropy/transform/units_mapping-1.2.0>
         unit_inputs:
           - name: x
             unit: !unit/unit-1.0.0 m
@@ -50,7 +50,7 @@ examples:
     - Accept any units, then replace with meters.
     - asdf-standard-1.6.0
     - |
-      !<tag:astropy.org:astropy/transform/units_mapping-1.1.0>
+      !<tag:astropy.org:astropy/transform/units_mapping-1.2.0>
         unit_inputs:
           - name: x
         unit_outputs:
@@ -92,7 +92,7 @@ definitions:
       equivalencies:
         description: |
           Equivalencies to apply when converting value to expected unit.
-        $ref: "http://astropy.org/schemas/astropy/units/equivalency-1.1.0"
+        tag: "tag:astropy.org:astropy/units/equivalency-1.*"
       allow_dimensionless:
         description: |
           Allow this value to receive dimensionless data.
