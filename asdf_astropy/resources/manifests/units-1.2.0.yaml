@@ -1,5 +1,5 @@
 
-id: asdf://astropy.org/astropy/manifests/units-1.1.0
+id: asdf://astropy.org/astropy/manifests/units-1.2.0
 extension_uri: asdf://astropy.org/astropy/extensions/units-1.2.0
 title: Astropy unit extension
 description: |-
