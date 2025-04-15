@@ -1,7 +1,7 @@
 %YAML 1.1
 ---
 $schema: "http://stsci.edu/schemas/yaml-schema/draft-01"
-id: "http://astropy.org/schemas/astropy/units/equivalency-1.1.0"
+id: "http://astropy.org/schemas/astropy/units/equivalency-1.2.0"
 
 title: |
   Represents unit equivalency.
@@ -24,7 +24,7 @@ definitions:
         type: array
         items:
           anyOf:
-            - $ref: "http://stsci.edu/schemas/asdf/unit/quantity-1.2.0"
+            - tag: "tag:stsci.edu:asdf/unit/quantity-1.*"
             - type: number
             - type: "null"
 
