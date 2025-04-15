@@ -1,0 +1,27 @@
+
+id: asdf://astropy.org/astropy/manifests/units-1.1.0
+extension_uri: asdf://astropy.org/astropy/extensions/units-1.1.0
+title: Astropy unit extension 1.0.0
+description: |-
+  A set of tags to inject into asdf-standard to enable serializing astropy units
+  related objects
+asdf_standard_requirement:
+  gte: 1.6.0
+tags:
+  - tag_uri: tag:astropy.org:astropy/units/unit-1.0.0
+    schema_uri: http://stsci.edu/schemas/asdf/unit/unit-1.0.0
+    title: Represents an astropy derived unit
+    description: |-
+      Supports serialization of the non-VOunits supported by astropy
+  - tag_uri: tag:astropy.org:astropy/units/equivalency-1.1.0
+    schema_uri: http://astropy.org/schemas/astropy/units/equivalency-1.1.0
+    title: Represents unit equivalency.
+    description: |-
+      Supports serialization of equivalencies between units
+      in certain contexts
+  - tag_uri: tag:astropy.org:astropy/units/magunit-1.0.0
+    schema_uri: http://astropy.org/schemas/astropy/units/magunit-1.0.0
+    title: Represents a Magnitude Unit
+    description: |-
+      Represents the serialization of the MagUnit units built into
+      astropy.
