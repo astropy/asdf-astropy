@@ -1,7 +1,7 @@
 %YAML 1.1
 ---
 $schema: "http://stsci.edu/schemas/yaml-schema/draft-01"
-id: "http://astropy.org/schemas/astropy/fits/fits-1.1.0"
+id: "http://astropy.org/schemas/astropy/fits/fits-1.2.0"
 title: >
   A FITS file inside of an ASDF file.
 description: |
@@ -22,7 +22,7 @@ examples:
     - A simple FITS file with a primary header and two extensions
     - asdf-standard-1.6.0
     - |
-        !<tag:astropy.org:astropy/fits/fits-1.1.0>
+        !<tag:astropy.org:astropy/fits/fits-1.2.0>
             - header:
               - [SIMPLE, true, conforms to FITS standard]
               - [BITPIX, 8, array data type]
@@ -74,20 +74,14 @@ examples:
               - [BUNIT, DN, Units of the error array]
 
 allOf:
-  - tag: "tag:astropy.org:astropy/fits/fits-1.1.0"
   - type: array
     items:
       type: object
       properties:
-        # TODO: Why are there no validations for the header here?  The
-        # next version of the schema should add them.
         data:
           description: "The data part of the HDU."
           anyOf:
-            - $ref: "http://stsci.edu/schemas/asdf/core/ndarray-1.1.0"
-            - $ref: "../table/table-1.2.0"
-            # Retain backwards compatibility with table defined by ASDF Standard
-            - $ref: "http://stsci.edu/schemas/asdf/table/table-1.1.0"
-            - $ref: "http://stsci.edu/schemas/asdf/core/table-1.0.0"
+            - tag: "tag:stsci.edu:asdf/core/ndarray-1.*"
+            - tag: "tag:astropy.org:astropy/table/table-1.*"
             - type: "null"
           default: null
