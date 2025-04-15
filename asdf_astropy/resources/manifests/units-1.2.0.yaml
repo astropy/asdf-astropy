@@ -1,7 +1,7 @@
 
 id: asdf://astropy.org/astropy/manifests/units-1.1.0
-extension_uri: asdf://astropy.org/astropy/extensions/units-1.1.0
-title: Astropy unit extension 1.0.0
+extension_uri: asdf://astropy.org/astropy/extensions/units-1.2.0
+title: Astropy unit extension
 description: |-
   A set of tags to inject into asdf-standard to enable serializing astropy units
   related objects
@@ -13,8 +13,8 @@ tags:
     title: Represents an astropy derived unit
     description: |-
       Supports serialization of the non-VOunits supported by astropy
-  - tag_uri: tag:astropy.org:astropy/units/equivalency-1.1.0
-    schema_uri: http://astropy.org/schemas/astropy/units/equivalency-1.1.0
+  - tag_uri: tag:astropy.org:astropy/units/equivalency-1.2.0
+    schema_uri: http://astropy.org/schemas/astropy/units/equivalency-1.2.0
     title: Represents unit equivalency.
     description: |-
       Supports serialization of equivalencies between units
