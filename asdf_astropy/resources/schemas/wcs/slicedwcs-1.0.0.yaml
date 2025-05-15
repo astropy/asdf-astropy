@@ -16,7 +16,10 @@ allOf:
   - type: object
     properties:
       wcs:
-        tag: "tag:astropy.org:astropy/wcs/wcs-1*"
+        anyOf:
+          - tag: "tag:astropy.org:astropy/wcs/wcs-1*"
+          - tag: "tag:stsci.edu:gwcs/wcs-*"
+
       slices_array:
         type: array
         items:

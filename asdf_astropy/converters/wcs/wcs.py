@@ -2,7 +2,7 @@ from asdf.extension import Converter
 
 # These attributes don't end up in the hdulist and
 # instead will be stored in "attrs"
-_WCS_ATTRS = ("naxis", "colsel", "keysel", "key", "pixel_bounds")
+_WCS_ATTRS = ("naxis", "_naxis", "colsel", "keysel", "key", "pixel_bounds")
 
 
 class WCSConverter(Converter):
@@ -18,6 +18,8 @@ class WCSConverter(Converter):
         if naxis := attrs.pop("naxis"):
             hdulist[0].header["naxis"] = naxis
 
+        _naxis = attrs.pop("_naxis")
+
         pixel_bounds = attrs.pop("pixel_bounds")
 
         wcs = WCS(hdulist[0].header, fobj=hdulist, **attrs)
@@ -29,6 +31,9 @@ class WCSConverter(Converter):
             wcs.wcs.set()
 
         wcs.pixel_bounds = pixel_bounds
+
+        if _naxis:
+            wcs._naxis = _naxis
         return wcs
 
     def to_yaml_tree(self, wcs, tag, ctx):
