@@ -2,16 +2,13 @@
 name = "asdf-astropy"
 description = "ASDF serialization support for astropy"
 readme = 'README.rst'
-license = { file = 'LICENSE.rst' }
+license-files = ['LICENSE.rst']
 authors = [{ name = 'The Astropy Developers', email = 'astropy.team@gmail.com' }]
 requires-python = '>=3.11'
 classifiers = [
   'Development Status :: 5 - Production/Stable',
   'Programming Language :: Python',
-  "Programming Language :: Python :: 3 :: Only",
-  "Programming Language :: Python :: 3.11",
-  "Programming Language :: Python :: 3.12",
-  "Programming Language :: Python :: 3.13",
+  "Programming Language :: Python :: 3",
 ]
 dynamic = [
   'version',
@@ -53,12 +50,12 @@ test = [
 [build-system]
 build-backend = 'setuptools.build_meta'
 requires = [
-  "setuptools>=60",
+  "setuptools>77",
   "setuptools_scm[toml]>=3.4",
 ]
 
-[tool.setuptools]
-packages = ["asdf_astropy", "asdf_astropy.resources"]
+[tool.setuptools.packages.find]
+include = ["asdf_astropy*"]
 
 [tool.setuptools.package-data]
 "asdf_astropy.resources" = ["asdf_astropy/resources/**/**/*.yaml"]
