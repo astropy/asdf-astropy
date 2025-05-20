@@ -1,5 +1,3 @@
-import warnings
-
 from asdf.extension import Converter
 
 
@@ -21,22 +19,9 @@ class UnitConverter(Converter):
     )
 
     def select_tag(self, obj, tags, ctx):
-        from astropy.units import UnitsError, UnitsWarning
-
-        with warnings.catch_warnings():
-            warnings.simplefilter("ignore", category=UnitsWarning)
-
-            try:
-                obj.to_string(format="vounit")
-            except (UnitsError, ValueError):
-                return next(t for t in tags if "astropy.org" in t)
-
-            return next(t for t in tags if "stsci.edu" in t)
+        return next(t for t in tags if "astropy.org" in t)
 
     def to_yaml_tree(self, obj, tag, ctx):
-        if "stsci.edu" in tag:
-            return obj.to_string(format="vounit")
-
         return obj.to_string()
 
     def from_yaml_tree(self, node, tag, ctx):
