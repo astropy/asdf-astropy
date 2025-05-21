@@ -14,7 +14,7 @@ dynamic = [
   'version',
 ]
 dependencies = [
-  "asdf>=2.14.4",
+  "asdf>=2.15.0",
   #"asdf-coordinates-schemas>=0.3",
   "asdf-coordinates-schemas @ git+https://github.com/asdf-format/asdf-coordinates-schemas",
   #"asdf-transform-schemas>=0.5",
