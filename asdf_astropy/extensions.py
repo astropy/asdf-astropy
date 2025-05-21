@@ -396,6 +396,7 @@ TRANSFORM_CONVERTERS = [
 # The order here is important; asdf will prefer to use extensions
 # that occur earlier in the list.
 TRANSFORM_MANIFEST_URIS = [
+    "asdf://asdf-format.org/transform/manifests/transform-1.7.0",
     "asdf://asdf-format.org/transform/manifests/transform-1.6.0",
     "asdf://asdf-format.org/transform/manifests/transform-1.5.0",
     "asdf://asdf-format.org/transform/manifests/transform-1.4.0",
@@ -485,6 +486,7 @@ ASTROPY_CONVERTERS = [
 ]
 
 _COORDINATES_MANIFEST_URIS = [
+    "asdf://asdf-format.org/astronomy/coordinates/manifests/coordinates-1.2.0",
     "asdf://asdf-format.org/astronomy/coordinates/manifests/coordinates-1.1.0",
     "asdf://asdf-format.org/astronomy/coordinates/manifests/coordinates-1.0.0",
 ]
