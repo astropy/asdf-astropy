@@ -3,6 +3,9 @@ This module builds all of the ASDF extensions which will be registered by `asdf_
 via an ``entry-point`` in the ``pyproject.toml`` file.
 """
 
+from importlib.util import find_spec
+
+import asdf
 from asdf.extension import Extension, ManifestExtension
 
 from .converters.coordinates.angle import AngleConverter, LatitudeConverter, LongitudeConverter
@@ -396,7 +399,7 @@ TRANSFORM_CONVERTERS = [
 # The order here is important; asdf will prefer to use extensions
 # that occur earlier in the list.
 TRANSFORM_MANIFEST_URIS = [
-    "asdf://asdf-format.org/transform/manifests/transform-1.7.0",
+    # 1.7.0 will be optionally inserted here based on the check below
     "asdf://asdf-format.org/transform/manifests/transform-1.6.0",
     "asdf://asdf-format.org/transform/manifests/transform-1.5.0",
     "asdf://asdf-format.org/transform/manifests/transform-1.4.0",
@@ -405,6 +408,41 @@ TRANSFORM_MANIFEST_URIS = [
     "asdf://asdf-format.org/transform/manifests/transform-1.1.0",
     "asdf://asdf-format.org/transform/manifests/transform-1.0.0",
 ]
+
+# Be careful here about including the new transforms.
+# Several libraries use a $ref to a specific transform schema
+# (old = 1.3.0, new = 1.4.0) to "duck-type" check if something
+# is a transform. This is problematic with the old transform-1.3.0
+# schema because it also includes specific tag versions for
+# anything with a bounding box. For a library that is using the
+# 1.3.0 schema if we produce a serialized transform with a new
+# bounding box tagged item it will fail validation.
+# This is fixed for transform-1.4.0 (which uses a tag wildcard)
+# which is included in the 1.7.0 manifest but since the downstream
+# libraries need to update references from 1.3.0 to 1.4.0 we need
+# to be careful about when we start using the new transform tags.
+# Here we check if a few known downstream libraries are installed
+# to avoid including the new tags until those libraries can be updated.
+# We make the assumption here that the next version of each
+# downstream library manifest will fix the issue.
+_REQUIRED_DOWNSTREAM_MANIFESTS = {
+    "dkist": "asdf://dkist.nso.edu/dkist/extensions/dkist-wcs-1.5.0",
+    "asdf_wcs_schemas": "asdf://asdf-format.org/astronomy/gwcs/extensions/gwcs-1.4.0",
+    "stdatamodels": "asdf://stsci.edu/jwst_pipeline/extensions/jwst_transforms-1.2.0",
+}
+_include_new_transforms = True
+_resource_manager = asdf.get_config().resource_manager
+for package_name, required_manifest_uri in _REQUIRED_DOWNSTREAM_MANIFESTS.items():
+    # don't use astropy.utils.minversion as it imports the package
+    if find_spec(package_name) is None:
+        # not installed
+        continue
+    if required_manifest_uri not in _resource_manager:
+        # don't include new manifest
+        _include_new_transforms = False
+        break
+if _include_new_transforms:
+    TRANSFORM_MANIFEST_URIS.insert(0, "asdf://asdf-format.org/transform/manifests/transform-1.7.0")
 
 TRANSFORM_EXTENSIONS = [
     ManifestExtension.from_uri(
