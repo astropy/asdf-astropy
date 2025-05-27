@@ -540,6 +540,7 @@ COORDINATES_EXTENSIONS = [
 
 
 _ASTROPY_EXTENSION_MANIFEST_URIS = [
+    "asdf://astropy.org/astropy/manifests/astropy-1.4.0",
     "asdf://astropy.org/astropy/manifests/astropy-1.3.0",
     "asdf://astropy.org/astropy/manifests/astropy-1.2.0",
     "asdf://astropy.org/astropy/manifests/astropy-1.1.0",
