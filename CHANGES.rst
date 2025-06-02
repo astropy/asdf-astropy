@@ -4,6 +4,8 @@
 - drop support for python 3.10 and numpy 1.24. [#255]
 - remove soon to be deprecated and non-working use of astropy TestRunner. [#263]
 - Add support for masked quantities, angles, and coordinates for astropy >= 7.1. [#253]
+- Serialize ``_naxis`` on ``astropy.wcs.WCS``. [#276]
+- Accept a gwcs object when serializing ``SlicedLowLevelWCS``. [#276]
 
 0.7.1 (2025-02-12)
 ------------------
