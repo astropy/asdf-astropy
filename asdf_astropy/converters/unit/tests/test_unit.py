@@ -26,8 +26,6 @@ def create_non_vounits():
 
 
 @pytest.mark.parametrize("unit", create_vounits())
-# Ignore warnings due to VOUnit deprecations
-@pytest.mark.filterwarnings("ignore::astropy.units.core.UnitsWarning")
 def test_vounit_serialization(unit, tmp_path):
     file_path = tmp_path / "test.asdf"
     with asdf.AsdfFile() as af:
@@ -39,7 +37,7 @@ def test_vounit_serialization(unit, tmp_path):
 
     with asdf.open(file_path, _force_raw_types=True) as af:
         assert isinstance(af["unit"], asdf.tagged.TaggedString)
-        assert af["unit"]._tag.startswith("tag:stsci.edu:asdf/unit/unit-")
+        assert af["unit"]._tag.startswith("tag:astropy.org:astropy/units/unit-")
 
 
 @pytest.mark.parametrize("unit", create_non_vounits())
