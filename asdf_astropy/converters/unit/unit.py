@@ -34,8 +34,14 @@ class UnitConverter(Converter):
             return next(t for t in tags if "stsci.edu" in t)
 
     def to_yaml_tree(self, obj, tag, ctx):
+        from astropy.units import UnitsWarning
+
         if "stsci.edu" in tag:
-            return obj.to_string(format="vounit")
+            with warnings.catch_warnings():
+                # astropy emits "deprecated" warnings when there is no plan
+                # to remove these units so we just ignore them here
+                warnings.simplefilter("ignore", category=UnitsWarning)
+                return obj.to_string(format="vounit")
 
         return obj.to_string()
 
@@ -46,4 +52,11 @@ class UnitConverter(Converter):
         if "stsci.edu" in tag:
             kwargs["format"] = "vounit"
 
-        return Unit(node, **kwargs)
+        from astropy.units import UnitsWarning
+
+        with warnings.catch_warnings():
+            # astropy emits "deprecated" warnings when there is no plan
+            # to remove these units so we just ignore them here
+            warnings.simplefilter("ignore", category=UnitsWarning)
+
+            return Unit(node, **kwargs)
