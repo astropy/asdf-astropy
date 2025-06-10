@@ -3,6 +3,7 @@ This module builds all of the ASDF extensions which will be registered by `asdf_
 via an ``entry-point`` in the ``pyproject.toml`` file.
 """
 
+import importlib.metadata
 from importlib.util import find_spec
 
 import asdf
@@ -602,7 +603,7 @@ CORE_MANIFEST_URIS = [
     "asdf://asdf-format.org/core/manifests/core-1.0.0",
 ]
 
-if min_version("asdf_standard", "1.2.1.dev"):
+if importlib.metadata.version("asdf-standard") > "1.2.0":
     CORE_MANIFEST_URIS.insert(0, "asdf://asdf-format.org/astronomy/manifests/astronomy-1.1.0")
 
 CORE_EXTENSIONS = [ManifestExtension.from_uri(u, converters=CORE_CONVERTERS) for u in CORE_MANIFEST_URIS]
