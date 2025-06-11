@@ -1,4 +1,4 @@
-0.8.0 (unreleased)
+0.8.0 (2025-06-11)
 ------------------
 
 - drop support for python 3.10 and numpy 1.24. [#255]
