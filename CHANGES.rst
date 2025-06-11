@@ -5,6 +5,7 @@
 - remove soon to be deprecated and non-working use of astropy TestRunner. [#263]
 - Add support for masked quantities, angles, and coordinates for astropy >= 7.1. [#253]
 - Add support for asdf-transform-schemas 0.6 and asdf-coordinates-schemas 0.4. [#279]
+- Ignore UnitsWarnings emitted by astropy when converting units to VO format. [#281]
 
 0.7.1 (2025-02-12)
 ------------------

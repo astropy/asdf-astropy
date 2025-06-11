@@ -18,16 +18,20 @@ def vounit_compatible(unit):
 
 
 def create_vounits():
-    return {u for u in list(units.__dict__.values()) if isinstance(u, units.UnitBase) and vounit_compatible(u)}
+    return sorted(
+        {u for u in list(units.__dict__.values()) if isinstance(u, units.UnitBase) and vounit_compatible(u)},
+        key=str,
+    )
 
 
 def create_non_vounits():
-    return {u for u in list(units.__dict__.values()) if isinstance(u, units.UnitBase) and not vounit_compatible(u)}
+    return sorted(
+        {u for u in list(units.__dict__.values()) if isinstance(u, units.UnitBase) and not vounit_compatible(u)},
+        key=str,
+    )
 
 
 @pytest.mark.parametrize("unit", create_vounits())
-# Ignore warnings due to VOUnit deprecations
-@pytest.mark.filterwarnings("ignore::astropy.units.core.UnitsWarning")
 def test_vounit_serialization(unit, tmp_path):
     file_path = tmp_path / "test.asdf"
     with asdf.AsdfFile() as af:
