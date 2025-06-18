@@ -2,7 +2,7 @@ from asdf.extension import Converter
 
 # These attributes don't end up in the hdulist and
 # instead will be stored in "attrs"
-_WCS_ATTRS = ("naxis", "_naxis", "colsel", "keysel", "key", "pixel_bounds")
+_WCS_ATTRS = ("naxis", "pixel_shape", "colsel", "keysel", "key", "pixel_bounds")
 
 
 class WCSConverter(Converter):
@@ -18,11 +18,14 @@ class WCSConverter(Converter):
         if naxis := attrs.pop("naxis"):
             hdulist[0].header["naxis"] = naxis
 
-        _naxis = attrs.pop("_naxis")
-
+        # pop attrs that are not valid kwargs
+        pixel_shape = attrs.pop("pixel_shape")
         pixel_bounds = attrs.pop("pixel_bounds")
 
         wcs = WCS(hdulist[0].header, fobj=hdulist, **attrs)
+
+        wcs.pixel_shape = pixel_shape
+        wcs.pixel_bounds = pixel_bounds
 
         if wcs.sip is not None:
             # work around a bug in astropy where sip headers lose precision
@@ -30,10 +33,6 @@ class WCSConverter(Converter):
             wcs.sip = wcs._read_sip_kw(hdulist[0].header, attrs.get("key", " "))
             wcs.wcs.set()
 
-        wcs.pixel_bounds = pixel_bounds
-
-        if _naxis:
-            wcs._naxis = _naxis
         return wcs
 
     def to_yaml_tree(self, wcs, tag, ctx):
