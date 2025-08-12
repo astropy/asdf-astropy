@@ -41,9 +41,8 @@ def test_vounit_serialization(unit, tmp_path):
     with asdf.open(file_path) as af:
         assert af["unit"].is_equivalent(unit)
 
-    with asdf.open(file_path, _force_raw_types=True) as af:
-        assert isinstance(af["unit"], asdf.tagged.TaggedString)
-        assert af["unit"]._tag.startswith("tag:stsci.edu:asdf/unit/unit-")
+    with file_path.open() as f:
+        assert "!unit/unit-" in f.read()
 
 
 @pytest.mark.parametrize("unit", create_non_vounits())
@@ -56,9 +55,8 @@ def test_non_vounit_serialization(unit, tmp_path):
     with asdf.open(file_path) as af:
         assert af["unit"].is_equivalent(unit)
 
-    with asdf.open(file_path, _force_raw_types=True) as af:
-        assert isinstance(af["unit"], asdf.tagged.TaggedString)
-        assert af["unit"]._tag.startswith("tag:astropy.org:astropy/units/unit-")
+    with file_path.open() as f:
+        assert "tag:astropy.org:astropy/units/unit-" in f.read()
 
 
 def test_read():
