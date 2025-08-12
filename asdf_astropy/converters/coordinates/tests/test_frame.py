@@ -116,6 +116,5 @@ def test_legacy_icrs_deseialize():
     truth = ICRS(ra=Longitude(25, unit=u.deg), dec=Latitude(45, unit=u.deg))
 
     buff = yaml_to_asdf(f"example: {example.strip()}", version="1.5.0")
-    with asdf.AsdfFile() as af:
-        af._open_impl(af, buff, mode="rw")
+    with asdf.open(buff) as af:
         assert_frame_equal(af["example"], truth)
