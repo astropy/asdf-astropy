@@ -36,6 +36,7 @@ docs = [
 test = [
   "coverage",
   "pytest-astropy",
+  "pytest-asdf-plugin",
   "pytest",
   "scipy",  # indirect requirement via astropy
 ]
