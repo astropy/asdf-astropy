@@ -136,6 +136,10 @@ def create_formats():
             # stardate is not a documented format for astropy
             # https://docs.astropy.org/en/latest/time/index.html#time-format
             continue
+        if format_ == "galexsec":
+            # galexsec is unsupported until the time schema can be updated
+            # https://github.com/astropy/asdf-astropy/issues/292
+            continue
         new = Time("B2000.0")
         new.format = format_
         formats.append(new)
