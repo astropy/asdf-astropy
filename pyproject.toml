@@ -162,7 +162,7 @@ filterwarnings = [
     'error',
     'ignore:numpy.ndarray size changed:RuntimeWarning',
 ]
-addopts = '--color=yes --doctest-rst'
+addopts = '-r a --color=yes --doctest-rst'
 asdf_schema_root = 'asdf_astropy/resources/schemas'
 asdf_schema_tests_enabled = true
 
