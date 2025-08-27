@@ -140,12 +140,12 @@ def create_formats():
         new = Time("B2000.0")
         new.format = format_
         if format_ == "galexsec":
-            # galexsec was only supported in asdf-standard > 1.3.0
+            # galexsec was only supported in asdf-standard >= 1.3.0
             new = pytest.param(
                 new,
                 marks=pytest.mark.skipif(
-                    importlib.metadata.version("asdf-standard") <= "1.3.0",
-                    reason="galexsec not supported until asdf-standard > 1.3.0",
+                    importlib.metadata.version("asdf-standard") < "1.4.0",
+                    reason="galexsec not supported until asdf-standard 1.4.0",
                 ),
             )
         formats.append(new)

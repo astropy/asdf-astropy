@@ -606,8 +606,7 @@ CORE_MANIFEST_URIS = [
 if importlib.metadata.version("asdf-standard") > "1.2.0":
     CORE_MANIFEST_URIS.insert(0, "asdf://asdf-format.org/astronomy/manifests/astronomy-1.1.0")
 
-# TODO update to released version
-if importlib.metadata.version("asdf-standard") > "1.3.0":
+if importlib.metadata.version("asdf-standard") >= "1.4.0":
     CORE_MANIFEST_URIS.insert(0, "asdf://asdf-format.org/astronomy/manifests/astronomy-1.2.0")
 
 CORE_EXTENSIONS = [ManifestExtension.from_uri(u, converters=CORE_CONVERTERS) for u in CORE_MANIFEST_URIS]
