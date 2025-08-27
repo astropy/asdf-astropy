@@ -1,3 +1,4 @@
+import importlib.metadata
 import unittest.mock as mk
 from datetime import datetime
 
@@ -136,12 +137,17 @@ def create_formats():
             # stardate is not a documented format for astropy
             # https://docs.astropy.org/en/latest/time/index.html#time-format
             continue
-        if format_ == "galexsec":
-            # galexsec is unsupported until the time schema can be updated
-            # https://github.com/astropy/asdf-astropy/issues/292
-            continue
         new = Time("B2000.0")
         new.format = format_
+        if format_ == "galexsec":
+            # galexsec was only supported in asdf-standard >= 1.3.0
+            new = pytest.param(
+                new,
+                marks=pytest.mark.skipif(
+                    importlib.metadata.version("asdf-standard") < "1.4.0",
+                    reason="galexsec not supported until asdf-standard 1.4.0",
+                ),
+            )
         formats.append(new)
 
     return formats
