@@ -2,6 +2,7 @@
 ------------------
 
 - drop support for numpy 1.25. [#285]
+- support astronomy-1.2.0 manifest including support for galexsec time. [#270]
 
 0.8.0 (2025-06-11)
 ------------------
