@@ -18,8 +18,6 @@ repos:
   - id: check-symlinks
   - id: debug-statements
   - id: detect-private-key
-  - id: fix-encoding-pragma
-    args: ["--remove"]
   - id: end-of-file-fixer
   - id: trailing-whitespace
 
