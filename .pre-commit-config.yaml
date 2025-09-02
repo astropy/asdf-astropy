@@ -6,7 +6,7 @@ ci:
 repos:
 
 - repo: https://github.com/pre-commit/pre-commit-hooks
-  rev: v5.0.0
+  rev: v6.0.0
   hooks:
   - id: check-added-large-files
   - id: check-ast
@@ -18,8 +18,6 @@ repos:
   - id: check-symlinks
   - id: debug-statements
   - id: detect-private-key
-  - id: fix-encoding-pragma
-    args: ["--remove"]
   - id: end-of-file-fixer
   - id: trailing-whitespace
 
@@ -41,7 +39,7 @@ repos:
         - tomli
 
 - repo: https://github.com/astral-sh/ruff-pre-commit
-  rev: "v0.12.7"
+  rev: "v0.12.11"
   hooks:
     - id: ruff
       args: ["--fix"]
