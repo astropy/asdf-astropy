@@ -1,8 +1,10 @@
 from asdf.extension import Converter
 
+from asdf_astropy.exceptions import InconsistentWCSError
+
 # These attributes don't end up in the hdulist and
 # instead will be stored in "attrs"
-_WCS_ATTRS = ("naxis", "pixel_shape", "colsel", "keysel", "key", "pixel_bounds")
+_WCS_ATTRS = ("naxis", "colsel", "keysel", "key", "pixel_bounds", "pixel_shape")
 
 
 class WCSConverter(Converter):
@@ -36,6 +38,16 @@ class WCSConverter(Converter):
         return wcs
 
     def to_yaml_tree(self, wcs, tag, ctx):
+        # Check that wcs is consistent. Astropy inconsistently checks
+        # that certain expected attributes match. We need to check this
+        # here to prevent writing inconsistent files that would be problematic
+        # to open.
+        if naxis := wcs.naxis:
+            for attr in ("pixel_shape", "pixel_bounds"):
+                if value := getattr(wcs, attr):
+                    if len(value) != naxis:
+                        msg = f"{attr} shape ({len(value)}) does not match naxis ({naxis})"
+                        raise InconsistentWCSError(msg)
         hdulist = wcs.to_fits(relax=True)
         attrs = {a: getattr(wcs, a) for a in _WCS_ATTRS if hasattr(wcs, a)}
         return {"hdulist": hdulist, "attrs": attrs}
