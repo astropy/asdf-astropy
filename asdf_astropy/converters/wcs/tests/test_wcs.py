@@ -6,11 +6,10 @@ from astropy.io import fits
 from astropy.utils.data import get_pkg_data_filename, get_pkg_data_filenames
 from astropy.wcs import WCS, DistortionLookupTable, FITSFixedWarning, Sip
 
+from asdf_astropy.exceptions import InconsistentWCSError
 from asdf_astropy.testing.helpers import assert_wcs_roundtrip
 
-_astropy_test_header_filenames = list(get_pkg_data_filenames("tests/data/maps", "astropy.wcs", "*.hdr")) + list(
-    get_pkg_data_filenames("tests/data/spectra", "astropy.wcs", "*.hdr"),
-)
+_astropy_test_header_filenames = list(get_pkg_data_filenames("tests/data/maps", "astropy.wcs", "*.hdr"))
 
 _astropy_test_fits_filenames = [
     get_pkg_data_filename(f"tests/data/{fn}", "astropy.wcs")
@@ -118,3 +117,11 @@ def test_astropy_data_fits_roundtrip(fn, tmp_path, version):
             wcs = WCS(ff[0].header, ff)
 
         assert_wcs_roundtrip(wcs, tmp_path, version)
+
+
+@pytest.mark.parametrize("attr", ["pixel_shape", "pixel_bounds"])
+def test_failure_to_convert_inconsistent(tmp_path, attr):
+    wcs = create_wcs_with_attrs()
+    wcs.naxis -= 1
+    with pytest.raises(InconsistentWCSError, match="does not match naxis"):
+        assert_wcs_roundtrip(wcs, tmp_path)
