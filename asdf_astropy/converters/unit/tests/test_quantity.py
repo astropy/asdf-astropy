@@ -4,16 +4,9 @@ import pytest
 from asdf.testing import helpers
 from astropy import units
 from astropy.units import Quantity
-from astropy.utils.introspection import minversion
 from numpy.testing import assert_array_equal
 
 from asdf_astropy.tests.versions import ASTROPY_GE_7_1
-
-
-def asdf_open_memory_mapping_kwarg(memmap: bool) -> dict:
-    if minversion("asdf", "3.1.0"):
-        return {"memmap": memmap}
-    return {"copy_arrays": not memmap}
 
 
 def create_quantities():
@@ -104,7 +97,7 @@ def test_memmap(tmp_path):
         af.write_to(file_path)
 
     # Update a value in the ASDF file
-    with asdf.open(file_path, mode="rw", **asdf_open_memory_mapping_kwarg(memmap=True)) as af:
+    with asdf.open(file_path, mode="rw", memmap=True) as af:
         assert (af.tree["quantity"] == quantity).all()
         assert af.tree["quantity"][-1, -1] != new_value
 
@@ -114,7 +107,7 @@ def test_memmap(tmp_path):
         assert (af.tree["quantity"] != quantity).any()
         assert (af.tree["quantity"] == new_quantity).all()
 
-    with asdf.open(file_path, mode="rw", **asdf_open_memory_mapping_kwarg(memmap=True)) as af:
+    with asdf.open(file_path, mode="rw", memmap=True) as af:
         assert af.tree["quantity"][-1, -1] == new_value
         assert (af.tree["quantity"] != quantity).any()
         assert (af.tree["quantity"] == new_quantity).all()
@@ -137,7 +130,7 @@ def test_no_memmap(tmp_path):
         af.write_to(file_path)
 
     # Update a value in the ASDF file
-    with asdf.open(file_path, mode="rw", **asdf_open_memory_mapping_kwarg(memmap=False)) as af:
+    with asdf.open(file_path, mode="rw", memmap=False) as af:
         assert (af.tree["quantity"] == quantity).all()
         assert af.tree["quantity"][-1, -1] != new_value
 
@@ -147,7 +140,7 @@ def test_no_memmap(tmp_path):
         assert (af.tree["quantity"] != quantity).any()
         assert (af.tree["quantity"] == new_quantity).all()
 
-    with asdf.open(file_path, mode="rw", **asdf_open_memory_mapping_kwarg(memmap=False)) as af:
+    with asdf.open(file_path, mode="rw", memmap=False) as af:
         assert af.tree["quantity"][-1, -1] != new_value
         assert (af.tree["quantity"] != new_quantity).any()
         assert (af.tree["quantity"] == quantity).all()
