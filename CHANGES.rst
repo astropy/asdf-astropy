@@ -13,7 +13,7 @@
 - Add support for asdf-transform-schemas 0.6 and asdf-coordinates-schemas 0.4. [#279]
 - Ignore UnitsWarnings emitted by astropy when converting units to VO format. [#281]
 - Add support for new astronomy-1.1.0 manifest. [#282]
-- Serialize ``_naxis`` on ``astropy.wcs.WCS``. [#276]
+- Serialize ``pixel_shape`` on ``astropy.wcs.WCS``. [#276]
 - Accept a gwcs object when serializing ``SlicedLowLevelWCS``. [#276]
 
 0.7.1 (2025-02-12)
