@@ -35,8 +35,8 @@ from .converters.unit.equivalency import EquivalencyConverter
 from .converters.unit.magunit import MagUnitConverter
 from .converters.unit.quantity import QuantityConverter
 from .converters.unit.unit import UnitConverter
-from .converters.wcs.slicedwcs import SlicedWCSConverter
 from .converters.wcs.highlevelwrapper import HighLevelWCSWrapperConverter
+from .converters.wcs.slicedwcs import SlicedWCSConverter
 from .converters.wcs.wcs import WCSConverter
 
 __all__ = [
