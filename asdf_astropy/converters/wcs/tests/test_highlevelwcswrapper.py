@@ -1,5 +1,4 @@
 import asdf
-import gwcs
 import pytest
 from astropy.wcs import WCS
 from astropy.wcs.wcsapi import HighLevelWCSWrapper
@@ -30,5 +29,3 @@ def test_hllwcs_serialization(hl_wcs, tmp_path):
         loaded_hl_wcs = af["hl_wcs"]
         if isinstance(loaded_hl_wcs, WCS):
             assert_wcs_equal(hl_wcs._low_level_wcs, loaded_hl_wcs._low_level_wcs)
-        elif isinstance(loaded_hl_wcs, gwcs.WCS):
-            pass
