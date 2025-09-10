@@ -76,3 +76,9 @@ tags:
     Represents the FITS WCS object, the HDUlist of the FITS header is preserved
     during serialization and during deserialization the WCS object is recreated
     from the HDUlist.
+- tag_uri: tag:astropy.org:astropy/wcs/highlevelwcswrapper-1.0.0
+  schema_uri: http://astropy.org/schemas/astropy/wcs/highlevelwcswrapper-1.0.0
+  title: Represents an instance of HighLevelWCSWrapper
+  description: |-
+    Wrapper class that can take any astropy.wcs.wcsapi.BaseLowLevelWCS
+    object and expose the high-level WCS API.
