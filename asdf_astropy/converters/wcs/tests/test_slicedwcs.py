@@ -1,30 +1,35 @@
 import asdf
 import numpy as np
 import pytest
-from astropy.wcs import WCS
 from astropy.wcs.wcsapi.wrappers.sliced_wcs import SlicedLowLevelWCS
 
 from asdf_astropy.testing.helpers import assert_wcs_equal
 
-
-def create_wcs():
-    wcs = WCS(naxis=4)
-    wcs.wcs.ctype = "RA---CAR", "DEC--CAR", "FREQ", "TIME"
-    wcs.wcs.cunit = "deg", "deg", "Hz", "s"
-    wcs.wcs.cdelt = -2.0, 2.0, 3.0e9, 1
-    wcs.wcs.crval = 4.0, 0.0, 4.0e9, 3
-    wcs.wcs.crpix = 6.0, 7.0, 11.0, 11.0
-    wcs.wcs.cname = "Right Ascension", "Declination", "Frequency", "Time"
-
-    wcs0 = SlicedLowLevelWCS(wcs, 1)
-    wcs1 = SlicedLowLevelWCS(wcs, [slice(None), slice(None), slice(None), 10])
-    wcs3 = SlicedLowLevelWCS(SlicedLowLevelWCS(wcs, slice(None)), [slice(3), slice(None), slice(None), 10])
-    wcs_ellipsis = SlicedLowLevelWCS(wcs, [Ellipsis, slice(5, 10)])
-    wcs2 = SlicedLowLevelWCS(wcs, np.s_[:, 2, 3, :])
-    return [wcs0, wcs1, wcs2, wcs_ellipsis, wcs3]
+from pytest_lazy_fixtures import lf
 
 
-@pytest.mark.parametrize("sl_wcs", create_wcs())
+@pytest.fixture(params=[
+    1,
+    [slice(None), slice(None), slice(None), 10],
+    [slice(3), slice(None), slice(None), 10],
+    [Ellipsis, slice(5, 10)],
+    np.s_[:, 2, 3, :],
+])
+def slices(request):
+    return request.param
+
+
+@pytest.fixture
+def sliced_wcses(astropy_wcs_4d, slices):
+    return SlicedLowLevelWCS(astropy_wcs_4d, slices)
+
+
+@pytest.fixture
+def nested_sliced_wcs(astropy_wcs_4d):
+    return SlicedLowLevelWCS(SlicedLowLevelWCS(astropy_wcs_4d, slice(None)), [slice(3), slice(None), slice(None), 10])
+
+
+@pytest.mark.parametrize("sl_wcs", [lf("sliced_wcses"), lf("nested_sliced_wcs")])
 def test_sliced_wcs_serialization(sl_wcs, tmp_path):
     file_path = tmp_path / "test_slicedwcs.asdf"
     with asdf.AsdfFile() as af:
