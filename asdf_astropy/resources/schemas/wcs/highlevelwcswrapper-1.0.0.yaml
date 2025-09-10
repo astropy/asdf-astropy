@@ -14,6 +14,7 @@ allOf:
     properties:
       wcs:
         anyOf:
+          # Known WCS objects
           - tag: "tag:astropy.org:astropy/wcs/wcs-1*"
           - tag: "tag:stsci.edu:gwcs/wcs-*"
           - tag: "tag:astropy.org:astropy/wcs/slicedwcs-*"
@@ -21,6 +22,8 @@ allOf:
           - tag: "tag:sunpy.org:ndcube/ndcubesequence-*"
           - tag: "tag:sunpy.org:ndcube/reorderedwcs-*"
           - tag: "tag:sunpy.org:ndcube/compoundwcs-*"
+          # Allow anything else because any APE-14 compliant object is valid
+          - {}
 
 
     required: ["wcs"]
