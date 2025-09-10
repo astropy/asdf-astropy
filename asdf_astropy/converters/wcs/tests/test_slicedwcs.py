@@ -2,19 +2,20 @@ import asdf
 import numpy as np
 import pytest
 from astropy.wcs.wcsapi.wrappers.sliced_wcs import SlicedLowLevelWCS
+from pytest_lazy_fixtures import lf
 
 from asdf_astropy.testing.helpers import assert_wcs_equal
 
-from pytest_lazy_fixtures import lf
 
-
-@pytest.fixture(params=[
-    1,
-    [slice(None), slice(None), slice(None), 10],
-    [slice(3), slice(None), slice(None), 10],
-    [Ellipsis, slice(5, 10)],
-    np.s_[:, 2, 3, :],
-])
+@pytest.fixture(
+    params=[
+        1,
+        [slice(None), slice(None), slice(None), 10],
+        [slice(3), slice(None), slice(None), 10],
+        [Ellipsis, slice(5, 10)],
+        np.s_[:, 2, 3, :],
+    ],
+)
 def slices(request):
     return request.param
 
