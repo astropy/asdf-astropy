@@ -36,6 +36,7 @@ from .converters.unit.magunit import MagUnitConverter
 from .converters.unit.quantity import QuantityConverter
 from .converters.unit.unit import UnitConverter
 from .converters.wcs.slicedwcs import SlicedWCSConverter
+from .converters.wcs.highlevelwrapper import HighLevelWCSWrapperConverter
 from .converters.wcs.wcs import WCSConverter
 
 __all__ = [
@@ -522,6 +523,7 @@ ASTROPY_CONVERTERS = [
     UncertaintyConverter(),
     WCSConverter(),
     SlicedWCSConverter(),
+    HighLevelWCSWrapperConverter(),
 ]
 
 _COORDINATES_MANIFEST_URIS = [

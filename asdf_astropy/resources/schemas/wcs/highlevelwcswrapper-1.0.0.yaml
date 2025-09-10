@@ -1,0 +1,26 @@
+%YAML 1.1
+---
+$schema: "http://stsci.edu/schemas/yaml-schema/draft-01"
+id: "http://astropy.org/schemas/astropy/wcs/highlevelwcswrapper-1.0.0"
+
+title: Represents a HighLevelWCSWrapper object
+
+description: >-
+    Wrapper class that can take any astropy.wcs.wcsapi.BaseLowLevelWCS
+    object and expose the high-level WCS API.
+
+allOf:
+  - type: object
+    properties:
+      wcs:
+        anyOf:
+          - tag: "tag:astropy.org:astropy/wcs/wcs-1*"
+          - tag: "tag:stsci.edu:gwcs/wcs-*"
+          - tag: "tag:astropy.org:astropy/wcs/slicedwcs-*"
+          - tag: "tag:sunpy.org:ndcube/resampledwcs-*"
+          - tag: "tag:sunpy.org:ndcube/ndcubesequence-*"
+          - tag: "tag:sunpy.org:ndcube/reorderedwcs-*"
+          - tag: "tag:sunpy.org:ndcube/compoundwcs-*"
+
+
+    required: ["wcs"]
