@@ -1,12 +1,12 @@
 import pytest
 from astropy.wcs import WCS
-
 from pytest_lazy_fixtures import lf
 
 
 @pytest.fixture
 def gwcs_4d_identity_units():
     from gwcs.examples import gwcs_4d_identity_units
+
     return gwcs_4d_identity_units()
 
 
@@ -22,9 +22,11 @@ def astropy_wcs_4d():
     return wcs
 
 
-@pytest.fixture(params=[
-    lf("gwcs_4d_identity_units"),
-    lf("astropy_wcs_4d"),
-])
+@pytest.fixture(
+    params=[
+        lf("gwcs_4d_identity_units"),
+        lf("astropy_wcs_4d"),
+    ],
+)
 def all_4d_wcses(request):
     return request.param

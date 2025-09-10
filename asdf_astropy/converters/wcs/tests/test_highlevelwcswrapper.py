@@ -1,13 +1,12 @@
 import asdf
-import pytest
 import gwcs
+import pytest
 from astropy.wcs import WCS
 from astropy.wcs.wcsapi import HighLevelWCSWrapper
 from astropy.wcs.wcsapi.wrappers.sliced_wcs import SlicedLowLevelWCS
+from pytest_lazy_fixtures import lf
 
 from asdf_astropy.testing.helpers import assert_wcs_equal
-
-from pytest_lazy_fixtures import lf
 
 
 @pytest.fixture
@@ -18,7 +17,6 @@ def wrapped_wcses(all_4d_wcses):
 @pytest.fixture
 def wrapped_sliced_wcs(astropy_wcs_4d):
     return HighLevelWCSWrapper(SlicedLowLevelWCS(astropy_wcs_4d, 1))
-
 
 
 @pytest.mark.parametrize("hl_wcs", [lf("wrapped_wcses"), lf("wrapped_sliced_wcs")])
