@@ -6,7 +6,7 @@ from astropy.wcs.wcsapi import HighLevelWCSWrapper
 from astropy.wcs.wcsapi.wrappers.sliced_wcs import SlicedLowLevelWCS
 from pytest_lazy_fixtures import lf
 
-from asdf_astropy.testing.helpers import assert_wcs_equal
+from asdf_astropy.testing.helpers import assert_gwcs_equal, assert_wcs_equal
 
 
 @pytest.fixture
@@ -26,9 +26,22 @@ def test_hllwcs_serialization(hl_wcs, tmp_path):
         af["hl_wcs"] = hl_wcs
         af.write_to(file_path)
 
+    ll_wcs = hl_wcs._low_level_wcs
     with asdf.open(file_path) as af:
         loaded_hl_wcs = af["hl_wcs"]
-        if isinstance(loaded_hl_wcs, WCS):
-            assert_wcs_equal(hl_wcs._low_level_wcs, loaded_hl_wcs._low_level_wcs)
-        elif isinstance(loaded_hl_wcs, gwcs.WCS):
-            assert loaded_hl_wcs == hl_wcs
+        loaded_ll_wcs = loaded_hl_wcs._low_level_wcs
+
+        # Unwrap the SlicedLowLevelWCS
+        if isinstance(loaded_ll_wcs, SlicedLowLevelWCS):
+            assert isinstance(ll_wcs, SlicedLowLevelWCS)
+            assert loaded_ll_wcs._slices_array == ll_wcs._slices_array
+            loaded_ll_wcs = loaded_ll_wcs._wcs
+            ll_wcs = ll_wcs._wcs
+
+        if isinstance(loaded_ll_wcs, WCS):
+            assert_wcs_equal(ll_wcs, loaded_ll_wcs)
+        elif isinstance(loaded_ll_wcs, gwcs.WCS):
+            assert_gwcs_equal(loaded_ll_wcs, ll_wcs)
+        else:
+            msg = f"Loaded an unexpected type: {type(loaded_ll_wcs)}"
+            raise TypeError(msg)
