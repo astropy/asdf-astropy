@@ -3,7 +3,7 @@ from asdf.extension import Converter
 
 class HighLevelWCSWrapperConverter(Converter):
     tags = ("tag:astropy.org:astropy/wcs/highlevelwcswrapper-*",)
-    types = ("astropy.wcs.wcsapi.HighLevelWCSWrapper",)
+    types = ("astropy.wcs.wcsapi.high_level_wcs_wrapper.HighLevelWCSWrapper",)
 
     def from_yaml_tree(self, node, tag, ctx):
         from astropy.wcs.wcsapi import HighLevelWCSWrapper
