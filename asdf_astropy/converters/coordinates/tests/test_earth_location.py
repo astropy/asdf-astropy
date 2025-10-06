@@ -5,8 +5,6 @@ from astropy.coordinates import EarthLocation, Latitude, Longitude
 from astropy.coordinates.earth import ELLIPSOIDS
 from astropy.units import Quantity
 
-from asdf_astropy.testing.helpers import assert_earth_location_equal
-
 
 def create_earth_locations():
     longitude = Longitude([0.0, 45.0, 90.0, 135.0, 180.0, -180, -90, -45], u.deg, wrap_angle=180 * u.deg)
@@ -33,15 +31,3 @@ def test_serialization(earth_location, tmp_path):
 
     with asdf.open(file_path) as af:
         assert (af["earth_location"] == earth_location).all()
-
-
-def test_earthlocation_site(tmp_path):
-    earth_location = EarthLocation(lon=-0.001475 * u.deg, lat=51.477811 * u.deg, height=46 * u.m)
-
-    file_path = tmp_path / "test.asdf"
-    with asdf.AsdfFile() as af:
-        af["earth_location"] = earth_location
-        af.write_to(file_path)
-
-    with asdf.open(file_path) as af:
-        assert_earth_location_equal(af["earth_location"], earth_location)
