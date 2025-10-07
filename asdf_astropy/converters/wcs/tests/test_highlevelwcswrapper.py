@@ -1,5 +1,4 @@
 import asdf
-import gwcs
 import pytest
 from astropy.wcs import WCS
 from astropy.wcs.wcsapi import HighLevelWCSWrapper
@@ -7,6 +6,11 @@ from astropy.wcs.wcsapi.wrappers.sliced_wcs import SlicedLowLevelWCS
 from pytest_lazy_fixtures import lf
 
 from asdf_astropy.testing.helpers import assert_gwcs_equal, assert_wcs_equal
+
+try:
+    import gwcs
+except ImportError:
+    gwcs = None
 
 
 @pytest.fixture
@@ -40,7 +44,7 @@ def test_hllwcs_serialization(hl_wcs, tmp_path):
 
         if isinstance(loaded_ll_wcs, WCS):
             assert_wcs_equal(ll_wcs, loaded_ll_wcs)
-        elif isinstance(loaded_ll_wcs, gwcs.WCS):
+        elif gwcs and isinstance(loaded_ll_wcs, gwcs.WCS):
             assert_gwcs_equal(loaded_ll_wcs, ll_wcs)
         else:
             msg = f"Loaded an unexpected type: {type(loaded_ll_wcs)}"

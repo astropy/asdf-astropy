@@ -18,7 +18,7 @@ dependencies = [
   "asdf-coordinates-schemas>=0.4",
   "asdf-transform-schemas>=0.6",
   "asdf-standard>=1.1.0",
-  "astropy>=6.0",
+  "astropy>=5.3.0",
   "numpy>=1.26",
   "packaging>=19",
 ]
@@ -33,18 +33,14 @@ docs = [
   "sphinx-automodapi",
   "tomli",
 ]
-# test deps which oldestdeps installs oldest versions
-test-oldest = [
-  "scipy>=1.14.1",  # indirect requirement via astropy, oldest version supported by gwcs
-  "gwcs>=0.22",
-]
 test = [
-  "asdf-astropy[test-oldest]",
   "coverage",
   "pytest-astropy",
   "pytest-asdf-plugin",
   "pytest-lazy-fixtures",
   "pytest",
+  "scipy>=1.14.1",  # indirect requirement via astropy, oldest version supported by gwcs
+  "gwcs>=0.22",
 ]
 [project.urls]
 'documentation' = 'https://asdf-astropy.readthedocs.io/en/latest/'
