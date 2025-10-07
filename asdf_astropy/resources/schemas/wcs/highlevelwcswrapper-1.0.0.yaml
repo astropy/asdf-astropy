@@ -19,7 +19,6 @@ allOf:
           - tag: "tag:stsci.edu:gwcs/wcs-*"
           - tag: "tag:astropy.org:astropy/wcs/slicedwcs-*"
           - tag: "tag:sunpy.org:ndcube/resampledwcs-*"
-          - tag: "tag:sunpy.org:ndcube/ndcubesequence-*"
           - tag: "tag:sunpy.org:ndcube/reorderedwcs-*"
           - tag: "tag:sunpy.org:ndcube/compoundwcs-*"
           # Allow anything else because any APE-14 compliant object is valid
