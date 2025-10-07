@@ -5,6 +5,7 @@ from pytest_lazy_fixtures import lf
 
 @pytest.fixture
 def gwcs_4d_identity_units():
+    pytest.importorskip("gwcs")
     from gwcs.examples import gwcs_4d_identity_units
 
     return gwcs_4d_identity_units()
