@@ -146,7 +146,7 @@ def test_no_memmap(tmp_path):
         assert (af.tree["quantity"] == quantity).all()
 
 
-@pytest.mark.skipif(ASTROPY_GE_7_1, reason="MaskedQuantity support was added in astropy 7.1")
+@pytest.mark.skipif(ASTROPY_GE_7_1, reason=r"MaskedQuantity support was added in astropy 7.1")
 def test_masked_quantity_raises():
     yaml = """
 quantity: !unit/quantity-1.1.0
@@ -161,5 +161,5 @@ quantity: !unit/quantity-1.1.0
     shape: [3]
 """
     buff = helpers.yaml_to_asdf(yaml, version="1.5.0")
-    with pytest.raises(NotImplementedError, match="MaskedQuantity support requires astropy 7.1 or later"):
+    with pytest.raises(NotImplementedError, match=r"MaskedQuantity support requires astropy 7.1 or later"):
         asdf.open(buff)
