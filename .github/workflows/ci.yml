@@ -40,6 +40,7 @@ jobs:
         - linux: py311-test-parallel-cov
         - linux: py312-test-parallel-cov
         - linux: py313-test-parallel-cov
+        - linux: py314-test-parallel-cov
       coverage: codecov
 
   asdf-schemas:
@@ -83,8 +84,8 @@ jobs:
       # Any env name which does not start with `pyXY` will use this Python version.
       default_python: '3.13'
       envs: |
-        - linux: py313-test-predeps-parallel-cov
-        - linux: py313-test-devdeps-parallel-cov
+        - linux: py314-test-predeps-parallel-cov
+        - linux: py314-test-devdeps-parallel-cov
       coverage: codecov
 
   oldest:
