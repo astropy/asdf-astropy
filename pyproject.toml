@@ -147,11 +147,6 @@ extend-ignore = [
 "asdf_astropy/testing/helpers.py" = ["S101"]
 "scripts/generate_manifest.py" = ["S101", "SLOT000"]
 
-[tool.isort]
-profile = "black"
-filter_files = true
-line_length = 120
-
 [tool.pytest.ini_options]
 testpaths = ['asdf_astropy', 'docs']
 astropy_header = true
