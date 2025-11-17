@@ -80,7 +80,7 @@ def _clean_astropy_imports():
     # one of the tracked astropy modules is imported
     class _Finder:
         def find_spec(self, modulename, path=None, target=None):
-            if any(modulename.startswith(m) for m in _ASTROPY_MODULES):
+            if any(modulename.startswith(m) for m in _ASTROPY_MODULES):  # pragma: no cover
                 msg = f"attempt to import astropy submodule({modulename}) during integration"
                 raise Exception(msg)  # noqa: TRY002
 
