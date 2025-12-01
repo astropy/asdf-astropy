@@ -22,13 +22,13 @@ jobs:
     outputs:
       requirements-hash: ${{ steps.requirements-hash.outputs.hash }}
     steps:
-      - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8  # v5.0.0
+      - uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3  # v6.0.0
       - id: requirements-hash
         run: echo "::set-output name=hash::${{ hashFiles('**/pyproject.toml', '**/setup.*', 'tox.ini') }}"
 
   core:
     needs: [setup]
-    uses: OpenAstronomy/github-actions-workflows/.github/workflows/tox.yml@d9b81a07e789d1b1921ab5fe33de2ddcbbd02c3f  # v2.3.0
+    uses: OpenAstronomy/github-actions-workflows/.github/workflows/tox.yml@9f1fedda61294df4c004c05519a3fbf3b8e1f32f  # v2.3.1
     with:
       cache-path: ~/.cache/pip
       cache-key: pip-${{ needs.setup.outputs.requirements-hash }}
@@ -45,7 +45,7 @@ jobs:
 
   asdf-schemas:
     needs: [setup]
-    uses: OpenAstronomy/github-actions-workflows/.github/workflows/tox.yml@d9b81a07e789d1b1921ab5fe33de2ddcbbd02c3f  # v2.3.0
+    uses: OpenAstronomy/github-actions-workflows/.github/workflows/tox.yml@9f1fedda61294df4c004c05519a3fbf3b8e1f32f  # v2.3.1
     with:
       cache-path: ~/.cache/pip
       cache-key: pip-${{ needs.setup.outputs.requirements-hash }}
@@ -60,7 +60,7 @@ jobs:
 
   test:
     needs: [core, asdf-schemas]
-    uses: OpenAstronomy/github-actions-workflows/.github/workflows/tox.yml@d9b81a07e789d1b1921ab5fe33de2ddcbbd02c3f  # v2.3.0
+    uses: OpenAstronomy/github-actions-workflows/.github/workflows/tox.yml@9f1fedda61294df4c004c05519a3fbf3b8e1f32f  # v2.3.1
     with:
       cache-path: ~/.cache/pip
       cache-key: pip-${{ needs.setup.outputs.requirements-hash }}
@@ -75,7 +75,7 @@ jobs:
 
   dev:
     needs: [core, asdf-schemas]
-    uses: OpenAstronomy/github-actions-workflows/.github/workflows/tox.yml@d9b81a07e789d1b1921ab5fe33de2ddcbbd02c3f  # v2.3.0
+    uses: OpenAstronomy/github-actions-workflows/.github/workflows/tox.yml@9f1fedda61294df4c004c05519a3fbf3b8e1f32f  # v2.3.1
     with:
       cache-path: ~/.cache/pip
       cache-key: pip-${{ needs.setup.outputs.requirements-hash }}
@@ -90,7 +90,7 @@ jobs:
 
   oldest:
     needs: [core, asdf-schemas]
-    uses: OpenAstronomy/github-actions-workflows/.github/workflows/tox.yml@d9b81a07e789d1b1921ab5fe33de2ddcbbd02c3f  # v2.3.0
+    uses: OpenAstronomy/github-actions-workflows/.github/workflows/tox.yml@9f1fedda61294df4c004c05519a3fbf3b8e1f32f  # v2.3.1
     with:
       cache-path: ~/.cache/pip
       cache-key: pip-${{ needs.setup.outputs.requirements-hash }}
@@ -105,7 +105,7 @@ jobs:
   wheel_building:
     permissions:
       contents: none
-    uses: OpenAstronomy/github-actions-workflows/.github/workflows/publish_pure_python.yml@d9b81a07e789d1b1921ab5fe33de2ddcbbd02c3f  # v2.3.0
+    uses: OpenAstronomy/github-actions-workflows/.github/workflows/publish_pure_python.yml@9f1fedda61294df4c004c05519a3fbf3b8e1f32f  # v2.3.1
     if: (github.event_name == 'push' || github.event_name == 'pull_request')
     with:
       upload_to_pypi: false
