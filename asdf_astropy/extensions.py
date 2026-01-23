@@ -541,6 +541,7 @@ COORDINATES_EXTENSIONS = [
 
 
 _ASTROPY_EXTENSION_MANIFEST_URIS = [
+    "asdf://astropy.org/astropy/manifests/astropy-1.5.0",
     "asdf://astropy.org/astropy/manifests/astropy-1.4.0",
     "asdf://astropy.org/astropy/manifests/astropy-1.3.0",
     "asdf://astropy.org/astropy/manifests/astropy-1.2.0",
@@ -587,6 +588,7 @@ _UNIT_CONVERTERS = [
 CORE_CONVERTERS = _FITS_CONVERTERS + _TIME_CONVERTERS + _TABLE_CONVERTERS + _UNIT_CONVERTERS
 
 ASTROPY_UNIT_MANIFESTS = [
+    "asdf://astropy.org/astropy/manifests/units-1.2.0",
     "asdf://astropy.org/astropy/manifests/units-1.1.0",
     "asdf://astropy.org/astropy/manifests/units-1.0.0",
 ]
