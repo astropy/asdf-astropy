@@ -1,7 +1,8 @@
 0.10.0 (unreleased)
 -------------------
 
-- add support for astronomy-1.2.0 manifest [#270]
+- Add support for astronomy-1.2.0 manifest [#270]
+- Add TETE and TEME coordinate frames [#310]
 
 0.9.0 (2025-11-17)
 ------------------
