@@ -1,3 +1,8 @@
+0.10.0 (unreleased)
+-------------------
+
+- Add TETE and TEME coordinate frames [#310]
+
 0.9.0 (2025-11-17)
 ------------------
 

@@ -502,6 +502,14 @@ COORDINATES_CONVERTERS = [
         "tag:astropy.org:astropy/coordinates/frames/precessedgeocentric-*",
         "astropy.coordinates.builtin_frames.gcrs.PrecessedGeocentric",
     ),
+    FrameConverter(
+        "tag:astropy.org:astropy/coordinates/frames/teme-*",
+        "astropy.coordinates.builtin_frames.equatorial.TEME",
+    ),
+    FrameConverter(
+        "tag:astropy.org:astropy/coordinates/frames/tete-*",
+        "astropy.coordinates.builtin_frames.equatorial.TETE",
+    ),
     LegacyICRSConverter(),
     AngleConverter(),
     LatitudeConverter(),
@@ -525,6 +533,7 @@ ASTROPY_CONVERTERS = [
 ]
 
 _COORDINATES_MANIFEST_URIS = [
+    "asdf://asdf-format.org/astronomy/coordinates/manifests/coordinates-1.3.0",
     "asdf://asdf-format.org/astronomy/coordinates/manifests/coordinates-1.2.0",
     "asdf://asdf-format.org/astronomy/coordinates/manifests/coordinates-1.1.0",
     "asdf://asdf-format.org/astronomy/coordinates/manifests/coordinates-1.0.0",
@@ -540,6 +549,7 @@ COORDINATES_EXTENSIONS = [
 
 
 _ASTROPY_EXTENSION_MANIFEST_URIS = [
+    "asdf://astropy.org/astropy/manifests/astropy-1.5.0",
     "asdf://astropy.org/astropy/manifests/astropy-1.4.0",
     "asdf://astropy.org/astropy/manifests/astropy-1.3.0",
     "asdf://astropy.org/astropy/manifests/astropy-1.2.0",
@@ -585,12 +595,13 @@ _UNIT_CONVERTERS = [
 
 CORE_CONVERTERS = _FITS_CONVERTERS + _TIME_CONVERTERS + _TABLE_CONVERTERS + _UNIT_CONVERTERS
 
-UNIT_EXTENSIONS = [
-    ManifestExtension.from_uri(
-        "asdf://astropy.org/astropy/manifests/units-1.0.0",
-        converters=_UNIT_CONVERTERS,
-    ),
+ASTROPY_UNIT_MANIFESTS = [
+    "asdf://astropy.org/astropy/manifests/units-1.2.0",
+    "asdf://astropy.org/astropy/manifests/units-1.1.0",
+    "asdf://astropy.org/astropy/manifests/units-1.0.0",
 ]
+
+UNIT_EXTENSIONS = [ManifestExtension.from_uri(u, converters=_UNIT_CONVERTERS) for u in ASTROPY_UNIT_MANIFESTS]
 
 # up to asdf 1.5.0 many tags supported by asdf-astropy
 # were defined in core manifests
@@ -604,8 +615,11 @@ CORE_MANIFEST_URIS = [
     "asdf://asdf-format.org/core/manifests/core-1.0.0",
 ]
 
-if importlib.metadata.version("asdf-standard") > "1.2.0":
+_asdf_standard_version = importlib.metadata.version("asdf-standard")
+if _asdf_standard_version > "1.2.0":
     CORE_MANIFEST_URIS.insert(0, "asdf://asdf-format.org/astronomy/manifests/astronomy-1.1.0")
+if _asdf_standard_version > "1.3.0":
+    CORE_MANIFEST_URIS.insert(0, "asdf://asdf-format.org/astronomy/manifests/astronomy-1.2.0")
 
 CORE_EXTENSIONS = [ManifestExtension.from_uri(u, converters=CORE_CONVERTERS) for u in CORE_MANIFEST_URIS]
 
