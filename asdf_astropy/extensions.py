@@ -533,11 +533,14 @@ ASTROPY_CONVERTERS = [
 ]
 
 _COORDINATES_MANIFEST_URIS = [
-    "asdf://asdf-format.org/astronomy/coordinates/manifests/coordinates-1.3.0",
     "asdf://asdf-format.org/astronomy/coordinates/manifests/coordinates-1.2.0",
     "asdf://asdf-format.org/astronomy/coordinates/manifests/coordinates-1.1.0",
     "asdf://asdf-format.org/astronomy/coordinates/manifests/coordinates-1.0.0",
 ]
+
+_asdf_coordinates_schemas_version = importlib.metadata.version("asdf-coordinates_schemas")
+if _asdf_coordinates_schemas_version > "1.4.0":
+    _COORDINATES_MANIFEST_URIS.insert(0, "asdf://asdf-format.org/astronomy/coordinates/manifests/coordinates-1.3.0",)
 
 COORDINATES_EXTENSIONS = [
     ManifestExtension.from_uri(
