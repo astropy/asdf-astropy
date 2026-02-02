@@ -19,7 +19,7 @@ dependencies = [
   "asdf-transform-schemas>=0.6",
   "asdf-standard>=1.1.0",
   "astropy>=5.3.0",
-  "numpy>=1.26",
+  "numpy>=1.26.4",
   "packaging>=19",
 ]
 [project.optional-dependencies]
