@@ -21,8 +21,6 @@ from astropy.coordinates import (
     Longitude,
     PrecessedGeocentric,
     SphericalRepresentation,
-    TETE,
-    TEME,
 )
 from astropy.time import Time
 
