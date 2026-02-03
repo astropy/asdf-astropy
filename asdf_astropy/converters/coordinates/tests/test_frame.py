@@ -22,7 +22,8 @@ from astropy.coordinates import (
     PrecessedGeocentric,
     SphericalRepresentation,
     TETE,
-    TEME,    
+    TEME,
+    SkyCoord
 )
 from astropy.time import Time
 
@@ -36,8 +37,8 @@ def create_frames():
         "dec": 2 * u.deg,
     }
 
-    sky = SkyCoord = ICRS(**test_data)
-
+    sky = SkyCoord(ra=10 * u.deg, dec=12 * u.deg, frame="icrs")
+                   
     return [
         CIRS(),
         CIRS(**test_data),
