@@ -139,7 +139,6 @@ extend-ignore = [
     "RUF012", # mutable class attributes should be annotated with typing.ClassVar
     "PTH123", # replace open with Path.open
     "B905", # zip with strict
-    "UP038", # isinstance with | instead of ,
     "A005", # shadow builtin modules
     "PLC0415", # import should be at the top-level of a file
 ]
