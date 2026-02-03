@@ -22,7 +22,7 @@ from astropy.coordinates import (
     PrecessedGeocentric,
     SphericalRepresentation,
     TETE,
-    TEME,
+    TEME,    
 )
 from astropy.time import Time
 
@@ -35,6 +35,8 @@ def create_frames():
         "ra": 1 * u.deg,
         "dec": 2 * u.deg,
     }
+
+    sky = SkyCoord = ICRS(**test_data)
 
     return [
         CIRS(),
@@ -68,6 +70,10 @@ def create_frames():
         PrecessedGeocentric(),
         PrecessedGeocentric(**test_data),
         PrecessedGeocentric(**test_data, equinox="B1975"),
+        TEME(obstime=Time("J2020")),
+        TEME(sky.represent_as('cartesian'), obstime=Time("J2020")),
+        TETE(),
+        TETE(**test_data, obstime=Time("J2020")),
     ]
 
 
