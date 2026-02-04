@@ -15,8 +15,7 @@ dynamic = [
 ]
 dependencies = [
   "asdf>=3.3.0",
-  #"asdf-coordinates-schemas>=0.4",
-  "asdf-coordinates-schemas @ git+https://github.com/nden/asdf-coordinates-schemas.git@tete-frame",
+  "asdf-coordinates-schemas>=0.5",
   "asdf-transform-schemas>=0.6",
   "asdf-standard>=1.1.0",
   "astropy>=5.3.0",
