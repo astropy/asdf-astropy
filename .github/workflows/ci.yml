@@ -22,13 +22,13 @@ jobs:
     outputs:
       requirements-hash: ${{ steps.requirements-hash.outputs.hash }}
     steps:
-      - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8  # v5.0.0
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd  # v6.0.2
       - id: requirements-hash
         run: echo "::set-output name=hash::${{ hashFiles('**/pyproject.toml', '**/setup.*', 'tox.ini') }}"
 
   core:
     needs: [setup]
-    uses: OpenAstronomy/github-actions-workflows/.github/workflows/tox.yml@28e947497bed4d6ec3fa1d66d198e95a1d17bc63  # v2.2.1
+    uses: OpenAstronomy/github-actions-workflows/.github/workflows/tox.yml@99401c364fa51c9c507d3cd6d272049278ac0b2c  # v2.4.0
     with:
       cache-path: ~/.cache/pip
       cache-key: pip-${{ needs.setup.outputs.requirements-hash }}
@@ -40,11 +40,12 @@ jobs:
         - linux: py311-test-parallel-cov
         - linux: py312-test-parallel-cov
         - linux: py313-test-parallel-cov
+        - linux: py314-test-parallel-cov
       coverage: codecov
 
   asdf-schemas:
     needs: [setup]
-    uses: OpenAstronomy/github-actions-workflows/.github/workflows/tox.yml@28e947497bed4d6ec3fa1d66d198e95a1d17bc63  # v2.2.1
+    uses: OpenAstronomy/github-actions-workflows/.github/workflows/tox.yml@99401c364fa51c9c507d3cd6d272049278ac0b2c  # v2.4.0
     with:
       cache-path: ~/.cache/pip
       cache-key: pip-${{ needs.setup.outputs.requirements-hash }}
@@ -59,7 +60,7 @@ jobs:
 
   test:
     needs: [core, asdf-schemas]
-    uses: OpenAstronomy/github-actions-workflows/.github/workflows/tox.yml@28e947497bed4d6ec3fa1d66d198e95a1d17bc63  # v2.2.1
+    uses: OpenAstronomy/github-actions-workflows/.github/workflows/tox.yml@99401c364fa51c9c507d3cd6d272049278ac0b2c  # v2.4.0
     with:
       cache-path: ~/.cache/pip
       cache-key: pip-${{ needs.setup.outputs.requirements-hash }}
@@ -74,7 +75,7 @@ jobs:
 
   dev:
     needs: [core, asdf-schemas]
-    uses: OpenAstronomy/github-actions-workflows/.github/workflows/tox.yml@28e947497bed4d6ec3fa1d66d198e95a1d17bc63  # v2.2.1
+    uses: OpenAstronomy/github-actions-workflows/.github/workflows/tox.yml@99401c364fa51c9c507d3cd6d272049278ac0b2c  # v2.4.0
     with:
       cache-path: ~/.cache/pip
       cache-key: pip-${{ needs.setup.outputs.requirements-hash }}
@@ -83,13 +84,13 @@ jobs:
       # Any env name which does not start with `pyXY` will use this Python version.
       default_python: '3.13'
       envs: |
-        - linux: py313-test-predeps-parallel-cov
-        - linux: py313-test-devdeps-parallel-cov
+        - linux: py314-test-predeps-parallel-cov
+        - linux: py314-test-devdeps-parallel-cov
       coverage: codecov
 
   oldest:
     needs: [core, asdf-schemas]
-    uses: OpenAstronomy/github-actions-workflows/.github/workflows/tox.yml@28e947497bed4d6ec3fa1d66d198e95a1d17bc63  # v2.2.1
+    uses: OpenAstronomy/github-actions-workflows/.github/workflows/tox.yml@99401c364fa51c9c507d3cd6d272049278ac0b2c  # v2.4.0
     with:
       cache-path: ~/.cache/pip
       cache-key: pip-${{ needs.setup.outputs.requirements-hash }}
@@ -104,7 +105,7 @@ jobs:
   wheel_building:
     permissions:
       contents: none
-    uses: OpenAstronomy/github-actions-workflows/.github/workflows/publish_pure_python.yml@28e947497bed4d6ec3fa1d66d198e95a1d17bc63  # v2.2.1
+    uses: OpenAstronomy/github-actions-workflows/.github/workflows/publish_pure_python.yml@99401c364fa51c9c507d3cd6d272049278ac0b2c  # v2.4.0
     if: (github.event_name == 'push' || github.event_name == 'pull_request')
     with:
       upload_to_pypi: false

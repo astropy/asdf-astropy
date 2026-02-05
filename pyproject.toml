@@ -19,7 +19,7 @@ dependencies = [
   "asdf-transform-schemas>=0.6",
   "asdf-standard>=1.1.0",
   "astropy>=5.3.0",
-  "numpy>=1.26",
+  "numpy>=1.26.4",
   "packaging>=19",
 ]
 [project.optional-dependencies]
@@ -65,6 +65,7 @@ include = ["asdf_astropy*"]
 
 [tool.setuptools_scm]
 write_to = "asdf_astropy/_version.py"
+version_scheme = "release-branch-semver"
 
 [tool.black]
 line-length = 120
@@ -149,11 +150,6 @@ extend-ignore = [
 "asdf_astropy/testing/helpers.py" = ["S101"]
 "scripts/generate_manifest.py" = ["S101", "SLOT000"]
 
-[tool.isort]
-profile = "black"
-filter_files = true
-line_length = 120
-
 [tool.pytest.ini_options]
 testpaths = ['asdf_astropy', 'docs']
 astropy_header = true
@@ -166,39 +162,6 @@ filterwarnings = [
 addopts = '--color=yes --doctest-rst'
 asdf_schema_root = 'asdf_astropy/resources/schemas'
 asdf_schema_tests_enabled = true
-
-[tool.coverage.run]
-omit = [
-    'asdf_astropy/conftest.py',
-    'asdf_astropy/*setup_package*',
-    'asdf_astropy/tests/*',
-    'asdf_astropy/*/tests/*',
-    'asdf_astropy/extern/*',
-    'asdf_astropy/version*',
-    '*/asdf_astropy/conftest.py',
-    '*/asdf_astropy/*setup_package*',
-    '*/asdf_astropy/tests/*',
-    '*/asdf_astropy/*/tests/*',
-    '*/asdf_astropy/extern/*',
-    '*/asdf_astropy/version*',
-]
-
-[tool.coverage.report]
-exclude_lines = [
-    # Have to re-enable the standard pragma
-    'pragma: no cover',
-    # Don't complain about packages we have installed
-    'except ImportError',
-    # Don't complain if tests don't hit assertions
-    'raise AssertionError',
-    'raise NotImplementedError',
-    # Don't complain about script hooks
-    'def main\(.*\):',
-    # Ignore branches that don't pertain to this version of Python
-    'pragma: py{ignore_python_version}',
-    # Don't complain about IPython completion helper
-    'def _ipython_key_completions_',
-]
 
 [tool.codespell]
 skip="*.pdf,*.fits,*.asdf,*.egg-info,.tox,build,./tags,.git,./docs/_build"
