@@ -502,6 +502,14 @@ COORDINATES_CONVERTERS = [
         "tag:astropy.org:astropy/coordinates/frames/precessedgeocentric-*",
         "astropy.coordinates.builtin_frames.gcrs.PrecessedGeocentric",
     ),
+    FrameConverter(
+        "tag:astropy.org:astropy/coordinates/frames/teme-*",
+        "astropy.coordinates.builtin_frames.equatorial.TEME",
+    ),
+    FrameConverter(
+        "tag:astropy.org:astropy/coordinates/frames/tete-*",
+        "astropy.coordinates.builtin_frames.equatorial.TETE",
+    ),
     LegacyICRSConverter(),
     AngleConverter(),
     LatitudeConverter(),
@@ -524,11 +532,18 @@ ASTROPY_CONVERTERS = [
     SlicedWCSConverter(),
 ]
 
+
 _COORDINATES_MANIFEST_URIS = [
     "asdf://asdf-format.org/astronomy/coordinates/manifests/coordinates-1.2.0",
     "asdf://asdf-format.org/astronomy/coordinates/manifests/coordinates-1.1.0",
     "asdf://asdf-format.org/astronomy/coordinates/manifests/coordinates-1.0.0",
 ]
+
+
+_asdf_coordinates_schemas_version = importlib.metadata.version("asdf-coordinates-schemas")
+if _asdf_coordinates_schemas_version >= "0.5.0":
+    _COORDINATES_MANIFEST_URIS.insert(0, "asdf://asdf-format.org/astronomy/coordinates/manifests/coordinates-1.3.0")
+
 
 COORDINATES_EXTENSIONS = [
     ManifestExtension.from_uri(
