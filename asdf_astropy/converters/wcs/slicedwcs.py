@@ -5,6 +5,13 @@ class SlicedWCSConverter(Converter):
     tags = ("tag:astropy.org:astropy/wcs/slicedwcs-*",)
     types = ("astropy.wcs.wcsapi.wrappers.sliced_wcs.SlicedLowLevelWCS",)
 
+    def select_tag(self, obj, tags, ctx):
+        # asdf sorts the tags supported by the current extension
+        # in the case that multiple tags are relevant, pick the first
+        # tag version as this most closely matches what asdf
+        # used to do prior to 3.0
+        return tags[0]
+
     def from_yaml_tree(self, node, tag, ctx):
         from astropy.wcs.wcsapi.wrappers.sliced_wcs import SlicedLowLevelWCS
 

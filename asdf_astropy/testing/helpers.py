@@ -271,3 +271,34 @@ def assert_wcs_roundtrip(wcs, tmp_path, version=None):
 
     with asdf.open(path) as af:
         assert_wcs_equal(wcs, af["wcs"])
+
+
+def _assert_gwcs_frame_equal(a, b):
+    __tracebackhide__ = True
+
+    import gwcs.coordinate_frames as cf
+
+    assert type(a) is type(b)
+
+    if a is None:
+        return None
+
+    if not isinstance(a, cf.CoordinateFrame):
+        return a == b
+
+    assert a.name == b.name  # nosec
+    if not isinstance(a, cf.EmptyFrame):
+        assert a.axes_order == b.axes_order  # nosec
+        assert a.axes_names == b.axes_names  # nosec
+        assert a.unit == b.unit  # nosec
+        assert a.reference_frame == b.reference_frame  # nosec
+    return None
+
+
+def assert_gwcs_equal(a, b):
+    assert a.name == b.name  # nosec
+    assert a.pixel_shape == b.pixel_shape
+    assert len(a.available_frames) == len(b.available_frames)  # nosec
+    for a_step, b_step in zip(a.pipeline, b.pipeline, strict=False):
+        _assert_gwcs_frame_equal(a_step.frame, b_step.frame)
+        assert_model_equal(a_step.transform, b_step.transform)

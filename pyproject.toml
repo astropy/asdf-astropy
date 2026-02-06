@@ -37,8 +37,10 @@ test = [
   "coverage",
   "pytest-astropy",
   "pytest-asdf-plugin",
+  "pytest-lazy-fixtures",
   "pytest",
-  "scipy",  # indirect requirement via astropy
+  "scipy>=1.14.1",  # indirect requirement via astropy, oldest version supported by gwcs
+  "gwcs>=0.22",
 ]
 [project.urls]
 'documentation' = 'https://asdf-astropy.readthedocs.io/en/latest/'
