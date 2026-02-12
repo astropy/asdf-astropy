@@ -56,7 +56,7 @@ def test_magunit_in_column(tmp_path):
     column = Column([1, 2, 3], unit=units.function.ABmag, name="foo")
 
     file_path = tmp_path / "test.asdf"
-    with asdf.AsdfFile() as af:
+    with asdf.AsdfFile(version="1.6.0") as af:
         af["column"] = column
         af.write_to(file_path)
 
