@@ -1,6 +1,7 @@
 import asdf
 import pytest
 from astropy import units
+from astropy.table import Column
 
 
 def create_builtin_units():
@@ -49,3 +50,16 @@ def test_magunit_serialization(unit, tmp_path):
 
     with file_path.open() as f:
         assert "tag:astropy.org:astropy/units/magunit-" in f.read()
+
+
+def test_magunit_in_column(tmp_path):
+    column = Column([1, 2, 3], unit=units.function.ABmag, name="foo")
+
+    file_path = tmp_path / "test.asdf"
+    with asdf.AsdfFile() as af:
+        af["column"] = column
+        af.write_to(file_path)
+
+    with asdf.open(file_path) as af:
+        # the column unit tests already cover the other attributes
+        assert af["column"].unit == column.unit
