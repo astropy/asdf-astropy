@@ -3,6 +3,7 @@
 
 - Add support for astronomy-1.2.0 manifest [#270]
 - Add TETE and TEME coordinate frames [#310]
+- Fix magunit serialization to match unit [#313]
 
 0.9.0 (2025-11-17)
 ------------------
