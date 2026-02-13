@@ -1,4 +1,4 @@
-0.10.0 (unreleased)
+0.10.0 (2026-02-13)
 -------------------
 
 - Add support for astronomy-1.2.0 manifest [#270]
