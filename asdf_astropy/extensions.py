@@ -602,6 +602,7 @@ _UNIT_CONVERTERS = [
 CORE_CONVERTERS = _FITS_CONVERTERS + _TIME_CONVERTERS + _TABLE_CONVERTERS + _UNIT_CONVERTERS
 
 ASTROPY_UNIT_MANIFESTS = [
+    "asdf://astropy.org/astropy/manifests/units-1.3.0",
     "asdf://astropy.org/astropy/manifests/units-1.2.0",
     "asdf://astropy.org/astropy/manifests/units-1.1.0",
     "asdf://astropy.org/astropy/manifests/units-1.0.0",
