@@ -1,4 +1,4 @@
-0.10.1 (unreleased)
+0.10.1 (2025-03-20)
 -------------------
 
 - Update version checks for transform schema compatibility to use package
