@@ -4,7 +4,6 @@ via an ``entry-point`` in the ``pyproject.toml`` file.
 """
 
 import importlib.metadata
-from importlib.util import find_spec
 
 import asdf
 from asdf.extension import Extension, ManifestExtension
@@ -426,19 +425,21 @@ TRANSFORM_MANIFEST_URIS = [
 # to avoid including the new tags until those libraries can be updated.
 # We make the assumption here that the next version of each
 # downstream library manifest will fix the issue.
-_REQUIRED_DOWNSTREAM_MANIFESTS = {
-    "dkist": "asdf://dkist.nso.edu/dkist/extensions/dkist-wcs-1.5.0",
-    "asdf_wcs_schemas": "asdf://asdf-format.org/astronomy/gwcs/extensions/gwcs-1.4.0",
-    "stdatamodels": "asdf://stsci.edu/jwst_pipeline/extensions/jwst_transforms-1.2.0",
+_REQUIRED_DOWNSTREAM_VERSIONS = {
+    "dkist": "1.14.0",
+    "asdf_wcs_schemas": "0.5.0",
+    "stdatamodels": "3.1.0",
 }
 _include_new_transforms = True
 _resource_manager = asdf.get_config().resource_manager
-for package_name, required_manifest_uri in _REQUIRED_DOWNSTREAM_MANIFESTS.items():
+for package_name, required_version in _REQUIRED_DOWNSTREAM_VERSIONS.items():
     # don't use astropy.utils.minversion as it imports the package
-    if find_spec(package_name) is None:
+    try:
+        version = importlib.metadata.version(package_name)
+    except importlib.metadata.PackageNotFoundError:
         # not installed
         continue
-    if required_manifest_uri not in _resource_manager:
+    if version < required_version:
         # don't include new manifest
         _include_new_transforms = False
         break

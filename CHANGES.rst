@@ -1,3 +1,9 @@
+0.10.1 (2025-03-20)
+-------------------
+
+- Update version checks for transform schema compatibility to use package
+  versions instead of manifests [#317]
+
 0.10.0 (2026-02-13)
 -------------------
 
