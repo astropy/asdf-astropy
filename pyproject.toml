@@ -37,7 +37,6 @@ test = [
   "coverage",
   "pytest-astropy",
   "pytest-asdf-plugin",
-  "pytest-lazy-fixtures",
   "pytest",
   "scipy",  # indirect requirement via astropy
 ]
