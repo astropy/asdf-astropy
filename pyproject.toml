@@ -39,7 +39,10 @@ test = [
   "pytest-asdf-plugin",
   "pytest-lazy-fixtures",
   "pytest",
-  "scipy>=1.14.1",  # indirect requirement via astropy, oldest version supported by gwcs
+  "scipy",  # indirect requirement via astropy
+]
+test-gwcs = [
+  "scipy>=1.14.1",  # oldest version supported by gwcs
   "gwcs>=0.22",
 ]
 [project.urls]
