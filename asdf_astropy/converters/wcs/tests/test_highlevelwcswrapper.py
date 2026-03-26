@@ -35,7 +35,7 @@ def test_hllwcs_serialization(hl_wcs, tmp_path):
     file_path = tmp_path / "test_highlevelwcswrapper.asdf"
     with asdf.AsdfFile() as af:
         af["hl_wcs"] = hl_wcs
-        af.write_to(file_path)
+        af.write_to(file_path, version="1.6.0")
 
     ll_wcs = hl_wcs.low_level_wcs
     with asdf.open(file_path) as af:
