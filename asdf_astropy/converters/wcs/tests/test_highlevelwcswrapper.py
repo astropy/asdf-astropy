@@ -30,7 +30,7 @@ def test_hllwcs_serialization(hl_wcs, tmp_path):
         af["hl_wcs"] = hl_wcs
         af.write_to(file_path)
 
-    ll_wcs = hl_wcs._low_level_wcs
+    ll_wcs = hl_wcs.low_level_wcs
     with asdf.open(file_path) as af:
         loaded_hl_wcs = af["hl_wcs"]
         loaded_ll_wcs = loaded_hl_wcs._low_level_wcs
