@@ -35,14 +35,11 @@ docs = [
 ]
 test = [
   "coverage",
+  "gwcs>=0.22",
   "pytest-astropy",
   "pytest-asdf-plugin",
   "pytest",
-  "scipy",  # indirect requirement via astropy
-]
-test-gwcs = [
   "scipy>=1.14.1",  # oldest version supported by gwcs
-  "gwcs>=0.22",
 ]
 [project.urls]
 'documentation' = 'https://asdf-astropy.readthedocs.io/en/latest/'
