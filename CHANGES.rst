@@ -1,3 +1,8 @@
+0.11.0 (Unreleased)
+-------------------
+
+- Add support for ``astropy.wcs.wcsapi.HighLevelWCSWrapper``. [#296]
+
 0.10.1 (2025-03-20)
 -------------------
 
@@ -16,7 +21,6 @@
 
 - drop support for numpy 1.25. [#285]
 - require asdf 3.3 and drop support for astropy 5.2 [#297]
-- Add support for ``astropy.wcs.wcsapi.HighLevelWCSWrapper``. [#296]
 
 0.8.0 (2025-06-11)
 ------------------
