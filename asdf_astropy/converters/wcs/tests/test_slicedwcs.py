@@ -16,13 +16,8 @@ from asdf_astropy.testing.helpers import assert_wcs_equal
         np.s_[:, 2, 3, :],
     ],
 )
-def slices(request):
-    return request.param
-
-
-@pytest.fixture
-def sliced_wcses(astropy_wcs_4d, slices):
-    return SlicedLowLevelWCS(astropy_wcs_4d, slices)
+def sliced_wcses(request, astropy_wcs_4d):
+    return SlicedLowLevelWCS(astropy_wcs_4d, request.param)
 
 
 @pytest.fixture
