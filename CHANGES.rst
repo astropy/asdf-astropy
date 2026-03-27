@@ -1,9 +1,9 @@
-0.11.0 (Unreleased)
+0.11.0 (2026-03-27)
 -------------------
 
 - Add support for ``astropy.wcs.wcsapi.HighLevelWCSWrapper``. [#296]
 
-0.10.1 (2025-03-20)
+0.10.1 (2026-03-20)
 -------------------
 
 - Update version checks for transform schema compatibility to use package
