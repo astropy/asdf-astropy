@@ -1,3 +1,8 @@
+0.11.0 (Unreleased)
+-------------------
+
+- Add support for ``astropy.wcs.wcsapi.HighLevelWCSWrapper``. [#296]
+
 0.10.1 (2025-03-20)
 -------------------
 

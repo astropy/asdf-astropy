@@ -34,6 +34,7 @@ from .converters.unit.equivalency import EquivalencyConverter
 from .converters.unit.magunit import MagUnitConverter
 from .converters.unit.quantity import QuantityConverter
 from .converters.unit.unit import UnitConverter
+from .converters.wcs.highlevelwrapper import HighLevelWCSWrapperConverter
 from .converters.wcs.slicedwcs import SlicedWCSConverter
 from .converters.wcs.wcs import WCSConverter
 
@@ -531,6 +532,7 @@ ASTROPY_CONVERTERS = [
     UncertaintyConverter(),
     WCSConverter(),
     SlicedWCSConverter(),
+    HighLevelWCSWrapperConverter(),
 ]
 
 
@@ -556,6 +558,7 @@ COORDINATES_EXTENSIONS = [
 
 
 _ASTROPY_EXTENSION_MANIFEST_URIS = [
+    "asdf://astropy.org/astropy/manifests/astropy-1.6.0",
     "asdf://astropy.org/astropy/manifests/astropy-1.5.0",
     "asdf://astropy.org/astropy/manifests/astropy-1.4.0",
     "asdf://astropy.org/astropy/manifests/astropy-1.3.0",
