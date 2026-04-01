@@ -28,7 +28,7 @@ jobs:
 
   core:
     needs: [setup]
-    uses: OpenAstronomy/github-actions-workflows/.github/workflows/tox.yml@99401c364fa51c9c507d3cd6d272049278ac0b2c  # v2.4.0
+    uses: OpenAstronomy/github-actions-workflows/.github/workflows/tox.yml@e97344095b099e1d729fe97429078c9975921d8a  # v2.6.2
     with:
       cache-path: ~/.cache/pip
       cache-key: pip-${{ needs.setup.outputs.requirements-hash }}
@@ -45,7 +45,7 @@ jobs:
 
   asdf-schemas:
     needs: [setup]
-    uses: OpenAstronomy/github-actions-workflows/.github/workflows/tox.yml@99401c364fa51c9c507d3cd6d272049278ac0b2c  # v2.4.0
+    uses: OpenAstronomy/github-actions-workflows/.github/workflows/tox.yml@e97344095b099e1d729fe97429078c9975921d8a  # v2.6.2
     with:
       cache-path: ~/.cache/pip
       cache-key: pip-${{ needs.setup.outputs.requirements-hash }}
@@ -60,7 +60,7 @@ jobs:
 
   test:
     needs: [core, asdf-schemas]
-    uses: OpenAstronomy/github-actions-workflows/.github/workflows/tox.yml@99401c364fa51c9c507d3cd6d272049278ac0b2c  # v2.4.0
+    uses: OpenAstronomy/github-actions-workflows/.github/workflows/tox.yml@e97344095b099e1d729fe97429078c9975921d8a  # v2.6.2
     with:
       cache-path: ~/.cache/pip
       cache-key: pip-${{ needs.setup.outputs.requirements-hash }}
@@ -75,7 +75,7 @@ jobs:
 
   dev:
     needs: [core, asdf-schemas]
-    uses: OpenAstronomy/github-actions-workflows/.github/workflows/tox.yml@99401c364fa51c9c507d3cd6d272049278ac0b2c  # v2.4.0
+    uses: OpenAstronomy/github-actions-workflows/.github/workflows/tox.yml@e97344095b099e1d729fe97429078c9975921d8a  # v2.6.2
     with:
       cache-path: ~/.cache/pip
       cache-key: pip-${{ needs.setup.outputs.requirements-hash }}
@@ -90,7 +90,7 @@ jobs:
 
   oldest:
     needs: [core, asdf-schemas]
-    uses: OpenAstronomy/github-actions-workflows/.github/workflows/tox.yml@99401c364fa51c9c507d3cd6d272049278ac0b2c  # v2.4.0
+    uses: OpenAstronomy/github-actions-workflows/.github/workflows/tox.yml@e97344095b099e1d729fe97429078c9975921d8a  # v2.6.2
     with:
       cache-path: ~/.cache/pip
       cache-key: pip-${{ needs.setup.outputs.requirements-hash }}
@@ -105,7 +105,7 @@ jobs:
   wheel_building:
     permissions:
       contents: none
-    uses: OpenAstronomy/github-actions-workflows/.github/workflows/publish_pure_python.yml@99401c364fa51c9c507d3cd6d272049278ac0b2c  # v2.4.0
+    uses: OpenAstronomy/github-actions-workflows/.github/workflows/publish_pure_python.yml@e97344095b099e1d729fe97429078c9975921d8a  # v2.6.2
     if: (github.event_name == 'push' || github.event_name == 'pull_request')
     with:
       upload_to_pypi: false
