@@ -74,7 +74,7 @@ exclude_patterns.append("_templates")
 # This does not *have* to match the package name, but typically does
 project = configuration["name"]
 author = f"{configuration['authors'][0]['name']} <{configuration['authors'][0]['email']}>"
-copyright = f"{datetime.datetime.now().year}, {configuration['authors'][0]}"
+copyright = f"{datetime.datetime.now().year}, {configuration['authors'][0]['name']}"
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
