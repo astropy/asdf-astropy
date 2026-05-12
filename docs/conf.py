@@ -34,7 +34,7 @@ import sphinx_astropy  # noqa: F403, F401
 import tomli
 
 try:
-    from sphinx_astropy.conf.v1 import *  # noqa: F403, F401
+    from sphinx_astropy.conf.v3 import *  # noqa: F403, F401
 except ImportError:
     print("ERROR: the documentation requires the sphinx-astropy package to be installed")
     sys.exit(1)
@@ -74,7 +74,7 @@ exclude_patterns.append("_templates")
 # This does not *have* to match the package name, but typically does
 project = configuration["name"]
 author = f"{configuration['authors'][0]['name']} <{configuration['authors'][0]['email']}>"
-copyright = f"{datetime.datetime.now().year}, {configuration['authors'][0]}"
+copyright = f"{datetime.datetime.now().year}, {configuration['authors'][0]['name']}"
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -108,13 +108,6 @@ release = package.__version__
 # a list of builtin themes. To override the custom theme, set this to the
 # name of a builtin theme or the name of a custom theme in html_theme_path.
 # html_theme = None
-
-
-html_theme_options = {
-    "logotext1": "asdf-astropy",  # white,  semi-bold
-    "logotext2": "",  # orange, light
-    "logotext3": ":docs",  # white,  light
-}
 
 
 # Custom sidebar templates, maps document names to template names.
