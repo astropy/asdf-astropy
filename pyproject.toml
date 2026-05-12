@@ -29,7 +29,7 @@ docs = [
   "matplotlib",
   "sphinx",
   "sphinx-asdf",
-  "sphinx-astropy",
+  "sphinx-astropy[confv3]",
   "sphinx-automodapi",
   "tomli",
 ]
