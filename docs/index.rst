@@ -26,15 +26,15 @@ Getting Started
 
     asdf-astropy/install.rst
     asdf-astropy/quickstart.rst
+    asdf-astropy/table.rst
     asdf-astropy/migrating.rst
 
-Using **asdf-astropy**
-======================
+Developer documentation
+=======================
 
 .. toctree::
     :maxdepth: 2
 
-    asdf-astropy/table.rst
     asdf-astropy/details.rst
     asdf-astropy/example.rst
     asdf-astropy/manifest.rst
