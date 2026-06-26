@@ -105,7 +105,7 @@ wcs/wcs-1.0.0
 
 .. asdf-autoschemas::
 
-    wcs/highlevelwcswrapper-1.0.0.yaml
+    wcs/highlevelwcswrapper-1.0.0
     wcs/slicedwcs-1.0.0
     wcs/slicedwcs-1.1.0
     wcs/wcs-1.0.0
