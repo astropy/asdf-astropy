@@ -28,15 +28,13 @@ Getting Started
     asdf-astropy/quickstart.rst
     asdf-astropy/table.rst
     asdf-astropy/migrating.rst
+    asdf-astropy/manifest.rst
+    asdf-astropy/schemas.rst
 
-Developer documentation
+Developer Documentation
 =======================
 
 .. toctree::
-    :maxdepth: 2
+    :maxdepth: 1
 
-    asdf-astropy/details.rst
-    asdf-astropy/example.rst
-    asdf-astropy/manifest.rst
-    asdf-astropy/schemas.rst
-    asdf-astropy/api.rst
+    asdf-astropy/developer_docs/index.rst
