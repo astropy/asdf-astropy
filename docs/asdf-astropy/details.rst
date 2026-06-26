@@ -4,30 +4,29 @@
 Details
 =======
 
-**ASDF** makes use of an abstract data type definition called a **tag**, which is a formed
-from a **schema** or collection of **schemas**. Each **schema** encodes part of the
-information that **ASDF** uses to both validate and identify the organization and types of
-data within an ASDF file. Tags are assigned to specific a specific schema or collection
-of schemas within a **manifest**. Finally, **ASDF** requires **converter** classes which implement
-the logic of serializing and deserializing of objects (in this case **astropy** classes) into
-and out of their respective **ASDF** tag representations.
+**ASDF** provides an :ref:`extension API <asdf:extending_extensions>` that **asdf-astropy**
+uses to support reading and writing **astropy** objects. The details here should be of
+no concern to users since the process of converting **astropy** objects to **ASDF**
+is transparent, the user need only provide the **astropy** object or **ASDF** file
+and the rest will be handled for them.
 
-The **asdf-astropy** package primarily defines **converters** for many **astropy**
-types, and then properly registers them with **ASDF**. Users should never need to refer
-to converter implementations directly. Their presence should be entirely transparent
-when processing ASDF files.
+Developers and maintainers may want to know more about how **asdf-astropy** works
+and should start by referring to the :ref:`asdf extension API documentation <asdf:extending_extensions>`.
+In brief, **asdf-astropy** implements **extensions** that provide mappings between
+**tags** that get written to or read from **ASDF** files, are associated with **schemas**
+to check that data is handles properly and **converter** classes that handle the logic
+of reading and writing.
 
-The converters in **asdf-astropy** related to transforms implement the tags that are
+The converters in **asdf-astropy** related to transforms correspond to schemas
 defined by the :ref:`asdf-transform-schemas package <asdf-transform-schemas:asdf-transform-schemas>`.
-Similarly, the converters in **asdf-astropy** related to coordinates implement
-the tags that are defined by the
+Similarly, the converters in **asdf-astropy** related to coordinates correspond to
+schemas defined in the
 :ref:`asdf-coordinates-schemas package <asdf-coordinates-schemas:asdf-coordinates-schemas>`.
-Moreover, many of the converters in **asdf-astropy** related to units implement tags
-that are defined in the :ref:`ASDF-standard <asdf-standard:asdf-standard>`.
-Finally, there are converters in **asdf-astropy** whose tags are defined within **asdf-astropy**
-itself. See :ref:`asdf-astropy_manifest` for a listing of all these tags. Documentation of the
-individual schemas defined by **asdf-astropy**, which are used to assemble these tags can be
-found in :ref:`asdf-astropy_schemas`.
+Moreover, many of the converters in **asdf-astropy** related to units correspond to schemas
+that are defined in the :ref:`ASDF astronomy schemas <asdf-standard:astronomy-schema>`.
+Finally, there are converters in **asdf-astropy** that correspond to schemas within **asdf-astropy**
+itself. See the respective packages for schema details and :ref:`asdf-astropy_manifest`
+and :ref:`asdf-astropy_schemas` for resources defined within this package.
 
 .. note::
     Not all **astropy** types are currently serializable by ASDF. Attempting to
