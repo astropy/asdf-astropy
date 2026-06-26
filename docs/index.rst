@@ -14,7 +14,7 @@ package has been designed to automatically detect the presence of tags defined b
 packages like **asdf-astropy** and automatically make use of that package's support
 infrastructure to operate correctly.
 
-Documentation on the **ASDF Standard** can be found :ref:`here <asdf-standard:asdf-standard>`.
+Documentation on the **ASDF Specification** can be found :ref:`here <asdf-standard:asdf-standard>`.
 Documentation on the **ASDF** Python library can be found :ref:`here <asdf:asdf>`.
 
 
