@@ -11,7 +11,7 @@ Requirements
 ============
 
 The :ref:`asdf-astropy` package has several dependencies which are all listed
-in the project's ``setup.cfg`` file. All dependencies are available on
+in the project's ``pyproject.toml`` file. All dependencies are available on
 pypi and will be automatically installed along with :ref:`asdf-astropy`.
 Most importantly, both the `asdf` and :ref:`astropy:getting-started` packages will be installed
 along with :ref:`asdf-astropy` which should enable full functionality.
