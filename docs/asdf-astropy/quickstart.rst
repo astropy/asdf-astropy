@@ -4,19 +4,19 @@
 Quick-Start
 ***********
 
-**asdf-astropy** is intended to be an extension library for **ASDF** to enable support
-for the **astropy** package.  It is intended to be used in conjunction with both the
-**ASDF** and **astropy** packages. To this end, the **asdf-astropy** package typically
-only needs to be installed in order to provide its functionality.
+**asdf-astropy** is an extension library for **ASDF** enabling saving and loading
+many **astropy** objects.  No additional setup is needed, just install **asdf-astropy**
+to start saving and loading **astropy** objects to **ASDF** files.
 
 A quick example of **ASDF**
 ===========================
 
-The **ASDF** format is a way of saving nested structures to **yaml**, where some of
-the stored data can be stored in a binary format. Thus, one typically structures
-an **ASDF** file as a dictionary, with key/value pairs.
+The Advanced Scientific Data Format (ASDF, pronounced *"Az-diff"*) is a next-generation
+interchange format for scientific data. The Python library :ref:`asdf <asdf:asdf>`
+can be used to read and write ASDF files and provides an interface to the ASDF "tree"
+that is similar to a python dictionary, with key/value pairs.
 
-For example if one wanted to store a `~astropy.modeling.functional_models.Gaussian1D` model in
+To save a `~astropy.modeling.functional_models.Gaussian1D` model in
 an **ASDF** file::
 
     from asdf import AsdfFile
