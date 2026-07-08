@@ -42,6 +42,8 @@ jobs:
         - linux: py313-test-parallel-cov
         - linux: py314-test-parallel-cov
       coverage: codecov
+    secrets:
+      CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
 
   asdf-schemas:
     needs: [setup]
