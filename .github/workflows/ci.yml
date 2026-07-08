@@ -91,6 +91,8 @@ jobs:
         - linux: py314-test-predeps-parallel-cov
         - linux: py314-test-devdeps-parallel-cov
       coverage: codecov
+    secrets:
+      CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
 
   oldest:
     needs: [core, asdf-schemas]
