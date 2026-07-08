@@ -107,6 +107,8 @@ jobs:
       envs: |
         - linux: py311-test-oldestdeps-parallel-cov
       coverage: codecov
+    secrets:
+      CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
 
   wheel_building:
     permissions:
