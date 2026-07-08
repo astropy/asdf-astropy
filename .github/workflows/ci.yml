@@ -72,6 +72,8 @@ jobs:
         - macos: py311-test-parallel-cov
         - windows: py311-test-parallel-cov
       coverage: codecov
+    secrets:
+      CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
 
   dev:
     needs: [core, asdf-schemas]
