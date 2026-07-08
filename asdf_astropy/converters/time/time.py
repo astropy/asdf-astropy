@@ -10,6 +10,8 @@ _ASTROPY_FORMAT_TO_ASDF_FORMAT = {
     "jyear_str": "jyear",
 }
 
+_EPOCH_PREFIX_FORMATS = {"jyear": ("jyear_str", "J"), "byear": ("byear_str", "B")}
+
 
 class TimeConverter(Converter):
     tags = ("tag:stsci.edu:asdf/time/time-*",)
@@ -101,9 +103,12 @@ class TimeConverter(Converter):
                     location["z"],
                 )
 
+        value = node["value"]
+        format = self._asdf_to_astropy_format(value, node.get("format"))
+
         time = Time(
-            node["value"],
-            format=node.get("format"),
+            value,
+            format=format,
             scale=node.get("scale"),
             location=location,
         )
@@ -113,3 +118,33 @@ class TimeConverter(Converter):
             time.format = base_format
 
         return time
+
+    @staticmethod
+    def _asdf_to_astropy_format(value, format):
+        if format not in _EPOCH_PREFIX_FORMATS:
+            return format
+
+        # Need a test scalar value to check if it's a string
+        if isinstance(value, list):
+            while value and isinstance(value, list):
+                value = value[0]
+
+            if not isinstance(value, str):
+                return format
+        elif isinstance(value, (np.ndarray, NDArrayType)):
+            if np.issubdtype(value.dtype, np.str_) and value.size > 0:
+                value = value.item()
+            else:
+                return format
+        elif not isinstance(value, str):
+            return format
+
+        # astropy.time has separate formats for Julian and Besselian year
+        # values with epoch prefixes; arguably this is a bit inflexible but
+        # we must fix up the format in this case.
+        new_format, prefix = _EPOCH_PREFIX_FORMATS[format]
+
+        if value[0] == prefix:
+            return new_format
+
+        return format
