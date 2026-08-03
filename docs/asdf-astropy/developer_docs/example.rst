@@ -43,12 +43,12 @@ model would look like
         properties:
           amplitude:
             anyOf:
-              - tag: tag:stsci.edu:asdf/unit/quantity-1.1.0
+              - tag: tag:stsci.edu:asdf/unit/quantity-1.*
               - type: number
             description: Amplitude of distribution.
           x_0:
             anyOf:
-              - tag: tag:stsci.edu:asdf/unit/quantity-1.1.0
+              - tag: tag:stsci.edu:asdf/unit/quantity-1.*
               - type: number
             description: X center position.
 
@@ -123,7 +123,7 @@ to use when serializing an object to an ASDF file.::
     from asdf_astropy.converters.transform.core import TransformConverterBase, parameter_to_value
 
     class MyModelConverter(TransformConverterBase):
-        tags = ["tag:stsci.edu:asdf/transform/mymodel-1.0.0"]
+        tags = ["tag:stsci.edu:asdf/transform/mymodel-*"]
         types = ['astropy.modeling.functional_models.MyModel']
 
         def to_yaml_tree_transform(self, model, tag, ctx):

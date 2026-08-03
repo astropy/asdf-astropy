@@ -14,7 +14,7 @@ package has been designed to automatically detect the presence of tags defined b
 packages like **asdf-astropy** and automatically make use of that package's support
 infrastructure to operate correctly.
 
-Documentation on the **ASDF Standard** can be found :ref:`here <asdf-standard:asdf-standard>`.
+Documentation on the **ASDF Specification** can be found :ref:`here <asdf-standard:asdf-standard>`.
 Documentation on the **ASDF** Python library can be found :ref:`here <asdf:asdf>`.
 
 
@@ -26,17 +26,15 @@ Getting Started
 
     asdf-astropy/install.rst
     asdf-astropy/quickstart.rst
-    asdf-astropy/migrating.rst
-
-Using **asdf-astropy**
-======================
-
-.. toctree::
-    :maxdepth: 2
-
     asdf-astropy/table.rst
-    asdf-astropy/details.rst
-    asdf-astropy/example.rst
+    asdf-astropy/migrating.rst
     asdf-astropy/manifest.rst
     asdf-astropy/schemas.rst
-    asdf-astropy/api.rst
+
+Developer Documentation
+=======================
+
+.. toctree::
+    :maxdepth: 1
+
+    asdf-astropy/developer_docs/index.rst
