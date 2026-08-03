@@ -14,7 +14,7 @@ Developers and maintainers may want to know more about how **asdf-astropy** work
 and should start by referring to the :ref:`asdf extension API documentation <asdf:extending_extensions>`.
 In brief, **asdf-astropy** implements **extensions** that provide mappings between
 **tags** that get written to or read from **ASDF** files, are associated with **schemas**
-to check that data is handles properly and **converter** classes that handle the logic
+to check that data is handled properly and **converter** classes that handle the logic
 of reading and writing.
 
 The converters in **asdf-astropy** related to transforms correspond to schemas
@@ -25,7 +25,7 @@ schemas defined in the
 Moreover, many of the converters in **asdf-astropy** related to units correspond to schemas
 that are defined in the :ref:`ASDF astronomy schemas <asdf-standard:astronomy-schema>`.
 Finally, there are converters in **asdf-astropy** that correspond to schemas within **asdf-astropy**
-itself. See the respective packages for schema details and :ref:`asdf-astropy_manifest`
+itself. See the respective packages for schema details and :ref:`asdf-astropy_manifest`,
 and :ref:`asdf-astropy_schemas` for resources defined within this package.
 
 .. note::
