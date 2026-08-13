@@ -10,7 +10,7 @@ from asdf.extension import Extension, ManifestExtension
 
 from .converters.coordinates.angle import AngleConverter, LatitudeConverter, LongitudeConverter
 from .converters.coordinates.earth_location import EarthLocationConverter
-from .converters.coordinates.frame import FrameConverter, LegacyICRSConverter
+from .converters.coordinates.frame import FrameConverter
 from .converters.coordinates.representation import RepresentationConverter
 from .converters.coordinates.sky_coord import SkyCoordConverter
 from .converters.coordinates.spectral_coord import SpectralCoordConverter
@@ -493,7 +493,7 @@ COORDINATES_CONVERTERS = [
         "astropy.coordinates.builtin_frames.gcrs.GCRS",
     ),
     FrameConverter(
-        "tag:astropy.org:astropy/coordinates/frames/icrs-1.1.0",
+        "tag:astropy.org:astropy/coordinates/frames/icrs-*",
         "astropy.coordinates.builtin_frames.icrs.ICRS",
     ),
     FrameConverter(
@@ -512,7 +512,6 @@ COORDINATES_CONVERTERS = [
         "tag:astropy.org:astropy/coordinates/frames/tete-*",
         "astropy.coordinates.builtin_frames.equatorial.TETE",
     ),
-    LegacyICRSConverter(),
     AngleConverter(),
     LatitudeConverter(),
     LongitudeConverter(),

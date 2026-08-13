@@ -12,6 +12,11 @@ class FrameConverter(Converter):
             tags = [tags]
         self._tags = tags
 
+    def select_tag(self, obj, tags, ctx):
+        # Implement select_tag since coordinates-1.0.0 has 2 icrs tags
+        # When writing use latest (only impacts icrs-1.0.0/1.1.0)
+        return sorted(tags)[-1]
+
     @property
     def tags(self):
         return self._tags
@@ -46,39 +51,16 @@ class FrameConverter(Converter):
         return node
 
     def from_yaml_tree(self, node, tag, ctx):
+        if tag == "tag:astropy.org:astropy/coordinates/frames/icrs-1.0.0":
+            # icrs-1.0.0 is special cased since it's schema/representation is odd
+            from astropy.coordinates import ICRS, Angle, Latitude, Longitude
+
+            ra = Longitude(node["ra"]["value"], unit=node["ra"]["unit"], wrap_angle=Angle(node["ra"]["wrap_angle"]))
+            dec = Latitude(node["dec"]["value"], unit=node["dec"]["unit"])
+            return ICRS(ra=ra, dec=dec)
+
         data = node.get("data", None)
         if data is not None:
             return self.frame_type(node["data"], **node["frame_attributes"])
 
         return self.frame_type(**node["frame_attributes"])
-
-
-class LegacyICRSConverter(Converter):
-    tags = ("tag:astropy.org:astropy/coordinates/frames/icrs-1.0.0",)
-    # Leave the types list empty so that the 1.1.0 ICRS converter
-    # is used on write.
-    types = ()
-
-    def to_yaml_tree(self, obj, tag, ctx):
-        from astropy.units import Quantity
-
-        return {
-            "ra": {
-                "value": obj.ra.value,
-                "unit": obj.ra.unit.to_string(),
-                "wrap_angle": Quantity(obj.ra.wrap_angle),
-            },
-            "dec": {
-                "value": obj.dec.value,
-                "unit": obj.dec.unit.to_string(),
-            },
-        }
-
-    def from_yaml_tree(self, node, tag, ctx):
-        from astropy.coordinates import ICRS, Angle, Latitude, Longitude
-
-        ra = Longitude(node["ra"]["value"], unit=node["ra"]["unit"], wrap_angle=Angle(node["ra"]["wrap_angle"]))
-
-        dec = Latitude(node["dec"]["value"], unit=node["dec"]["unit"])
-
-        return ICRS(ra=ra, dec=dec)

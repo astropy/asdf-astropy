@@ -1,5 +1,4 @@
 import importlib.metadata
-import unittest.mock as mk
 
 import asdf
 import numpy as np
@@ -28,7 +27,7 @@ from astropy.coordinates import (
 )
 from astropy.time import Time
 
-from asdf_astropy.converters.coordinates.frame import FrameConverter, LegacyICRSConverter
+from asdf_astropy.converters.coordinates.frame import FrameConverter
 from asdf_astropy.testing.helpers import assert_frame_equal
 
 # skip TETE and TEME for old asdf-coordinates_schemas
@@ -99,23 +98,6 @@ def test_serialization(frame, tmp_path):
 def test_tags():
     converter = FrameConverter(["tag1", "tag2"], "test")
     assert converter.tags == ["tag1", "tag2"]
-
-
-def test_legacy_icrs_serialize():
-    converter = LegacyICRSConverter()
-
-    ra = 25
-    dec = 45
-
-    frame = ICRS(ra=Longitude(ra, unit=u.deg), dec=Latitude(dec, unit=u.deg))
-    node = converter.to_yaml_tree(frame, mk.MagicMock(), mk.MagicMock())
-
-    assert node["ra"]["value"] == ra
-    assert node["ra"]["unit"] == "deg"
-    assert node["ra"]["wrap_angle"] == 360 * u.deg
-
-    assert node["dec"]["value"] == dec
-    assert node["dec"]["unit"] == "deg"
 
 
 def test_legacy_icrs_deseialize():
