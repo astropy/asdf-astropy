@@ -100,7 +100,7 @@ def test_tags():
     assert converter.tags == ["tag1", "tag2"]
 
 
-def test_legacy_icrs_deseialize():
+def test_legacy_icrs_deserialize():
     example = """!<tag:astropy.org:astropy/coordinates/frames/icrs-1.0.0>
     ra:
       value: 25
@@ -116,3 +116,19 @@ def test_legacy_icrs_deseialize():
     buff = yaml_to_asdf(f"example: {example.strip()}", version="1.5.0")
     with asdf.open(buff) as af:
         assert_frame_equal(af["example"], truth)
+
+
+def test_icrs_serialization(tmp_path):
+    """
+    oordinates-1.0.0 contains 2 icrs tags 1.0.0 and 1.1.0. This was previously
+    handled with a special converter that resulted in incorrect tag selection.
+    This is not handled with the standard FrameConverter but still special cased
+    since icrs-1.0.0 is odd. This test checks that the 1.0.0 tag is not used on write.
+    """
+    fn = tmp_path / "test.asdf"
+    asdf.AsdfFile({"frame": ICRS()}).write_to(fn)
+    tag = asdf.util.load_yaml(fn, tagged=True)["frame"]._tag
+    suffix = tag.split("/")[-1]
+    name, version = suffix.split("-")
+    assert name == "icrs"
+    assert version > "1.0.0"
