@@ -15,28 +15,23 @@ dynamic = [
 ]
 dependencies = [
   "asdf>=3.3.0",
-  "asdf-coordinates-schemas>=0.4",
+  "asdf-coordinates-schemas>=0.5",
   "asdf-transform-schemas>=0.6",
-  "asdf-standard>=1.1.0",
-  "astropy>=6.0",
+  "asdf-standard>=1.5.0",
+  "astropy>=6.1",
   "numpy>=1.26.4",
   "packaging>=19",
 ]
 [project.optional-dependencies]
 docs = [
-  "docutils",
-  "graphviz",
-  "matplotlib",
   "sphinx",
   "sphinx-asdf",
   "sphinx-astropy[confv3]>=1.11",
-  "sphinx-automodapi",
   "tomli",
 ]
 test = [
   "coverage",
   "gwcs>=0.22",
-  "pytest-astropy",
   "pytest-asdf-plugin",
   "pytest",
   "scipy>=1.14.1",  # oldest version supported by gwcs
@@ -150,9 +145,6 @@ extend-ignore = [
 
 [tool.pytest.ini_options]
 testpaths = ['asdf_astropy', 'docs']
-astropy_header = true
-doctest_plus = 'enabled'
-text_file_format = 'rst'
 filterwarnings = [
     'error',
     'ignore:numpy.ndarray size changed:RuntimeWarning',
@@ -160,7 +152,7 @@ filterwarnings = [
     # astropy addresses it: https://github.com/astropy/astropy/issues/19216
     'ignore:The chararray class is deprecated:DeprecationWarning',
 ]
-addopts = '--color=yes --doctest-rst'
+addopts = '--color=yes'
 asdf_schema_root = 'asdf_astropy/resources/schemas'
 asdf_schema_tests_enabled = true
 
