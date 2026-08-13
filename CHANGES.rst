@@ -1,3 +1,8 @@
+0.12.0 (unreleased)
+-------------------
+
+- Fix ICRS serialization to use latest tag instead of 1.0.0. [#335]
+
 0.11.0 (2026-03-27)
 -------------------
 
