@@ -36,7 +36,6 @@ docs = [
 test = [
   "coverage",
   "gwcs>=0.22",
-  "pytest-astropy",
   "pytest-asdf-plugin",
   "pytest",
   "scipy>=1.14.1",  # oldest version supported by gwcs
