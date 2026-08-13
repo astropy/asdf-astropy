@@ -149,9 +149,6 @@ extend-ignore = [
 
 [tool.pytest.ini_options]
 testpaths = ['asdf_astropy', 'docs']
-astropy_header = true
-doctest_plus = 'enabled'
-text_file_format = 'rst'
 filterwarnings = [
     'error',
     'ignore:numpy.ndarray size changed:RuntimeWarning',
@@ -159,7 +156,7 @@ filterwarnings = [
     # astropy addresses it: https://github.com/astropy/astropy/issues/19216
     'ignore:The chararray class is deprecated:DeprecationWarning',
 ]
-addopts = '--color=yes --doctest-rst'
+addopts = '--color=yes'
 asdf_schema_root = 'asdf_astropy/resources/schemas'
 asdf_schema_tests_enabled = true
 
