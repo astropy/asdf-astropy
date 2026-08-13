@@ -24,13 +24,9 @@ dependencies = [
 ]
 [project.optional-dependencies]
 docs = [
-  "docutils",
-  "graphviz",
-  "matplotlib",
   "sphinx",
   "sphinx-asdf",
   "sphinx-astropy[confv3]>=1.11",
-  "sphinx-automodapi",
   "tomli",
 ]
 test = [
