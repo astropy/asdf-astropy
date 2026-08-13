@@ -613,6 +613,8 @@ UNIT_EXTENSIONS = [ManifestExtension.from_uri(u, converters=_UNIT_CONVERTERS) fo
 # up to asdf 1.5.0 many tags supported by asdf-astropy
 # were defined in core manifests
 CORE_MANIFEST_URIS = [
+    "asdf://asdf-format.org/astronomy/manifests/astronomy-1.2.0",
+    "asdf://asdf-format.org/astronomy/manifests/astronomy-1.1.0",
     "asdf://asdf-format.org/astronomy/manifests/astronomy-1.0.0",
     "asdf://asdf-format.org/core/manifests/core-1.5.0",
     "asdf://asdf-format.org/core/manifests/core-1.4.0",
@@ -621,12 +623,6 @@ CORE_MANIFEST_URIS = [
     "asdf://asdf-format.org/core/manifests/core-1.1.0",
     "asdf://asdf-format.org/core/manifests/core-1.0.0",
 ]
-
-_asdf_standard_version = importlib.metadata.version("asdf-standard")
-if _asdf_standard_version > "1.2.0":
-    CORE_MANIFEST_URIS.insert(0, "asdf://asdf-format.org/astronomy/manifests/astronomy-1.1.0")
-if _asdf_standard_version > "1.3.0":
-    CORE_MANIFEST_URIS.insert(0, "asdf://asdf-format.org/astronomy/manifests/astronomy-1.2.0")
 
 CORE_EXTENSIONS = [ManifestExtension.from_uri(u, converters=CORE_CONVERTERS) for u in CORE_MANIFEST_URIS]
 
