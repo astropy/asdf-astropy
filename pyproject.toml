@@ -18,7 +18,7 @@ dependencies = [
   "asdf-coordinates-schemas>=0.5",
   "asdf-transform-schemas>=0.6",
   "asdf-standard>=1.5.0",
-  "astropy>=6.0",
+  "astropy>=6.1",
   "numpy>=1.26.4",
   "packaging>=19",
 ]
