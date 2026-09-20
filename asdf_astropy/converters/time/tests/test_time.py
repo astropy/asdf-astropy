@@ -71,6 +71,12 @@ def create_examples():
         },
         {
             "example": """!time/time-1.1.0
+          value: B2000.0
+          format: byear""",
+            "truth": Time("B2000.0", format="byear_str"),
+        },
+        {
+            "example": """!time/time-1.1.0
           ["2000-12-31T13:05:27.737", "2000-12-31T13:06:38.444"]""",
             "truth": Time(["2000-12-31T13:05:27.737", "2000-12-31T13:06:38.444"]),
         },
@@ -84,7 +90,12 @@ def create_examples():
         },
         {
             "example": """!time/time-1.1.0
-          value: !core/ndarray-1.0.0
+          value: J2000.0
+          format: jyear""",
+            "truth": Time("J2000.0", format="jyear_str")
+        },
+        {
+            "example": """!time/time-1.1.0
           value: 2000.0
           format: jyear
           scale: tdb
@@ -97,8 +108,7 @@ def create_examples():
               unit: !unit/unit-1.0.0 m
             z: !unit/quantity-1.1.0
               value: 0
-              unit: !unit/unit-1.0.0 m
-          format: jyear""",
+              unit: !unit/unit-1.0.0 m""",
             "truth": Time(
                 2000.0,
                 location=EarthLocation(x=6378100 * u.m, y=0 * u.m, z=0 * u.m),
