@@ -1,5 +1,4 @@
 import importlib.metadata
-import unittest.mock as mk
 
 import asdf
 import numpy as np
@@ -28,7 +27,7 @@ from astropy.coordinates import (
 )
 from astropy.time import Time
 
-from asdf_astropy.converters.coordinates.frame import FrameConverter, LegacyICRSConverter
+from asdf_astropy.converters.coordinates.frame import FrameConverter
 from asdf_astropy.testing.helpers import assert_frame_equal
 
 # skip TETE and TEME for old asdf-coordinates_schemas
@@ -101,24 +100,7 @@ def test_tags():
     assert converter.tags == ["tag1", "tag2"]
 
 
-def test_legacy_icrs_serialize():
-    converter = LegacyICRSConverter()
-
-    ra = 25
-    dec = 45
-
-    frame = ICRS(ra=Longitude(ra, unit=u.deg), dec=Latitude(dec, unit=u.deg))
-    node = converter.to_yaml_tree(frame, mk.MagicMock(), mk.MagicMock())
-
-    assert node["ra"]["value"] == ra
-    assert node["ra"]["unit"] == "deg"
-    assert node["ra"]["wrap_angle"] == 360 * u.deg
-
-    assert node["dec"]["value"] == dec
-    assert node["dec"]["unit"] == "deg"
-
-
-def test_legacy_icrs_deseialize():
+def test_legacy_icrs_deserialize():
     example = """!<tag:astropy.org:astropy/coordinates/frames/icrs-1.0.0>
     ra:
       value: 25
@@ -134,3 +116,19 @@ def test_legacy_icrs_deseialize():
     buff = yaml_to_asdf(f"example: {example.strip()}", version="1.5.0")
     with asdf.open(buff) as af:
         assert_frame_equal(af["example"], truth)
+
+
+def test_icrs_serialization(tmp_path):
+    """
+    oordinates-1.0.0 contains 2 icrs tags 1.0.0 and 1.1.0. This was previously
+    handled with a special converter that resulted in incorrect tag selection.
+    This is not handled with the standard FrameConverter but still special cased
+    since icrs-1.0.0 is odd. This test checks that the 1.0.0 tag is not used on write.
+    """
+    fn = tmp_path / "test.asdf"
+    asdf.AsdfFile({"frame": ICRS()}).write_to(fn)
+    tag = asdf.util.load_yaml(fn, tagged=True)["frame"]._tag
+    suffix = tag.split("/")[-1]
+    name, version = suffix.split("-")
+    assert name == "icrs"
+    assert version > "1.0.0"
