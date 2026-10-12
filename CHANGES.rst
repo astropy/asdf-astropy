@@ -1,3 +1,9 @@
+0.12.0 (unreleased)
+-------------------
+
+- Fix model parameter bounds with limits that are all zero or ``None``
+  (e.g., ``(0, None)``) being dropped on serialization. [#338]
+
 0.11.0 (2026-03-27)
 -------------------
 
