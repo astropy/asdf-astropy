@@ -458,10 +458,9 @@ UNSUPPORTED_MODELS = [
     astropy.modeling.projections.Zenithal,
     # https://github.com/astropy/asdf-astropy/issues/6
     astropy.modeling.physical_models.NFW,
+    astropy.modeling.functional_models.GeneralSersic2D,
 ]
 
-if minversion("astropy", "6.0.dev"):
-    UNSUPPORTED_MODELS.append(astropy.modeling.functional_models.GeneralSersic2D)
 
 if minversion("astropy", "7.0.dev"):
     UNSUPPORTED_MODELS.append(astropy.modeling.functional_models.Lorentz2D)
