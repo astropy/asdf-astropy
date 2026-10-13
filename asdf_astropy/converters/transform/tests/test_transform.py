@@ -831,3 +831,14 @@ def test_serialize_cbbox(tmp_path):
     mdl.bounding_box = bounding_box
 
     helpers.assert_model_roundtrip(mdl, tmp_path)
+
+
+@pytest.mark.parametrize("bounds", [(0, None), (None, 0), (0, 0), (0, 10), (1, None), (None, None)])
+def test_round_trip_zero_bounds(bounds, tmp_path):
+    """
+    Regression test for bounds with zero limits being dropped.
+    """
+    model = astropy_models.Gaussian1D(amplitude=1, mean=0, stddev=1)
+    model.amplitude.bounds = bounds
+    result = helpers.assert_model_roundtrip(model, tmp_path)
+    assert result.amplitude.bounds == bounds

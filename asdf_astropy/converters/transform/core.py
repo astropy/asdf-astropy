@@ -109,7 +109,7 @@ class TransformConverterBase(Converter):
             fixed_nondefaults = {k: f for k, f in model.fixed.items() if f}
             if fixed_nondefaults:
                 node["fixed"] = fixed_nondefaults
-            bounds_nondefaults = {k: b for k, b in model.bounds.items() if any(b)}
+            bounds_nondefaults = {k: b for k, b in model.bounds.items() if any(v is not None for v in b)}
             if bounds_nondefaults:
                 node["bounds"] = bounds_nondefaults
 
