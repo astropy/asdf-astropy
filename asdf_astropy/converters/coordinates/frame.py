@@ -15,7 +15,7 @@ class FrameConverter(Converter):
     def select_tag(self, obj, tags, ctx):
         # Implement select_tag since coordinates-1.0.0 has 2 icrs tags
         # When writing use latest (only impacts icrs-1.0.0/1.1.0)
-        return sorted(tags)[-1]
+        return max(tags)
 
     @property
     def tags(self):
