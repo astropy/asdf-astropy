@@ -43,6 +43,7 @@ jobs:
         - linux: py312-test-parallel-cov
         - linux: py313-test-parallel-cov
         - linux: py314-test-parallel-cov
+        - linux: py315-test-parallel-cov
       coverage: codecov-oidc
 
   asdf-schemas:
