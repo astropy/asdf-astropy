@@ -17,6 +17,19 @@ and
 
 .. contents::
 
+Cosmology
+---------
+
+The following schemas are associated with **astropy** objects from the
+:ref:`astropy-cosmology` submodule:
+
+cosmology/cosmology
+^^^^^^^^^^^^^^^^^^^
+
+.. asdf-autoschemas::
+
+    cosmology/cosmology-1.0.0
+
 FITS
 ----
 
