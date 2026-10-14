@@ -2,7 +2,6 @@ import asdf
 import astropy.units as u
 import pytest
 from astropy import cosmology
-from astropy.cosmology import realizations
 
 from asdf_astropy.converters.cosmology.cosmology import _COSMOLOGY_CLASSES
 
@@ -17,7 +16,9 @@ def _instance(name):
     return cls(**_PARAMS, **extra, name=f"test-{name}", meta={"note": name})
 
 
-COSMOLOGIES = [_instance(n) for n in _COSMOLOGY_CLASSES] + [getattr(realizations, n) for n in realizations.available]
+COSMOLOGIES = [_instance(n) for n in _COSMOLOGY_CLASSES] + [
+    getattr(cosmology.realizations, n) for n in cosmology.realizations.available
+]
 
 
 @pytest.mark.parametrize("cosmo", COSMOLOGIES, ids=lambda c: c.name)

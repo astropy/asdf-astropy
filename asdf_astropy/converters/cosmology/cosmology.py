@@ -24,21 +24,21 @@ class CosmologyConverter(Converter):
         return node
 
     def from_yaml_tree(self, node, tag, ctx):
-        from astropy.cosmology import Cosmology
+        import astropy.cosmology
 
         node = {k: _with_cosmology_unit(v) for k, v in node.items()}
         node["meta"] = {k: _with_cosmology_unit(v) for k, v in node.get("meta", {}).items()}
-        return Cosmology.from_format(node, format="mapping")
+        return astropy.cosmology.Cosmology.from_format(node, format="mapping")
 
 
 def _with_cosmology_unit(value):
     """Re-parse units (e.g. redshift) that asdf could not recognize because
     astropy.cosmology.units are not enabled by default."""
     # ponytail: only top-level params and meta values, recurse if nested meta needs it
-    from astropy.cosmology import units as cu
-    from astropy.units import Quantity, Unit, UnrecognizedUnit, add_enabled_units
+    import astropy.cosmology.units as cu
+    import astropy.units as u
 
-    if isinstance(value, Quantity) and isinstance(value.unit, UnrecognizedUnit):
-        with add_enabled_units(cu):
-            return Quantity(value.value, Unit(value.unit.name))
+    if isinstance(value, u.Quantity) and isinstance(value.unit, u.UnrecognizedUnit):
+        with u.add_enabled_units(cu):
+            return u.Quantity(value.value, u.Unit(value.unit.name))
     return value
