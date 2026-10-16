@@ -26,7 +26,7 @@ def test_serialization(cosmo, tmp_path):
     file_path = tmp_path / "test.asdf"
     with asdf.AsdfFile() as af:
         af["cosmo"] = cosmo
-        af.write_to(file_path)
+        af.write_to(file_path, version="1.6.0")
 
     with asdf.open(file_path) as af:
         loaded = af["cosmo"]

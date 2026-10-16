@@ -37,7 +37,7 @@ examples:
           Om0: 0.3
           Tcmb0: !unit/quantity-1.2.0 {unit: !unit/unit-1.0.0 K, value: 2.725}
           Neff: 3.04
-          m_nu: null
+          m_nu: !unit/quantity-1.2.0 {unit: !unit/unit-1.0.0 eV, value: 0.0}
           Ob0: 0.0
           meta: {}
 ...
