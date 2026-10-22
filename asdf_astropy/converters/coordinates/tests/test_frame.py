@@ -112,7 +112,7 @@ def test_legacy_icrs_deserialize():
 
 def test_icrs_serialization(tmp_path):
     """
-    oordinates-1.0.0 contains 2 icrs tags 1.0.0 and 1.1.0. This was previously
+    coordinates-1.0.0 contains 2 icrs tags 1.0.0 and 1.1.0. This was previously
     handled with a special converter that resulted in incorrect tag selection.
     This is not handled with the standard FrameConverter but still special cased
     since icrs-1.0.0 is odd. This test checks that the 1.0.0 tag is not used on write.
