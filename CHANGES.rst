@@ -1,6 +1,8 @@
 0.12.0 (unreleased)
 -------------------
 
+- Add support for ``astropy.cosmology`` FLRW cosmologies. [#30]
+
 - Fix model parameter bounds with limits that are all zero or ``None``
   (e.g., ``(0, None)``) being dropped on serialization. [#338]
 - Fix ICRS serialization to use latest tag instead of 1.0.0. [#335]

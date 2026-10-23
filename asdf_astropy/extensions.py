@@ -14,6 +14,7 @@ from .converters.coordinates.frame import FrameConverter
 from .converters.coordinates.representation import RepresentationConverter
 from .converters.coordinates.sky_coord import SkyCoordConverter
 from .converters.coordinates.spectral_coord import SpectralCoordConverter
+from .converters.cosmology.cosmology import CosmologyConverter
 from .converters.fits.fits import AsdfFitsConverter, AstropyFitsConverter
 from .converters.nddata.uncertainty import UncertaintyConverter
 from .converters.table.table import AsdfTableConverter, AstropyTableConverter, ColumnConverter, NdarrayMixinConverter
@@ -532,6 +533,7 @@ ASTROPY_CONVERTERS = [
     WCSConverter(),
     SlicedWCSConverter(),
     HighLevelWCSWrapperConverter(),
+    CosmologyConverter(),
 ]
 
 
@@ -553,6 +555,7 @@ COORDINATES_EXTENSIONS = [
 
 
 _ASTROPY_EXTENSION_MANIFEST_URIS = [
+    "asdf://astropy.org/astropy/manifests/astropy-1.7.0",
     "asdf://astropy.org/astropy/manifests/astropy-1.6.0",
     "asdf://astropy.org/astropy/manifests/astropy-1.5.0",
     "asdf://astropy.org/astropy/manifests/astropy-1.4.0",

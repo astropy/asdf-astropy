@@ -1,0 +1,43 @@
+%YAML 1.1
+---
+$schema: "http://stsci.edu/schemas/yaml-schema/draft-01"
+id: "http://astropy.org/schemas/astropy/cosmology/cosmology-1.0.0"
+
+title: Represents an astropy.cosmology Cosmology
+
+description: >-
+  A cosmology, stored as the name of its class in ``astropy.cosmology``
+  (e.g. ``FlatLambdaCDM``), its name and metadata, and its parameters
+  (e.g. ``H0``, ``Om0``) as additional properties.
+
+type: object
+properties:
+  cosmology:
+    description: Name of the cosmology class in ``astropy.cosmology``.
+    type: string
+  name:
+    description: Name of the cosmology instance.
+    anyOf:
+      - type: string
+      - type: "null"
+  meta:
+    description: Free-form metadata about the cosmology.
+    type: object
+required: [cosmology]
+
+examples:
+  -
+    - A flat Lambda-CDM cosmology
+    - asdf-standard-1.6.0
+    - |
+        !<tag:astropy.org:astropy/cosmology/cosmology-1.0.0>
+          cosmology: FlatLambdaCDM
+          name: example
+          H0: !unit/quantity-1.2.0 {unit: !unit/unit-1.0.0 km.Mpc**-1.s**-1, value: 70.0}
+          Om0: 0.3
+          Tcmb0: !unit/quantity-1.2.0 {unit: !unit/unit-1.0.0 K, value: 2.725}
+          Neff: 3.04
+          m_nu: !unit/quantity-1.2.0 {unit: !unit/unit-1.0.0 eV, value: 0.0}
+          Ob0: 0.0
+          meta: {}
+...
