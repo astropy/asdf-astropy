@@ -52,10 +52,13 @@ highlight_language = "python3"
 # If your documentation needs a minimal Sphinx version, state it here.
 needs_sphinx = "1.7"
 
-intersphinx_mapping["asdf"] = ("https://asdf.readthedocs.io/en/latest/", None)
+intersphinx_mapping["asdf"] = ("https://www.asdf-format.org/projects/asdf/en/latest/", None)
 intersphinx_mapping["asdf-standard"] = ("https://asdf-standard.readthedocs.io/en/latest/", None)
 intersphinx_mapping["asdf-transform-schemas"] = ("https://asdf-transform-schemas.readthedocs.io/en/latest/", None)
 intersphinx_mapping["asdf-coordinates-schemas"] = ("https://asdf-coordinates-schemas.readthedocs.io/en/latest/", None)
+
+extlinks = {"asdf": ("https://www.asdf-format.org/projects/asdf/en/latest/%s", None)}
+extlinks_detect_hardcoded_links = True
 
 # To perform a Sphinx version check that needs to be more specific than
 # major.minor, call `check_sphinx_version("x.y.z")` here.
@@ -147,7 +150,7 @@ latex_documents = [("index", project + ".tex", project + " Documentation", autho
 # (source start file, name, description, authors, manual section).
 man_pages = [("index", project.lower(), project + " Documentation", [author], 1)]
 
-extensions += ["sphinx_asdf"]
+extensions += ["sphinx.ext.extlinks", "sphinx_asdf"]
 # extensions = ['sphinx.ext.autodoc',
 #               'sphinx.ext.autosummary',
 #               'sphinx_automodapi.automodsumm',

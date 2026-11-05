@@ -79,7 +79,7 @@ To install:
     $ pip install .
 
 To install in `development
-mode <https://packaging.python.org/tutorials/distributing-packages/#working-in-development-mode>`__
+mode <https://setuptools.pypa.io/en/latest/userguide/development_mode.html>`__
 
 .. code-block:: console
 

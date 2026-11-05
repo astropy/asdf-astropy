@@ -15,7 +15,7 @@ packages like **asdf-astropy** and automatically make use of that package's supp
 infrastructure to operate correctly.
 
 Documentation on the **ASDF Specification** can be found :ref:`here <asdf-standard:asdf-standard>`.
-Documentation on the **ASDF** Python library can be found :ref:`here <asdf:asdf>`.
+Documentation on the **ASDF** Python library can be found :asdf:`here <>`.
 
 
 Getting Started

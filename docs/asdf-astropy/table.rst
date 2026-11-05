@@ -40,7 +40,7 @@ Advanced Usage
 ^^^^^^^^^^^^^^
 
 The fundamental **ASDF** data structure is the tree, which is a nested
-combination of basic data structures (see :ref:`asdf:data-model` for a more
+combination of basic data structures (see :asdf:`Data Model <asdf/features/#data-model>` for a more
 detailed description). At the top level, the tree is a `dict`.
 
 The consequence of this is that a `~astropy.table.Table` object (or any object,

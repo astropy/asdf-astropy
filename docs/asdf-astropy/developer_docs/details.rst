@@ -4,14 +4,14 @@
 Details
 =======
 
-**ASDF** provides an :ref:`extension API <asdf:extending_extensions>` that **asdf-astropy**
+**ASDF** provides an :asdf:`extension API <asdf/extending/extensions/>` that **asdf-astropy**
 uses to support reading and writing **astropy** objects. The details here should be of
 no concern to users since the process of converting **astropy** objects to **ASDF**
 is transparent, the user need only provide the **astropy** object or **ASDF** file
 and the rest will be handled for them.
 
 Developers and maintainers may want to know more about how **asdf-astropy** works
-and should start by referring to the :ref:`asdf extension API documentation <asdf:extending_extensions>`.
+and should start by referring to the :asdf:`asdf extension API documentation <asdf/extending/extensions/>`.
 In brief, **asdf-astropy** implements **extensions** that provide mappings between
 **tags** that get written to or read from **ASDF** files, are associated with **schemas**
 to check that data is handled properly and **converter** classes that handle the logic
@@ -32,6 +32,5 @@ and :ref:`asdf-astropy_schemas` for resources defined within this package.
     Not all **astropy** types are currently serializable by ASDF. Attempting to
     write unsupported types to an ASDF file will lead to a ``RepresenterError``. In
     order to support new types, new tags and converters must be created. A basic
-    example can be found in :ref:`basic_example`, for additional details please refer to
-    :ref:`asdf:extending_extensions`.
+    example can be found in :ref:`basic_example`, for additional details please refer to :asdf:`Extensions <asdf/extending/extensions/>`.
     If you do write additional converters or schemas please consider contributing them to **asdf-astropy**.

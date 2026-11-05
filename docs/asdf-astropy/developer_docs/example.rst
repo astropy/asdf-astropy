@@ -164,4 +164,4 @@ In this case ``tags`` and `types` must still be defined, but instead
             """Code to read a Python dictionary representing MyType"""
             ...
 
-For more details please see :ref:`asdf:extending_extensions`.
+For more details please see :asdf:`Extensions <asdf/extending/extensions/>`.

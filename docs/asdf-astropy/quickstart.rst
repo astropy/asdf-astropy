@@ -12,7 +12,7 @@ A quick example of **ASDF**
 ===========================
 
 The Advanced Scientific Data Format (ASDF, pronounced *"Az-diff"*) is a next-generation
-interchange format for scientific data. The Python library :ref:`asdf <asdf:asdf>`
+interchange format for scientific data. The Python library :asdf:`asdf <>`
 can be used to read and write ASDF files and provides an interface to the ASDF "tree"
 that is similar to a python dictionary, with key/value pairs.
 
@@ -72,6 +72,6 @@ In the same way that the `~astropy.modeling.functional_models.Gaussian1D` model 
 Further Reading
 ===============
 
-For further getting started material on **ASDF** see, :ref:`asdf:overview`. If one
+For further getting started material on **ASDF** see :asdf:`Overview <asdf/overview/>`. If one
 wants to find more examples of how to write an **astropy** `~astropy.table.Table`
 to **ASDF** files, see :ref:`table`.

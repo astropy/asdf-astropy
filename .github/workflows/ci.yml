@@ -121,3 +121,18 @@ jobs:
       upload_to_anaconda: false
       test_extras: test
       test_command: pytest --pyargs asdf_astropy
+
+  linkcheck:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      with:
+        fetch-depth: 0
+        persist-credentials: false
+    - uses: astral-sh/setup-uv@68559e99cc807c1eb7e9238fd43a15bba460eec2 # v10.3.3
+      with:
+        python-version: "3.14"
+        enable-cache: true
+    - run: uv sync --all-extras
+    - run: uv run make linkcheck
+      working-directory: docs
